@@ -5,19 +5,25 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #singleinstance, forced
 #include class.ahk
 
+#IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 ^F13::Pause
 return
 
- ;;; HOTSTRING
+;;; HOTSTRING
 ; :*:3-1::3-1. ROUGH_ENDMILL_0DEG
 ; :*:3-2::3-2. ROUGH_ENDMILL_120DEG
 ; :*:3-3::3-3. ROUGH_ENDMILL_240DEG
 
+:*:d10::
+Deg.deg10()
+return
+
+
 ;======================     SELECTING DEGREES        =====================
 f13::
 Deg.deg0()
-Return
+return
 f14::
 Deg.deg90()
 return
