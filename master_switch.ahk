@@ -4,6 +4,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #singleinstance, forced
 #include class.ahk
+#include tools.ahk
 
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
@@ -15,11 +16,6 @@ return
 ; :*:3-2::3-2. ROUGH_ENDMILL_120DEG
 ; :*:3-3::3-3. ROUGH_ENDMILL_240DEG
 
-:*:d10::
-Deg.deg10()
-return
-
-
 ;======================     SELECTING DEGREES        =====================
 f13::
 Deg.deg0()
@@ -27,7 +23,7 @@ return
 f14::
 Deg.deg90()
 return
-f15::
+e::
 Deg.deg180()
 return
 f16::
@@ -39,29 +35,52 @@ return
 v::
 Deg.rear()
 return
-;; ========================= WIRE FRAME VIEW ==================================
+; ========================= WIRE FRAME VIEW ==================================
 
 wire_frame_is_active := false
 
-
 XButton2::
 if(wire_frame_is_active == false){
- sendinput, !a
+ tools.wireframe_view()
  wire_frame_is_active := true
  return
 } else {
- sendinput, !s
+ tools.solid_view()
  wire_frame_is_active := false
  return
 }
 
-; XButton1::
+!a::
+tools.solid_view()
+wire_frame_is_active := false
+return
 
+!s::
+tools.wireframe_view()
+wire_frame_is_active := true
+return
 
+; ==========================  Tools ==========================================
 
-;;; ==========================  borders ==========================================
+; Circle Tool
++c::
+tools.circle_tool()
+return
 
+; Line Tool
+^l::
+tools.line_tool()
+return
 
+^x::
+tools.trim_tool()
+return
+
+^e::
+tools.extrude_tool()
+return
+
+; ==========================  borders ==========================================
 f19::
 border_icon.flatdoubleside()
 return
@@ -69,7 +88,6 @@ return
 f20::
 border_icon.slant_circle()
 return
-
 
 ;; ==========================
 
