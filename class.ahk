@@ -236,7 +236,6 @@ class Deg  ;;; shortcut keys to deg views
 	}
 }
 
-
 class border_icon
 {
 	flatdoubleside() {
@@ -264,9 +263,4 @@ class border_icon
 		control, check,, Button3, ahk_class #32770
 		SLEEP, 100
 	}
-}
-
-step1(){
-	WinActivate, ESPRIT
-	PostMessage, 0x111, 5018 , , , ESPRIT
 }

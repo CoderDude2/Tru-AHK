@@ -37,6 +37,10 @@ class tools{
 		PostMessage, 0x111, 3145 , , , ESPRIT
 	}
 
+	draw_path(){
+		PostMessage, 0x111, 3057, , , ESPRIT
+	}
+
 	play_simulation(){
 		PostMessage, 0x111, 6268 , , , ESPRIT
 	}

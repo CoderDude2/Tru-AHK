@@ -39,23 +39,14 @@ return
 
 wire_frame_is_active := false
 
-XButton2::
-if(wire_frame_is_active == false){
- tools.wireframe_view()
- wire_frame_is_active := true
- return
-} else {
- tools.solid_view()
- wire_frame_is_active := false
- return
-}
-
 !a::
+a::
 tools.solid_view()
 wire_frame_is_active := false
 return
 
 !s::
+s::
 tools.wireframe_view()
 wire_frame_is_active := true
 return
@@ -68,11 +59,17 @@ tools.circle_tool()
 return
 
 ; Line Tool
-^l::
++f18::
+XButton2::
 tools.line_tool()
 return
 
++XButton2::
+tools.draw_path()
+return
+
 ^x::
+XButton1::
 tools.trim_tool()
 return
 
@@ -92,6 +89,10 @@ return
 ;; ==========================
 
 f21::
-SENDINPUT, X,0
-SENDINPUT, {ENTER}
-RETURN
+tools.line_tool()
+Click Left
+Send 20{Enter}0{Enter}{Esc}
+Click Left 2
+Sleep, 100
+border_icon.flatdoubleside()
+return
