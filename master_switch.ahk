@@ -3,7 +3,9 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #singleinstance, forced
+
 #include class.ahk
+#include views.ahk
 #include tools.ahk
 
 #IfWinExist ahk_exe esprit.exe
@@ -34,6 +36,22 @@ Deg.face()
 return
 v::
 Deg.rear()
+return
+
++WheelDown::
+gosub increment_10_degrees
+return
+
+!WheelDown::
+gosub increment_90_degrees
+return
+
++WheelUp::
+gosub decrement_10_degrees
+return
+
+!WheelUp::
+gosub decrement_90_degrees
 return
 ; ========================= WIRE FRAME VIEW ==================================
 
