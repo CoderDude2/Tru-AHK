@@ -41,7 +41,7 @@ class tools{
 		PostMessage, 0x111, 3057, , , ESPRIT
 	}
 
-	play_simulation(){
+	toggle_simulation(){
 		PostMessage, 0x111, 6268 , , , ESPRIT
 	}
 

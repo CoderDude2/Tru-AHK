@@ -19,38 +19,43 @@ return
 ; :*:3-3::3-3. ROUGH_ENDMILL_240DEG
 
 ;======================     SELECTING DEGREES        =====================
-f13::
+q::
 Deg.deg0()
 return
-f14::
+
+w::
 Deg.deg90()
 return
+
 e::
 Deg.deg180()
 return
-f16::
+
+r::
 Deg.deg270()
 return
+
 c::
 Deg.face()
 return
+
 v::
 Deg.rear()
 return
 
-+WheelDown::
+!WheelDown::
 gosub increment_10_degrees
 return
 
-!WheelDown::
++!WheelDown::
 gosub increment_90_degrees
 return
 
-+WheelUp::
+!WheelUp::
 gosub decrement_10_degrees
 return
 
-!WheelUp::
++!WheelUp::
 gosub decrement_90_degrees
 return
 ; ========================= WIRE FRAME VIEW ==================================
@@ -69,19 +74,18 @@ tools.wireframe_view()
 wire_frame_is_active := true
 return
 
-; ==========================  Tools ==========================================
+; ==========================  Controls ==========================================
 
 ; Circle Tool
 +c::
 tools.circle_tool()
 return
 
-; Line Tool
-+f18::
 XButton2::
 tools.line_tool()
 return
 
+; Draws a path
 +XButton2::
 tools.draw_path()
 return
@@ -95,6 +99,22 @@ return
 tools.extrude_tool()
 return
 
+Space::
+tools.toggle_simulation()
+return
+
++Space::
+tools.stop_simulation()
+return
+
+f13::
+tools.generate_path()
+return
+
+f14::
+tools.swap_path()
+return
+
 ; ==========================  borders ==========================================
 f19::
 border_icon.flatdoubleside()
@@ -106,7 +126,9 @@ return
 
 ;; ==========================
 
-f21::
+; Draw a straight line, 20 mm long, and extrude it
+; Useful for quickly creating limitations when all you need is a straight line
+f15::
 tools.line_tool()
 Click Left
 Send 20{Enter}0{Enter}{Esc}
