@@ -4,19 +4,14 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #singleinstance, forced
 
-#include class.ahk
-#include views.ahk
-#include tools.ahk
+#include %A_ScriptDir%\src\class.ahk
+#include %A_ScriptDir%\src\views.ahk
+#include %A_ScriptDir%\src\tools.ahk
 
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 ^F13::Pause
 return
-
-;;; HOTSTRING
-; :*:3-1::3-1. ROUGH_ENDMILL_0DEG
-; :*:3-2::3-2. ROUGH_ENDMILL_120DEG
-; :*:3-3::3-3. ROUGH_ENDMILL_240DEG
 
 ;======================     SELECTING DEGREES        =====================
 q::
