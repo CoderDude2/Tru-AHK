@@ -7,39 +7,49 @@ current_value := 7
 min_value := 7
 max_value := 42
 
-activate(){
-	global current_value
-	wingetclass, deg_class, A
-	control, choose, %current_value%, ComboBox1, ahk_class %deg_class%
+update_angle(angle_index) {
+	WinGetClass, deg_class, A
+	Control, Choose, %angle_index%, ComboBox1, ahk_class %deg_class%
 }
 
-increment_10_degrees:
-	current_value := current_value + 1
-	if current_value > %max_value%
-		current_value := min_value
-	activate()
-	return
+get_current_angle() {
+	WinGetClass, deg_class, A
+	ControlGet, string_combobox, choice, , combobox1, ahk_class %deg_class%
+	ControlGet, current_angle, findstring, %string_combobox%, combobox1, ahk_class %deg_class%
+	return current_angle
+}
 
-decrement_10_degrees:
-	current_value := current_value - 1
-	if current_value < %min_value%
-		current_value := max_value
-	activate()
-	return
+increment_10_degrees() {
+	new_angle := get_current_angle() + 1
+	if(new_angle > 42){
+		new_angle := 7
+	}
+	update_angle(new_angle)
+}
 
-increment_90_degrees:
-	current_value := current_value + 9
-	if current_value > %max_value%
-		current_value := min_value + (current_value - max_value - 1)
-	activate()
-	return
+increment_90_degrees()
 
-decrement_90_degrees:
-	current_value := current_value - 9
-	if current_value < %min_value%
-		current_value := max_value - (-1 * current_value + min_value - 1)
-	activate()
-	return
+decrement_10_degrees(){
+	new_angle := get_current_angle() - 1
+	if(new_angle < 7){
+		new_angle := 42
+	}
+	update_angle(new_angle)
+}
+
+; increment_90_degrees:
+; 	current_value := current_value + 9
+; 	if current_value > %max_value%
+; 		current_value := min_value + (current_value - max_value - 1)
+; 	activate()
+; 	return
+
+; decrement_90_degrees:
+; 	current_value := current_value - 9
+; 	if current_value < %min_value%
+; 		current_value := max_value - (-1 * current_value + min_value - 1)
+; 	activate()
+	; return
 
 class Deg  ;;; shortcut keys to deg views
 {

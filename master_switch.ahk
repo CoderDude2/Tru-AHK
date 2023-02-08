@@ -39,19 +39,19 @@ Deg.rear()
 return
 
 !WheelDown::
-gosub increment_10_degrees
+increment_10_degrees()
 return
 
 +!WheelDown::
-gosub increment_90_degrees
+; gosub increment_90_degrees
 return
 
 !WheelUp::
-gosub decrement_10_degrees
+decrement_10_degrees()
 return
 
 +!WheelUp::
-gosub decrement_90_degrees
+; gosub decrement_90_degrees
 return
 ; ========================= WIRE FRAME VIEW ==================================
 
