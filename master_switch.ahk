@@ -13,7 +13,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ^F13::Pause
 return
 
-;======================     SELECTING DEGREES        =====================
+;========================== SELECTING DEGREES ===================================
 q::
 Deg.deg0()
 return
@@ -53,7 +53,7 @@ return
 +!WheelUp::
 gosub decrement_90_degrees
 return
-; ========================= WIRE FRAME VIEW ==================================
+; ========================== WIRE FRAME VIEW ====================================
 
 wire_frame_is_active := false
 
@@ -71,7 +71,6 @@ return
 
 ; ==========================  Controls ==========================================
 
-; Circle Tool
 +c::
 tools.circle_tool()
 return
@@ -80,7 +79,6 @@ XButton2::
 tools.line_tool()
 return
 
-; Draws a path
 +XButton2::
 tools.draw_path()
 return
@@ -92,6 +90,10 @@ return
 
 ^e::
 tools.extrude_tool()
+return
+
+^+3::
+tools.three_point_tool()
 return
 
 Space::
@@ -110,7 +112,7 @@ f14::
 tools.swap_path()
 return
 
-; ==========================  borders ==========================================
+; ==========================  Borders ==========================================
 f19::
 border_icon.flatdoubleside()
 return
@@ -124,10 +126,19 @@ return
 ; Draw a straight line, 20 mm long, and extrude it
 ; Useful for quickly creating limitations when all you need is a straight line
 f15::
+BlockInput, On
 tools.line_tool()
 Click Left
 Send 20{Enter}0{Enter}{Esc}
 Click Left 2
 Sleep, 100
 border_icon.flatdoubleside()
+BlockInput, Off
+return
+
+; This is for special cases when you have to enter "X,90"
+f18::
+BlockInput, On
+Send X,90{Enter}
+BlockInput, Off
 return

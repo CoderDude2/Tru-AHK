@@ -21,6 +21,10 @@ class tools{
 		PostMessage, 0x111, 3033 , , , ESPRIT
 	}
 
+	three_point_tool(){
+		PostMessage, 0x111, 3004 , , , ESPRIT
+	}
+
 	wireframe_view(){
 		PostMessage, 0x111, 6130 , , , ESPRIT
 	}
