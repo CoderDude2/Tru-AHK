@@ -27,8 +27,6 @@ increment_10_degrees() {
 	update_angle(new_angle)
 }
 
-increment_90_degrees()
-
 decrement_10_degrees(){
 	new_angle := get_current_angle() - 1
 	if(new_angle < 7){
@@ -37,19 +35,13 @@ decrement_10_degrees(){
 	update_angle(new_angle)
 }
 
-; increment_90_degrees:
-; 	current_value := current_value + 9
-; 	if current_value > %max_value%
-; 		current_value := min_value + (current_value - max_value - 1)
-; 	activate()
-; 	return
-
-; decrement_90_degrees:
-; 	current_value := current_value - 9
-; 	if current_value < %min_value%
-; 		current_value := max_value - (-1 * current_value + min_value - 1)
-; 	activate()
-	; return
+increment_90_degrees(){
+	new_angle := get_current_angle() + 9
+	if (new_angle > 42){
+		new_angle := 6 + new_angle - 42
+	}
+	update_angle(new_angle)
+}
 
 class Deg  ;;; shortcut keys to deg views
 {
