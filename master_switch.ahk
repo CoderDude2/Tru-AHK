@@ -43,7 +43,7 @@ increment_10_degrees()
 return
 
 +!WheelDown::
-; gosub increment_90_degrees
+increment_90_degrees()
 return
 
 !WheelUp::
@@ -51,7 +51,7 @@ decrement_10_degrees()
 return
 
 +!WheelUp::
-; gosub decrement_90_degrees
+decrement_90_degrees()
 return
 ; ========================= WIRE FRAME VIEW ==================================
 

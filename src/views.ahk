@@ -43,8 +43,15 @@ increment_90_degrees(){
 	update_angle(new_angle)
 }
 
-class Deg  ;;; shortcut keys to deg views
-{
+decrement_90_degrees(){
+	new_angle := get_current_angle() - 9
+	if(new_angle < 7) {
+		new_angle := 42 - (-1 * new_angle + 7 - 1)
+	}
+	update_angle(new_angle)
+}
+
+class Deg {
 	FACE() {
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
