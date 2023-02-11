@@ -1,4 +1,15 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿; On the isaac branch, I have a few differences with how the keyboard is layed out
+; The keys G1-G6 have been remapped to F13-F18
+; Win-Left is Delete
+; CapsLock is Enter
+; All other keys have been returned to their original state
+;
+; My goal is to have the autohotkey script manage context, rather than a keyboard profile.
+; The reason being is for ease of updates.
+; If we change the keyboard layout with a keyboard profile; we will have to go to each computer and re-import the respective keyboard profiles.
+; If managed by the scripts themselves, there's no need for an extra step, and updates will be more seamless.
+
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -10,6 +21,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
+
 ^F13::Pause
 return
 
@@ -55,18 +67,18 @@ decrement_90_degrees()
 return
 ; ========================== WIRE FRAME VIEW ====================================
 
-wire_frame_is_active := false
+wireframe_is_active := false
 
 !a::
 a::
 tools.solid_view()
-wire_frame_is_active := false
+wireframe_is_active := false
 return
 
 !s::
 s::
 tools.wireframe_view()
-wire_frame_is_active := true
+wireframe_is_active := true
 return
 
 ; ==========================  Controls ==========================================
