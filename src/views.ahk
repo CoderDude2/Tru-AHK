@@ -10,9 +10,9 @@ class views {
 	}
 
 	get_current_angle() {
-		WinGetClass, deg_class, A
-		ControlGet, string_combobox, choice, , combobox1, ahk_class %deg_class%
-		ControlGet, current_angle, findstring, %string_combobox%, combobox1, ahk_class %deg_class%
+		SendMessage, 0x0147, 0, 0, ComboBox1, ESPRIT ; Uses CB_GETCURSEL command to retrieve the current selected value in ComboBox1. This outputs to the ErrorLevel.
+		current_angle := ErrorLevel<<32>>32 ; Convert UInt to Int to have -1 if there is no item selected.
+		current_angle += 1
 		return current_angle
 	}
 

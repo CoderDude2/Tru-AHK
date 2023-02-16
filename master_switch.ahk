@@ -19,25 +19,25 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #include %A_ScriptDir%\src\views.ahk
 #include %A_ScriptDir%\src\tools.ahk
 
-
-
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 ^F13::Pause
 return
 
 ;========================== HOT STRINGS =========================================
-
 :*:3-1::
-Send 3-1. ROUGH_ENDMILL_0DEG
+formatted_angle := (views.get_current_angle() - 7) * 10
+Send 3-1. ROUGH_ENDMILL_%formatted_angle%DEG
 return
 
 :*:3-2::
-Send 3-2. ROUGH_ENDMILL_120DEG
+formatted_angle := (views.get_current_angle() - 7) * 10
+Send 3-2. ROUGH_ENDMILL_%formatted_angle%DEG
 return
 
 :*:3-3::
-Send 3-3. ROUGH_ENDMILL_240DEG
+formatted_angle := (views.get_current_angle() - 7) * 10
+Send 3-3. ROUGH_ENDMILL_%formatted_angle%DEG
 return
 
 ;========================== SELECTING DEGREES ===================================
