@@ -140,11 +140,11 @@ tools.swap_path()
 return
 
 ; ==========================  Borders ==========================================
-f19::
+g::
 border_icon.flatdoubleside()
 return
 
-f20::
+b::
 border_icon.slant_circle()
 return
 
