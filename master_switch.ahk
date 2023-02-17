@@ -81,7 +81,6 @@ return
 views.decrement_90_degrees()
 return
 ; ========================== WIRE FRAME VIEW ====================================
-
 wireframe_is_active := false
 
 !a::
@@ -139,7 +138,7 @@ f14::
 tools.swap_path()
 return
 
-; ==========================  Borders ==========================================
+; ========================== Borders ==========================================
 g::
 border_icon.flatdoubleside()
 return
@@ -148,8 +147,9 @@ b::
 border_icon.slant_circle()
 return
 
-;; ==========================
+;; ========================= Macros ===========================================
 
+; G3 Key
 ; Draw a straight line, 20 mm long, and extrude it
 ; Useful for quickly creating limitations when all you need is a straight line
 f15::
@@ -163,6 +163,7 @@ border_icon.flatdoubleside()
 BlockInput, Off
 return
 
+; G6 Key
 ; This is for special cases when you have to enter "X,90"
 f18::
 BlockInput, On
