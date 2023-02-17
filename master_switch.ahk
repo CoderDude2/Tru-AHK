@@ -25,7 +25,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 return
 
 ;========================== REMAPPINGS =========================================
-
 q::Esc
 LWin::Delete
 Space::Enter
@@ -148,6 +147,11 @@ return
 ; G2 Key
 f14::
 tools.swap_path()
+return
+
+; G6 Key
+f18::
+tools.save_file()
 return
 
 ; ==========================  Borders ==========================================
