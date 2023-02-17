@@ -24,6 +24,12 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ^F13::Pause
 return
 
+;========================== REMAPPINGS =========================================
+
+q::Esc
+LWin::Delete
+Space::Enter
+
 ;========================== HOT STRINGS =========================================
 :*:3-1::
 formatted_angle := (views.get_current_angle() - 7) * 10
@@ -41,19 +47,19 @@ Send 3-3. ROUGH_ENDMILL_%formatted_angle%DEG
 return
 
 ;========================== SELECTING DEGREES ===================================
-q::
+a::
 Deg.deg0()
 return
 
-w::
+s::
 Deg.deg90()
 return
 
-e::
+d::
 Deg.deg180()
 return
 
-r::
+f::
 Deg.deg270()
 return
 
@@ -80,23 +86,26 @@ return
 +!WheelUp::
 views.decrement_90_degrees()
 return
-; ========================== WIRE FRAME VIEW ====================================
 
+; ========================== WIRE FRAME VIEW ====================================
 wireframe_is_active := false
 
 !a::
-a::
+z::
 tools.solid_view()
 wireframe_is_active := false
 return
 
 !s::
-s::
+x::
 tools.wireframe_view()
 wireframe_is_active := true
 return
 
 ; ==========================  Controls ==========================================
+t::
+tools.transformation_window()
+return
 
 +c::
 tools.circle_tool()
@@ -123,7 +132,7 @@ return
 tools.three_point_tool()
 return
 
-Space::
+!Space::
 tools.toggle_simulation()
 return
 
@@ -131,25 +140,28 @@ return
 tools.stop_simulation()
 return
 
+; G1 Key
 f13::
 tools.generate_path()
 return
 
+; G2 Key
 f14::
 tools.swap_path()
 return
 
 ; ==========================  Borders ==========================================
-f19::
+g::
 border_icon.flatdoubleside()
 return
 
-f20::
+b::
 border_icon.slant_circle()
 return
 
 ;; ==========================
 
+; G3 Key
 ; Draw a straight line, 20 mm long, and extrude it
 ; Useful for quickly creating limitations when all you need is a straight line
 f15::
@@ -164,7 +176,7 @@ BlockInput, Off
 return
 
 ; This is for special cases when you have to enter "X,90"
-f18::
+r::
 BlockInput, On
 Send X,90{Enter}
 BlockInput, Off
