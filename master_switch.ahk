@@ -170,3 +170,20 @@ BlockInput, On
 Send X,90{Enter}
 BlockInput, Off
 return
+
+
+margin_complete := False
+start_position := [0, 0]
+
+f16::
+if(margin_complete = False){
+    KeyWait LButton, D
+    MouseGetPos, posX, posY
+    start_position[0] := posX
+    start_position[1] := posY
+} else {
+
+}
+
+margin_complete := !margin_complete
+return
