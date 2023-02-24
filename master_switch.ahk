@@ -19,11 +19,15 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #include %A_ScriptDir%\src\views.ahk
 #include %A_ScriptDir%\src\tools.ahk
 
+#IfWinExist ahk_exe DaouMessenger.exe
+#IfWinActive ahk_exe DaouMessenger.exe
+:*:$mf::I can take more files{!}
+
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
+
 ^F13::Pause
 return
-
 ;========================== HOT STRINGS =========================================
 :*:3-1::
 formatted_angle := (views.get_current_angle() - 7) * 10
