@@ -24,6 +24,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ^F13::Pause
 return
 
+;========================== VARIABLES =========================================
+
+path_tool_active = false
+
 ;========================== HOT STRINGS =========================================
 :*:3-1::
 formatted_angle := (views.get_current_angle() - 7) * 10
@@ -107,6 +111,8 @@ return
 
 +XButton2::
 tools.draw_path()
+path_tool_active := true
+; Store the first click
 return
 
 ^x::
@@ -188,6 +194,14 @@ if(margin_complete = False){
 margin_complete := !margin_complete
 return
 
+RButton::
+    if(path_tool_active = true){
+        ; Snap to original position
+        path_tool_active := false
+    } else {
+        SendInput, RButton
+    }
+return
 ; If path drawing tool is active, right clicking will complete the path and deactivate the path tool.
 ; When path tool is activated the start position of the first click will be stored.
 ; When the user right clicks it will snap to the stored position, completing the path.
