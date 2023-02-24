@@ -187,3 +187,7 @@ if(margin_complete = False){
 
 margin_complete := !margin_complete
 return
+
+; If path drawing tool is active, right clicking will complete the path and deactivate the path tool.
+; When path tool is activated the start position of the first click will be stored.
+; When the user right clicks it will snap to the stored position, completing the path.
