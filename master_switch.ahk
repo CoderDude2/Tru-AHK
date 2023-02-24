@@ -159,18 +159,23 @@ return
 f15::
 BlockInput, On
 tools.line_tool()
-Click Left
-Send 20{Enter}0{Enter}{Esc}
-Click Left 2
+Click, Left
+Send, 20{Enter}0{Enter}{Esc}
+Click, Left 2
 Sleep, 100
 border_icon.flatdoubleside()
 BlockInput, Off
 return
 
-; G6 Key
+; G5 Key
 ; This is for special cases when you have to enter "X,90"
-f18::
+f17::
 BlockInput, On
 Send X,90{Enter}
 BlockInput, Off
+return
+
+; G6 Key
+f18::
+tools.save_file()
 return
