@@ -1,7 +1,6 @@
 ﻿; On the isaac branch, I have a few differences with how the keyboard is layed out
 ; The keys G1-G6 have been remapped to F13-F18
 ; Win-Left is Delete
-; CapsLock is Enter
 ; All other keys have been returned to their original state
 ;
 ; My goal is to have the autohotkey script manage context, rather than a keyboard profile.
@@ -13,7 +12,7 @@
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-#singleinstance, forced
+#SingleInstance, forced
 
 #include %A_ScriptDir%\src\class.ahk
 #include %A_ScriptDir%\src\views.ahk
@@ -21,13 +20,15 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
+
 ^F13::Pause
 return
 
 ;========================== REMAPPINGS =========================================
-q::Esc
 LWin::Delete
 Space::Enter
+z::^z
+F4::^F9
 
 ;========================== HOT STRINGS =========================================
 :*:3-1::
@@ -90,13 +91,13 @@ return
 wireframe_is_active := false
 
 !a::
-z::
+q::
 tools.solid_view()
 wireframe_is_active := false
 return
 
 !s::
-x::
+w::
 tools.wireframe_view()
 wireframe_is_active := true
 return
@@ -123,11 +124,15 @@ XButton1::
 tools.trim_tool()
 return
 
++XButton1::
+tools.circle_tool()
+return
+
 ^e::
 tools.extrude_tool()
 return
 
-^+3::
++3::
 tools.three_point_tool()
 return
 
@@ -163,13 +168,13 @@ b::
 border_icon.slant_circle()
 return
 
-;; ==========================
+;; ==========================  MACROS  =========================================
 
-; G3 Key
 ; Draw a straight line, 20 mm long, and extrude it
 ; Useful for quickly creating limitations when all you need is a straight line
-f15::
+e::
 BlockInput, On
+Sleep 150
 tools.line_tool()
 Click Left
 Send 20{Enter}0{Enter}{Esc}
@@ -179,9 +184,10 @@ border_icon.flatdoubleside()
 BlockInput, Off
 return
 
+; G5 Key
 ; This is for special cases when you have to enter "X,90"
-r::
+f17::
 BlockInput, On
-Send X,90{Enter}
+Send X,90
 BlockInput, Off
 return
