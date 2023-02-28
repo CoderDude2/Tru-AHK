@@ -28,6 +28,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ^F13::Pause
 return
+
+;========================== VARIABLES =========================================
+
+
+
 ;========================== HOT STRINGS =========================================
 :*:3-1::
 formatted_angle := (views.get_current_angle() - 7) * 10
@@ -109,10 +114,6 @@ XButton2::
 tools.line_tool()
 return
 
-+XButton2::
-tools.draw_path()
-return
-
 ^x::
 XButton1::
 tools.trim_tool()
@@ -182,4 +183,44 @@ return
 ; G6 Key
 f18::
 tools.save_file()
+return
+
+; G6 Key
+f18::
+tools.save_file()
+return
+
+;; ========================= Auto-Complete Margins ===========================================
+
+initial_pos_x := 0
+initial_pos_y := 0
+click_index := 0
+path_tool_active = false
+
++XButton2::
+tools.draw_path()
+path_tool_active := true
+return
+
+LButton::
+if(path_tool_active = true){
+    click_index++
+    ; Store the coordinates of the first click
+    if(click_index = 1){
+        MouseGetPos, initial_pos_x, initial_pos_y
+    }
+}
+SendInput, {LButton}
+return
+
+RButton::
+    if(path_tool_active = true){
+        ; Snap to original position and click to complete the path
+        MouseMove, initial_pos_x, initial_pos_y
+        Click
+        path_tool_active := false
+        click_index := 0
+    } else {
+        SendInput, {RButton}
+    }
 return
