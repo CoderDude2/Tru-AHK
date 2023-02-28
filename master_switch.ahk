@@ -118,6 +118,10 @@ XButton1::
 tools.trim_tool()
 return
 
++XButton1::
+tools.three_point_tool()
+return
+
 ^e::
 tools.extrude_tool()
 return
