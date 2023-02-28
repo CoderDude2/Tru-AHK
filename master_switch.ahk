@@ -13,6 +13,7 @@
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+
 #singleinstance, forced
 
 #include %A_ScriptDir%\src\class.ahk
@@ -106,6 +107,10 @@ return
 
 ; ==========================  Controls ==========================================
 
+t::
+tools.transformation_window()
+return
+
 +c::
 tools.circle_tool()
 return
@@ -197,7 +202,8 @@ tools.draw_path()
 path_tool_active := true
 return
 
-LButton::
+~LButton::
+CoordMode, Mouse, Screen
 if(path_tool_active = true){
     click_index++
     ; Store the coordinates of the first click
@@ -205,16 +211,18 @@ if(path_tool_active = true){
         MouseGetPos, initial_pos_x, initial_pos_y
     }
 }
-SendInput, {LButton}
 return
 
 RButton::
+    CoordMode, Mouse, Screen
     if(path_tool_active = true){
         ; Snap to original position and click to complete the path
         MouseMove, initial_pos_x, initial_pos_y
         Click
         path_tool_active := false
         click_index := 0
+        initial_pos_x := 0
+        initial_pos_y := 0
     } else {
         SendInput, {RButton}
     }

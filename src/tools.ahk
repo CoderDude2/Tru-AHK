@@ -56,4 +56,8 @@ class tools{
 	save_file(){
 		PostMessage, 0x111, 57603 , , , ESPRIT
 	}
+
+	transformation_window(){
+		PostMessage, 0x111, 57634 , , , ESPRIT
+	}
 }
