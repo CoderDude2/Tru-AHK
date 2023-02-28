@@ -26,7 +26,7 @@ return
 
 ;========================== VARIABLES =========================================
 
-path_tool_active = false
+
 
 ;========================== HOT STRINGS =========================================
 :*:3-1::
@@ -109,12 +109,6 @@ XButton2::
 tools.line_tool()
 return
 
-+XButton2::
-tools.draw_path()
-path_tool_active := true
-; Store the first click
-return
-
 ^x::
 XButton1::
 tools.trim_tool()
@@ -177,31 +171,37 @@ Send X,90{Enter}
 BlockInput, Off
 return
 
+;; ========================= Auto-Complete Margins ===========================================
 
-margin_complete := False
-start_position := [0, 0]
+initial_pos_x := 0
+initial_pos_y := 0
+click_index := 0
+path_tool_active = false
 
-f16::
-if(margin_complete = False){
-    KeyWait LButton, D
-    MouseGetPos, posX, posY
-    start_position[0] := posX
-    start_position[1] := posY
-} else {
++XButton2::
+tools.draw_path()
+path_tool_active := true
+return
 
+LButton::
+if(path_tool_active = true){
+    click_index++
+    ; Store the coordinates of the first click
+    if(click_index = 1){
+        MouseGetPos, initial_pos_x, initial_pos_y
+    }
 }
-
-margin_complete := !margin_complete
+SendInput, {LButton}
 return
 
 RButton::
     if(path_tool_active = true){
-        ; Snap to original position
+        ; Snap to original position and click to complete the path
+        MouseMove, initial_pos_x, initial_pos_y
+        Click
         path_tool_active := false
+        click_index := 0
     } else {
-        SendInput, RButton
+        SendInput, {RButton}
     }
 return
-; If path drawing tool is active, right clicking will complete the path and deactivate the path tool.
-; When path tool is activated the start position of the first click will be stored.
-; When the user right clicks it will snap to the stored position, completing the path.
