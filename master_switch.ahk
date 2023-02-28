@@ -185,11 +185,6 @@ f18::
 tools.save_file()
 return
 
-; G6 Key
-f18::
-tools.save_file()
-return
-
 ;; ========================= Auto-Complete Margins ===========================================
 
 initial_pos_x := 0
