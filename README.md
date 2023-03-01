@@ -1,5 +1,4 @@
-# AutoHotkey_Automation
-A set of useful automation scripts for Esprit
+FOR EACH PERSON YOU MAY HAVE TO MODIFY X,90 OR X,0
 
-Must have AutoHotkey v1.1 installed.
-You can download it [here](https://www.autohotkey.com).
+YOU CAN DEL CLASS FOLDER AND REPLACE WITH SRC FOLDER
+
