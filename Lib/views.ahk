@@ -64,28 +64,24 @@ class Deg {
 	}
 
 	deg0() {
-		global current_value := 7
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
 		control, choose, 7, ComboBox1, ahk_class %deg_class%
 	}
 
 	deg90() {
-		global current_value := 16
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
 		control, choose, 16, ComboBox1, ahk_class %deg_class%
 	}
 
 	deg180() {
-		global current_value := 25
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
 		control, choose, 25, ComboBox1, ahk_class %deg_class%
 	}
 
 	deg270() {
-		global current_value := 34
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
 		control, choose, 34, ComboBox1, ahk_class %deg_class%

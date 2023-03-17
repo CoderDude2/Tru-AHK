@@ -14,11 +14,11 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-#singleinstance, forced
+#SingleInstance, forced
 
-#include %A_ScriptDir%\src\class.ahk
-#include %A_ScriptDir%\src\views.ahk
-#include %A_ScriptDir%\src\tools.ahk
+#Include %A_ScriptDir%\Lib\class.ahk
+#Include %A_ScriptDir%\Lib\views.ahk
+#Include %A_ScriptDir%\Lib\tools.ahk
 
 #IfWinExist ahk_exe DaouMessenger.exe
 #IfWinActive ahk_exe DaouMessenger.exe
@@ -27,14 +27,14 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 
-^F13::Pause
+^F13::
+Suspend, Toggle
 return
 
-;========================== VARIABLES =========================================
-
-
+;========================== VARIABLES ===========================================
 
 ;========================== HOT STRINGS =========================================
+
 :*:3-1::
 formatted_angle := (views.get_current_angle() - 7) * 10
 Send 3-1. ROUGH_ENDMILL_%formatted_angle%DEG
@@ -190,14 +190,21 @@ f18::
 tools.save_file()
 return
 
-;; ========================= Auto-Complete Margins ===========================================
+; ========================= Auto-Complete Margins ===========================================
 
 initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active = false
 
+~Escape::
+path_tool_active = false
+click_index := 0
+return
+
 +XButton2::
+click_index := 0
+path_tool_active = false
 tools.draw_path()
 path_tool_active := true
 return
@@ -226,4 +233,43 @@ RButton::
     } else {
         SendInput, {RButton}
     }
+return
+
+
+; Create a feature to check the part length when posting
+; WindowsForms10.BUTTON.app.0.7e40fc_r31_ad17 <-- this is the class of the 'Post' button
+; Advanced NC Code Output <-- Window title name for the ctrl+F9 popup
+; 3593 <-- Ctrl+F9 control code
+; ESPRIT NC 편집기 <-- NC Code editor title
+; WindowsForms10.Window.8.app.0.141b42a_r7_ad13 <-- this is the class of the code_box on the NC editor
+; ^l::
+; PostMessage, 0x111, 3593 , , , ESPRIT
+; WinWaitActive, Advanced NC Code Output
+; ControlClick, WindowsForms10.BUTTON.app.0.7e40fc_r31_ad17, Advanced NC Code Output
+; WinWaitActive, ESPRIT NC 편집기
+; ControlGet, editor_field, Hwnd, , WindowsForms10.Window.8.app.0.141b42a_r7_ad13, ESPRIT NC 편집기
+; SendMessage, 0x000D, 5, tester, editor_field, ESPRIT NC 편집기
+; MsgBox % tester
+; TO-DO:
+; Get the text inside the file and check for against the part length
+; return
+
+;; ========================= Auto-Populate Special Cases ===========================================
+
+; Title Regex to extract 5 numbers: #101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)
+^y::
+WinWaitActive ahk_exe esprit.exe
+WinGetTitle, esprit_title, A
+if(get_case_type(esprit_title) = "TLOC"){
+    FoundPos := RegExMatch(esprit_title, "O)#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", SubPat)
+    working_degree := SubPat.Value(1)
+    rotate_stl_by := SubPat.Value(2)
+    y_pos := SubPat.Value(3)
+    z_pos := SubPat.Value(4)
+    x_pos := SubPat.Value(5)
+
+    MsgBox, Move to degree %working_degree%, rotate the stl by %rotate_stl_by%, and transform to the position %x_pos%, %y_pos%, %z_pos%
+
+    tools.transformation_window()
+}
 return
