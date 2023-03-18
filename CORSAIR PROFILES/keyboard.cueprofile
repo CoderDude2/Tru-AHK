@@ -14,7 +14,7 @@
 			<tabsTransparencyEnabled>false</tabsTransparencyEnabled>
 			<tabsTransparency>0</tabsTransparency>
 			<isInitial>false</isInitial>
-			<exporterVersion>4.31.168</exporterVersion>
+			<exporterVersion>4.33.138</exporterVersion>
 			<properties size="dynamic">
 				<value0>
 					<key>Mouse</key>
@@ -683,7 +683,7 @@
 																													<cereal_class_version>200</cereal_class_version>
 																													<base>
 																														<cereal_class_version>400</cereal_class_version>
-																														<id>{a0309528-fbaf-4a73-bfdc-c81a5e57c7cf}</id>
+																														<id>{71d5cf09-4153-41a9-ad48-926d432902ef}</id>
 																														<name>Rainbow</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
@@ -769,7 +769,7 @@
 																												<id>2147483651</id>
 																												<data>
 																													<base>
-																														<id>{851271dd-b064-4359-8434-c5729a821911}</id>
+																														<id>{e474125d-d070-42f6-9ca7-b55e031ad7bb}</id>
 																														<name>Water Color</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
@@ -1028,7 +1028,7 @@
 																									<id>2147483653</id>
 																									<data>
 																										<base>
-																											<id>{f85bd2a4-8c2a-4a60-aa03-1f10f0d40934}</id>
+																											<id>{8b50ada9-cb44-4bb8-ac55-d5f0f615c0dc}</id>
 																											<name>Default</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1094,16 +1094,7 @@
 																	<key>0</key>
 																	<value size="dynamic">
 																		<value0>
-																			<polymorphic_id>1073741824</polymorphic_id>
-																			<ptr_wrapper>
-																				<valid>1</valid>
-																				<data>
-																					<base>
-																						<base/>
-																						<layers size="dynamic"/>
-																					</base>
-																				</data>
-																			</ptr_wrapper>
+																			<polymorphic_id>0</polymorphic_id>
 																		</value0>
 																	</value>
 																</value0>
@@ -1146,7 +1137,7 @@
 																									<id>2147483655</id>
 																									<data>
 																										<base>
-																											<id>{a1da7434-fe83-48ed-bec8-3b17740df189}</id>
+																											<id>{bd59585e-c2b9-4012-abd1-1f0f7c7425c6}</id>
 																											<name>Default</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1236,7 +1227,7 @@
 																									<id>2147483657</id>
 																									<data>
 																										<base>
-																											<id>{a9002ac4-7bf1-45e4-966b-0139bf4e29e6}</id>
+																											<id>{d0fb888c-cab2-4227-bb6a-037bb9518d2f}</id>
 																											<name>Rainbow Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1304,7 +1295,16 @@
 																	<key>0</key>
 																	<value size="dynamic">
 																		<value0>
-																			<polymorphic_id>0</polymorphic_id>
+																			<polymorphic_id>1073741824</polymorphic_id>
+																			<ptr_wrapper>
+																				<valid>1</valid>
+																				<data>
+																					<base>
+																						<base/>
+																						<layers size="dynamic"/>
+																					</base>
+																				</data>
+																			</ptr_wrapper>
 																		</value0>
 																	</value>
 																</value0>
@@ -1803,6 +1803,28 @@
 													</ptr_wrapper>
 												</value>
 											</value5>
+											<value6>
+												<key>
+													<capability>ExtendedZoneRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>6940</usbVid>
+														<usbPid>7076</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value6>
 										</properties>
 									</data>
 								</ptr_wrapper>
@@ -1845,11 +1867,11 @@
 															<base/>
 															<enabledIndicatorColor>
 																<nullopt>false</nullopt>
-																<data>#ff00ffff</data>
+																<data>#ffff0000</data>
 															</enabledIndicatorColor>
 															<disabledIndicatorColor>
 																<nullopt>false</nullopt>
-																<data>#ffff0000</data>
+																<data>#ffffffff</data>
 															</disabledIndicatorColor>
 														</data>
 													</ptr_wrapper>
@@ -1878,7 +1900,7 @@
 										<base/>
 										<disableAltTab>false</disableAltTab>
 										<disableAltF4>false</disableAltF4>
-										<disableWinKey>true</disableWinKey>
+										<disableWinKey>false</disableWinKey>
 										<disableShiftTab>false</disableShiftTab>
 										<disableEncryption>false</disableEncryption>
 										<disableTouchpad>false</disableTouchpad>
@@ -1979,6 +2001,49 @@
 													</ptr_wrapper>
 												</value>
 											</value1>
+											<value2>
+												<key>
+													<hidCaps>ExtendedZoneRgb</hidCaps>
+													<deviceLightingType>SpecificList</deviceLightingType>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<property>
+																<polymorphic_id>1073741824</polymorphic_id>
+																<ptr_wrapper>
+																	<valid>1</valid>
+																	<data>
+																		<base/>
+																		<channelProperties size="dynamic">
+																			<value0>
+																				<key>0</key>
+																				<value size="dynamic">
+																					<value0>
+																						<polymorphic_id>1073741824</polymorphic_id>
+																						<ptr_wrapper>
+																							<valid>1</valid>
+																							<data>
+																								<base>
+																									<base/>
+																									<layers size="dynamic"/>
+																								</base>
+																							</data>
+																						</ptr_wrapper>
+																					</value0>
+																				</value>
+																			</value0>
+																		</channelProperties>
+																	</data>
+																</ptr_wrapper>
+															</property>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value2>
 										</properties>
 									</data>
 								</ptr_wrapper>
@@ -2336,11 +2401,11 @@
 																		<value0>
 																			<cereal_class_version>400</cereal_class_version>
 																			<state>1</state>
-																			<color>#ff00ffff</color>
+																			<color>#ffff0000</color>
 																		</value0>
 																		<value1>
 																			<state>0</state>
-																			<color>#ffff0000</color>
+																			<color>#ffffffff</color>
 																		</value1>
 																	</value>
 																</value0>
@@ -2349,11 +2414,11 @@
 																	<value size="dynamic">
 																		<value0>
 																			<state>1</state>
-																			<color>#ff00ffff</color>
+																			<color>#ffff0000</color>
 																		</value0>
 																		<value1>
 																			<state>0</state>
-																			<color>#ffff0000</color>
+																			<color>#ffffffff</color>
 																		</value1>
 																	</value>
 																</value1>
@@ -2406,7 +2471,7 @@
 																<cereal_class_version>301</cereal_class_version>
 																<base>
 																	<name></name>
-																	<id>{bf30be66-2ad3-4c0e-8a27-291fd60f516a}</id>
+																	<id>{2c2f8186-4508-4af2-befd-3db8b166fa02}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2441,7 +2506,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{19c2e09c-455d-4d03-9fb2-f2868bcd72c7}</id>
+																	<id>{8a523b64-bded-4e9e-abb1-f6668e78e098}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2476,7 +2541,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{fd2c5d56-7cc2-4d43-bfb9-a4dbf630670c}</id>
+																	<id>{46f4c881-2ea9-4c7b-ae0b-c0aaf6c1d271}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2511,7 +2576,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{1d717c8b-6d08-4845-a776-9f0c25dde639}</id>
+																	<id>{7bb2345f-0cd3-4d43-a767-45565b7c4959}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2546,7 +2611,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{ed1091aa-7a9b-4d0c-a667-20b49ef67e66}</id>
+																	<id>{41b0a4e8-0835-4738-a2d7-1d573f6d819d}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2581,7 +2646,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{03c4a180-fee5-4457-913b-0b0a36231433}</id>
+																	<id>{f0a6d3b9-1e8b-474d-89a0-313f34a540d3}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2616,7 +2681,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{98671c26-c4e2-4c90-b5c5-f19d58908366}</id>
+																	<id>{45daec9e-23f8-4d46-8af7-47041b4190f0}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2651,7 +2716,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{f3622b73-d6c1-4765-bfec-2890f0944363}</id>
+																	<id>{4f03de7c-c925-43b7-85f1-f5aa27e50ed8}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2686,7 +2751,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{91988359-7b4c-487e-ae6d-b496517f055e}</id>
+																	<id>{1ce8da19-7e2b-4e9c-9b13-c88f123cb248}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2721,7 +2786,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{4d412ec8-fdcd-43d0-8b9a-3d1d401731a6}</id>
+																	<id>{717f18de-abc7-48c5-907b-cd9008e0b434}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2756,7 +2821,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{38109839-48f1-4f6a-88df-65d4767235fa}</id>
+																	<id>{6326cf05-184f-4659-8c13-84dffabb835d}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2791,7 +2856,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{843cbfb1-9c4f-4898-af5e-e9864a08cdfc}</id>
+																	<id>{08127377-3a12-4ab1-9ac5-4d9d5a72bd84}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2826,7 +2891,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{46dddba9-4643-4e73-8a6b-325beca62eb0}</id>
+																	<id>{77bd85fd-fc7c-48a2-8ded-95ade7ee1745}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2861,7 +2926,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{a1af837d-51ee-4543-a83d-ea83df24db7c}</id>
+																	<id>{5b50621d-dcbe-46e8-8ac1-b2361fde3fa4}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2896,7 +2961,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{7976826f-cd5c-44f9-af59-6b653163c4f3}</id>
+																	<id>{3c6babf5-a5b6-46da-8061-93817e198b70}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2931,7 +2996,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{7587acb6-9848-481b-bfa6-d77b7e18aaf7}</id>
+																	<id>{f92974b0-d361-4790-8a45-87c5551db725}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2966,7 +3031,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{9da6ccdb-5ba9-4cf1-acb1-ee2aea31e2d8}</id>
+																	<id>{edc16552-beea-49b1-8504-bd9eb4c02789}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3001,7 +3066,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{47b63c29-0ee2-4b5e-a0c1-872591ec096b}</id>
+																	<id>{e7f49847-ae13-445f-80e6-e3a896863afc}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3036,7 +3101,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{d616522c-5e43-4b29-b39a-7c0280e67216}</id>
+																	<id>{934d45b9-26a1-4913-b1de-33ef41a964b0}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3071,7 +3136,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{15087a46-4b17-4434-882a-b83e53339ca2}</id>
+																	<id>{6801aa5d-52ce-40ae-88a1-a89b6583036b}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3106,7 +3171,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{ec86df98-c9f7-4855-b967-55d45c441721}</id>
+																	<id>{79022df9-9508-4fd4-a43e-b4c41ef89d1c}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3489,7 +3554,7 @@
 																									<id>2147483701</id>
 																									<data>
 																										<base>
-																											<id>{20a21b55-bb2c-4eb9-939b-424601c74d9e}</id>
+																											<id>{7070eeb5-7482-40dc-b58d-48c093a70f2a}</id>
 																											<name>Static Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -3575,7 +3640,7 @@
 																									<id>2147483703</id>
 																									<data>
 																										<base>
-																											<id>{b4f8ee98-f8fc-4911-b1bc-d9485118eeb5}</id>
+																											<id>{ccb13aa9-6f24-402e-adc8-d82bf6179654}</id>
 																											<name>Static Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -3661,7 +3726,7 @@
 																									<id>2147483705</id>
 																									<data>
 																										<base>
-																											<id>{f868e216-1942-42f9-b97b-5cb4ef50aa8f}</id>
+																											<id>{44a49859-82a7-47bb-84c7-2653116091a5}</id>
 																											<name>Blink</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -4799,7 +4864,7 @@
 																									<id>2147483713</id>
 																									<data>
 																										<base>
-																											<id>{73aad757-1dd7-46db-b2da-5c7da7849859}</id>
+																											<id>{a4ff7ac3-56f2-40b0-9b48-962c5abf0ef6}</id>
 																											<name>Static Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -5075,7 +5140,7 @@
 												<data>
 													<cereal_class_version>300</cereal_class_version>
 													<base>
-														<id>{769188c8-d7b9-4202-bc88-a2e57f626b85}</id>
+														<id>{3ed814e2-24c9-4ec6-80c2-23d540672233}</id>
 														<name></name>
 														<keys size="dynamic"/>
 														<enabled>true</enabled>
@@ -5192,9 +5257,10 @@
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
-										<cereal_class_version>400</cereal_class_version>
+										<cereal_class_version>401</cereal_class_version>
 										<base/>
 										<currentEffectId>{00000000-0000-0000-0000-000000000000}</currentEffectId>
+										<currentLayoutId>{00000000-0000-0000-0000-000000000000}</currentLayoutId>
 									</data>
 								</ptr_wrapper>
 							</value6>
@@ -5915,7 +5981,47 @@
 									<valid>1</valid>
 									<data>
 										<base/>
-										<properties size="dynamic"/>
+										<properties size="dynamic">
+											<value0>
+												<key>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>6940</usbVid>
+														<usbPid>1033</usbPid>
+													</modelId>
+													<hidCaps>DramRgb</hidCaps>
+													<deviceLightingType>Default</deviceLightingType>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<channelProperties size="dynamic">
+																<value0>
+																	<key>0</key>
+																	<value size="dynamic">
+																		<value0>
+																			<polymorphic_id>1073741824</polymorphic_id>
+																			<ptr_wrapper>
+																				<valid>1</valid>
+																				<data>
+																					<base>
+																						<base/>
+																						<layers size="dynamic"/>
+																					</base>
+																				</data>
+																			</ptr_wrapper>
+																		</value0>
+																	</value>
+																</value0>
+															</channelProperties>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+										</properties>
 									</data>
 								</ptr_wrapper>
 							</value1>

@@ -6,11 +6,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 class views {
 	update_angle(angle_index) {
 		WinGetClass, deg_class, A
-		Control, Choose, %angle_index%, ComboBox1, ahk_class %deg_class%
+		Control, Choose, %angle_index%, ComboBox2, ahk_class %deg_class%
 	}
 
 	get_current_angle() {
-		SendMessage, 0x0147, 0, 0, ComboBox1, ESPRIT ; Uses CB_GETCURSEL command to retrieve the current selected value in ComboBox1. This outputs to the ErrorLevel.
+		SendMessage, 0x0147, 0, 0, ComboBox2, ESPRIT ; Uses CB_GETCURSEL command to retrieve the current selected value in ComboBox1. This outputs to the ErrorLevel.
 		current_angle := ErrorLevel<<32>>32 ; Convert UInt to Int to have -1 if there is no item selected.
 		current_angle += 1
 		return current_angle
@@ -54,40 +54,36 @@ class Deg {
 	FACE() {
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
-		control, choose, 5, ComboBox1, ahk_class %deg_class%
+		control, choose, 5, ComboBox2, ahk_class %deg_class%
 	}
 
 	REAR() {
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
-		control, choose, 6, ComboBox1, ahk_class %deg_class%
+		control, choose, 6, ComboBox2, ahk_class %deg_class%
 	}
 
 	deg0() {
-		global current_value := 7
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
-		control, choose, 7, ComboBox1, ahk_class %deg_class%
+		control, choose, 7, ComboBox2, ahk_class %deg_class%
 	}
 
 	deg90() {
-		global current_value := 16
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
-		control, choose, 16, ComboBox1, ahk_class %deg_class%
+		control, choose, 16, ComboBox2, ahk_class %deg_class%
 	}
 
 	deg180() {
-		global current_value := 25
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
-		control, choose, 25, ComboBox1, ahk_class %deg_class%
+		control, choose, 25, ComboBox2, ahk_class %deg_class%
 	}
 
 	deg270() {
-		global current_value := 34
 		WinActivate, ESPRIT
 		wingetclass, deg_class, A
-		control, choose, 34, ComboBox1, ahk_class %deg_class%
+		control, choose, 34, ComboBox2, ahk_class %deg_class%
 	}
 }

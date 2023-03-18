@@ -1,0 +1,4 @@
+make sure combobox is set correctly for each computer on Main esprit software menu
+
+-master_switch.ahk
+-view.ahk
