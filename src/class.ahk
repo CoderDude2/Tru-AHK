@@ -32,15 +32,15 @@ class border_icon {
 	}
 
 	center_border_3() {
-		winactivate, ESPRIT
+		WinActivate, ESPRIT
 		PostMessage, 0x111, 3130,,, ESPRIT
 
-		winwaitactive, 보스 돌출/잘라내기
-		controlsettext, Edit1, 6, ahk_class #32770
-		sleep, 100
-		control, CHECK,, Button2, ahk_class #32770
-		SLEEP, 100
-		control, unCHECK,, Button2, ahk_class #32770
+		WinWaitActive, 보스 돌출/잘라내기
+		ControlSetText, Edit1, 6, ahk_class #32770
+		Sleep, 100
+		Control, CHECK,, Button2, ahk_class #32770
+		Sleep, 100
+		Control, unCHECK,, Button2, ahk_class #32770
 	}
 }
 
@@ -55,7 +55,7 @@ class list_search {
 			break
 		}
 
-		control, ChooseString, %match%, %box%, %title%
+		Control, ChooseString, %match%, %box%, %title%
 		return
 	}
 	;; ===================================================================
