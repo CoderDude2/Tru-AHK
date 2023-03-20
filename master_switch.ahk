@@ -14,11 +14,14 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-#singleinstance, forced
+#SingleInstance, forced
 
-#include %A_ScriptDir%\src\class.ahk
-#include %A_ScriptDir%\src\views.ahk
-#include %A_ScriptDir%\src\tools.ahk
+#include %A_ScriptDir%\Lib\class.ahk
+#include %A_ScriptDir%\Lib\views.ahk
+#include %A_ScriptDir%\Lib\tools.ahk
+
+^F13::Suspend
+return
 
 #IfWinExist ahk_exe DaouMessenger.exe
 #IfWinActive ahk_exe DaouMessenger.exe
@@ -26,9 +29,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
-
-^F13::Pause
-return
 
 ;========================== VARIABLES =========================================
 
@@ -197,7 +197,12 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active = false
 
+~Escape::
+click_index := 0
+return
+
 +XButton2::
+click_index := 0
 tools.draw_path()
 path_tool_active := true
 return
