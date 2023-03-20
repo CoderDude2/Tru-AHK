@@ -13,11 +13,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinActive ahk_exe esprit.exe
 
 
-^f13::
-Suspend
+^F13::Pause
 return
 
-;;; HOTSTRING
+ ;;; HOTSTRING
 :*:3-1::
 formatted_angle := (views.get_current_angle() - 7) * 10
 Send 3-1. ROUGH_ENDMILL_%formatted_angle%DEG
@@ -35,28 +34,25 @@ return
 
 ;======================     SELECTING DEGREES        =====================
 f13::
-Deg.deg0()
-return
-
+DEG.deg0()
+Return
 f14::
-Deg.deg90()
+DEG.deg90()
 return
-
 f15::
-Deg.deg180()
+DEG.DEG180()
 return
-
 f16::
-Deg.deg270()
+DEG.DEG270()
 return
-
 f17::
 DEG.FACE()
 return
-
 f18::
 DEG.REAR()
 return
+
+
 
 !WheelDown::
 views.increment_10_degrees()
@@ -77,13 +73,17 @@ return
 ;; ========================= WIRE FRAME VIEW ==================================
 XButton2:: ;; TOP SIDE MOUSE BUTTON
 tools.draw_path()
+
 return
 
 XButton1:: ;; BOTTOM SIDE MOUSE BUTTON
 tools.trim_tool()
 return
 
+
 ;; ========================= SELECT TOOLS ==================================
+
+
 !f13::  ;; first line tool set to TAB
 tools.line_tool()
 return
@@ -97,6 +97,8 @@ tools.three_point_tool()
 return
 
 ;;; ==========================  borders ==========================================
+
+
 f19::
 border_icon.flatdoubleside()
 return
@@ -110,40 +112,52 @@ border_icon.center_border_3()
 return
 
 ;; ========================= Macros ===========================================
+
+
 f21::
-SendInput, X,90
-SendInput, {ENTER}
-return
+SENDINPUT, X,90
+SENDINPUT, {ENTER}
+RETURN
+
 
 f22::
 BlockInput, On
-Sleep, 20
+;list_search.layer("도형", "combobox5", "ESPRIT")  ;;SET LAYER TO LINES ONLY, SO YOU CAN DRAW LINES ON TOP OF MODELS
+;SLEEP, 50
+;PostMessage, 0x111, 6384 , , , ESPRIT ;; OPTION "INT"  (BOTTOM RIGHT CORNER)  , THIS ALLOWS LINES TO BE DRAWN ON X/Y AXIS
+sleep, 20
 tools.line_tool()
-Click, Left
-Send, 25{Enter}0{Enter}{Esc}
+Click Left
+Send 25{Enter}0{Enter}{Esc}
 Click Left 2
 Sleep, 400
 border_icon.flatdoubleside()
-SendInput, {enter}
-Sleep, 50
+sendinput, {enter}
+SLEEP, 50
+;list_search.layer("모두", "combobox5", "ESPRIT") ;; SET LAYER BACK TO EVERYTHING
+;PostMessage, 0x111, 6384 , , , ESPRIT ;; TURN OFF "INT" SETTING
+
 BlockInput, Off
 return
 
 !F20::
 SEND, ^{F9}
-return
+RETURN
 
 ;; ========================= END PROCESS / RELOAD ==============================
+
 !F18::
 Reload
 return
 
+
 !F19:: ;; this close will prevent software from slowing down over time
-Loop {
-    Process, Exist, esprit.exe
-    If !ErrorLevel
-        Break
-    Process, Close, esprit.exe
+Loop
+{
+Process, Exist, esprit.exe
+If !ErrorLevel
+    Break
+Process, Close, esprit.exe
 }
 return
 
