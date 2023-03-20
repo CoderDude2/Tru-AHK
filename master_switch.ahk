@@ -235,25 +235,6 @@ RButton::
     }
 return
 
-
-; Create a feature to check the part length when posting
-; WindowsForms10.BUTTON.app.0.7e40fc_r31_ad17 <-- this is the class of the 'Post' button
-; Advanced NC Code Output <-- Window title name for the ctrl+F9 popup
-; 3593 <-- Ctrl+F9 control code
-; ESPRIT NC 편집기 <-- NC Code editor title
-; WindowsForms10.Window.8.app.0.141b42a_r7_ad13 <-- this is the class of the code_box on the NC editor
-; ^l::
-; PostMessage, 0x111, 3593 , , , ESPRIT
-; WinWaitActive, Advanced NC Code Output
-; ControlClick, WindowsForms10.BUTTON.app.0.7e40fc_r31_ad17, Advanced NC Code Output
-; WinWaitActive, ESPRIT NC 편집기
-; ControlGet, editor_field, Hwnd, , WindowsForms10.Window.8.app.0.141b42a_r7_ad13, ESPRIT NC 편집기
-; SendMessage, 0x000D, 5, tester, editor_field, ESPRIT NC 편집기
-; MsgBox % tester
-; TO-DO:
-; Get the text inside the file and check for against the part length
-; return
-
 ;; ========================= Auto-Populate Special Cases ===========================================
 
 ; Title Regex to extract 5 numbers: #101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)
