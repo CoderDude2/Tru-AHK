@@ -254,3 +254,32 @@ if(get_case_type(esprit_title) = "TLOC"){
     tools.transformation_window()
 }
 return
+
+;; ========================= Manual Front Turning ===========================================
+
+; This function is mainly for when the Front Turning is incorrectly generated.
+; It will move the selected line on the x, y, and z by the specified value.
+transform_line(x := 0, y := 0, z := 0){
+    WinActivate, ESPRIT
+    tools.transformation_window()
+    WinWaitActive, ahk_class #32770
+    Control, Check, , Button7, ahk_class #32770
+    Sleep 100
+    Control, choose, 5, ComboBox1, ahk_class #32770
+    ControlSetText, Edit2, %x%, ahk_class #32770
+    ControlSetText, Edit3, %y%, ahk_class #32770
+    ControlSetText, Edit4, %z%, ahk_class #32770
+    Send {Enter}
+}
+
++1::
+transform_line(0.1, 1.25)
+return
+
++2::
+transform_line(0.1, 1.5)
+return
+
++3::
+transform_line(0.1, 0.25)
+return
