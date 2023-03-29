@@ -16,12 +16,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #SingleInstance, forced
 
-#include %A_ScriptDir%\Lib\class.ahk
-#include %A_ScriptDir%\Lib\views.ahk
-#include %A_ScriptDir%\Lib\tools.ahk
-
-^F13::Suspend
-return
+#Include %A_ScriptDir%\Lib\class.ahk
+#Include %A_ScriptDir%\Lib\views.ahk
+#Include %A_ScriptDir%\Lib\tools.ahk
+#Include %A_ScriptDir%\Lib\transformations.ahk
 
 #IfWinExist ahk_exe DaouMessenger.exe
 #IfWinActive ahk_exe DaouMessenger.exe
@@ -30,11 +28,14 @@ return
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 
-;========================== VARIABLES =========================================
+^F13::
+Suspend, Toggle
+return
 
-
+;========================== VARIABLES ===========================================
 
 ;========================== HOT STRINGS =========================================
+
 :*:3-1::
 formatted_angle := (views.get_current_angle() - 7) * 10
 Send 3-1. ROUGH_ENDMILL_%formatted_angle%DEG
@@ -190,7 +191,7 @@ f18::
 tools.save_file()
 return
 
-;; ========================= Auto-Complete Margins ===========================================
+; ========================= Auto-Complete Margins ===========================================
 
 initial_pos_x := 0
 initial_pos_y := 0
@@ -198,11 +199,13 @@ click_index := 0
 path_tool_active = false
 
 ~Escape::
+path_tool_active = false
 click_index := 0
 return
 
 +XButton2::
 click_index := 0
+path_tool_active = false
 tools.draw_path()
 path_tool_active := true
 return
@@ -231,4 +234,42 @@ RButton::
     } else {
         SendInput, {RButton}
     }
+return
+
+;; ========================= Auto-Populate Special Cases ===========================================
+
+; Title Regex to extract 5 numbers: #101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)
+^y::
+WinWaitActive ahk_exe esprit.exe
+WinGetTitle, esprit_title, A
+if(get_case_type(esprit_title) = "TLOC"){
+    FoundPos := RegExMatch(esprit_title, "O)#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", SubPat)
+    working_degree := SubPat.Value(1)
+    rotate_stl_by := SubPat.Value(2)
+    y_pos := SubPat.Value(3)
+    z_pos := SubPat.Value(4)
+    x_pos := SubPat.Value(5)
+
+    MsgBox, Move to degree %working_degree%, rotate the stl by %rotate_stl_by%, and transform to the position %x_pos%, %y_pos%, %z_pos%
+
+    tools.transformation_window()
+}
+return
+
+;; ========================= Manual Front Turning ===========================================
+
++1::
+transform_selection(0.1, 1.25)
+return
+
++2::
+transform_selection(0.1, 1.5)
+return
+
++3::
+transform_selection(0.1, 0.25)
+return
+
++p::
+scale_selection(2)
 return
