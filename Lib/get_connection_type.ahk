@@ -4,6 +4,6 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 get_connection_type(title){
-    FoundPos := RegExMatch(title, "O)\((\w+)-\w+-(\w+),", SubPat)
-    return SubPat.Value(1)
+    FoundPos := RegExMatch(title, "O)\(([A-Za-z0-9;-]+),", SubPat)
+    return StrSplit(SubPat.Value(1), "-")[1]
 }
