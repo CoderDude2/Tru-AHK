@@ -269,7 +269,3 @@ return
 +3::
 transform_selection(0.1, 0.25)
 return
-
-+p::
-scale_selection(2)
-return
