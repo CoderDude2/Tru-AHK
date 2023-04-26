@@ -1,4 +1,4 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -15,6 +15,10 @@ class tools{
 
 	line_tool(){
 		PostMessage, 0x111, 3018 , , , ESPRIT
+	}
+
+	line_tool_2(){
+		PostMessage, 0x111, 3019 , , , ESPRIT
 	}
 
 	trim_tool(){
