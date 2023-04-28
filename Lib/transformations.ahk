@@ -3,16 +3,18 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-transform_selection(x := 0, y := 0, z := 0){
+translate_selection(x := 0, y := 0, z := 0){
     WinActivate, ESPRIT
     tools.transformation_window()
     WinWaitActive, ahk_class #32770
-    Control, Check, , Button7, ahk_class #32770
-    Sleep 100
+
     Control, Choose, 5, ComboBox1, ahk_class #32770
+    Control, Check, , Button7, ahk_class #32770
+
     ControlSetText, Edit2, %x%, ahk_class #32770
     ControlSetText, Edit3, %y%, ahk_class #32770
     ControlSetText, Edit4, %z%, ahk_class #32770
+
     Send {Enter}
 }
 

@@ -1,15 +1,4 @@
-﻿; On the isaac branch, I have a few differences with how the keyboard is layed out
-; The keys G1-G6 have been remapped to F13-F18
-; Win-Left is Delete
-; CapsLock is Enter
-; All other keys have been returned to their original state
-;
-; My goal is to have the autohotkey script manage context, rather than a keyboard profile.
-; The reason being is for ease of updates.
-; If we change the keyboard layout with a keyboard profile; we will have to go to each computer and re-import the respective keyboard profiles.
-; If managed by the scripts themselves, there's no need for an extra step, and updates will be more seamless.
-
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -21,16 +10,16 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Include %A_ScriptDir%\Lib\tools.ahk
 #Include %A_ScriptDir%\Lib\transformations.ahk
 
-#IfWinExist ahk_exe DaouMessenger.exe
-#IfWinActive ahk_exe DaouMessenger.exe
-:*:$mf::I can take more files{!}
-
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 
 ^F13::
-Suspend, Toggle
+Pause
 return
+
+;========================== REMAPPINGS ===========================================
+Space::Enter
+w::Delete
 
 ;========================== VARIABLES ===========================================
 
@@ -52,19 +41,19 @@ Send 3-3. ROUGH_ENDMILL_%formatted_angle%DEG
 return
 
 ;========================== SELECTING DEGREES ===================================
-q::
+a::
 Deg.deg0()
 return
 
-w::
+s::
 Deg.deg90()
 return
 
-e::
+d::
 Deg.deg180()
 return
 
-r::
+f::
 Deg.deg270()
 return
 
@@ -94,14 +83,12 @@ return
 ; ========================== WIRE FRAME VIEW ====================================
 wireframe_is_active := false
 
-!a::
-a::
+f14::
 tools.solid_view()
 wireframe_is_active := false
 return
 
-!s::
-s::
+f19::
 tools.wireframe_view()
 wireframe_is_active := true
 return
@@ -116,41 +103,20 @@ return
 tools.circle_tool()
 return
 
-XButton2::
-tools.line_tool()
-return
-
-^x::
 XButton1::
 tools.trim_tool()
-return
-
-+XButton1::
-tools.three_point_tool()
 return
 
 ^e::
 tools.extrude_tool()
 return
 
-^+3::
-tools.three_point_tool()
-return
-
-Space::
-tools.toggle_simulation()
+CapsLock::
+tools.line_tool()
 return
 
 +Space::
-tools.stop_simulation()
-return
-
-f13::
-tools.generate_path()
-return
-
-f14::
-tools.swap_path()
+tools.toggle_simulation()
 return
 
 ; ========================== Borders ==========================================
@@ -162,12 +128,15 @@ b::
 border_icon.slant_circle()
 return
 
+r::
+border_icon.center_border_3()
+return
+
 ;; ========================= Macros ===========================================
 
-; G3 Key
 ; Draw a straight line, 20 mm long, and extrude it
 ; Useful for quickly creating limitations when all you need is a straight line
-f15::
+e::
 BlockInput, On
 tools.line_tool()
 Click, Left
@@ -199,13 +168,13 @@ click_index := 0
 path_tool_active = false
 
 ~Escape::
+tools.stop_simulation()
 path_tool_active = false
 click_index := 0
 return
 
-+XButton2::
+XButton2::
 click_index := 0
-path_tool_active = false
 tools.draw_path()
 path_tool_active := true
 return
@@ -237,8 +206,6 @@ RButton::
 return
 
 ;; ========================= Auto-Populate Special Cases ===========================================
-
-; Title Regex to extract 5 numbers: #101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)
 ^y::
 WinWaitActive ahk_exe esprit.exe
 WinGetTitle, esprit_title, A
@@ -250,22 +217,43 @@ if(get_case_type(esprit_title) = "TLOC"){
     z_pos := SubPat.Value(4)
     x_pos := SubPat.Value(5)
 
-    MsgBox, Move to degree %working_degree%, rotate the stl by %rotate_stl_by%, and transform to the position %x_pos%, %y_pos%, %z_pos%
+    views.update_angle_deg(working_degree)
+    Sleep 100
+    rotate_selection(rotate_stl_by)
+    Sleep 100
+    translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
+    Sleep 100
+    rotate_selection(Mod(working_degree, 10), True)
+} else if(get_case_type(esprit_title) = "AOT"){
+    FoundPos := RegExMatch(esprit_title, "O)#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", SubPat)
+    working_degree := SubPat.Value(1)
+    rotate_stl_by := SubPat.Value(2)
+    y_pos := SubPat.Value(3)
+    z_pos := SubPat.Value(4)
+    x_pos := SubPat.Value(5)
 
-    tools.transformation_window()
+    views.update_angle_deg(working_degree)
+    Sleep 100
+    rotate_selection(rotate_stl_by)
+    Sleep 100
+    translate_selection(x_pos+20, -1 * y_pos, -1 * z_pos)
+    Sleep 100
+    rotate_selection(Mod(working_degree, 10), True)
 }
 return
 
-;; ========================= Manual Front Turning ===========================================
+;; ========================= END PROCESS / RELOAD ==============================
 
-+1::
-transform_selection(0.1, 1.25)
+f13::
+Reload
 return
 
-+2::
-transform_selection(0.1, 1.5)
-return
-
-+3::
-transform_selection(0.1, 0.25)
+f12:: ;; this close will prevent software from slowing down over time
+Loop
+{
+Process, Exist, esprit.exe
+If !ErrorLevel
+    Break
+Process, Close, esprit.exe
+}
 return

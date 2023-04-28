@@ -60,4 +60,16 @@ class tools{
 	transformation_window(){
 		PostMessage, 0x111, 57634 , , , ESPRIT
 	}
+
+	unsuppress_operation(){
+		PostMessage, 0x111, 32792 , , SysTreeView321, ESPRIT
+	}
+
+	suppress_operation(){
+		PostMessage, 0x111, 32770 , , SysTreeView321, ESPRIT
+	}
+
+	rebuild_operation(){
+		PostMessage, 0x111, 32768 , , SysTreeView321, ESPRIT
+	}
 }
