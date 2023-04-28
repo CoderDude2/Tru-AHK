@@ -4,10 +4,10 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #singleinstance, force
 
-#include %A_ScriptDir%\src\class.ahk
-#include %A_ScriptDir%\src\views.ahk
-#include %A_ScriptDir%\src\tools.ahk
-#include %A_ScriptDir%\src\gui.ahk
+#include %A_ScriptDir%\Lib\class.ahk
+#include %A_ScriptDir%\Lib\views.ahk
+#include %A_ScriptDir%\Lib\tools.ahk
+#include %A_ScriptDir%\Lib\gui.ahk
 
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
