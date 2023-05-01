@@ -248,6 +248,10 @@ f13::
 Reload
 return
 
+f4::
+Send, ^{F9}
+return
+
 f12:: ;; this close will prevent software from slowing down over time
 Loop
 {
