@@ -4,8 +4,8 @@
 		<cereal_class_version>302</cereal_class_version>
 		<profile>
 			<cereal_class_version>317</cereal_class_version>
-			<name>Esprit</name>
-			<id>{15326e02-cdda-4839-9c73-5acc66d85d1c}</id>
+			<name>ESPRIT</name>
+			<id>{b54c9a73-e2c2-406c-a62f-0b374c928ca5}</id>
 			<iconUrl></iconUrl>
 			<iconColor>#00000000</iconColor>
 			<linkedProgramsPaths size="dynamic">
@@ -16,7 +16,7 @@
 			<tabsTransparencyEnabled>false</tabsTransparencyEnabled>
 			<tabsTransparency>0</tabsTransparency>
 			<isInitial>false</isInitial>
-			<exporterVersion>4.32.129</exporterVersion>
+			<exporterVersion>4.33.138</exporterVersion>
 			<properties size="dynamic">
 				<value0>
 					<key>Mouse</key>
@@ -200,7 +200,7 @@
 							</value0>
 							<value1>
 								<polymorphic_id>2147483650</polymorphic_id>
-								<polymorphic_name>HardwareMetaProperty::Proxy</polymorphic_name>
+								<polymorphic_name>BasicLightingsProperty::Proxy</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -210,6 +210,29 @@
 											<value0>
 												<key>
 													<cereal_class_version>301</cereal_class_version>
+													<capability>StandardRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<cereal_class_version>300</cereal_class_version>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+											<value1>
+												<key>
 													<capability>DramRgb</capability>
 													<deviceId></deviceId>
 													<modelId>
@@ -222,16 +245,116 @@
 													<ptr_wrapper>
 														<valid>1</valid>
 														<data>
-															<cereal_class_version>301</cereal_class_version>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
 														</data>
 													</ptr_wrapper>
 												</value>
-											</value0>
-											<value1>
+											</value1>
+											<value2>
+												<key>
+													<capability>StandardSingleColor</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value2>
+											<value3>
+												<key>
+													<capability>ZoneRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value3>
+											<value4>
+												<key>
+													<capability>RestrictedWireless</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value4>
+											<value5>
+												<key>
+													<capability>DramSingleColor</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value5>
+										</properties>
+									</data>
+								</ptr_wrapper>
+							</value1>
+							<value2>
+								<polymorphic_id>2147483651</polymorphic_id>
+								<polymorphic_name>HardwareMetaProperty::Proxy</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>301</cereal_class_version>
+										<base/>
+										<properties size="dynamic">
+											<value0>
 												<key>
 													<capability>StandardRgb</capability>
 													<deviceId></deviceId>
@@ -245,9 +368,32 @@
 													<ptr_wrapper>
 														<valid>1</valid>
 														<data>
+															<cereal_class_version>301</cereal_class_version>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+											<value1>
+												<key>
+													<capability>DramRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -268,8 +414,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -290,8 +436,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -312,8 +458,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -334,8 +480,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -356,8 +502,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -378,8 +524,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -400,8 +546,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -422,8 +568,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -444,8 +590,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -454,9 +600,9 @@
 										</properties>
 									</data>
 								</ptr_wrapper>
-							</value1>
-							<value2>
-								<polymorphic_id>2147483651</polymorphic_id>
+							</value2>
+							<value3>
+								<polymorphic_id>2147483652</polymorphic_id>
 								<polymorphic_name>AdvancedLightingsProperty::Proxy</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -494,152 +640,6 @@
 													</ptr_wrapper>
 												</value>
 											</value1>
-										</properties>
-									</data>
-								</ptr_wrapper>
-							</value2>
-							<value3>
-								<polymorphic_id>2147483652</polymorphic_id>
-								<polymorphic_name>BasicLightingsProperty::Proxy</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>301</cereal_class_version>
-										<base/>
-										<properties size="dynamic">
-											<value0>
-												<key>
-													<capability>DramRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<cereal_class_version>300</cereal_class_version>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-											<value1>
-												<key>
-													<capability>StandardRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value1>
-											<value2>
-												<key>
-													<capability>StandardSingleColor</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value2>
-											<value3>
-												<key>
-													<capability>ZoneRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value3>
-											<value4>
-												<key>
-													<capability>RestrictedWireless</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value4>
-											<value5>
-												<key>
-													<capability>DramSingleColor</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value5>
 										</properties>
 									</data>
 								</ptr_wrapper>
@@ -685,7 +685,7 @@
 												<key>
 													<cereal_class_version>300</cereal_class_version>
 													<hidCaps>StandardRgb</hidCaps>
-													<deviceLightingType>Standard</deviceLightingType>
+													<deviceLightingType>Limited</deviceLightingType>
 												</key>
 												<value>
 													<polymorphic_id>1073741824</polymorphic_id>
@@ -721,8 +721,8 @@
 																													<cereal_class_version>200</cereal_class_version>
 																													<base>
 																														<cereal_class_version>400</cereal_class_version>
-																														<id>{9091308f-3e86-4eae-aee4-d32a83fe3e1b}</id>
-																														<name>Rainbow</name>
+																														<id>{4d307f8f-9cc1-419e-996a-2a73fdb78d67}</id>
+																														<name>Water Color</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
 																														<executionHints>
@@ -738,7 +738,7 @@
 																													</base>
 																													<lighting>
 																														<polymorphic_id>2147483657</polymorphic_id>
-																														<polymorphic_name>RainbowLighting</polymorphic_name>
+																														<polymorphic_name>WaterColorLighting</polymorphic_name>
 																														<ptr_wrapper>
 																															<id>2147483650</id>
 																															<data>
@@ -747,10 +747,16 @@
 																																	<cereal_class_version>300</cereal_class_version>
 																																	<name></name>
 																																	<id>{00000000-0000-0000-0000-000000000000}</id>
-																																	<duration>16800</duration>
+																																	<duration>1000</duration>
 																																	<brightness>10</brightness>
 																																</base>
+																																<isRandom>true</isRandom>
+																																<colors>
+																																	<first>16711680</first>
+																																	<second>255</second>
+																																</colors>
 																																<speed>2</speed>
+																																<background>16777215</background>
 																															</data>
 																														</ptr_wrapper>
 																													</lighting>
@@ -775,7 +781,7 @@
 											<value1>
 												<key>
 													<hidCaps>StandardRgb</hidCaps>
-													<deviceLightingType>Limited</deviceLightingType>
+													<deviceLightingType>Standard</deviceLightingType>
 												</key>
 												<value>
 													<polymorphic_id>1073741824</polymorphic_id>
@@ -807,8 +813,8 @@
 																												<id>2147483651</id>
 																												<data>
 																													<base>
-																														<id>{b369617b-7a40-418a-9da9-961656d91a16}</id>
-																														<name>Water Color</name>
+																														<id>{f5e30212-ca63-45dc-b354-bef7e5f05a61}</id>
+																														<name>Rainbow</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
 																														<executionHints>
@@ -823,7 +829,7 @@
 																													</base>
 																													<lighting>
 																														<polymorphic_id>2147483658</polymorphic_id>
-																														<polymorphic_name>WaterColorLighting</polymorphic_name>
+																														<polymorphic_name>RainbowLighting</polymorphic_name>
 																														<ptr_wrapper>
 																															<id>2147483652</id>
 																															<data>
@@ -831,16 +837,10 @@
 																																<base>
 																																	<name></name>
 																																	<id>{00000000-0000-0000-0000-000000000000}</id>
-																																	<duration>1000</duration>
+																																	<duration>16800</duration>
 																																	<brightness>10</brightness>
 																																</base>
-																																<isRandom>true</isRandom>
-																																<colors>
-																																	<first>16711680</first>
-																																	<second>255</second>
-																																</colors>
 																																<speed>2</speed>
-																																<background>16777215</background>
 																															</data>
 																														</ptr_wrapper>
 																													</lighting>
@@ -880,31 +880,6 @@
 							</value7>
 							<value8>
 								<polymorphic_id>2147483660</polymorphic_id>
-								<polymorphic_name>SystemPointerProperty</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>200</cereal_class_version>
-										<base/>
-										<enhancePointerPrecision>true</enhancePointerPrecision>
-										<pointerMotionSpeed>12</pointerMotionSpeed>
-									</data>
-								</ptr_wrapper>
-							</value8>
-							<value9>
-								<polymorphic_id>2147483661</polymorphic_id>
-								<polymorphic_name>HardwareActionsProperty::Proxy</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>302</cereal_class_version>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value9>
-							<value10>
-								<polymorphic_id>2147483662</polymorphic_id>
 								<polymorphic_name>DPIProperty::Proxy</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -914,9 +889,9 @@
 										<properties size="dynamic"/>
 									</data>
 								</ptr_wrapper>
-							</value10>
-							<value11>
-								<polymorphic_id>2147483663</polymorphic_id>
+							</value8>
+							<value9>
+								<polymorphic_id>2147483661</polymorphic_id>
 								<polymorphic_name>AngleSnappingProperty</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -925,6 +900,31 @@
 										<base/>
 										<enabled>false</enabled>
 										<value>5</value>
+									</data>
+								</ptr_wrapper>
+							</value9>
+							<value10>
+								<polymorphic_id>2147483662</polymorphic_id>
+								<polymorphic_name>HardwareActionsProperty::Proxy</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>302</cereal_class_version>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
+							</value10>
+							<value11>
+								<polymorphic_id>2147483663</polymorphic_id>
+								<polymorphic_name>SystemPointerProperty</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>200</cereal_class_version>
+										<base/>
+										<enhancePointerPrecision>true</enhancePointerPrecision>
+										<pointerMotionSpeed>10</pointerMotionSpeed>
 									</data>
 								</ptr_wrapper>
 							</value11>
@@ -1027,45 +1027,6 @@
 														<usbVid>0</usbVid>
 														<usbPid>0</usbPid>
 													</modelId>
-													<hidCaps>ExtendedSingleColor</hidCaps>
-													<deviceLightingType>Default</deviceLightingType>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<channelProperties size="dynamic">
-																<value0>
-																	<key>0</key>
-																	<value size="dynamic">
-																		<value0>
-																			<polymorphic_id>1073741824</polymorphic_id>
-																			<ptr_wrapper>
-																				<valid>1</valid>
-																				<data>
-																					<base>
-																						<base/>
-																						<layers size="dynamic"/>
-																					</base>
-																				</data>
-																			</ptr_wrapper>
-																		</value0>
-																	</value>
-																</value0>
-															</channelProperties>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value2>
-											<value3>
-												<key>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
 													<hidCaps>RestrictedWireless</hidCaps>
 													<deviceLightingType>Default</deviceLightingType>
 												</key>
@@ -1093,7 +1054,7 @@
 																									<id>2147483653</id>
 																									<data>
 																										<base>
-																											<id>{b75a0022-a08d-4411-ad33-cd9be5002291}</id>
+																											<id>{3222a81f-514a-4697-a959-3c2aba8854ac}</id>
 																											<name>Default</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1127,6 +1088,45 @@
 																								</ptr_wrapper>
 																							</value0>
 																						</layers>
+																					</base>
+																				</data>
+																			</ptr_wrapper>
+																		</value0>
+																	</value>
+																</value0>
+															</channelProperties>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value2>
+											<value3>
+												<key>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+													<hidCaps>ExtendedSingleColor</hidCaps>
+													<deviceLightingType>Default</deviceLightingType>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<channelProperties size="dynamic">
+																<value0>
+																	<key>0</key>
+																	<value size="dynamic">
+																		<value0>
+																			<polymorphic_id>1073741824</polymorphic_id>
+																			<ptr_wrapper>
+																				<valid>1</valid>
+																				<data>
+																					<base>
+																						<base/>
+																						<layers size="dynamic"/>
 																					</base>
 																				</data>
 																			</ptr_wrapper>
@@ -1211,7 +1211,7 @@
 																									<id>2147483655</id>
 																									<data>
 																										<base>
-																											<id>{0584055e-f38b-4cc7-a40f-584a45313430}</id>
+																											<id>{caf66461-65a5-420c-b0e0-4075d66d58e2}</id>
 																											<name>Default</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1301,7 +1301,7 @@
 																									<id>2147483657</id>
 																									<data>
 																										<base>
-																											<id>{8dbf0b01-7e22-40ae-bad0-fc2b8098871b}</id>
+																											<id>{dba82a43-aae3-4525-be74-298d7155922b}</id>
 																											<name>Rainbow Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1382,7 +1382,7 @@
 																									<id>2147483659</id>
 																									<data>
 																										<base>
-																											<id>{b3d1cdf1-a5db-4d0c-932c-69219f31faa2}</id>
+																											<id>{e94d341a-8d6c-4eaf-a8bc-a26f69af705d}</id>
 																											<name>Static Color 1</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1404,14 +1404,14 @@
 																													<base>
 																														<base>
 																															<name></name>
-																															<id>{ed1f9e51-b254-45c1-87a8-8010581a6d56}</id>
+																															<id>{00bfa2c8-0714-4e79-afa6-5bbc442e0de3}</id>
 																															<duration>1000</duration>
 																															<brightness>10</brightness>
 																														</base>
 																														<transitions size="dynamic">
 																															<value0>
 																																<time>0</time>
-																																<color>#ffff0011</color>
+																																<color>#ff444dff</color>
 																															</value0>
 																														</transitions>
 																													</base>
@@ -1479,19 +1479,6 @@
 								</ptr_wrapper>
 							</value1>
 							<value2>
-								<polymorphic_id>2147483668</polymorphic_id>
-								<polymorphic_name>TouchpadPerformanceProperty</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>302</cereal_class_version>
-										<base/>
-										<pointerSpeed>50</pointerSpeed>
-										<tappingSpeed>50</tappingSpeed>
-									</data>
-								</ptr_wrapper>
-							</value2>
-							<value3>
 								<polymorphic_id>2</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -1500,28 +1487,6 @@
 										<properties size="dynamic">
 											<value0>
 												<key>
-													<capability>DramRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-											<value1>
-												<key>
 													<capability>StandardRgb</capability>
 													<deviceId></deviceId>
 													<modelId>
@@ -1534,230 +1499,6 @@
 													<ptr_wrapper>
 														<valid>1</valid>
 														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value1>
-											<value2>
-												<key>
-													<capability>ZoneRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value2>
-											<value3>
-												<key>
-													<capability>ExtendedMouseRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value3>
-											<value4>
-												<key>
-													<capability>RestrictedWireless</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value4>
-											<value5>
-												<key>
-													<capability>RestrictedWirelessRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value5>
-											<value6>
-												<key>
-													<capability>PluginDeviceRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value6>
-											<value7>
-												<key>
-													<capability>DramSoftware</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value7>
-											<value8>
-												<key>
-													<capability>StandardSingleColor</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value8>
-											<value9>
-												<key>
-													<capability>RestrictedWirelessSingleLed</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value9>
-											<value10>
-												<key>
-													<capability>DramSingleColor</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value10>
-										</properties>
-									</data>
-								</ptr_wrapper>
-							</value3>
-							<value4>
-								<polymorphic_id>3</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic">
-											<value0>
-												<key>true</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
 															<base>
 																<base/>
 																<layers size="dynamic"/>
@@ -1767,56 +1508,8 @@
 												</value>
 											</value0>
 											<value1>
-												<key>false</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value1>
-										</properties>
-									</data>
-								</ptr_wrapper>
-							</value4>
-							<value5>
-								<polymorphic_id>4</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic">
-											<value0>
 												<key>
 													<capability>DramRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-											<value1>
-												<key>
-													<capability>StandardRgb</capability>
 													<deviceId></deviceId>
 													<modelId>
 														<usbVid>0</usbVid>
@@ -1949,8 +1642,324 @@
 										</properties>
 									</data>
 								</ptr_wrapper>
+							</value2>
+							<value3>
+								<polymorphic_id>2147483668</polymorphic_id>
+								<polymorphic_name>TouchpadPerformanceProperty</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>302</cereal_class_version>
+										<base/>
+										<pointerSpeed>50</pointerSpeed>
+										<tappingSpeed>50</tappingSpeed>
+									</data>
+								</ptr_wrapper>
+							</value3>
+							<value4>
+								<polymorphic_id>3</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic">
+											<value0>
+												<key>
+													<capability>StandardRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+											<value1>
+												<key>
+													<capability>DramRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value1>
+											<value2>
+												<key>
+													<capability>ZoneRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value2>
+											<value3>
+												<key>
+													<capability>ExtendedMouseRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value3>
+											<value4>
+												<key>
+													<capability>RestrictedWireless</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value4>
+											<value5>
+												<key>
+													<capability>RestrictedWirelessRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value5>
+											<value6>
+												<key>
+													<capability>PluginDeviceRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value6>
+											<value7>
+												<key>
+													<capability>DramSoftware</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value7>
+											<value8>
+												<key>
+													<capability>StandardSingleColor</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value8>
+											<value9>
+												<key>
+													<capability>RestrictedWirelessSingleLed</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value9>
+											<value10>
+												<key>
+													<capability>DramSingleColor</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value10>
+										</properties>
+									</data>
+								</ptr_wrapper>
+							</value4>
+							<value5>
+								<polymorphic_id>4</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic">
+											<value0>
+												<key>true</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+											<value1>
+												<key>false</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value1>
+										</properties>
+									</data>
+								</ptr_wrapper>
 							</value5>
 							<value6>
+								<polymorphic_id>5</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+									</data>
+								</ptr_wrapper>
+							</value6>
+							<value7>
 								<polymorphic_id>2147483669</polymorphic_id>
 								<polymorphic_name>WinlockIndicatorProperty::Proxy</polymorphic_name>
 								<ptr_wrapper>
@@ -1987,27 +1996,16 @@
 														<data>
 															<base/>
 															<enabledIndicatorColor>
-																<nullopt>false</nullopt>
-																<data>#ffff0000</data>
+																<nullopt>true</nullopt>
 															</enabledIndicatorColor>
 															<disabledIndicatorColor>
-																<nullopt>false</nullopt>
-																<data>#ffffffff</data>
+																<nullopt>true</nullopt>
 															</disabledIndicatorColor>
 														</data>
 													</ptr_wrapper>
 												</value>
 											</value1>
 										</properties>
-									</data>
-								</ptr_wrapper>
-							</value6>
-							<value7>
-								<polymorphic_id>5</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
 									</data>
 								</ptr_wrapper>
 							</value7>
@@ -2030,6 +2028,21 @@
 								</ptr_wrapper>
 							</value8>
 							<value9>
+								<polymorphic_id>6</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<m1Color>#ffff7900</m1Color>
+										<m2Color>#ffaf1900</m2Color>
+										<m3Color>#ffaf0099</m3Color>
+										<profileIndicatorColor>
+											<nullopt>true</nullopt>
+										</profileIndicatorColor>
+									</data>
+								</ptr_wrapper>
+							</value9>
+							<value10>
 								<polymorphic_id>7</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -2080,21 +2093,6 @@
 												</value>
 											</value0>
 										</properties>
-									</data>
-								</ptr_wrapper>
-							</value9>
-							<value10>
-								<polymorphic_id>6</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<m1Color>#ffff7900</m1Color>
-										<m2Color>#ffaf1900</m2Color>
-										<m3Color>#ffaf0099</m3Color>
-										<profileIndicatorColor>
-											<nullopt>true</nullopt>
-										</profileIndicatorColor>
 									</data>
 								</ptr_wrapper>
 							</value10>
@@ -2150,8 +2148,8 @@
 																				<cereal_class_version>205</cereal_class_version>
 																				<base>
 																					<cereal_class_version>202</cereal_class_version>
-																					<name>Keyboard 10</name>
-																					<id>{47a577bd-a21d-4b84-b93e-30e4a988e064}</id>
+																					<name>Keyboard 1</name>
+																					<id>{0e928aa4-717f-48a0-8615-c75d3827ec8d}</id>
 																					<repeatOptions>
 																						<cereal_class_version>300</cereal_class_version>
 																						<repeatCount>1</repeatCount>
@@ -2172,7 +2170,7 @@
 																					<actionSoundPath></actionSoundPath>
 																					<attachedActions size="dynamic"/>
 																				</base>
-																				<keyName>Enter</keyName>
+																				<keyName>F13</keyName>
 																				<keyStroke size="dynamic"/>
 																				<holdingKeyEnabled>false</holdingKeyEnabled>
 																				<holdingKeyType>OnPress</holdingKeyType>
@@ -2184,7 +2182,7 @@
 																	</first>
 																	<second>
 																		<cereal_class_version>400</cereal_class_version>
-																		<key>CapsLock</key>
+																		<key>G1</key>
 																		<layer>StandardLayer</layer>
 																		<event>Click</event>
 																		<distance>0</distance>
@@ -2197,228 +2195,8 @@
 																			<id>2147483662</id>
 																			<data>
 																				<base>
-																					<name>Keyboard 9</name>
-																					<id>{3917264b-5e8d-4b28-a140-f34db11c8fc6}</id>
-																					<repeatOptions>
-																						<repeatCount>1</repeatCount>
-																						<repeatMode>NoRepeat</repeatMode>
-																						<delay>0</delay>
-																						<delayMode>Constant</delayMode>
-																						<randomDelayFrom>0</randomDelayFrom>
-																						<randomDelayTo>0</randomDelayTo>
-																					</repeatOptions>
-																					<executionHints>
-																						<terminateOnSecondExec>false</terminateOnSecondExec>
-																						<restartOnSecondExec>false</restartOnSecondExec>
-																						<execHint>OnBoth</execHint>
-																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
-																					</executionHints>
-																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
-																					<actionSoundPath></actionSoundPath>
-																					<attachedActions size="dynamic"/>
-																				</base>
-																				<keyName>Delete</keyName>
-																				<keyStroke size="dynamic"/>
-																				<holdingKeyEnabled>false</holdingKeyEnabled>
-																				<holdingKeyType>OnPress</holdingKeyType>
-																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
-																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
-																				<remapGroup>0</remapGroup>
-																			</data>
-																		</ptr_wrapper>
-																	</first>
-																	<second>
-																		<key>LeftGui</key>
-																		<layer>StandardLayer</layer>
-																		<event>Click</event>
-																		<distance>0</distance>
-																	</second>
-																</value1>
-																<value2>
-																	<first>
-																		<polymorphic_id>25</polymorphic_id>
-																		<ptr_wrapper>
-																			<id>2147483663</id>
-																			<data>
-																				<base>
-																					<name>Keyboard 9</name>
-																					<id>{8e28b6ab-7b1b-4c58-864e-0735efd8380f}</id>
-																					<repeatOptions>
-																						<repeatCount>1</repeatCount>
-																						<repeatMode>NoRepeat</repeatMode>
-																						<delay>0</delay>
-																						<delayMode>Constant</delayMode>
-																						<randomDelayFrom>0</randomDelayFrom>
-																						<randomDelayTo>0</randomDelayTo>
-																					</repeatOptions>
-																					<executionHints>
-																						<terminateOnSecondExec>false</terminateOnSecondExec>
-																						<restartOnSecondExec>false</restartOnSecondExec>
-																						<execHint>OnBoth</execHint>
-																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
-																					</executionHints>
-																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
-																					<actionSoundPath></actionSoundPath>
-																					<attachedActions size="dynamic"/>
-																				</base>
-																				<keyName>F18</keyName>
-																				<keyStroke size="dynamic"/>
-																				<holdingKeyEnabled>false</holdingKeyEnabled>
-																				<holdingKeyType>OnPress</holdingKeyType>
-																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
-																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
-																				<remapGroup>0</remapGroup>
-																			</data>
-																		</ptr_wrapper>
-																	</first>
-																	<second>
-																		<key>G6</key>
-																		<layer>StandardLayer</layer>
-																		<event>Click</event>
-																		<distance>0</distance>
-																	</second>
-																</value2>
-																<value3>
-																	<first>
-																		<polymorphic_id>25</polymorphic_id>
-																		<ptr_wrapper>
-																			<id>2147483664</id>
-																			<data>
-																				<base>
-																					<name>Keyboard 8</name>
-																					<id>{91918a27-5835-4d45-ba35-8de63f92374c}</id>
-																					<repeatOptions>
-																						<repeatCount>1</repeatCount>
-																						<repeatMode>NoRepeat</repeatMode>
-																						<delay>0</delay>
-																						<delayMode>Constant</delayMode>
-																						<randomDelayFrom>0</randomDelayFrom>
-																						<randomDelayTo>0</randomDelayTo>
-																					</repeatOptions>
-																					<executionHints>
-																						<terminateOnSecondExec>false</terminateOnSecondExec>
-																						<restartOnSecondExec>false</restartOnSecondExec>
-																						<execHint>OnBoth</execHint>
-																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
-																					</executionHints>
-																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
-																					<actionSoundPath></actionSoundPath>
-																					<attachedActions size="dynamic"/>
-																				</base>
-																				<keyName>F17</keyName>
-																				<keyStroke size="dynamic"/>
-																				<holdingKeyEnabled>false</holdingKeyEnabled>
-																				<holdingKeyType>OnPress</holdingKeyType>
-																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
-																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
-																				<remapGroup>0</remapGroup>
-																			</data>
-																		</ptr_wrapper>
-																	</first>
-																	<second>
-																		<key>G5</key>
-																		<layer>StandardLayer</layer>
-																		<event>Click</event>
-																		<distance>0</distance>
-																	</second>
-																</value3>
-																<value4>
-																	<first>
-																		<polymorphic_id>25</polymorphic_id>
-																		<ptr_wrapper>
-																			<id>2147483665</id>
-																			<data>
-																				<base>
-																					<name>Keyboard 7</name>
-																					<id>{6bff3510-4371-4d81-a1ce-3aefae02a99f}</id>
-																					<repeatOptions>
-																						<repeatCount>1</repeatCount>
-																						<repeatMode>NoRepeat</repeatMode>
-																						<delay>0</delay>
-																						<delayMode>Constant</delayMode>
-																						<randomDelayFrom>0</randomDelayFrom>
-																						<randomDelayTo>0</randomDelayTo>
-																					</repeatOptions>
-																					<executionHints>
-																						<terminateOnSecondExec>false</terminateOnSecondExec>
-																						<restartOnSecondExec>false</restartOnSecondExec>
-																						<execHint>OnBoth</execHint>
-																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
-																					</executionHints>
-																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
-																					<actionSoundPath></actionSoundPath>
-																					<attachedActions size="dynamic"/>
-																				</base>
-																				<keyName>F16</keyName>
-																				<keyStroke size="dynamic"/>
-																				<holdingKeyEnabled>false</holdingKeyEnabled>
-																				<holdingKeyType>OnPress</holdingKeyType>
-																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
-																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
-																				<remapGroup>0</remapGroup>
-																			</data>
-																		</ptr_wrapper>
-																	</first>
-																	<second>
-																		<key>G4</key>
-																		<layer>StandardLayer</layer>
-																		<event>Click</event>
-																		<distance>0</distance>
-																	</second>
-																</value4>
-																<value5>
-																	<first>
-																		<polymorphic_id>25</polymorphic_id>
-																		<ptr_wrapper>
-																			<id>2147483666</id>
-																			<data>
-																				<base>
-																					<name>Keyboard 9</name>
-																					<id>{ee219507-f6b8-44cf-8b13-beb59c291dee}</id>
-																					<repeatOptions>
-																						<repeatCount>1</repeatCount>
-																						<repeatMode>NoRepeat</repeatMode>
-																						<delay>0</delay>
-																						<delayMode>Constant</delayMode>
-																						<randomDelayFrom>0</randomDelayFrom>
-																						<randomDelayTo>0</randomDelayTo>
-																					</repeatOptions>
-																					<executionHints>
-																						<terminateOnSecondExec>false</terminateOnSecondExec>
-																						<restartOnSecondExec>false</restartOnSecondExec>
-																						<execHint>OnBoth</execHint>
-																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
-																					</executionHints>
-																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
-																					<actionSoundPath></actionSoundPath>
-																					<attachedActions size="dynamic"/>
-																				</base>
-																				<keyName>F15</keyName>
-																				<keyStroke size="dynamic"/>
-																				<holdingKeyEnabled>false</holdingKeyEnabled>
-																				<holdingKeyType>OnPress</holdingKeyType>
-																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
-																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
-																				<remapGroup>0</remapGroup>
-																			</data>
-																		</ptr_wrapper>
-																	</first>
-																	<second>
-																		<key>G3</key>
-																		<layer>StandardLayer</layer>
-																		<event>Click</event>
-																		<distance>0</distance>
-																	</second>
-																</value5>
-																<value6>
-																	<first>
-																		<polymorphic_id>25</polymorphic_id>
-																		<ptr_wrapper>
-																			<id>2147483667</id>
-																			<data>
-																				<base>
-																					<name>Keyboard 8</name>
-																					<id>{8a320298-43f3-4dc4-b2cc-215a5c843122}</id>
+																					<name>Keyboard 2</name>
+																					<id>{2a2a8423-21a8-49bd-9a85-a1b8fa2cd3ec}</id>
 																					<repeatOptions>
 																						<repeatCount>1</repeatCount>
 																						<repeatMode>NoRepeat</repeatMode>
@@ -2453,16 +2231,16 @@
 																		<event>Click</event>
 																		<distance>0</distance>
 																	</second>
-																</value6>
-																<value7>
+																</value1>
+																<value2>
 																	<first>
 																		<polymorphic_id>25</polymorphic_id>
 																		<ptr_wrapper>
-																			<id>2147483668</id>
+																			<id>2147483663</id>
 																			<data>
 																				<base>
-																					<name>Keyboard 7</name>
-																					<id>{bccca1e0-6483-43f2-a685-7a701a1c9616}</id>
+																					<name>Keyboard 3</name>
+																					<id>{71243d7e-9a12-4d62-a10c-45bf5ec81253}</id>
 																					<repeatOptions>
 																						<repeatCount>1</repeatCount>
 																						<repeatMode>NoRepeat</repeatMode>
@@ -2481,7 +2259,7 @@
 																					<actionSoundPath></actionSoundPath>
 																					<attachedActions size="dynamic"/>
 																				</base>
-																				<keyName>F13</keyName>
+																				<keyName>F15</keyName>
 																				<keyStroke size="dynamic"/>
 																				<holdingKeyEnabled>false</holdingKeyEnabled>
 																				<holdingKeyType>OnPress</holdingKeyType>
@@ -2492,23 +2270,21 @@
 																		</ptr_wrapper>
 																	</first>
 																	<second>
-																		<key>G1</key>
+																		<key>G3</key>
 																		<layer>StandardLayer</layer>
 																		<event>Click</event>
 																		<distance>0</distance>
 																	</second>
-																</value7>
-																<value8>
+																</value2>
+																<value3>
 																	<first>
-																		<polymorphic_id>2147483674</polymorphic_id>
-																		<polymorphic_name>ProfileSwitchingAction</polymorphic_name>
+																		<polymorphic_id>25</polymorphic_id>
 																		<ptr_wrapper>
-																			<id>2147483669</id>
+																			<id>2147483664</id>
 																			<data>
-																				<cereal_class_version>301</cereal_class_version>
 																				<base>
-																					<name>Profile Switching 1</name>
-																					<id>{283097dd-68c7-4fb0-accf-f36432fc7d36}</id>
+																					<name>Keyboard 4</name>
+																					<id>{897e77a1-5ab4-49a6-8b10-a6fbfe7b525e}</id>
 																					<repeatOptions>
 																						<repeatCount>1</repeatCount>
 																						<repeatMode>NoRepeat</repeatMode>
@@ -2520,37 +2296,127 @@
 																					<executionHints>
 																						<terminateOnSecondExec>false</terminateOnSecondExec>
 																						<restartOnSecondExec>false</restartOnSecondExec>
-																						<execHint>OnPress</execHint>
+																						<execHint>OnBoth</execHint>
 																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
 																					</executionHints>
 																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
 																					<actionSoundPath></actionSoundPath>
 																					<attachedActions size="dynamic"/>
 																				</base>
-																				<switchType>Direct</switchType>
-																				<loop>true</loop>
-																				<profile>{6cd71b5b-3931-40b3-b349-10604b36d69e}</profile>
-																				<profiles size="dynamic"/>
-																				<direction>Forward</direction>
+																				<keyName>F16</keyName>
+																				<keyStroke size="dynamic"/>
+																				<holdingKeyEnabled>false</holdingKeyEnabled>
+																				<holdingKeyType>OnPress</holdingKeyType>
+																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
+																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
+																				<remapGroup>0</remapGroup>
 																			</data>
 																		</ptr_wrapper>
 																	</first>
 																	<second>
-																		<key>WinLock</key>
+																		<key>G4</key>
 																		<layer>StandardLayer</layer>
 																		<event>Click</event>
 																		<distance>0</distance>
 																	</second>
-																</value8>
-																<value9>
+																</value3>
+																<value4>
 																	<first>
 																		<polymorphic_id>25</polymorphic_id>
 																		<ptr_wrapper>
-																			<id>2147483670</id>
+																			<id>2147483665</id>
 																			<data>
 																				<base>
-																					<name>Keyboard 8</name>
-																					<id>{4d234667-5803-46db-895d-1b2776c00b06}</id>
+																					<name>Keyboard 5</name>
+																					<id>{1dc8b84e-582b-4c78-be83-cdb5cfea67dc}</id>
+																					<repeatOptions>
+																						<repeatCount>1</repeatCount>
+																						<repeatMode>NoRepeat</repeatMode>
+																						<delay>0</delay>
+																						<delayMode>Constant</delayMode>
+																						<randomDelayFrom>0</randomDelayFrom>
+																						<randomDelayTo>0</randomDelayTo>
+																					</repeatOptions>
+																					<executionHints>
+																						<terminateOnSecondExec>false</terminateOnSecondExec>
+																						<restartOnSecondExec>false</restartOnSecondExec>
+																						<execHint>OnBoth</execHint>
+																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
+																					</executionHints>
+																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
+																					<actionSoundPath></actionSoundPath>
+																					<attachedActions size="dynamic"/>
+																				</base>
+																				<keyName>F17</keyName>
+																				<keyStroke size="dynamic"/>
+																				<holdingKeyEnabled>false</holdingKeyEnabled>
+																				<holdingKeyType>OnPress</holdingKeyType>
+																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
+																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
+																				<remapGroup>0</remapGroup>
+																			</data>
+																		</ptr_wrapper>
+																	</first>
+																	<second>
+																		<key>G5</key>
+																		<layer>StandardLayer</layer>
+																		<event>Click</event>
+																		<distance>0</distance>
+																	</second>
+																</value4>
+																<value5>
+																	<first>
+																		<polymorphic_id>25</polymorphic_id>
+																		<ptr_wrapper>
+																			<id>2147483666</id>
+																			<data>
+																				<base>
+																					<name>Keyboard 6</name>
+																					<id>{d932b578-31c2-4ef5-859d-72f79a161ccb}</id>
+																					<repeatOptions>
+																						<repeatCount>1</repeatCount>
+																						<repeatMode>NoRepeat</repeatMode>
+																						<delay>0</delay>
+																						<delayMode>Constant</delayMode>
+																						<randomDelayFrom>0</randomDelayFrom>
+																						<randomDelayTo>0</randomDelayTo>
+																					</repeatOptions>
+																					<executionHints>
+																						<terminateOnSecondExec>false</terminateOnSecondExec>
+																						<restartOnSecondExec>false</restartOnSecondExec>
+																						<execHint>OnBoth</execHint>
+																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
+																					</executionHints>
+																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
+																					<actionSoundPath></actionSoundPath>
+																					<attachedActions size="dynamic"/>
+																				</base>
+																				<keyName>F18</keyName>
+																				<keyStroke size="dynamic"/>
+																				<holdingKeyEnabled>false</holdingKeyEnabled>
+																				<holdingKeyType>OnPress</holdingKeyType>
+																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
+																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
+																				<remapGroup>0</remapGroup>
+																			</data>
+																		</ptr_wrapper>
+																	</first>
+																	<second>
+																		<key>G6</key>
+																		<layer>StandardLayer</layer>
+																		<event>Click</event>
+																		<distance>0</distance>
+																	</second>
+																</value5>
+																<value6>
+																	<first>
+																		<polymorphic_id>25</polymorphic_id>
+																		<ptr_wrapper>
+																			<id>2147483667</id>
+																			<data>
+																				<base>
+																					<name>Keyboard 7</name>
+																					<id>{91867a23-a002-4399-82ce-ac7d9dc8b1f1}</id>
 																					<repeatOptions>
 																						<repeatCount>1</repeatCount>
 																						<repeatMode>NoRepeat</repeatMode>
@@ -2580,21 +2446,23 @@
 																		</ptr_wrapper>
 																	</first>
 																	<second>
-																		<key>G</key>
+																		<key>GraveAccentAndTilde</key>
 																		<layer>StandardLayer</layer>
 																		<event>Click</event>
 																		<distance>0</distance>
 																	</second>
-																</value9>
-																<value10>
+																</value6>
+																<value7>
 																	<first>
-																		<polymorphic_id>25</polymorphic_id>
+																		<polymorphic_id>2147483674</polymorphic_id>
+																		<polymorphic_name>ProfileSwitchingAction</polymorphic_name>
 																		<ptr_wrapper>
-																			<id>2147483671</id>
+																			<id>2147483668</id>
 																			<data>
+																				<cereal_class_version>301</cereal_class_version>
 																				<base>
-																					<name>Keyboard 6</name>
-																					<id>{461bab3a-afc3-4bdd-b832-a888125b5eda}</id>
+																					<name>Profile Switching DEFAULT</name>
+																					<id>{b44dca2b-383d-4fde-9519-544f11b55118}</id>
 																					<repeatOptions>
 																						<repeatCount>1</repeatCount>
 																						<repeatMode>NoRepeat</repeatMode>
@@ -2606,35 +2474,36 @@
 																					<executionHints>
 																						<terminateOnSecondExec>false</terminateOnSecondExec>
 																						<restartOnSecondExec>false</restartOnSecondExec>
-																						<execHint>OnBoth</execHint>
+																						<execHint>OnPress</execHint>
 																						<retainOriginalKeyOutput>false</retainOriginalKeyOutput>
 																					</executionHints>
 																					<actionLighting>{00000000-0000-0000-0000-000000000000}</actionLighting>
 																					<actionSoundPath></actionSoundPath>
 																					<attachedActions size="dynamic"/>
 																				</base>
-																				<keyName>F20</keyName>
-																				<keyStroke size="dynamic"/>
-																				<holdingKeyEnabled>false</holdingKeyEnabled>
-																				<holdingKeyType>OnPress</holdingKeyType>
-																				<holdingKeyOnPressInterval>100</holdingKeyOnPressInterval>
-																				<sniperSwitchMode>WhilePressed</sniperSwitchMode>
-																				<remapGroup>0</remapGroup>
+																				<switchType>ProfileList</switchType>
+																				<loop>true</loop>
+																				<profile>{00000000-0000-0000-0000-000000000000}</profile>
+																				<profiles size="dynamic">
+																					<value0>{6cd71b5b-3931-40b3-b349-10604b36d69e}</value0>
+																					<value1>{b54c9a73-e2c2-406c-a62f-0b374c928ca5}</value1>
+																				</profiles>
+																				<direction>Forward</direction>
 																			</data>
 																		</ptr_wrapper>
 																	</first>
 																	<second>
-																		<key>B</key>
+																		<key>WinLock</key>
 																		<layer>StandardLayer</layer>
 																		<event>Click</event>
 																		<distance>0</distance>
 																	</second>
-																</value10>
+																</value7>
 															</actions>
 															<presetsInfo>
 																<polymorphic_id>1073741824</polymorphic_id>
 																<ptr_wrapper>
-																	<id>2147483672</id>
+																	<id>2147483669</id>
 																	<data>
 																		<cereal_class_version>400</cereal_class_version>
 																		<activePresetId>{00000000-0000-0000-0000-000000000000}</activePresetId>
@@ -2651,196 +2520,7 @@
 								</ptr_wrapper>
 							</value13>
 							<value14>
-								<polymorphic_id>13</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic">
-											<value0>
-												<key>
-													<cereal_class_version>400</cereal_class_version>
-													<identifier></identifier>
-													<types>0</types>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<cereal_class_version>300</cereal_class_version>
-															<base>
-																<base/>
-																<actions size="dynamic"/>
-																<presetsInfo>
-																	<polymorphic_id>1073741824</polymorphic_id>
-																	<ptr_wrapper>
-																		<id>2147483673</id>
-																		<data>
-																			<activePresetId>{00000000-0000-0000-0000-000000000000}</activePresetId>
-																			<isActive>false</isActive>
-																		</data>
-																	</ptr_wrapper>
-																</presetsInfo>
-															</base>
-															<hwActionsSupportedTypes>0</hwActionsSupportedTypes>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-										</properties>
-									</data>
-								</ptr_wrapper>
-							</value14>
-							<value15>
 								<polymorphic_id>2147483675</polymorphic_id>
-								<polymorphic_name>ActuationProperty::Proxy</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>400</cereal_class_version>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value15>
-							<value16>
-								<polymorphic_id>2147483676</polymorphic_id>
-								<polymorphic_name>DialControlProperty</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>301</cereal_class_version>
-										<base/>
-										<activeModeIndex>0</activeModeIndex>
-										<modes size="dynamic">
-											<value0>
-												<polymorphic_id>1073741824</polymorphic_id>
-												<ptr_wrapper>
-													<id>2147483674</id>
-													<data>
-														<cereal_class_version>301</cereal_class_version>
-														<id>{5079139c-6772-4265-bb69-1a14b6edd398}</id>
-														<color>#ff00bfff</color>
-														<enabled>true</enabled>
-														<type>BrightnessControl</type>
-														<hostOs>0</hostOs>
-														<musicApp>0</musicApp>
-													</data>
-												</ptr_wrapper>
-											</value0>
-											<value1>
-												<polymorphic_id>1073741824</polymorphic_id>
-												<ptr_wrapper>
-													<id>2147483675</id>
-													<data>
-														<id>{cda1059d-905a-4148-8616-78d7258d5b82}</id>
-														<color>#ff00ff00</color>
-														<enabled>true</enabled>
-														<type>MediaJogging</type>
-														<hostOs>0</hostOs>
-														<musicApp>2</musicApp>
-													</data>
-												</ptr_wrapper>
-											</value1>
-											<value2>
-												<polymorphic_id>1073741824</polymorphic_id>
-												<ptr_wrapper>
-													<id>2147483676</id>
-													<data>
-														<id>{891fdf07-0eb7-4bec-9eca-67ebc7b519fb}</id>
-														<color>#ffffffff</color>
-														<enabled>true</enabled>
-														<type>TrackSelector</type>
-														<hostOs>0</hostOs>
-														<musicApp>0</musicApp>
-													</data>
-												</ptr_wrapper>
-											</value2>
-											<value3>
-												<polymorphic_id>2147483677</polymorphic_id>
-												<polymorphic_name>ActionsPlaybackDialMode</polymorphic_name>
-												<ptr_wrapper>
-													<id>2147483677</id>
-													<data>
-														<cereal_class_version>302</cereal_class_version>
-														<base>
-															<id>{dbcafb74-e7d1-4dec-b07d-70609f17f931}</id>
-															<color>#ffff0000</color>
-															<enabled>true</enabled>
-															<type>ActionsPlayback</type>
-															<hostOs>0</hostOs>
-															<musicApp>0</musicApp>
-														</base>
-														<leftDialActionId>{00000000-0000-0000-0000-000000000000}</leftDialActionId>
-														<rightDialActionId>{00000000-0000-0000-0000-000000000000}</rightDialActionId>
-														<name></name>
-														<isOnlyMacroRecording>true</isOnlyMacroRecording>
-													</data>
-												</ptr_wrapper>
-											</value3>
-											<value4>
-												<polymorphic_id>1073741824</polymorphic_id>
-												<ptr_wrapper>
-													<id>2147483678</id>
-													<data>
-														<id>{038d4db2-9c8e-44b1-966f-b0a9fcf717c7}</id>
-														<color>#ffbfff00</color>
-														<enabled>false</enabled>
-														<type>SwitchApplications</type>
-														<hostOs>0</hostOs>
-														<musicApp>0</musicApp>
-													</data>
-												</ptr_wrapper>
-											</value4>
-											<value5>
-												<polymorphic_id>1073741824</polymorphic_id>
-												<ptr_wrapper>
-													<id>2147483679</id>
-													<data>
-														<id>{55263bb7-ed0f-4c47-aaa3-4296bf9fa484}</id>
-														<color>#ffff8000</color>
-														<enabled>false</enabled>
-														<type>VerticalScrolling</type>
-														<hostOs>0</hostOs>
-														<musicApp>0</musicApp>
-													</data>
-												</ptr_wrapper>
-											</value5>
-											<value6>
-												<polymorphic_id>1073741824</polymorphic_id>
-												<ptr_wrapper>
-													<id>2147483680</id>
-													<data>
-														<id>{5289804f-ec17-4663-b1ef-70442dc86333}</id>
-														<color>#ffffff00</color>
-														<enabled>false</enabled>
-														<type>HorizontalScrolling</type>
-														<hostOs>0</hostOs>
-														<musicApp>0</musicApp>
-													</data>
-												</ptr_wrapper>
-											</value6>
-											<value7>
-												<polymorphic_id>1073741824</polymorphic_id>
-												<ptr_wrapper>
-													<id>2147483681</id>
-													<data>
-														<id>{ec7e9171-6813-4fd9-9bc6-062c7595717e}</id>
-														<color>#ffc400ab</color>
-														<enabled>false</enabled>
-														<type>Zoom</type>
-														<hostOs>0</hostOs>
-														<musicApp>0</musicApp>
-													</data>
-												</ptr_wrapper>
-											</value7>
-										</modes>
-									</data>
-								</ptr_wrapper>
-							</value16>
-							<value17>
-								<polymorphic_id>2147483678</polymorphic_id>
 								<polymorphic_name>JoystickPerformanceProperty</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -2855,9 +2535,9 @@
 										<rButtonDisabled>false</rButtonDisabled>
 									</data>
 								</ptr_wrapper>
-							</value17>
-							<value18>
-								<polymorphic_id>2147483679</polymorphic_id>
+							</value14>
+							<value15>
+								<polymorphic_id>2147483676</polymorphic_id>
 								<polymorphic_name>GesturesProperty</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -2870,15 +2550,15 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>2147483680</polymorphic_id>
+														<polymorphic_id>2147483677</polymorphic_id>
 														<polymorphic_name>GestureAction</polymorphic_name>
 														<ptr_wrapper>
-															<id>2147483682</id>
+															<id>2147483670</id>
 															<data>
 																<cereal_class_version>301</cereal_class_version>
 																<base>
 																	<name></name>
-																	<id>{724adefe-e74c-4f0d-85a2-bbdeb6c07b3d}</id>
+																	<id>{bd81eae1-fbc0-4f78-96da-417c30b2618f}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2907,13 +2587,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483683</id>
+															<id>2147483671</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{ae69b8a0-22e2-48a3-9b7a-7db2bb6e4b0d}</id>
+																	<id>{e78b708c-5e7a-4132-8ac7-d473840ad252}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2942,13 +2622,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483684</id>
+															<id>2147483672</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{fae2935b-ea1d-40e4-9bef-fda73acd611e}</id>
+																	<id>{701291ea-a4a8-48c7-9c30-b2edbc771342}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -2977,13 +2657,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483685</id>
+															<id>2147483673</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{1e2bd5fd-c738-455e-8743-0cd6c3b1c0c6}</id>
+																	<id>{4a773b4d-e946-46c2-a4e3-4a9d29dc6292}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3012,13 +2692,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483686</id>
+															<id>2147483674</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{d4b07920-e8f9-4278-bb69-938f4d0381a5}</id>
+																	<id>{ae3db944-7143-4768-bb25-c1221e767f31}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3047,13 +2727,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483687</id>
+															<id>2147483675</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{a17b0edb-fee0-4578-96fe-17eeca1b0f09}</id>
+																	<id>{a18b7650-57aa-435d-8278-1380a79b719c}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3082,13 +2762,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483688</id>
+															<id>2147483676</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{94bc6d27-4762-4f3a-917c-ddd1d659f285}</id>
+																	<id>{19adee66-8d1e-48a5-94c8-eae3404e949b}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3117,13 +2797,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483689</id>
+															<id>2147483677</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{4856b187-092e-4456-b7c0-cb62a4443c15}</id>
+																	<id>{a4f92497-2cf2-4e22-a7c4-b310fae5618f}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3152,13 +2832,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483690</id>
+															<id>2147483678</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{6c8650ac-b293-4576-8687-a3925b996894}</id>
+																	<id>{bc374d28-2187-4d80-a806-4fbf5b3ce835}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3187,13 +2867,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483691</id>
+															<id>2147483679</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{b41251e5-3868-4940-8443-65e607021d5e}</id>
+																	<id>{d85d72d4-0de1-4266-919c-4e8c8443c359}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3222,13 +2902,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483692</id>
+															<id>2147483680</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{6af6de22-83eb-4582-9393-7e7aff2ab828}</id>
+																	<id>{b5bc7ad9-0841-4ffb-9883-a2da937e046b}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3257,13 +2937,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483693</id>
+															<id>2147483681</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{47fdb64f-4db2-448a-bc59-8ad68cf3ad55}</id>
+																	<id>{84ddce6b-bc88-46ae-9e54-a5a788e772fc}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3292,13 +2972,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483694</id>
+															<id>2147483682</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{b7081fb1-8462-44da-bd83-55123dc48399}</id>
+																	<id>{83904023-422c-43c2-87f9-9b8e25f9b91d}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3327,13 +3007,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483695</id>
+															<id>2147483683</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{4b90d521-80b9-4e55-9393-d8a8769cbdb0}</id>
+																	<id>{a740f684-e0fe-4a21-9c9c-09dfc6792091}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3362,13 +3042,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483696</id>
+															<id>2147483684</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{03df9b64-9de1-4c11-9fa7-b82fec477090}</id>
+																	<id>{38d8ef9e-04c5-4597-9f15-caf8aac2ea01}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3397,13 +3077,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483697</id>
+															<id>2147483685</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{b6e2c57d-1f49-401b-8526-c506270ff192}</id>
+																	<id>{4c918952-c69c-4eee-b36f-70b12c4222f5}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3432,13 +3112,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483698</id>
+															<id>2147483686</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{b13e41c3-33dd-4323-8bde-9bf2f83af961}</id>
+																	<id>{07b9dd57-2303-4f8e-bf06-d33dc1ba2eb9}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3467,13 +3147,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483699</id>
+															<id>2147483687</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{638544ca-45d4-4f2f-9497-a8ccd36e6676}</id>
+																	<id>{f6935cef-f89d-4638-9dc0-1e7399fcc864}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3502,13 +3182,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483700</id>
+															<id>2147483688</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{f0a73e9a-d299-4f60-99da-c72d12288b2f}</id>
+																	<id>{bbf1eee4-3a6d-4807-a6b1-ac2dda317cfb}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3537,13 +3217,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483701</id>
+															<id>2147483689</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{4aba7c95-3382-4a06-ade7-d6650578cbe6}</id>
+																	<id>{7ad28609-e110-4c3b-bde8-7afba4bdf23f}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3572,13 +3252,13 @@
 												<value>
 													<first>Enabled</first>
 													<second>
-														<polymorphic_id>32</polymorphic_id>
+														<polymorphic_id>29</polymorphic_id>
 														<ptr_wrapper>
-															<id>2147483702</id>
+															<id>2147483690</id>
 															<data>
 																<base>
 																	<name></name>
-																	<id>{18c72ff4-f979-45ed-a583-0ca0b06c0604}</id>
+																	<id>{88be3e22-fb94-4e3b-b9e0-8c98a4f84b7e}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3605,9 +3285,9 @@
 										</gestures>
 									</data>
 								</ptr_wrapper>
-							</value18>
-							<value19>
-								<polymorphic_id>2147483681</polymorphic_id>
+							</value15>
+							<value16>
+								<polymorphic_id>2147483678</polymorphic_id>
 								<polymorphic_name>LockIndicatorProperty::Proxy</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -3638,41 +3318,202 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<availableIndicatorStatus size="dynamic">
-																<value0>
-																	<key>3</key>
-																	<value size="dynamic">
-																		<value0>
-																			<cereal_class_version>400</cereal_class_version>
-																			<state>1</state>
-																			<color>#ffff0000</color>
-																		</value0>
-																		<value1>
-																			<state>0</state>
-																			<color>#ffffffff</color>
-																		</value1>
-																	</value>
-																</value0>
-																<value1>
-																	<key>4</key>
-																	<value size="dynamic">
-																		<value0>
-																			<state>1</state>
-																			<color>#ffff0000</color>
-																		</value0>
-																		<value1>
-																			<state>0</state>
-																			<color>#ffffffff</color>
-																		</value1>
-																	</value>
-																</value1>
-															</availableIndicatorStatus>
+															<availableIndicatorStatus size="dynamic"/>
 															<singlecolor>false</singlecolor>
 														</data>
 													</ptr_wrapper>
 												</value>
 											</value1>
 										</properties>
+									</data>
+								</ptr_wrapper>
+							</value16>
+							<value17>
+								<polymorphic_id>2147483679</polymorphic_id>
+								<polymorphic_name>ActuationProperty::Proxy</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>400</cereal_class_version>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
+							</value17>
+							<value18>
+								<polymorphic_id>14</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic">
+											<value0>
+												<key>
+													<cereal_class_version>400</cereal_class_version>
+													<identifier></identifier>
+													<types>0</types>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<cereal_class_version>300</cereal_class_version>
+															<base>
+																<base/>
+																<actions size="dynamic"/>
+																<presetsInfo>
+																	<polymorphic_id>1073741824</polymorphic_id>
+																	<ptr_wrapper>
+																		<id>2147483691</id>
+																		<data>
+																			<activePresetId>{00000000-0000-0000-0000-000000000000}</activePresetId>
+																			<isActive>false</isActive>
+																		</data>
+																	</ptr_wrapper>
+																</presetsInfo>
+															</base>
+															<hwActionsSupportedTypes>0</hwActionsSupportedTypes>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+										</properties>
+									</data>
+								</ptr_wrapper>
+							</value18>
+							<value19>
+								<polymorphic_id>2147483680</polymorphic_id>
+								<polymorphic_name>DialControlProperty</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>301</cereal_class_version>
+										<base/>
+										<activeModeIndex>0</activeModeIndex>
+										<modes size="dynamic">
+											<value0>
+												<polymorphic_id>1073741824</polymorphic_id>
+												<ptr_wrapper>
+													<id>2147483692</id>
+													<data>
+														<cereal_class_version>301</cereal_class_version>
+														<id>{3f11f045-31cb-4dc4-90a1-8f79c4ccd7f8}</id>
+														<color>#ff00bfff</color>
+														<enabled>true</enabled>
+														<type>BrightnessControl</type>
+														<hostOs>1</hostOs>
+														<musicApp>0</musicApp>
+													</data>
+												</ptr_wrapper>
+											</value0>
+											<value1>
+												<polymorphic_id>1073741824</polymorphic_id>
+												<ptr_wrapper>
+													<id>2147483693</id>
+													<data>
+														<id>{1261f98b-d284-4add-bfc8-65a0603eb9f9}</id>
+														<color>#ff00ff00</color>
+														<enabled>true</enabled>
+														<type>MediaJogging</type>
+														<hostOs>1</hostOs>
+														<musicApp>2</musicApp>
+													</data>
+												</ptr_wrapper>
+											</value1>
+											<value2>
+												<polymorphic_id>1073741824</polymorphic_id>
+												<ptr_wrapper>
+													<id>2147483694</id>
+													<data>
+														<id>{2212449a-d557-4023-90e7-0bd5de490b37}</id>
+														<color>#ffffffff</color>
+														<enabled>true</enabled>
+														<type>TrackSelector</type>
+														<hostOs>1</hostOs>
+														<musicApp>0</musicApp>
+													</data>
+												</ptr_wrapper>
+											</value2>
+											<value3>
+												<polymorphic_id>2147483681</polymorphic_id>
+												<polymorphic_name>ActionsPlaybackDialMode</polymorphic_name>
+												<ptr_wrapper>
+													<id>2147483695</id>
+													<data>
+														<cereal_class_version>302</cereal_class_version>
+														<base>
+															<id>{ec76e8bd-a0ea-46f8-bf73-3d20614f6c7a}</id>
+															<color>#ffff0000</color>
+															<enabled>true</enabled>
+															<type>ActionsPlayback</type>
+															<hostOs>1</hostOs>
+															<musicApp>0</musicApp>
+														</base>
+														<leftDialActionId>{00000000-0000-0000-0000-000000000000}</leftDialActionId>
+														<rightDialActionId>{00000000-0000-0000-0000-000000000000}</rightDialActionId>
+														<name></name>
+														<isOnlyMacroRecording>true</isOnlyMacroRecording>
+													</data>
+												</ptr_wrapper>
+											</value3>
+											<value4>
+												<polymorphic_id>1073741824</polymorphic_id>
+												<ptr_wrapper>
+													<id>2147483696</id>
+													<data>
+														<id>{0bce756e-9cc4-4856-b128-52efb9f55bdf}</id>
+														<color>#ffbfff00</color>
+														<enabled>false</enabled>
+														<type>SwitchApplications</type>
+														<hostOs>1</hostOs>
+														<musicApp>0</musicApp>
+													</data>
+												</ptr_wrapper>
+											</value4>
+											<value5>
+												<polymorphic_id>1073741824</polymorphic_id>
+												<ptr_wrapper>
+													<id>2147483697</id>
+													<data>
+														<id>{eafb46fe-8cca-432f-9b54-1b99a0e667fe}</id>
+														<color>#ffff8000</color>
+														<enabled>false</enabled>
+														<type>VerticalScrolling</type>
+														<hostOs>1</hostOs>
+														<musicApp>0</musicApp>
+													</data>
+												</ptr_wrapper>
+											</value5>
+											<value6>
+												<polymorphic_id>1073741824</polymorphic_id>
+												<ptr_wrapper>
+													<id>2147483698</id>
+													<data>
+														<id>{d20f9de7-4106-4cab-b598-1b9f18afef00}</id>
+														<color>#ffffff00</color>
+														<enabled>false</enabled>
+														<type>HorizontalScrolling</type>
+														<hostOs>1</hostOs>
+														<musicApp>0</musicApp>
+													</data>
+												</ptr_wrapper>
+											</value6>
+											<value7>
+												<polymorphic_id>1073741824</polymorphic_id>
+												<ptr_wrapper>
+													<id>2147483699</id>
+													<data>
+														<id>{370f5cda-0f1f-43a7-bdf6-b0452c02296b}</id>
+														<color>#ff800080</color>
+														<enabled>false</enabled>
+														<type>Zoom</type>
+														<hostOs>1</hostOs>
+														<musicApp>0</musicApp>
+													</data>
+												</ptr_wrapper>
+											</value7>
+										</modes>
 									</data>
 								</ptr_wrapper>
 							</value19>
@@ -3706,7 +3547,7 @@
 															<presets size="dynamic">
 																<value0>
 																	<ptr_wrapper>
-																		<id>2147483703</id>
+																		<id>2147483700</id>
 																		<data>
 																			<cereal_class_version>201</cereal_class_version>
 																			<id>{df65cb3e-f06b-49e4-9376-adba2c0caf6e}</id>
@@ -3730,7 +3571,7 @@
 																</value0>
 																<value1>
 																	<ptr_wrapper>
-																		<id>2147483704</id>
+																		<id>2147483701</id>
 																		<data>
 																			<id>{c1d3947b-493e-42c6-9503-dd63d6c40012}</id>
 																			<name>Movie Theater</name>
@@ -3753,7 +3594,7 @@
 																</value1>
 																<value2>
 																	<ptr_wrapper>
-																		<id>2147483705</id>
+																		<id>2147483702</id>
 																		<data>
 																			<id>{138c0b33-bc2c-42ff-96c8-190328221a5a}</id>
 																			<name>FPS Competition</name>
@@ -3776,7 +3617,7 @@
 																</value2>
 																<value3>
 																	<ptr_wrapper>
-																		<id>2147483706</id>
+																		<id>2147483703</id>
 																		<data>
 																			<id>{861c1fd2-fafa-485c-ae46-64fe006e583f}</id>
 																			<name>Clear Chat</name>
@@ -3799,7 +3640,7 @@
 																</value3>
 																<value4>
 																	<ptr_wrapper>
-																		<id>2147483707</id>
+																		<id>2147483704</id>
 																		<data>
 																			<id>{ace12c08-a7e1-4a87-8110-555e383ce327}</id>
 																			<name>Bass Boost</name>
@@ -3848,7 +3689,7 @@
 																<presets size="dynamic">
 																	<value0>
 																		<ptr_wrapper>
-																			<id>2147483708</id>
+																			<id>2147483705</id>
 																			<data>
 																				<id>{df65cb3e-f06b-49e4-9376-adba2c0caf6e}</id>
 																				<name>Pure Direct</name>
@@ -3871,7 +3712,7 @@
 																	</value0>
 																	<value1>
 																		<ptr_wrapper>
-																			<id>2147483709</id>
+																			<id>2147483706</id>
 																			<data>
 																				<id>{6be81934-62e4-4db3-be74-6afb0606b87f}</id>
 																				<name>Movie Theater</name>
@@ -3894,7 +3735,7 @@
 																	</value1>
 																	<value2>
 																		<ptr_wrapper>
-																			<id>2147483710</id>
+																			<id>2147483707</id>
 																			<data>
 																				<id>{aeb1ee88-19b1-4810-946c-1e101276bc2f}</id>
 																				<name>FPS Competition</name>
@@ -3917,7 +3758,7 @@
 																	</value2>
 																	<value3>
 																		<ptr_wrapper>
-																			<id>2147483711</id>
+																			<id>2147483708</id>
 																			<data>
 																				<id>{9bc18606-1d67-464d-84ec-283f38cbc7cc}</id>
 																				<name>Clear Chat</name>
@@ -3940,7 +3781,7 @@
 																	</value3>
 																	<value4>
 																		<ptr_wrapper>
-																			<id>2147483712</id>
+																			<id>2147483709</id>
 																			<data>
 																				<id>{ca4d4eb0-c810-4de9-bfc6-02eac1c6e8bc}</id>
 																				<name>Bass Boost</name>
@@ -3979,18 +3820,6 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>2147483684</polymorphic_id>
-								<polymorphic_name>BatteryProperty</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>200</cereal_class_version>
-										<base/>
-										<lowBatteryIntervalIndex>2</lowBatteryIntervalIndex>
-									</data>
-								</ptr_wrapper>
-							</value1>
-							<value2>
 								<polymorphic_id>1</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -4005,7 +3834,7 @@
 														<usbPid>0</usbPid>
 													</modelId>
 													<hidCaps>StandardRgb</hidCaps>
-													<deviceLightingType>Headset</deviceLightingType>
+													<deviceLightingType>Default</deviceLightingType>
 												</key>
 												<value>
 													<polymorphic_id>1073741824</polymorphic_id>
@@ -4028,11 +3857,11 @@
 																							<value0>
 																								<polymorphic_id>8</polymorphic_id>
 																								<ptr_wrapper>
-																									<id>2147483713</id>
+																									<id>2147483710</id>
 																									<data>
 																										<base>
-																											<id>{89ff0a43-f335-4156-8448-a316f29450a1}</id>
-																											<name>Static Color</name>
+																											<id>{8f27291c-499d-4fde-9e6b-01ae18d6e140}</id>
+																											<name>Blink</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
 																											<executionHints>
@@ -4046,25 +3875,21 @@
 																											<option>AllLeds</option>
 																										</base>
 																										<lighting>
-																											<polymorphic_id>17</polymorphic_id>
+																											<polymorphic_id>2147483684</polymorphic_id>
+																											<polymorphic_name>BlinkLighting</polymorphic_name>
 																											<ptr_wrapper>
-																												<id>2147483714</id>
+																												<id>2147483711</id>
 																												<data>
+																													<cereal_class_version>300</cereal_class_version>
 																													<base>
-																														<base>
-																															<name></name>
-																															<id>{409b78a6-3321-11eb-adc1-0242ac120002}</id>
-																															<duration>1000</duration>
-																															<brightness>10</brightness>
-																														</base>
-																														<transitions size="dynamic">
-																															<value0>
-																																<time>0</time>
-																																<color>#ffffffff</color>
-																															</value0>
-																														</transitions>
+																														<name></name>
+																														<id>{02bb8400-faf2-4e73-bc78-d80dda9107b3}</id>
+																														<duration>10000</duration>
+																														<brightness>10</brightness>
 																													</base>
-																													<opacity>255</opacity>
+																													<color1>#ffff0000</color1>
+																													<color2>#ff0000ff</color2>
+																													<type>SingleBlink</type>
 																												</data>
 																											</ptr_wrapper>
 																										</lighting>
@@ -4114,10 +3939,10 @@
 																							<value0>
 																								<polymorphic_id>8</polymorphic_id>
 																								<ptr_wrapper>
-																									<id>2147483715</id>
+																									<id>2147483712</id>
 																									<data>
 																										<base>
-																											<id>{f22b3d58-4576-4f5d-adaa-965a74dfae69}</id>
+																											<id>{4a8c8f74-14cf-4cc1-a2fc-70974dbef5d8}</id>
 																											<name>Static Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -4134,7 +3959,7 @@
 																										<lighting>
 																											<polymorphic_id>17</polymorphic_id>
 																											<ptr_wrapper>
-																												<id>2147483716</id>
+																												<id>2147483713</id>
 																												<data>
 																													<base>
 																														<base>
@@ -4177,7 +4002,7 @@
 														<usbPid>0</usbPid>
 													</modelId>
 													<hidCaps>StandardRgb</hidCaps>
-													<deviceLightingType>Default</deviceLightingType>
+													<deviceLightingType>Headset</deviceLightingType>
 												</key>
 												<value>
 													<polymorphic_id>1073741824</polymorphic_id>
@@ -4200,11 +4025,11 @@
 																							<value0>
 																								<polymorphic_id>8</polymorphic_id>
 																								<ptr_wrapper>
-																									<id>2147483717</id>
+																									<id>2147483714</id>
 																									<data>
 																										<base>
-																											<id>{543715cc-37d2-418f-8d08-c514ca175a87}</id>
-																											<name>Blink</name>
+																											<id>{748b3292-ab3c-4050-b70c-21e91df78510}</id>
+																											<name>Static Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
 																											<executionHints>
@@ -4218,21 +4043,25 @@
 																											<option>AllLeds</option>
 																										</base>
 																										<lighting>
-																											<polymorphic_id>2147483685</polymorphic_id>
-																											<polymorphic_name>BlinkLighting</polymorphic_name>
+																											<polymorphic_id>17</polymorphic_id>
 																											<ptr_wrapper>
-																												<id>2147483718</id>
+																												<id>2147483715</id>
 																												<data>
-																													<cereal_class_version>300</cereal_class_version>
 																													<base>
-																														<name></name>
-																														<id>{02bb8400-faf2-4e73-bc78-d80dda9107b3}</id>
-																														<duration>10000</duration>
-																														<brightness>10</brightness>
+																														<base>
+																															<name></name>
+																															<id>{409b78a6-3321-11eb-adc1-0242ac120002}</id>
+																															<duration>1000</duration>
+																															<brightness>10</brightness>
+																														</base>
+																														<transitions size="dynamic">
+																															<value0>
+																																<time>0</time>
+																																<color>#ffffffff</color>
+																															</value0>
+																														</transitions>
 																													</base>
-																													<color1>#ffff0000</color1>
-																													<color2>#ff0000ff</color2>
-																													<type>SingleBlink</type>
+																													<opacity>255</opacity>
 																												</data>
 																											</ptr_wrapper>
 																										</lighting>
@@ -4254,17 +4083,20 @@
 										</properties>
 									</data>
 								</ptr_wrapper>
-							</value2>
-							<value3>
-								<polymorphic_id>5</polymorphic_id>
+							</value1>
+							<value2>
+								<polymorphic_id>2147483685</polymorphic_id>
+								<polymorphic_name>BatteryProperty</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
+										<cereal_class_version>200</cereal_class_version>
 										<base/>
+										<lowBatteryIntervalIndex>2</lowBatteryIntervalIndex>
 									</data>
 								</ptr_wrapper>
-							</value3>
-							<value4>
+							</value2>
+							<value3>
 								<polymorphic_id>2147483686</polymorphic_id>
 								<polymorphic_name>DolbyProperty</polymorphic_name>
 								<ptr_wrapper>
@@ -4275,37 +4107,24 @@
 										<enabled>false</enabled>
 									</data>
 								</ptr_wrapper>
+							</value3>
+							<value4>
+								<polymorphic_id>5</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+									</data>
+								</ptr_wrapper>
 							</value4>
 							<value5>
-								<polymorphic_id>2</polymorphic_id>
+								<polymorphic_id>3</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
 										<base/>
 										<properties size="dynamic">
 											<value0>
-												<key>
-													<capability>DramRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-											<value1>
 												<key>
 													<capability>StandardRgb</capability>
 													<deviceId></deviceId>
@@ -4320,8 +4139,30 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+											<value1>
+												<key>
+													<capability>DramRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4342,8 +4183,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4364,8 +4205,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4386,8 +4227,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4408,8 +4249,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4430,8 +4271,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4452,8 +4293,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4474,8 +4315,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4496,8 +4337,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4518,8 +4359,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4548,7 +4389,7 @@
 															<presetsInfo>
 																<polymorphic_id>1073741824</polymorphic_id>
 																<ptr_wrapper>
-																	<id>2147483719</id>
+																	<id>2147483716</id>
 																	<data>
 																		<activePresetId>{00000000-0000-0000-0000-000000000000}</activePresetId>
 																		<isActive>false</isActive>
@@ -4576,16 +4417,6 @@
 								</ptr_wrapper>
 							</value7>
 							<value8>
-								<polymorphic_id>13</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value8>
-							<value9>
 								<polymorphic_id>2147483688</polymorphic_id>
 								<polymorphic_name>AutoAudioRepositioningProperty</polymorphic_name>
 								<ptr_wrapper>
@@ -4596,22 +4427,19 @@
 										<enabled>true</enabled>
 									</data>
 								</ptr_wrapper>
-							</value9>
-							<value10>
-								<polymorphic_id>2147483689</polymorphic_id>
-								<polymorphic_name>SidetoneProperty</polymorphic_name>
+							</value8>
+							<value9>
+								<polymorphic_id>14</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
-										<cereal_class_version>200</cereal_class_version>
 										<base/>
-										<muted>false</muted>
-										<level>-1</level>
+										<properties size="dynamic"/>
 									</data>
 								</ptr_wrapper>
-							</value10>
-							<value11>
-								<polymorphic_id>2147483690</polymorphic_id>
+							</value9>
+							<value10>
+								<polymorphic_id>2147483689</polymorphic_id>
 								<polymorphic_name>MicrophoneProperty</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -4621,6 +4449,19 @@
 										<muted>false</muted>
 										<level>-1</level>
 										<intervalIndex>0</intervalIndex>
+									</data>
+								</ptr_wrapper>
+							</value10>
+							<value11>
+								<polymorphic_id>2147483690</polymorphic_id>
+								<polymorphic_name>SidetoneProperty</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>200</cereal_class_version>
+										<base/>
+										<muted>false</muted>
+										<level>-1</level>
 									</data>
 								</ptr_wrapper>
 							</value11>
@@ -4721,35 +4562,54 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>2</polymorphic_id>
+								<polymorphic_id>4</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
 										<base/>
 										<properties size="dynamic">
 											<value0>
-												<key>
-													<capability>DramRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
+												<key>true</key>
 												<value>
 													<polymorphic_id>1073741824</polymorphic_id>
 													<ptr_wrapper>
 														<valid>1</valid>
 														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
 														</data>
 													</ptr_wrapper>
 												</value>
 											</value0>
 											<value1>
+												<key>false</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base>
+																<base/>
+																<layers size="dynamic"/>
+															</base>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value1>
+										</properties>
+									</data>
+								</ptr_wrapper>
+							</value1>
+							<value2>
+								<polymorphic_id>3</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic">
+											<value0>
 												<key>
 													<capability>StandardRgb</capability>
 													<deviceId></deviceId>
@@ -4764,8 +4624,30 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+											<value1>
+												<key>
+													<capability>DramRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4786,8 +4668,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4808,8 +4690,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4830,8 +4712,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4852,8 +4734,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4874,8 +4756,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4896,8 +4778,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4918,8 +4800,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4940,8 +4822,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4962,8 +4844,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -4972,9 +4854,125 @@
 										</properties>
 									</data>
 								</ptr_wrapper>
+							</value2>
+						</properties>
+					</value>
+				</value3>
+				<value4>
+					<key>GPU</key>
+					<value>
+						<properties size="dynamic">
+							<value0>
+								<polymorphic_id>2147483691</polymorphic_id>
+								<polymorphic_name>CoolingConfigurationProperty::Proxy</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>300</cereal_class_version>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
+							</value0>
+							<value1>
+								<polymorphic_id>1</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic">
+											<value0>
+												<key>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+													<hidCaps>PluginDeviceRgb</hidCaps>
+													<deviceLightingType>Default</deviceLightingType>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<channelProperties size="dynamic">
+																<value0>
+																	<key>22</key>
+																	<value size="dynamic">
+																		<value0>
+																			<polymorphic_id>1073741824</polymorphic_id>
+																			<ptr_wrapper>
+																				<valid>1</valid>
+																				<data>
+																					<base>
+																						<base/>
+																						<layers size="dynamic">
+																							<value0>
+																								<polymorphic_id>8</polymorphic_id>
+																								<ptr_wrapper>
+																									<id>2147483717</id>
+																									<data>
+																										<base>
+																											<id>{8f37c8a1-76c6-44ed-8552-001f0f98f6d0}</id>
+																											<name>Static Color</name>
+																											<keys size="dynamic"/>
+																											<enabled>true</enabled>
+																											<executionHints>
+																												<startOnKeyPress>false</startOnKeyPress>
+																												<startWithProfile>true</startWithProfile>
+																												<stopOnKeyPress>false</stopOnKeyPress>
+																												<stopOnKeyRelease>false</stopOnKeyRelease>
+																												<stopAfterTimes>-1</stopAfterTimes>
+																												<playOption>Standard</playOption>
+																											</executionHints>
+																											<option>AllLeds</option>
+																										</base>
+																										<lighting>
+																											<polymorphic_id>17</polymorphic_id>
+																											<ptr_wrapper>
+																												<id>2147483718</id>
+																												<data>
+																													<base>
+																														<base>
+																															<name></name>
+																															<id>{e4be71bf-ef9e-48a2-9d84-0cf1c2a3877d}</id>
+																															<duration>1000</duration>
+																															<brightness>10</brightness>
+																														</base>
+																														<transitions size="dynamic">
+																															<value0>
+																																<time>0</time>
+																																<color>#ffffffff</color>
+																															</value0>
+																														</transitions>
+																													</base>
+																													<opacity>255</opacity>
+																												</data>
+																											</ptr_wrapper>
+																										</lighting>
+																									</data>
+																								</ptr_wrapper>
+																							</value0>
+																						</layers>
+																					</base>
+																				</data>
+																			</ptr_wrapper>
+																		</value0>
+																	</value>
+																</value0>
+															</channelProperties>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+										</properties>
+									</data>
+								</ptr_wrapper>
 							</value1>
 							<value2>
-								<polymorphic_id>3</polymorphic_id>
+								<polymorphic_id>4</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -5016,12 +5014,22 @@
 							</value2>
 						</properties>
 					</value>
-				</value3>
-				<value4>
+				</value4>
+				<value5>
 					<key>HeadsetStand</key>
 					<value>
 						<properties size="dynamic">
 							<value0>
+								<polymorphic_id>40</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<enabled>true</enabled>
+									</data>
+								</ptr_wrapper>
+							</value0>
+							<value1>
 								<polymorphic_id>34</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -5041,7 +5049,7 @@
 															<presets size="dynamic">
 																<value0>
 																	<ptr_wrapper>
-																		<id>2147483720</id>
+																		<id>2147483719</id>
 																		<data>
 																			<id>{df65cb3e-f06b-49e4-9376-adba2c0caf6e}</id>
 																			<name>Pure Direct</name>
@@ -5064,7 +5072,7 @@
 																</value0>
 																<value1>
 																	<ptr_wrapper>
-																		<id>2147483721</id>
+																		<id>2147483720</id>
 																		<data>
 																			<id>{c1d3947b-493e-42c6-9503-dd63d6c40012}</id>
 																			<name>Movie Theater</name>
@@ -5087,7 +5095,7 @@
 																</value1>
 																<value2>
 																	<ptr_wrapper>
-																		<id>2147483722</id>
+																		<id>2147483721</id>
 																		<data>
 																			<id>{138c0b33-bc2c-42ff-96c8-190328221a5a}</id>
 																			<name>FPS Competition</name>
@@ -5110,7 +5118,7 @@
 																</value2>
 																<value3>
 																	<ptr_wrapper>
-																		<id>2147483723</id>
+																		<id>2147483722</id>
 																		<data>
 																			<id>{861c1fd2-fafa-485c-ae46-64fe006e583f}</id>
 																			<name>Clear Chat</name>
@@ -5133,7 +5141,7 @@
 																</value3>
 																<value4>
 																	<ptr_wrapper>
-																		<id>2147483724</id>
+																		<id>2147483723</id>
 																		<data>
 																			<id>{ace12c08-a7e1-4a87-8110-555e383ce327}</id>
 																			<name>Bass Boost</name>
@@ -5185,16 +5193,6 @@
 												</value>
 											</value1>
 										</properties>
-									</data>
-								</ptr_wrapper>
-							</value0>
-							<value1>
-								<polymorphic_id>40</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<enabled>true</enabled>
 									</data>
 								</ptr_wrapper>
 							</value1>
@@ -5249,11 +5247,14 @@
 								</ptr_wrapper>
 							</value2>
 							<value3>
-								<polymorphic_id>5</polymorphic_id>
+								<polymorphic_id>41</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
 										<base/>
+										<muted>false</muted>
+										<level>-1</level>
+										<intervalIndex>0</intervalIndex>
 									</data>
 								</ptr_wrapper>
 							</value3>
@@ -5268,19 +5269,16 @@
 								</ptr_wrapper>
 							</value4>
 							<value5>
-								<polymorphic_id>42</polymorphic_id>
+								<polymorphic_id>5</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
 										<base/>
-										<muted>false</muted>
-										<level>-1</level>
-										<intervalIndex>0</intervalIndex>
 									</data>
 								</ptr_wrapper>
 							</value5>
 							<value6>
-								<polymorphic_id>3</polymorphic_id>
+								<polymorphic_id>4</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -5320,163 +5318,6 @@
 									</data>
 								</ptr_wrapper>
 							</value6>
-						</properties>
-					</value>
-				</value4>
-				<value5>
-					<key>GPU</key>
-					<value>
-						<properties size="dynamic">
-							<value0>
-								<polymorphic_id>1</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic">
-											<value0>
-												<key>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-													<hidCaps>PluginDeviceRgb</hidCaps>
-													<deviceLightingType>Default</deviceLightingType>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<channelProperties size="dynamic">
-																<value0>
-																	<key>22</key>
-																	<value size="dynamic">
-																		<value0>
-																			<polymorphic_id>1073741824</polymorphic_id>
-																			<ptr_wrapper>
-																				<valid>1</valid>
-																				<data>
-																					<base>
-																						<base/>
-																						<layers size="dynamic">
-																							<value0>
-																								<polymorphic_id>8</polymorphic_id>
-																								<ptr_wrapper>
-																									<id>2147483725</id>
-																									<data>
-																										<base>
-																											<id>{23597afe-fee6-4e29-b224-7aca25dc1a56}</id>
-																											<name>Static Color</name>
-																											<keys size="dynamic"/>
-																											<enabled>true</enabled>
-																											<executionHints>
-																												<startOnKeyPress>false</startOnKeyPress>
-																												<startWithProfile>true</startWithProfile>
-																												<stopOnKeyPress>false</stopOnKeyPress>
-																												<stopOnKeyRelease>false</stopOnKeyRelease>
-																												<stopAfterTimes>-1</stopAfterTimes>
-																												<playOption>Standard</playOption>
-																											</executionHints>
-																											<option>AllLeds</option>
-																										</base>
-																										<lighting>
-																											<polymorphic_id>17</polymorphic_id>
-																											<ptr_wrapper>
-																												<id>2147483726</id>
-																												<data>
-																													<base>
-																														<base>
-																															<name></name>
-																															<id>{e4be71bf-ef9e-48a2-9d84-0cf1c2a3877d}</id>
-																															<duration>1000</duration>
-																															<brightness>10</brightness>
-																														</base>
-																														<transitions size="dynamic">
-																															<value0>
-																																<time>0</time>
-																																<color>#ffffffff</color>
-																															</value0>
-																														</transitions>
-																													</base>
-																													<opacity>255</opacity>
-																												</data>
-																											</ptr_wrapper>
-																										</lighting>
-																									</data>
-																								</ptr_wrapper>
-																							</value0>
-																						</layers>
-																					</base>
-																				</data>
-																			</ptr_wrapper>
-																		</value0>
-																	</value>
-																</value0>
-															</channelProperties>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-										</properties>
-									</data>
-								</ptr_wrapper>
-							</value0>
-							<value1>
-								<polymorphic_id>2147483691</polymorphic_id>
-								<polymorphic_name>CoolingConfigurationProperty::Proxy</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>300</cereal_class_version>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value1>
-							<value2>
-								<polymorphic_id>3</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic">
-											<value0>
-												<key>true</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-											<value1>
-												<key>false</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base>
-																<base/>
-																<layers size="dynamic"/>
-															</base>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value1>
-										</properties>
-									</data>
-								</ptr_wrapper>
-							</value2>
 						</properties>
 					</value>
 				</value5>
@@ -5535,7 +5376,7 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>3</polymorphic_id>
+								<polymorphic_id>4</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -5610,18 +5451,6 @@
 							</value0>
 							<value1>
 								<polymorphic_id>2147483694</polymorphic_id>
-								<polymorphic_name>LightingLinkProperty</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>300</cereal_class_version>
-										<base/>
-										<layers size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value1>
-							<value2>
-								<polymorphic_id>2147483695</polymorphic_id>
 								<polymorphic_name>AllDevicesCoolingProperty</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -5631,6 +5460,18 @@
 										<enabled>false</enabled>
 										<fixedPercents>40</fixedPercents>
 										<activeMode>1</activeMode>
+									</data>
+								</ptr_wrapper>
+							</value1>
+							<value2>
+								<polymorphic_id>2147483695</polymorphic_id>
+								<polymorphic_name>LightingLinkProperty</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>300</cereal_class_version>
+										<base/>
+										<layers size="dynamic"/>
 									</data>
 								</ptr_wrapper>
 							</value2>
@@ -5649,11 +5490,11 @@
 										<layer>
 											<polymorphic_id>1073741824</polymorphic_id>
 											<ptr_wrapper>
-												<id>2147483727</id>
+												<id>2147483724</id>
 												<data>
 													<cereal_class_version>300</cereal_class_version>
 													<base>
-														<id>{8511c852-a2ae-496e-a284-4f3607a93129}</id>
+														<id>{61623c9b-ef5f-4fdd-aab4-aecc1b4682ec}</id>
 														<name></name>
 														<keys size="dynamic"/>
 														<enabled>true</enabled>
@@ -5686,7 +5527,7 @@
 										<storage>
 											<polymorphic_id>1073741824</polymorphic_id>
 											<ptr_wrapper>
-												<id>2147483728</id>
+												<id>2147483725</id>
 												<data>
 													<cereal_class_version>400</cereal_class_version>
 													<storage size="dynamic">
@@ -5745,6 +5586,19 @@
 							</value4>
 							<value5>
 								<polymorphic_id>2147483698</polymorphic_id>
+								<polymorphic_name>CanvasEffectProperty</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>401</cereal_class_version>
+										<base/>
+										<currentEffectId>{00000000-0000-0000-0000-000000000000}</currentEffectId>
+										<currentLayoutId>{00000000-0000-0000-0000-000000000000}</currentLayoutId>
+									</data>
+								</ptr_wrapper>
+							</value5>
+							<value6>
+								<polymorphic_id>2147483699</polymorphic_id>
 								<polymorphic_name>TemperatureAlertProperty</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
@@ -5754,18 +5608,6 @@
 										<assignments size="dynamic"/>
 										<alerts size="dynamic"/>
 										<defaultAlerts size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value5>
-							<value6>
-								<polymorphic_id>2147483699</polymorphic_id>
-								<polymorphic_name>CanvasEffectProperty</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>400</cereal_class_version>
-										<base/>
-										<currentEffectId>{00000000-0000-0000-0000-000000000000}</currentEffectId>
 									</data>
 								</ptr_wrapper>
 							</value6>
@@ -5827,57 +5669,13 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>13</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value1>
-							<value2>
-								<polymorphic_id>2147483700</polymorphic_id>
-								<polymorphic_name>GamepadSensitivityProperty::Proxy</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>400</cereal_class_version>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value2>
-							<value3>
-								<polymorphic_id>2</polymorphic_id>
+								<polymorphic_id>3</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
 										<base/>
 										<properties size="dynamic">
 											<value0>
-												<key>
-													<capability>StandardRgb</capability>
-													<deviceId></deviceId>
-													<modelId>
-														<usbVid>0</usbVid>
-														<usbPid>0</usbPid>
-													</modelId>
-												</key>
-												<value>
-													<polymorphic_id>1073741824</polymorphic_id>
-													<ptr_wrapper>
-														<valid>1</valid>
-														<data>
-															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
-															<dpiCookie>0</dpiCookie>
-														</data>
-													</ptr_wrapper>
-												</value>
-											</value0>
-											<value1>
 												<key>
 													<capability>DramRgb</capability>
 													<deviceId></deviceId>
@@ -5892,8 +5690,30 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
+															<dpiCookie>0</dpiCookie>
+														</data>
+													</ptr_wrapper>
+												</value>
+											</value0>
+											<value1>
+												<key>
+													<capability>StandardRgb</capability>
+													<deviceId></deviceId>
+													<modelId>
+														<usbVid>0</usbVid>
+														<usbPid>0</usbPid>
+													</modelId>
+												</key>
+												<value>
+													<polymorphic_id>1073741824</polymorphic_id>
+													<ptr_wrapper>
+														<valid>1</valid>
+														<data>
+															<base/>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -5914,8 +5734,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -5936,8 +5756,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -5958,8 +5778,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -5980,8 +5800,8 @@
 														<valid>1</valid>
 														<data>
 															<base/>
-															<cookie>0</cookie>
-															<blobCookie>0</blobCookie>
+															<cookie>1</cookie>
+															<blobCookie>1</blobCookie>
 															<dpiCookie>0</dpiCookie>
 														</data>
 													</ptr_wrapper>
@@ -5990,9 +5810,31 @@
 										</properties>
 									</data>
 								</ptr_wrapper>
+							</value1>
+							<value2>
+								<polymorphic_id>11</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
+							</value2>
+							<value3>
+								<polymorphic_id>2147483700</polymorphic_id>
+								<polymorphic_name>GamepadSensitivityProperty::Proxy</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>400</cereal_class_version>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
 							</value3>
 							<value4>
-								<polymorphic_id>7</polymorphic_id>
+								<polymorphic_id>14</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6002,22 +5844,22 @@
 								</ptr_wrapper>
 							</value4>
 							<value5>
-								<polymorphic_id>2147483701</polymorphic_id>
-								<polymorphic_name>VibrationProperty::Proxy</polymorphic_name>
+								<polymorphic_id>7</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
-										<cereal_class_version>200</cereal_class_version>
 										<base/>
 										<properties size="dynamic"/>
 									</data>
 								</ptr_wrapper>
 							</value5>
 							<value6>
-								<polymorphic_id>11</polymorphic_id>
+								<polymorphic_id>2147483701</polymorphic_id>
+								<polymorphic_name>VibrationProperty::Proxy</polymorphic_name>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
+										<cereal_class_version>200</cereal_class_version>
 										<base/>
 										<properties size="dynamic"/>
 									</data>
@@ -6031,7 +5873,7 @@
 					<value>
 						<properties size="dynamic">
 							<value0>
-								<polymorphic_id>43</polymorphic_id>
+								<polymorphic_id>1</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6041,7 +5883,7 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>1</polymorphic_id>
+								<polymorphic_id>43</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6063,7 +5905,7 @@
 								</ptr_wrapper>
 							</value2>
 							<value3>
-								<polymorphic_id>4</polymorphic_id>
+								<polymorphic_id>2</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6071,7 +5913,7 @@
 										<properties size="dynamic">
 											<value0>
 												<key>
-													<capability>StandardRgb</capability>
+													<capability>DramRgb</capability>
 													<deviceId></deviceId>
 													<modelId>
 														<usbVid>0</usbVid>
@@ -6093,7 +5935,7 @@
 											</value0>
 											<value1>
 												<key>
-													<capability>DramRgb</capability>
+													<capability>StandardRgb</capability>
 													<deviceId></deviceId>
 													<modelId>
 														<usbVid>0</usbVid>
@@ -6230,7 +6072,7 @@
 					<value>
 						<properties size="dynamic">
 							<value0>
-								<polymorphic_id>43</polymorphic_id>
+								<polymorphic_id>1</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6240,7 +6082,7 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>1</polymorphic_id>
+								<polymorphic_id>43</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6250,17 +6092,7 @@
 								</ptr_wrapper>
 							</value1>
 							<value2>
-								<polymorphic_id>54</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value2>
-							<value3>
-								<polymorphic_id>3</polymorphic_id>
+								<polymorphic_id>4</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6299,11 +6131,60 @@
 										</properties>
 									</data>
 								</ptr_wrapper>
+							</value2>
+							<value3>
+								<polymorphic_id>54</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
 							</value3>
 						</properties>
 					</value>
 				</value11>
 				<value12>
+					<key>Touchscreen</key>
+					<value>
+						<properties size="dynamic">
+							<value0>
+								<polymorphic_id>11</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
+							</value0>
+							<value1>
+								<polymorphic_id>2147483703</polymorphic_id>
+								<polymorphic_name>TouchscreenProperty</polymorphic_name>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<cereal_class_version>300</cereal_class_version>
+										<base/>
+										<devices size="dynamic"/>
+									</data>
+								</ptr_wrapper>
+							</value1>
+							<value2>
+								<polymorphic_id>1</polymorphic_id>
+								<ptr_wrapper>
+									<valid>1</valid>
+									<data>
+										<base/>
+										<properties size="dynamic"/>
+									</data>
+								</ptr_wrapper>
+							</value2>
+						</properties>
+					</value>
+				</value12>
+				<value13>
 					<key>DRAM</key>
 					<value>
 						<properties size="dynamic">
@@ -6318,7 +6199,7 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>4</polymorphic_id>
+								<polymorphic_id>2</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6326,7 +6207,7 @@
 										<properties size="dynamic">
 											<value0>
 												<key>
-													<capability>StandardRgb</capability>
+													<capability>DramRgb</capability>
 													<deviceId></deviceId>
 													<modelId>
 														<usbVid>0</usbVid>
@@ -6348,7 +6229,7 @@
 											</value0>
 											<value1>
 												<key>
-													<capability>DramRgb</capability>
+													<capability>StandardRgb</capability>
 													<deviceId></deviceId>
 													<modelId>
 														<usbVid>0</usbVid>
@@ -6462,8 +6343,8 @@
 							</value1>
 						</properties>
 					</value>
-				</value12>
-				<value13>
+				</value13>
+				<value14>
 					<key>MotherBoard</key>
 					<value>
 						<properties size="dynamic">
@@ -6478,7 +6359,7 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>3</polymorphic_id>
+								<polymorphic_id>4</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
@@ -6520,45 +6401,6 @@
 							</value1>
 						</properties>
 					</value>
-				</value13>
-				<value14>
-					<key>Touchscreen</key>
-					<value>
-						<properties size="dynamic">
-							<value0>
-								<polymorphic_id>1</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value0>
-							<value1>
-								<polymorphic_id>2147483703</polymorphic_id>
-								<polymorphic_name>TouchscreenProperty</polymorphic_name>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<cereal_class_version>300</cereal_class_version>
-										<base/>
-										<devices size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value1>
-							<value2>
-								<polymorphic_id>11</polymorphic_id>
-								<ptr_wrapper>
-									<valid>1</valid>
-									<data>
-										<base/>
-										<properties size="dynamic"/>
-									</data>
-								</ptr_wrapper>
-							</value2>
-						</properties>
-					</value>
 				</value14>
 				<value15>
 					<key>Nanoleaf</key>
@@ -6575,7 +6417,7 @@
 								</ptr_wrapper>
 							</value0>
 							<value1>
-								<polymorphic_id>3</polymorphic_id>
+								<polymorphic_id>4</polymorphic_id>
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
