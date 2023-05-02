@@ -1,12 +1,12 @@
-G1                  Reload Script
-G3                  # NOT MAPPED
+G1                      Reload Script
+G3                      # NOT MAPPED
 G4                      # NOT MAPPED
 G5                      Type X,90
 G6                      Save file
 w                       Delete
 Space                   Enter
 F4                      Generate NC file
-F12		        Close all Esprit sessions
+F12		                  Close all Esprit sessions
 
 a                       0 Degree
 s                       90 Degree
