@@ -13,9 +13,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 
-^F13::
-Pause
-return
+^f13::Suspend
 
 ;========================== REMAPPINGS ===========================================
 Space::Enter
@@ -83,11 +81,13 @@ return
 ; ========================== WIRE FRAME VIEW ====================================
 wireframe_is_active := false
 
+; G2 Key
 f14::
 tools.solid_view()
 wireframe_is_active := false
 return
 
+; Tilde Key
 f19::
 tools.wireframe_view()
 wireframe_is_active := true
@@ -203,43 +203,6 @@ RButton::
     } else {
         SendInput, {RButton}
     }
-return
-
-;; ========================= Auto-Populate Special Cases ===========================================
-^y::
-WinWaitActive ahk_exe esprit.exe
-WinGetTitle, esprit_title, A
-if(get_case_type(esprit_title) = "TLOC"){
-    FoundPos := RegExMatch(esprit_title, "O)#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", SubPat)
-    working_degree := SubPat.Value(1)
-    rotate_stl_by := SubPat.Value(2)
-    y_pos := SubPat.Value(3)
-    z_pos := SubPat.Value(4)
-    x_pos := SubPat.Value(5)
-
-    views.update_angle_deg(working_degree)
-    Sleep 100
-    rotate_selection(rotate_stl_by)
-    Sleep 100
-    translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
-    Sleep 100
-    rotate_selection(Mod(working_degree, 10), True)
-} else if(get_case_type(esprit_title) = "AOT"){
-    FoundPos := RegExMatch(esprit_title, "O)#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", SubPat)
-    working_degree := SubPat.Value(1)
-    rotate_stl_by := SubPat.Value(2)
-    y_pos := SubPat.Value(3)
-    z_pos := SubPat.Value(4)
-    x_pos := SubPat.Value(5)
-
-    views.update_angle_deg(working_degree)
-    Sleep 100
-    rotate_selection(rotate_stl_by)
-    Sleep 100
-    translate_selection(x_pos+20, -1 * y_pos, -1 * z_pos)
-    Sleep 100
-    rotate_selection(Mod(working_degree, 10), True)
-}
 return
 
 ;; ========================= END PROCESS / RELOAD ==============================
