@@ -6,7 +6,7 @@ G6                      Save file
 w                       Delete
 Space                   Enter
 F4                      Generate NC file
-F12		                  Close all Esprit sessions
+F12                     Close all Esprit sessions
 
 a                       0 Degree
 s                       90 Degree
