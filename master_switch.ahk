@@ -54,17 +54,20 @@ return
 f::
 Deg.deg270()
 return
-f18::
-DEG.REAR()
+
+c::
+Deg.face()
 return
 
-
+v::
+Deg.rear()
+return
 
 !WheelDown::
 views.increment_10_degrees()
 return
 
-^WheelDown::
++!WheelDown::
 views.increment_90_degrees()
 return
 
@@ -72,7 +75,7 @@ return
 views.decrement_10_degrees()
 return
 
-^WheelUp::
++!WheelUp::
 views.decrement_90_degrees()
 return
 ; ========================== WIRE FRAME VIEW ====================================
@@ -96,10 +99,9 @@ t::
 tools.transformation_window()
 return
 
-t::
-tools.transformation_window()
++c::
+tools.circle_tool()
 return
-
 
 XButton1::
 tools.trim_tool()
@@ -136,15 +138,12 @@ return
 ; Useful for quickly creating limitations when all you need is a straight line
 e::
 BlockInput, On
-Sleep, 20
 tools.line_tool()
 Click, Left
 Send, 20{Enter}0{Enter}{Esc}
 Click, Left 2
 Sleep, 100
 border_icon.flatdoubleside()
-SendInput, {Enter}
-Sleep, 50
 BlockInput, Off
 return
 
