@@ -136,21 +136,15 @@ return
 ; Useful for quickly creating limitations when all you need is a straight line
 e::
 BlockInput, On
-;list_search.layer("도형", "combobox5", "ESPRIT")  ;;SET LAYER TO LINES ONLY, SO YOU CAN DRAW LINES ON TOP OF MODELS
-;SLEEP, 50
-;PostMessage, 0x111, 6384 , , , ESPRIT ;; OPTION "INT"  (BOTTOM RIGHT CORNER)  , THIS ALLOWS LINES TO BE DRAWN ON X/Y AXIS
-sleep, 20
+Sleep, 20
 tools.line_tool()
 Click, Left
 Send, 20{Enter}0{Enter}{Esc}
 Click, Left 2
 Sleep, 100
 border_icon.flatdoubleside()
-sendinput, {enter}
-SLEEP, 50
-;list_search.layer("모두", "combobox5", "ESPRIT") ;; SET LAYER BACK TO EVERYTHING
-;PostMessage, 0x111, 6384 , , , ESPRIT ;; TURN OFF "INT" SETTING
-
+SendInput, {Enter}
+Sleep, 50
 BlockInput, Off
 return
 
