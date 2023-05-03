@@ -14,7 +14,7 @@
 			<tabsTransparencyEnabled>false</tabsTransparencyEnabled>
 			<tabsTransparency>0</tabsTransparency>
 			<isInitial>true</isInitial>
-			<exporterVersion>4.32.129</exporterVersion>
+			<exporterVersion>4.33.138</exporterVersion>
 			<properties size="dynamic">
 				<value0>
 					<key>Profile</key>
@@ -56,9 +56,10 @@
 								<ptr_wrapper>
 									<valid>1</valid>
 									<data>
-										<cereal_class_version>400</cereal_class_version>
+										<cereal_class_version>401</cereal_class_version>
 										<base/>
 										<currentEffectId>{00000000-0000-0000-0000-000000000000}</currentEffectId>
+										<currentLayoutId>{00000000-0000-0000-0000-000000000000}</currentLayoutId>
 									</data>
 								</ptr_wrapper>
 							</value2>
@@ -108,7 +109,7 @@
 													<cereal_class_version>300</cereal_class_version>
 													<base>
 														<cereal_class_version>400</cereal_class_version>
-														<id>{9a05a716-1d57-4e56-b906-0d9383e1007c}</id>
+														<id>{40363cff-e44e-4b0a-ab57-a153c9d6aa5f}</id>
 														<name></name>
 														<keys size="dynamic"/>
 														<enabled>true</enabled>
@@ -350,7 +351,7 @@
 																									<data>
 																										<cereal_class_version>200</cereal_class_version>
 																										<base>
-																											<id>{cf7b6be7-1a65-4851-97e0-31bbc01437ad}</id>
+																											<id>{98e121e4-f9f9-4214-9e19-86678f742293}</id>
 																											<name>Water Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -437,7 +438,7 @@
 																									<id>2147483655</id>
 																									<data>
 																										<base>
-																											<id>{335f6b1d-86fb-4d39-a26d-24b2a1ae2af1}</id>
+																											<id>{4e42ddb4-19e2-418f-a654-149decf5dcc9}</id>
 																											<name>Pulse</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -518,7 +519,7 @@
 																									<id>2147483657</id>
 																									<data>
 																										<base>
-																											<id>{7dcc84b3-4ee6-4738-97ec-eaceda926955}</id>
+																											<id>{b07c9deb-8fff-48e6-a3bf-16259f9f2a70}</id>
 																											<name>Rainbow</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -598,7 +599,7 @@
 																									<id>2147483659</id>
 																									<data>
 																										<base>
-																											<id>{1b258010-b933-488f-80f9-41f42cf0dd03}</id>
+																											<id>{f39154c7-caa0-4849-bc53-b92ce0c12611}</id>
 																											<name>Water Сolor</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1186,7 +1187,7 @@
 																												<id>2147483661</id>
 																												<data>
 																													<base>
-																														<id>{50435f02-1c20-43a6-bd27-6260ae4e2a5d}</id>
+																														<id>{fdd3fc67-a39b-4aab-85d1-572bdfd4792b}</id>
 																														<name>Rainbow</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
@@ -1268,7 +1269,7 @@
 																												<id>2147483663</id>
 																												<data>
 																													<base>
-																														<id>{2019bc6b-1bdb-4603-aaab-c3eeee6518b8}</id>
+																														<id>{fdc437b3-bb03-4783-986e-f2fee5cda518}</id>
 																														<name>Water Сolor</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
@@ -1356,7 +1357,7 @@
 																												<id>2147483665</id>
 																												<data>
 																													<base>
-																														<id>{43016c8e-3d71-42c6-a1d5-9bdc8aa7e57e}</id>
+																														<id>{b02c5d2c-4d73-4f52-bce8-2dfecc52ff6b}</id>
 																														<name>Water Color</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
@@ -1497,7 +1498,7 @@
 																									<id>2147483667</id>
 																									<data>
 																										<base>
-																											<id>{7e713c93-e097-443e-a2ee-1f646eeccfe4}</id>
+																											<id>{a5381890-3145-4bdd-8875-fe97a6b72682}</id>
 																											<name>Water Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1581,7 +1582,7 @@
 																									<id>2147483669</id>
 																									<data>
 																										<base>
-																											<id>{66ed0d51-a631-4001-b55b-cbf397ab20bb}</id>
+																											<id>{33173eee-3ae4-4760-9129-b0658500c467}</id>
 																											<name>Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1663,7 +1664,7 @@
 																									<id>2147483671</id>
 																									<data>
 																										<base>
-																											<id>{868e7bd8-37de-4a17-897b-62dd2544fa6b}</id>
+																											<id>{dcadea56-86c1-4410-af91-11cedf4d4899}</id>
 																											<name>Spiral Rainbow</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1744,7 +1745,7 @@
 																									<id>2147483673</id>
 																									<data>
 																										<base>
-																											<id>{70462a97-e9b9-4877-92ff-09df045d2a68}</id>
+																											<id>{1dd49bf8-1684-4dae-aefc-7d313c465a24}</id>
 																											<name>Default</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1825,7 +1826,7 @@
 																									<id>2147483675</id>
 																									<data>
 																										<base>
-																											<id>{99aa8330-d618-4926-a6aa-aff78b38dcc7}</id>
+																											<id>{68fefc56-88b8-4533-8303-80476ba66bda}</id>
 																											<name>Visor</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1904,7 +1905,7 @@
 																									<id>2147483677</id>
 																									<data>
 																										<base>
-																											<id>{209f1115-a0cb-4bcb-b8e9-c7b977c3cf21}</id>
+																											<id>{fb6d4512-21a3-4097-90d7-3a1f21c900f3}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -1985,7 +1986,7 @@
 																									<id>2147483679</id>
 																									<data>
 																										<base>
-																											<id>{3ec3f06d-d8e6-4c62-a4e5-b7859ef3621e}</id>
+																											<id>{fb74f0b2-b69e-41f0-ad53-d08ad8f0cdbb}</id>
 																											<name>Default</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -2075,7 +2076,7 @@
 																									<id>2147483681</id>
 																									<data>
 																										<base>
-																											<id>{642eb4e6-c31d-41b3-8b73-76c445038daa}</id>
+																											<id>{929ccd68-f9c4-4356-bbbe-b6a0d2c07e3a}</id>
 																											<name>Rainbow Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -2156,7 +2157,7 @@
 																									<id>2147483683</id>
 																									<data>
 																										<base>
-																											<id>{3fd79cbb-7d13-4cbc-8396-4896ee58131d}</id>
+																											<id>{e28b2899-fbba-4744-91e2-da283f68735e}</id>
 																											<name>Type Lighting 1</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -2204,7 +2205,7 @@
 																									<id>2147483685</id>
 																									<data>
 																										<base>
-																											<id>{a70d8116-5e1b-44a9-a22f-5d2568349f2b}</id>
+																											<id>{c09bae28-6d18-4b9d-ba01-5cb929d2763d}</id>
 																											<name>Static Color 1</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -2397,7 +2398,7 @@
 																			<id>2147483687</id>
 																			<data>
 																				<base>
-																					<id>{24e853a6-8213-40b9-b03e-cf0f750b6988}</id>
+																					<id>{9a6863a6-e9bc-40f1-af10-d4760eb91bc2}</id>
 																					<name>Rainbow Wave</name>
 																					<keys size="dynamic"/>
 																					<enabled>true</enabled>
@@ -2963,7 +2964,7 @@
 																												<id>2147483688</id>
 																												<data>
 																													<base>
-																														<id>{9d985d98-0b5f-4a61-b2c7-a096158a2708}</id>
+																														<id>{535b2274-2492-4491-a774-893eb0380526}</id>
 																														<name>Water Color</name>
 																														<keys size="dynamic"/>
 																														<enabled>true</enabled>
@@ -3089,8 +3090,8 @@
 																				<cereal_class_version>301</cereal_class_version>
 																				<base>
 																					<cereal_class_version>202</cereal_class_version>
-																					<name>Profile Switching 1</name>
-																					<id>{f8e94e15-fe61-4e43-b229-97699d829010}</id>
+																					<name>Profile Switching DEFAULT</name>
+																					<id>{579b6ea9-f521-4aa6-b60f-6bf793dba6c2}</id>
 																					<repeatOptions>
 																						<cereal_class_version>300</cereal_class_version>
 																						<repeatCount>1</repeatCount>
@@ -3111,10 +3112,13 @@
 																					<actionSoundPath></actionSoundPath>
 																					<attachedActions size="dynamic"/>
 																				</base>
-																				<switchType>Direct</switchType>
+																				<switchType>ProfileList</switchType>
 																				<loop>true</loop>
-																				<profile>{15326e02-cdda-4839-9c73-5acc66d85d1c}</profile>
-																				<profiles size="dynamic"/>
+																				<profile>{00000000-0000-0000-0000-000000000000}</profile>
+																				<profiles size="dynamic">
+																					<value0>{6cd71b5b-3931-40b3-b349-10604b36d69e}</value0>
+																					<value1>{b54c9a73-e2c2-406c-a62f-0b374c928ca5}</value1>
+																				</profiles>
 																				<direction>Forward</direction>
 																			</data>
 																		</ptr_wrapper>
@@ -3309,7 +3313,7 @@
 																<cereal_class_version>301</cereal_class_version>
 																<base>
 																	<name></name>
-																	<id>{6336f308-6c98-4852-b839-339ca3983533}</id>
+																	<id>{c945ad3a-de7e-4ab1-9ed3-8bddaea97a80}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3344,7 +3348,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{f6c2d01c-bb79-404b-baab-c8bb6ddbea0c}</id>
+																	<id>{2504a6c8-0ca7-4f94-9acf-8904096fe1aa}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3379,7 +3383,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{cb782dbf-983e-4748-a2b8-e7b0c808d3bd}</id>
+																	<id>{5c699272-9f28-418b-8322-018d8d1d548b}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3414,7 +3418,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{ff20add4-7006-4d17-8565-a5a5d5a608da}</id>
+																	<id>{6d84f199-f5cb-43ff-aa07-803eb4beaad6}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3449,7 +3453,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{1d9bde19-a13c-41e5-be8e-3c06a742dfd2}</id>
+																	<id>{01214efa-9fa3-419b-9a1d-357a167ecf1f}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3484,7 +3488,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{89b5bd7e-9370-4d26-851c-ae3358fc47b3}</id>
+																	<id>{5c824b6d-6d3e-40da-9e72-500467de6bdc}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3519,7 +3523,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{dbe24fea-f43d-4e1e-a6d2-21926754dc36}</id>
+																	<id>{0f88f37f-7742-4eeb-89ca-3792679cbb6b}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3554,7 +3558,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{a69f751f-9327-4988-b1a7-cd6305416591}</id>
+																	<id>{10dd63d0-c7a8-41ce-b087-63a9566167fe}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3589,7 +3593,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{cbc67cce-4fda-474c-a5e2-33040b7ec79e}</id>
+																	<id>{d503c03b-b707-46d5-9f08-46bb8ae06dac}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3624,7 +3628,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{6211fb1d-60e2-4138-bdea-2c1f919c7b53}</id>
+																	<id>{6b239607-cc56-4a8f-bcbd-e76ccba18672}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3659,7 +3663,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{b802119e-81fd-4141-b1bf-84d885928438}</id>
+																	<id>{1b620e79-b3ad-4197-add8-482f78c49d31}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3694,7 +3698,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{2cb9593b-e711-497a-aa16-11a88e091ec0}</id>
+																	<id>{699d00da-645b-4227-a7f9-50887b8f35d2}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3729,7 +3733,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{3c5d9236-5f40-43a0-9fe2-a8f8d8be3738}</id>
+																	<id>{935d7efd-d26e-425b-9f16-789fd83ef6d9}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3764,7 +3768,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{97f2d9a2-1310-4cd9-84f9-a295abe21a47}</id>
+																	<id>{2bd7f21a-91af-4d03-92da-e1712893108a}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3799,7 +3803,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{20c9e8e7-3b74-49d5-8430-deb9ab223588}</id>
+																	<id>{8beb8fa5-eb58-41fc-804c-b1843958b596}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3834,7 +3838,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{39859ef1-763f-4ba9-ba09-5e4d63aa1a5b}</id>
+																	<id>{874e1a38-f9dc-4875-b83e-9463aeaf160e}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3869,7 +3873,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{163c7914-3735-4ca3-8428-fbe5bd7c5da3}</id>
+																	<id>{56717a34-4b0e-4adc-a4f7-5f7e0ff3a8f1}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3904,7 +3908,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{adca42fd-4c1e-410d-9d70-527ec6404688}</id>
+																	<id>{41ddea54-f354-44f0-a412-99bbe50b0d58}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3939,7 +3943,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{be2ba6c9-5324-4fa4-8ba5-8154f4abdeb8}</id>
+																	<id>{ae725bcc-2a27-4ca5-bfa5-dbdf5b50b0dd}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -3974,7 +3978,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{63068ecc-89d2-4d84-b80c-d2aef24704a5}</id>
+																	<id>{410647d3-7682-4ad5-b649-156e80a79fea}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -4009,7 +4013,7 @@
 															<data>
 																<base>
 																	<name></name>
-																	<id>{13790cec-c0b8-4331-8027-220e52b0fdf8}</id>
+																	<id>{b5d8c0a3-f97b-4b4d-bcd7-a649544173e7}</id>
 																	<repeatOptions>
 																		<repeatCount>1</repeatCount>
 																		<repeatMode>NoRepeat</repeatMode>
@@ -4585,7 +4589,7 @@
 																									<id>2147483733</id>
 																									<data>
 																										<base>
-																											<id>{11345e0a-d4fd-43b9-895b-b06b04bee57e}</id>
+																											<id>{433e0a0f-62a5-449c-b6fc-b928c59ef92d}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -4664,7 +4668,7 @@
 																									<id>2147483735</id>
 																									<data>
 																										<base>
-																											<id>{66705451-7ff6-48c8-aad4-635c9dc63b12}</id>
+																											<id>{121c44a0-0bbf-4b0e-80cc-b8c28e1952c0}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -4743,7 +4747,7 @@
 																									<id>2147483737</id>
 																									<data>
 																										<base>
-																											<id>{71dc3231-684a-48a7-8556-ae180bdc3c17}</id>
+																											<id>{937929d6-90bf-43c8-abd0-4a0113436ce1}</id>
 																											<name>Static Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -5287,7 +5291,7 @@
 																									<id>2147483742</id>
 																									<data>
 																										<base>
-																											<id>{cacb4848-a144-44ae-962f-8f1ddf503562}</id>
+																											<id>{702edcba-6483-4371-a78f-ded21ae25b4b}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -5366,7 +5370,7 @@
 																									<id>2147483744</id>
 																									<data>
 																										<base>
-																											<id>{51f68fbb-d0e7-43fa-9b98-1b0a4211821e}</id>
+																											<id>{acc1471c-00fe-4fb3-9f93-4f4e27d4fd14}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -5934,7 +5938,7 @@
 																									<id>2147483751</id>
 																									<data>
 																										<base>
-																											<id>{b052e838-95a9-46bb-8101-e7bcb2961812}</id>
+																											<id>{13fcc3a6-4a5f-4fcd-bbcb-2efabdb8656e}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -6103,7 +6107,7 @@
 																									<id>2147483753</id>
 																									<data>
 																										<base>
-																											<id>{07d16000-26fe-4383-ae7e-1b5a31ca2ab8}</id>
+																											<id>{a3c23972-ba54-4306-a9cc-0c23e71fb3b9}</id>
 																											<name>Rainbow</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -6181,7 +6185,7 @@
 																									<id>2147483755</id>
 																									<data>
 																										<base>
-																											<id>{60eb3e0b-6682-4f8e-9c47-a5a30489c13c}</id>
+																											<id>{dc264276-14f6-49df-9442-3dad9eaf4ab2}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -6260,7 +6264,7 @@
 																									<id>2147483757</id>
 																									<data>
 																										<base>
-																											<id>{28fb14e4-b568-49ac-a436-506ece7c8416}</id>
+																											<id>{42c9bfda-9dc1-4feb-b21b-9ef753226b04}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic">
 																												<value0>Led_CaseZone6</value0>
@@ -6542,7 +6546,7 @@
 																			<id>2147483759</id>
 																			<data>
 																				<base>
-																					<id>{b545e0d3-ddbf-4fa8-a851-f21a7da7e8ea}</id>
+																					<id>{b6a54773-4f8e-4f33-823c-4fc44d392354}</id>
 																					<name>Rainbow</name>
 																					<keys size="dynamic"/>
 																					<enabled>true</enabled>
@@ -6701,7 +6705,7 @@
 																			<id>2147483760</id>
 																			<data>
 																				<base>
-																					<id>{64c11d98-18e6-4f94-88a8-1a15b9f14a70}</id>
+																					<id>{21cadccd-ecba-4ade-987f-855261586df7}</id>
 																					<name>Pulse</name>
 																					<keys size="dynamic"/>
 																					<enabled>true</enabled>
@@ -6818,7 +6822,7 @@
 																									<id>2147483761</id>
 																									<data>
 																										<base>
-																											<id>{141c8195-1e0c-465a-b959-92374361446c}</id>
+																											<id>{5b9a7ea8-2b4f-4a53-82c8-c30ba16572d8}</id>
 																											<name>Rainbow Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -6897,7 +6901,7 @@
 																									<id>2147483763</id>
 																									<data>
 																										<base>
-																											<id>{5579e46a-4b2c-4149-8687-7ba68d05de74}</id>
+																											<id>{069b80d2-94c8-4889-8551-acdb4e42c29b}</id>
 																											<name>Rainbow Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -6976,7 +6980,7 @@
 																									<id>2147483765</id>
 																									<data>
 																										<base>
-																											<id>{887c6734-4dd1-40bf-bcd9-066ec07e2e75}</id>
+																											<id>{c6de2845-3d9b-47b5-a591-6795e2c5d1fd}</id>
 																											<name>Rainbow Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7055,7 +7059,7 @@
 																									<id>2147483767</id>
 																									<data>
 																										<base>
-																											<id>{e7e69793-9472-4627-822e-3c31b2e9e4d6}</id>
+																											<id>{99ebd4d5-8995-4530-b854-8af6aea53175}</id>
 																											<name>Rainbow Wave</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7134,7 +7138,7 @@
 																									<id>2147483769</id>
 																									<data>
 																										<base>
-																											<id>{e9b55061-7cbe-4b3c-ac49-02a6688e1845}</id>
+																											<id>{d6d361a8-f996-4219-ae50-08c5d8aa0ccc}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7213,7 +7217,7 @@
 																									<id>2147483771</id>
 																									<data>
 																										<base>
-																											<id>{89e0b1dc-6825-42d8-9197-174a24094e5f}</id>
+																											<id>{8e0fe49b-ab3f-46e3-b6f7-d59811a12e1a}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7292,7 +7296,7 @@
 																									<id>2147483773</id>
 																									<data>
 																										<base>
-																											<id>{ec4ef989-4879-40cc-b462-9a7709b1aca2}</id>
+																											<id>{5364500f-00e2-4393-b0b4-31165a2164e8}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7371,7 +7375,7 @@
 																									<id>2147483775</id>
 																									<data>
 																										<base>
-																											<id>{bcda5046-eaa8-48d8-a53e-0ec29767f637}</id>
+																											<id>{bd7fd7a3-f7b1-473f-8c84-233c60da231a}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7468,7 +7472,7 @@
 																									<id>2147483777</id>
 																									<data>
 																										<base>
-																											<id>{4bae9a19-bd3b-46bf-8a8b-695fc756a9ca}</id>
+																											<id>{507c2ad0-1b86-46bb-872c-0ff61c349332}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7520,7 +7524,7 @@
 																									<id>2147483779</id>
 																									<data>
 																										<base>
-																											<id>{187e47d2-c360-4597-bdcd-d4bb773e28fb}</id>
+																											<id>{97955657-cd51-457a-8c85-802aaed5494d}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7577,7 +7581,7 @@
 																									<id>2147483781</id>
 																									<data>
 																										<base>
-																											<id>{7a1d5fde-e68b-474e-980c-0f8d11365745}</id>
+																											<id>{fc2ae086-28c6-411c-a6b2-2784cf8b72fc}</id>
 																											<name></name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7656,7 +7660,7 @@
 																									<id>2147483783</id>
 																									<data>
 																										<base>
-																											<id>{9ea23f6e-d871-4eaf-9fca-d0c0e4dedc36}</id>
+																											<id>{9a90ef1f-7899-46dc-91a0-454c2b27887f}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7708,7 +7712,7 @@
 																									<id>2147483785</id>
 																									<data>
 																										<base>
-																											<id>{9510170b-4c04-4e64-8c6e-5b3a9a8b4e99}</id>
+																											<id>{b9071b1d-bbb5-43f9-ba78-ae4584ae1b52}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7787,7 +7791,7 @@
 																									<id>2147483787</id>
 																									<data>
 																										<base>
-																											<id>{926e3518-7110-424a-8a74-95374207c8fd}</id>
+																											<id>{89fcd324-f94f-4e0c-9cfb-7414d206eb61}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -7945,7 +7949,7 @@
 																									<id>2147483789</id>
 																									<data>
 																										<base>
-																											<id>{34726c05-116e-4e5b-8b59-1a9916841667}</id>
+																											<id>{0c7303b2-80c0-4b1b-beda-312171034988}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -8083,7 +8087,7 @@
 																									<id>2147483791</id>
 																									<data>
 																										<base>
-																											<id>{e7bcd52d-dc91-4507-bf09-a8316ffe20f5}</id>
+																											<id>{0d0a91a3-b3e2-455c-a9cf-caaa1ad17100}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -8140,7 +8144,7 @@
 																									<id>2147483793</id>
 																									<data>
 																										<base>
-																											<id>{42157b01-2a87-427f-a35f-7cdf7e36171a}</id>
+																											<id>{5f74c476-8e7a-4029-9537-6966619a285d}</id>
 																											<name>Static Color</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -8295,7 +8299,7 @@
 																									<id>2147483795</id>
 																									<data>
 																										<base>
-																											<id>{864b30ad-40bc-41f3-b5fd-fba0dfb65ccb}</id>
+																											<id>{cf202534-d85e-4ece-b33e-68b90e4f5b10}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -8457,7 +8461,7 @@
 																									<id>2147483797</id>
 																									<data>
 																										<base>
-																											<id>{8d85d226-bcca-41c3-bf03-14b96980f10b}</id>
+																											<id>{806056c1-4c88-463f-89b4-6d91994f7d1a}</id>
 																											<name>Static Color 1</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
@@ -8571,7 +8575,7 @@
 																									<id>2147483799</id>
 																									<data>
 																										<base>
-																											<id>{81c07ebb-a23a-4b4c-b735-a3b93688936d}</id>
+																											<id>{1211be5a-027d-4e85-8668-f98d3aca7ef8}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic">
 																												<value0>Led_GamepadZone1</value0>
@@ -8891,7 +8895,7 @@
 																									<id>2147483802</id>
 																									<data>
 																										<base>
-																											<id>{fbfabad3-c9e0-43f9-9ce0-05223cd9f966}</id>
+																											<id>{7a4531f4-7056-4983-9311-3106c3ebeed5}</id>
 																											<name>Watercolor Spectrum</name>
 																											<keys size="dynamic"/>
 																											<enabled>true</enabled>
