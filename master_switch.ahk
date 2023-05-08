@@ -103,6 +103,19 @@ return
 tools.circle_tool()
 return
 
++a::
+tools.unsuppress_operation()
+return
+
++s::
+tools.suppress_operation()
+return
+
+
++r::
+tools.rebuild_operation()
+return
+
 XButton1::
 tools.trim_tool()
 return
