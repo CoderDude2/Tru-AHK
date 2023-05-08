@@ -145,6 +145,7 @@ Click, Left 2
 Sleep, 100
 border_icon.flatdoubleside()
 BlockInput, Off
+Send, {Enter}
 return
 
 ; G5 Key
