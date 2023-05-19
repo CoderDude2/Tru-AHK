@@ -1,4 +1,5 @@
 G1                      Reload Script
+Ctrl+G1                 Suspend Hotkeys
 G3                      # NOT MAPPED
 G4                      # NOT MAPPED
 G5                      Type X,90
