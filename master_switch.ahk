@@ -220,7 +220,7 @@ RButton::
 return
 
 ; ========================= Auto-Fill TLOC cases ===========================================
-^y::
++t::
 WinWaitActive ahk_exe esprit.exe
 WinGetTitle, esprit_title, A
 if(get_case_type(esprit_title) = "TLOC"){
