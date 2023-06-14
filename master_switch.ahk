@@ -219,6 +219,49 @@ RButton::
     }
 return
 
+; ========================= Auto-Fill TLOC cases ===========================================
+^y::
+WinWaitActive ahk_exe esprit.exe
+WinGetTitle, esprit_title, A
+if(get_case_type(esprit_title) = "TLOC"){
+    FoundPos := RegExMatch(esprit_title, "O)#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", SubPat)
+    working_degree := SubPat.Value(1)
+    rotate_stl_by := SubPat.Value(2)
+    y_pos := SubPat.Value(3)
+    z_pos := SubPat.Value(4)
+    x_pos := SubPat.Value(5)
+
+    views.update_angle_deg(working_degree)
+    Sleep 50
+    rotate_selection(rotate_stl_by)
+    Sleep 50
+    translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
+    Sleep 50
+    rotate_selection(Mod(working_degree, 10), True)
+
+    ; Copies the five properties associated with the TLOC file to the clipboard for use in ESPRIT.
+    clipboard := "#101=" working_degree "`r`n#102=" rotate_stl_by "`r`n#103=" y_pos "`r`n#104=" z_pos "`r`n#105=" x_pos
+
+} else if(get_case_type(esprit_title) = "AOT"){
+    FoundPos := RegExMatch(esprit_title, "O)#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", SubPat)
+    working_degree := SubPat.Value(1)
+    rotate_stl_by := SubPat.Value(2)
+    y_pos := SubPat.Value(3)
+    z_pos := SubPat.Value(4)
+    x_pos := SubPat.Value(5)
+
+    views.update_angle_deg(working_degree)
+    Sleep 50
+    translate_selection(20, 0, 0)
+    Sleep 50
+    rotate_selection(rotate_stl_by)
+    Sleep 50
+    translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
+    Sleep 50
+    rotate_selection(Mod(working_degree, 10), True)
+}
+return
+
 ;; ========================= END PROCESS / RELOAD ==============================
 
 f13::
