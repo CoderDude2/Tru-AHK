@@ -20,7 +20,7 @@ v                       Rear view
 G2                      Wireframe view
 t                       Transformation window
 
-g                       Extrude drawn line to a length of 11 mm and a thickness of 1 mm
+g                       Extrude drawn line to a length of 11 mm and a thickness of 1 mm. 
 b                       Cut solid with selected line
 e                       Draw a line 25 mm with a thickness of 1 mm
 r                       Draw a line 6 mm long with a width of 1 mm
@@ -35,10 +35,19 @@ Ctrl+e                  Extrude tool
 CapsLock                Line tool
 
 Shift+Space             Play/Pause simulation
-Escape                  Stop simulation/Cancel auto-complete margin
+Escape                  Stop simulation/Cancel auto-complete margin.
 
 Mouse X1                Trim Tool
 Mouse X2                Draw path tool
 
-Alt+Scroll              Increment/Decrement working view by 10 degrees
-Alt+Shift+Scroll        Increment/Decrement working view by 90 degrees
+Alt+Scroll              Increment/Decrement working view by 10 degrees.
+Alt+Shift+Scroll        Increment/Decrement working view by 90 degrees.
+
+
+Auto-fill TLOC and AOT:
+
+How to use:
+  1. Select the cap.
+  2. Press [Shift+t].
+  3. Wait for autofill to finish.
+  4. Select the X axis.
