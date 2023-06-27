@@ -24,6 +24,7 @@ g                       Extrude drawn line to a length of 11 mm and a thickness 
 b                       Cut solid with selected line
 e                       Draw a line 25 mm with a thickness of 1 mm
 r                       Draw a line 6 mm long with a width of 1 mm
+Shift+1                 Raise line by 0.25
 
 Shift+a                 Unsuppress selected operation(s)
 Shift+s                 Suppress selected operation(s)
