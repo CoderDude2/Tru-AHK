@@ -262,8 +262,15 @@ if(get_case_type(esprit_title) = "TLOC"){
     rotate_selection(Mod(working_degree, 10), True)
 }
 return
+;========================== Text X and PL Tracker =============================
 
-;; ========================= END PROCESS / RELOAD ==============================
++x::
+
+
+
+return
+
+; ========================= END PROCESS / RELOAD ==============================
 
 f13::
 Reload
