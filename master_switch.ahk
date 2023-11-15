@@ -13,19 +13,21 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 
-^f13::Suspend
-
-;========================== REMAPPINGS ===========================================
-Space::Enter
-w::Delete
 
 ;========================== VARIABLES ===========================================
+
+log_path := "C:\Users\TruUser\Desktop"
 
 saved_values := load_metadata(log_path)
 global text_x := saved_values[1]
 global text_x_asc := saved_values[2]
 global process_last := saved_values[3]
 global process_last_asc := saved_values[4]
+
+^f13::Suspend
+;========================== REMAPPINGS ===========================================
+Space::Enter
+w::Delete
 
 ;========================== HOT STRINGS =========================================
 
@@ -296,22 +298,26 @@ add_to_text_x(){
     if(id = ""){
         return
     }
-    
+
     if(get_case_type(esprit_title) = "ASC"){
         for key, value in text_x_asc
             if(value = id){
                 text_x_asc.RemoveAt(key)
+                MsgBox, %id% removed from Text X.
                 return
             }
         text_x_asc.Push(id)
+        MsgBox, %id% added to Text X.
     } else {
         for key, value in text_x
             if(value = id){
                 text_x.RemoveAt(key)
+                MsgBox, %id% removed from Text X.
                 return
             }
         text_x.Push(id)
-    }
+        MsgBox, %id% added to Text X.
+    }    
 }
 
 add_to_process_last(){
@@ -320,20 +326,25 @@ add_to_process_last(){
     if(id = ""){
         return
     }
+
     if(get_case_type(esprit_title) = "ASC"){
         for key, value in process_last_asc
             if(value = id){
                 process_last_asc.RemoveAt(key)
+                MsgBox, %id% removed from Process Last.
                 return
             }
         process_last_asc.Push(id)
+        MsgBox, %id% added to Process Last.
     } else {
         for key, value in process_last
             if(value = id){
                 process_last.RemoveAt(key)
+                MsgBox, %id% removed from Process Last.
                 return
             }
         process_last.Push(id)
+        MsgBox, %id% added to Process Last.
     }
 }
 
