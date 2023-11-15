@@ -1,0 +1,53 @@
+G1                      Reload Script
+Ctrl+G1                 Suspend Hotkeys
+G3                      # NOT MAPPED
+G4                      # NOT MAPPED
+G5                      Type X,90
+G6                      Save file
+w                       Delete
+Space                   Enter
+F4                      Generate NC file
+F12                     Close all Esprit sessions
+
+a                       0 Degree
+s                       90 Degree
+d                       180 Degree
+f                       270 Degree
+c                       Face view
+v                       Rear view
+
+~                       Solid view
+G2                      Wireframe view
+t                       Transformation window
+
+g                       Extrude drawn line to a length of 11 mm and a thickness of 1 mm. 
+b                       Cut solid with selected line
+e                       Draw a line 25 mm with a thickness of 1 mm
+r                       Draw a line 6 mm long with a width of 1 mm
+Shift+1                 Raise line by 0.25
+
+Shift+a                 Unsuppress selected operation(s)
+Shift+s                 Suppress selected operation(s)
+Shift+r                 Rebuild selected operation(s)
+
+Shift+c                 Circle Tool
+Ctrl+e                  Extrude tool
+CapsLock                Line tool
+
+Shift+Space             Play/Pause simulation
+Escape                  Stop simulation/Cancel auto-complete margin.
+
+Mouse X1                Trim Tool
+Mouse X2                Draw path tool
+
+Alt+Scroll              Increment/Decrement working view by 10 degrees.
+Alt+Shift+Scroll        Increment/Decrement working view by 90 degrees.
+
+
+Auto-fill TLOC and AOT:
+
+How to use:
+  1. Select the cap.
+  2. Press [Shift+t].
+  3. Wait for autofill to finish.
+  4. Select the X axis.
