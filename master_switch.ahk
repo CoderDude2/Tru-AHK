@@ -21,6 +21,12 @@ w::Delete
 
 ;========================== VARIABLES ===========================================
 
+saved_values := load_metadata(log_path)
+global text_x := saved_values[1]
+global text_x_asc := saved_values[2]
+global process_last := saved_values[3]
+global process_last_asc := saved_values[4]
+
 ;========================== HOT STRINGS =========================================
 
 :*:3-1::
@@ -265,10 +271,71 @@ return
 ;========================== Text X and PL Tracker =============================
 
 +x::
-
-
-
+saved_values := load_metadata(log_path)
+text_x := saved_values[1]
+text_x_asc := saved_values[2]
+process_last := saved_values[3]
+process_last_asc := saved_values[4]
+add_to_text_x()
+save_metadata(text_x, text_x_asc, process_last, process_last_asc, log_path)
 return
+
++z::
+saved_values := load_metadata(log_path)
+text_x := saved_values[1]
+text_x_asc := saved_values[2]
+process_last := saved_values[3]
+process_last_asc := saved_values[4]
+add_to_process_last()
+save_metadata(text_x, text_x_asc, process_last, process_last_asc, log_path)
+return
+
+add_to_text_x(){
+    WinGetTitle, esprit_title, A
+    id:=get_case_id(esprit_title)
+    if(id = ""){
+        return
+    }
+    
+    if(get_case_type(esprit_title) = "ASC"){
+        for key, value in text_x_asc
+            if(value = id){
+                text_x_asc.RemoveAt(key)
+                return
+            }
+        text_x_asc.Push(id)
+    } else {
+        for key, value in text_x
+            if(value = id){
+                text_x.RemoveAt(key)
+                return
+            }
+        text_x.Push(id)
+    }
+}
+
+add_to_process_last(){
+    WinGetTitle, esprit_title, A
+    id:=get_case_id(esprit_title)
+    if(id = ""){
+        return
+    }
+    if(get_case_type(esprit_title) = "ASC"){
+        for key, value in process_last_asc
+            if(value = id){
+                process_last_asc.RemoveAt(key)
+                return
+            }
+        process_last_asc.Push(id)
+    } else {
+        for key, value in process_last
+            if(value = id){
+                process_last.RemoveAt(key)
+                return
+            }
+        process_last.Push(id)
+    }
+}
 
 ; ========================= END PROCESS / RELOAD ==============================
 
