@@ -13,13 +13,21 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinExist ahk_exe esprit.exe
 #IfWinActive ahk_exe esprit.exe
 
-^f13::Suspend
 
+;========================== VARIABLES ===========================================
+
+log_path := "C:\Users\TruUser\Desktop"
+
+saved_values := load_metadata(log_path)
+global text_x := saved_values[1]
+global text_x_asc := saved_values[2]
+global process_last := saved_values[3]
+global process_last_asc := saved_values[4]
+
+^f13::Suspend
 ;========================== REMAPPINGS ===========================================
 Space::Enter
 w::Delete
-
-;========================== VARIABLES ===========================================
 
 ;========================== HOT STRINGS =========================================
 
@@ -262,8 +270,85 @@ if(get_case_type(esprit_title) = "TLOC"){
     rotate_selection(Mod(working_degree, 10), True)
 }
 return
+;========================== Text X and PL Tracker =============================
 
-;; ========================= END PROCESS / RELOAD ==============================
++x::
+saved_values := load_metadata(log_path)
+text_x := saved_values[1]
+text_x_asc := saved_values[2]
+process_last := saved_values[3]
+process_last_asc := saved_values[4]
+add_to_text_x()
+save_metadata(text_x, text_x_asc, process_last, process_last_asc, log_path)
+return
+
++z::
+saved_values := load_metadata(log_path)
+text_x := saved_values[1]
+text_x_asc := saved_values[2]
+process_last := saved_values[3]
+process_last_asc := saved_values[4]
+add_to_process_last()
+save_metadata(text_x, text_x_asc, process_last, process_last_asc, log_path)
+return
+
+add_to_text_x(){
+    WinGetTitle, esprit_title, A
+    id:=get_case_id(esprit_title)
+    if(id = ""){
+        return
+    }
+
+    if(get_case_type(esprit_title) = "ASC"){
+        for key, value in text_x_asc
+            if(value = id){
+                text_x_asc.RemoveAt(key)
+                MsgBox, %id% removed from Text X.
+                return
+            }
+        text_x_asc.Push(id)
+        MsgBox, %id% added to Text X.
+    } else {
+        for key, value in text_x
+            if(value = id){
+                text_x.RemoveAt(key)
+                MsgBox, %id% removed from Text X.
+                return
+            }
+        text_x.Push(id)
+        MsgBox, %id% added to Text X.
+    }    
+}
+
+add_to_process_last(){
+    WinGetTitle, esprit_title, A
+    id:=get_case_id(esprit_title)
+    if(id = ""){
+        return
+    }
+
+    if(get_case_type(esprit_title) = "ASC"){
+        for key, value in process_last_asc
+            if(value = id){
+                process_last_asc.RemoveAt(key)
+                MsgBox, %id% removed from Process Last.
+                return
+            }
+        process_last_asc.Push(id)
+        MsgBox, %id% added to Process Last.
+    } else {
+        for key, value in process_last
+            if(value = id){
+                process_last.RemoveAt(key)
+                MsgBox, %id% removed from Process Last.
+                return
+            }
+        process_last.Push(id)
+        MsgBox, %id% added to Process Last.
+    }
+}
+
+; ========================= END PROCESS / RELOAD ==============================
 
 f13::
 Reload
