@@ -8,6 +8,8 @@ w                       Delete
 Space                   Enter
 F4                      Generate NC file
 F12                     Close all Esprit sessions
+Shift+X                 Add current file to Text-X list.
+Shift+Z                 Add current file to Process-Last list.
 
 a                       0 Degree
 s                       90 Degree
