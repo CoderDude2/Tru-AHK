@@ -1,6 +1,8 @@
 ﻿#SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+#Include <views>
+
 ^r::Reload
 
 ; ===== HOT STRINGS =====
@@ -17,4 +19,8 @@ SetWorkingDir A_ScriptDir
 :*:3-3::{
    formatted_angle := 180
    Send "3-3. ROUGH_ENDMILL_" formatted_angle "DEG"
+}
+
+^t::{
+    get_current_angle()
 }
