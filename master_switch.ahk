@@ -1,7 +1,7 @@
 ﻿#SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-#Include <views>
+; #Include "%A_ScriptDir%/Lib/views.ahk"
 
 ^r::Reload
 
@@ -22,5 +22,5 @@ SetWorkingDir A_ScriptDir
 }
 
 ^t::{
-    get_current_angle()
+    
 }
