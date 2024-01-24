@@ -24,7 +24,6 @@ SetWorkingDir A_ScriptDir
 
 ; ===== View Controls=====
 
-
 ; ===== Controls =====
 t::{
     commands.transformation_window()
