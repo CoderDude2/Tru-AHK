@@ -62,3 +62,7 @@ CapsLock::{
 +Space::{
     commands.toggle_simulation()
 }
+
+^t::{
+    update_angle_deg(200)
+}
