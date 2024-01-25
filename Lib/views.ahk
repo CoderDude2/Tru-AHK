@@ -1,4 +1,9 @@
-class views{
+﻿class views{
+	update_angle(angle_index){
+		deg_class := WinGetClass("A")
+		ControlChooseIndex angle_index, "ComboBox1", deg_class
+	}
+
     static get_current_angle() {
 		MsgReply := SendMessage(0x0147, 0, 0, "ComboBox1", "ESPRIT") ; Uses CB_GETCURSEL command to retrieve the current selected value in ComboBox1. This outputs to the ErrorLevel.
 		current_angle := MsgReply<<32>>32 ; Convert UInt to Int to have -1 if there is no item selected.

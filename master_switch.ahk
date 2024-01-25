@@ -4,6 +4,8 @@ SetWorkingDir A_ScriptDir
 #Include "%A_ScriptDir%/Lib/views.ahk"
 #Include %A_ScriptDir%\Lib\commands.ahk
 
+#HotIf WinActive("ahk_exe esprit.exe")
+
 ^r::Reload
 
 ; ===== Hotstrings =====
