@@ -18,3 +18,35 @@ get_current_angle() {
 	return current_angle
 }
 
+increment_10_degrees() {
+	new_angle := get_current_angle() + 1
+	if(new_angle > 42){
+		new_angle := 7
+	}
+	update_angle(new_angle)
+}
+
+decrement_10_degrees(){
+	new_angle := get_current_angle() - 1
+	if(new_angle < 7){
+		new_angle := 42
+	}
+
+	update_angle(new_angle)
+}
+
+increment_90_degrees(){
+	new_angle := get_current_angle() + 9
+	if (new_angle > 42){
+		new_angle := 6 + new_angle - 42
+	}
+	update_angle(new_angle)
+}
+
+decrement_90_degrees(){
+	new_angle := get_current_angle() - 9
+	if(new_angle < 7) {
+		new_angle := 42 - (-1 * new_angle + 7 - 1)
+	}
+	update_angle(new_angle)
+}

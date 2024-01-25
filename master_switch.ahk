@@ -26,6 +26,23 @@ SetWorkingDir A_ScriptDir
 
 ; ===== View Controls=====
 
+!WheelDown::{
+    increment_10_degrees()
+}
+
++!WheelDown::{
+    increment_90_degrees()
+}
+
+!WheelUp::{
+    decrement_10_degrees()
+}
+
++!WheelUp::{
+    decrement_90_degrees()
+}
+
+
 ; ===== Controls =====
 t::{
     commands.transformation_window()
