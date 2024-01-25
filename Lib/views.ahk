@@ -1,5 +1,4 @@
-﻿
-update_angle(angle_index){
+﻿update_angle(angle_index){
 	deg_class := WinGetClass("A")
 	ControlChooseIndex(angle_index, "ComboBox1", "ahk_class " deg_class)
 }
@@ -49,4 +48,40 @@ decrement_90_degrees(){
 		new_angle := 42 - (-1 * new_angle + 7 - 1)
 	}
 	update_angle(new_angle)
+}
+
+face() {
+	WinActivate("ESPRIT")
+	deg_class := WinGetClass("A")
+	ControlChooseIndex(5,"ComboBox1","ahk_class " deg_class)
+}
+
+rear() {
+	WinActivate("ESPRIT")
+	deg_class := WinGetClass("A")
+	ControlChooseIndex(6,"ComboBox1","ahk_class " deg_class)
+}
+
+deg0() {
+	WinActivate("ESPRIT")
+	deg_class := WinGetClass("A")
+	ControlChooseIndex(7,"ComboBox1","ahk_class " deg_class)
+}
+
+deg90() {
+	WinActivate("ESPRIT")
+	deg_class := WinGetClass("A")
+	ControlChooseIndex(16,"ComboBox1","ahk_class " deg_class)
+}
+
+deg180() {
+	WinActivate("ESPRIT")
+	deg_class := WinGetClass("A")
+	ControlChooseIndex(25,"ComboBox1","ahk_class " deg_class)
+}
+
+deg270() {
+	WinActivate("ESPRIT")
+	deg_class := WinGetClass("A")
+	ControlChooseIndex(34,"ComboBox1","ahk_class " deg_class)
 }

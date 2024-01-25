@@ -26,6 +26,30 @@ SetWorkingDir A_ScriptDir
 
 ; ===== View Controls=====
 
+a::{
+    deg0()
+}
+
+s::{
+    deg90()
+}
+
+d::{
+    deg180()
+}
+
+f::{
+    deg270()
+}
+
+c::{
+    face()
+}
+
+v::{
+    rear()
+}
+
 !WheelDown::{
     increment_10_degrees()
 }
