@@ -107,3 +107,15 @@ CapsLock::{
 ^t::{
     update_angle_deg(200)
 }
+
+g::{
+    double_sided_border()
+}
+
+b::{
+    cut_with_border()
+}
+
+r::{
+    center_border_3()
+}

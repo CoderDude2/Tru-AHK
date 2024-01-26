@@ -73,3 +73,52 @@ suppress_operation(){
 rebuild_operation(){
 	PostMessage 0x111, 32768 , , "SysTreeView321", "ESPRIT"
 }
+
+double_sided_border() {
+	WinActivate("ESPRIT")
+	PostMessage(0x111, 3130, , , "ESPRIT")
+
+	WinWaitActive("ahk_class #32770")
+	try{
+		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
+		ControlSetText(11, "Edit1", "ahk_class #32770")
+		ControlSetText(1, "Edit4", "ahk_class #32770")
+		ControlSetChecked(1,"Button8","ahk_class #32770")
+		ControlSetChecked(0,"Button8","ahk_class #32770")
+	} catch TargetError as err {
+		MsgBox "Select a line first"
+	}
+}
+
+cut_with_border() {
+	WinActivate("ESPRIT")
+	PostMessage(0x111, 3130, , , "ESPRIT")
+
+	WinWaitActive("ahk_class #32770")
+	try{
+		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
+		ControlSetText(11, "Edit1", "ahk_class #32770")
+		ControlSetText(4, "Edit4", "ahk_class #32770")
+		ControlChooseIndex(2,"ComboBox2","ahk_class #32770")
+		ControlSetChecked(1,"Button8","ahk_class #32770")
+		ControlSetChecked(1,"Button3","ahk_class #32770")
+	} catch TargetError as err {
+		MsgBox "Select a line first"
+	}
+}
+
+center_border_3() {
+	WinActivate("ESPRIT")
+	PostMessage(0x111, 3130, , , "ESPRIT")
+
+	WinWaitActive("ahk_class #32770")
+	try{
+		ControlSetText(6, "Edit1", "ahk_class #32770")
+		Sleep(100)
+		ControlSetChecked(1,"Button2","ahk_class #32770")
+		Sleep(100)
+		ControlSetChecked(0,"Button2","ahk_class #32770")
+	} catch TargetError as err {
+		MsgBox "Select a line first"
+	}
+}
