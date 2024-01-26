@@ -66,6 +66,13 @@ v::{
     decrement_90_degrees()
 }
 
+f14::{
+    solid_view()
+}
+
+f19::{
+    wireframe_view()
+}
 
 ; ===== Controls =====
 t::{
@@ -118,4 +125,8 @@ b::{
 
 r::{
     center_border_3()
+}
+
+e::{
+    draw_straight_border()
 }

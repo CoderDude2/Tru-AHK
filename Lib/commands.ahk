@@ -122,3 +122,15 @@ center_border_3() {
 		MsgBox "Select a line first"
 	}
 }
+
+draw_straight_border(){
+	BlockInput("MouseMove")
+	line_tool()
+	Click("Left")
+	Send("20{Enter}0{Enter}{Esc}")
+	Click("Left 2")
+	Sleep(100)
+	double_sided_border()
+	BlockInput("MouseMoveOff")
+	Send("{Enter}")
+}
