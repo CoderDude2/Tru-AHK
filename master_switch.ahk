@@ -1,7 +1,7 @@
 ﻿#SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-#Include "%A_ScriptDir%/Lib/views.ahk"
+#Include "%A_ScriptDir%\Lib\views.ahk"
 #Include %A_ScriptDir%\Lib\commands.ahk
 
 #HotIf WinActive("ahk_exe esprit.exe")
@@ -69,39 +69,39 @@ v::{
 
 ; ===== Controls =====
 t::{
-    commands.transformation_window()
+    transformation_window()
 }
 
 +c::{
-    commands.circle_tool()
+    circle_tool()
 }
 
 +a::{
-    commands.unsuppress_operation()
+    unsuppress_operation()
 }
 
 +s::{
-    commands.suppress_operation()
+    suppress_operation()
 }
 
 +r::{
-    commands.rebuild_operation()
+    rebuild_operation()
 }
 
 XButton1::{
-    commands.trim_tool()
+    trim_tool()
 }
 
 ^e::{
-    commands.extrude_tool()
+    extrude_tool()
 }
 
 CapsLock::{
-    commands.line_tool()
+    line_tool()
 }
 
 +Space::{
-    commands.toggle_simulation()
+    toggle_simulation()
 }
 
 ^t::{
