@@ -70,6 +70,7 @@ f14::{
     solid_view()
 }
 
+; Tilde(~) key
 f19::{
     wireframe_view()
 }
@@ -129,4 +130,15 @@ r::{
 
 e::{
     draw_straight_border()
+}
+
+; G5 Key
+f17::{
+    BlockInput true
+    Send("X,90{Enter}")
+    BlockInput false
+}
+
+f18::{
+    save_file()
 }
