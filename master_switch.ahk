@@ -4,6 +4,12 @@ SetWorkingDir A_ScriptDir
 #Include "%A_ScriptDir%\Lib\views.ahk"
 #Include %A_ScriptDir%\Lib\commands.ahk
 
+; ===== Variables =====
+initial_pos_x := 0
+initial_pos_y := 0
+click_index := 0
+path_tool_active := false
+
 #HotIf WinActive("ahk_exe esprit.exe")
 
 ^r::Reload
@@ -142,3 +148,44 @@ f17::{
 f18::{
     save_file()
 }
+
+; ===== Auto-Complete Margins =====
+~Escape::{
+    stop_simulation()
+    global path_tool_active := false
+    global click_index := 0
+}
+
+XButton2::{
+    global click_index := 0
+    draw_path()
+    global path_tool_active := true
+}
+
+~LButton::{
+    ; MsgBox click_index
+    CoordMode("Mouse", "Screen")
+    if(path_tool_active == true){
+        global click_index := click_index + 1
+        ; Store the coordinates of the first click
+        if(click_index == 1){
+            MouseGetPos(&initial_pos_x, &initial_pos_y)
+        }
+    }
+}
+
+RButton::{
+    CoordMode("Mouse", "Screen")
+    if(path_tool_active == true){
+        ; Snap to original position and click to complete the path
+        MouseMove(initial_pos_x, initial_pos_y)
+        Click()
+        global path_tool_active := false
+        global click_index := 0
+        global initial_pos_x := 0
+        global initial_pos_y := 0
+    } else {
+        SendInput("{RButton}")
+    }
+}
+    
