@@ -1,7 +1,6 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-
 extrude_tool(){
 	PostMessage 0x111, 3130 , , , "ESPRIT"
 }
@@ -149,6 +148,16 @@ get_case_type(title){
     } else {
         return -1
     }
+}
+
+get_case_id(title){
+    FoundPos := RegExMatch(title, ",([0-9]+)", &SubPat)
+    return SubPat[1]
+}
+
+get_connection_type(title){
+    FoundPos := RegExMatch(title, "\(([A-Za-z0-9;-]+),", &SubPat)
+    return StrSplit(SubPat[1], "-")[1]
 }
 
 translate_selection(x := 0, y := 0, z := 0){
