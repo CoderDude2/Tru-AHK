@@ -151,39 +151,53 @@ f18::{
 
 ; ===== Auto-Complete Margins =====
 ~Escape::{
+    global click_index
+    global path_tool_active
+    
+    click_index := 0
+    path_tool_active := false
+
     stop_simulation()
-    global path_tool_active := false
-    global click_index := 0
 }
 
 XButton2::{
-    global click_index := 0
+    global click_index
+    global path_tool_active
+
+    click_index := 0
+    path_tool_active := true
     draw_path()
-    global path_tool_active := true
 }
 
 ~LButton::{
-    ; MsgBox click_index
-    CoordMode("Mouse", "Screen")
-    if(path_tool_active == true){
-        global click_index := click_index + 1
-        ; Store the coordinates of the first click
-        if(click_index == 1){
-            MouseGetPos(&initial_pos_x, &initial_pos_y)
-        }
+    global click_index
+    global path_tool_active
+    global initial_pos_x
+    global initial_pos_y
+
+
+    if(path_tool_active == true && click_index < 1){
+        CoordMode("Mouse", "Screen")
+        click_index += 1
+        MouseGetPos(&initial_pos_x, &initial_pos_y)
     }
 }
 
 RButton::{
-    CoordMode("Mouse", "Screen")
+    global path_tool_active
+    global click_index
+    global initial_pos_x
+    global initial_pos_y
+
     if(path_tool_active == true){
         ; Snap to original position and click to complete the path
-        MouseMove(initial_pos_x, initial_pos_y)
+        CoordMode("Mouse", "Screen")
+        MouseMove(initial_pos_x, initial_pos_y, 0)
         Click()
-        global path_tool_active := false
-        global click_index := 0
-        global initial_pos_x := 0
-        global initial_pos_y := 0
+        path_tool_active := false
+        click_index := 0
+        initial_pos_x := 0
+        initial_pos_y := 0
     } else {
         SendInput("{RButton}")
     }
