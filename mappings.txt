@@ -1,12 +1,11 @@
 G1                      Reload Script
 Ctrl+G1                 Suspend Hotkeys
 G3                      # NOT MAPPED
-G4                      # NOT MAPPED
+G4                      STL File Opener
 G5                      Type X,90
 G6                      Save file
 w                       Delete
 Space                   Enter
-F4                      Generate NC file
 F12                     Close all Esprit sessions
 Shift+X                 Add current file to Text-X list.
 Shift+Z                 Add current file to Process-Last list.
@@ -26,7 +25,6 @@ g                       Extrude drawn line to a length of 11 mm and a thickness 
 b                       Cut solid with selected line
 e                       Draw a line 25 mm with a thickness of 1 mm
 r                       Draw a line 6 mm long with a width of 1 mm
-Shift+1                 Raise line by 0.25
 
 Shift+a                 Unsuppress selected operation(s)
 Shift+s                 Suppress selected operation(s)

@@ -12,7 +12,18 @@ path_tool_active := false
 
 #HotIf WinActive("ahk_exe esprit.exe")
 
-^r::Reload
+; Ctrl+G1
+^f13::{
+    Reload
+}
+
+f16::{
+    Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
+}
+
+; ===== Remappings =====
+Space::Enter
+w::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
