@@ -1,14 +1,26 @@
-﻿#SingleInstance Force
+﻿#Requires Autohotkey v2.0
+
+#SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-#Include "%A_ScriptDir%\Lib\views.ahk"
+#Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
+#Include %A_ScriptDir%\Lib\load_values.ahk
+#Include %A_ScriptDir%\Lib\save_values.ahk
 
 ; ===== Variables =====
 initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active := false
+
+log_path := "C:\Users\TruUser\Desktop"
+
+saved_values := load_metadata(log_path)
+text_x := saved_values[1]
+text_x_asc := saved_values[2]
+process_last := saved_values[3]
+process_last_asc := saved_values[4]
 
 #HotIf WinActive("ahk_exe esprit.exe")
 
@@ -252,4 +264,33 @@ esprit_title := WinGetTitle("A")
         Sleep(50)
         rotate_selection(Mod(working_degree, 10), True)
     }
+}
+
+; ===== Text-X and Process Last Tracking =====
+add_to_text_x(){
+    esprit_title := WinGetTitle("A")
+    id:=get_case_id(esprit_title)
+    if(id = ""){
+        return
+    }
+
+    if(get_case_type(esprit_title) = "ASC"){
+        for key, value in text_x_asc
+            if(value = id){
+                text_x_asc.RemoveAt(key)
+                MsgBox(id " removed from Text X.")
+                return
+            }
+        text_x_asc.Push(id)
+        MsgBox(id " added to Text X.")
+    } else {
+        for key, value in text_x
+            if(value = id){
+                text_x.RemoveAt(key)
+                MsgBox(id " removed from Text X.")
+                return
+            }
+        text_x.Push(id)
+        MsgBox(id " added to Text X.")
+    }    
 }
