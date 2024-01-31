@@ -17,8 +17,8 @@ f                       270 Degree
 c                       Face view
 v                       Rear view
 
-~                       Solid view
-G2                      Wireframe view
+G2                      Solid view
+~                       Wireframe view
 t                       Transformation window
 
 g                       Extrude drawn line to a length of 11 mm and a thickness of 1 mm. 
