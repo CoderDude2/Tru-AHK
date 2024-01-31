@@ -26,10 +26,17 @@ if(saved_values != ""){
 
 #HotIf WinActive("ahk_exe esprit.exe")
 
-; Ctrl+G1
-^f13::{
+#SuspendExempt
+;G1
+f13::{
     Reload
 }
+
+;Ctrl+G1
+^f13::{
+    Suspend
+}
+#SuspendExempt False
 
 f16::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
