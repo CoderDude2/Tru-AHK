@@ -213,6 +213,7 @@ f18::{
     stop_simulation()
 }
 
++CapsLock::
 XButton2::{
     global click_index
     global path_tool_active
@@ -387,4 +388,129 @@ add_to_process_last(){
     process_last_asc := saved_values[4]
     add_to_process_last()
     save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
+}
+
+; ===== More Keys =====
+y::{
+    CoordMode("Mouse", "Screen")
+    MouseMove(1700, 370, 0)
+    Click(2)
+    Send("{Delete}-5")
+    MouseMove(1705, 315, 0)
+    Click(1)
+}
+
+AppsKey::{
+    BlockInput("On")
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+
+    ; 1st Margin
+    Click("1600 220")
+    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Send(0.025)
+    Click("1660, 370") ; Click Re-Generate Operation
+
+    ; 2nd Margin
+    Click("1700 222")
+    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Send(0.025)
+    Click("1660, 370") ; Click Re-Generate Operation
+
+    ; 3rd Margin
+    Click("1600 260")
+    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Send(0.025)
+    Click("1660, 370") ; Click Re-Generate Operation
+    BlockInput("Off")
+}
+
++AppsKey{
+    BlockInput("ON")
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+
+    ; 1st Margin
+    Click("1600 220")
+    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Send(0.025)
+    Click("1660, 370") ; Click Re-Generate Operation
+
+    ; 2nd Margin
+    Click("1700 222")
+    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Send(0.025)
+    Click("1660, 370") ; Click Re-Generate Operation
+
+    ; 3rd Margin
+    Click("1600 260")
+    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Send(0.025)
+    Click("1660, 370") ; Click Re-Generate Operation
+
+    ; 4th Margin
+    Click("1700 275")
+    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Send(0.025)
+    Click("1660, 370") ; Click Re-Generate Operation
+    BlockInput("Off")
+}
+
+q::{
+    generate_path()
+}
+
+w::{
+    swap_path()
+}
+
+; Macro 1
+^Numpad1::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("25 105")
+}
+
+; Macro 2
+^Numpad1::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("68 105")
+}
+
+; Macro 3
+^Numpad1::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("90 105")
+}
+
+; Macro 4
+^Numpad1::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("111 105")
+}
+
+; Macro 5
+^Numpad1::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("137 105")
+}
+
+; Macro 6
+^Numpad1::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("20 105")
+}
+
+!e::{
+    show_milling_tool()
+}
+
+; G3 Key
+f15::{
+    WinMove(-500, 275, , , "esprit", "&Yes")
 }
