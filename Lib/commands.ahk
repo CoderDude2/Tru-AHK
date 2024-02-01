@@ -129,7 +129,18 @@ draw_straight_border(){
 	Send("20{Enter}0{Enter}{Esc}")
 	Click("Left 2")
 	Sleep(100)
-	double_sided_border()
+
+	extrude_tool()
+	WinWaitActive("ahk_class #32770")
+	try{
+		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
+		ControlSetText(11, "Edit1", "ahk_class #32770")
+		ControlSetText(1, "Edit4", "ahk_class #32770")
+		ControlSetChecked(0,"Button8","ahk_class #32770")
+	} catch TargetError as err {
+		
+	}
+
 	BlockInput("MouseMoveOff")
 	Send("{Enter}")
 }
