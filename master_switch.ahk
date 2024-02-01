@@ -48,17 +48,17 @@ w::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
-   formatted_angle := 0
+   formatted_angle := (get_current_angle() - 7) * 10
    Send "3-1. ROUGH_ENDMILL_" formatted_angle "DEG"
 }
 
 :*:3-2::{
-   formatted_angle := 90
+   formatted_angle := (get_current_angle() - 7) * 10
    Send "3-2. ROUGH_ENDMILL_" formatted_angle "DEG"
 }
 
 :*:3-3::{
-   formatted_angle := 180
+   formatted_angle := (get_current_angle() - 7) * 10
    Send "3-3. ROUGH_ENDMILL_" formatted_angle "DEG"
 }
 
