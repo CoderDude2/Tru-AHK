@@ -158,6 +158,7 @@ t::{
     rebuild_operation()
 }
 
+!x::
 XButton1::{
     trim_tool()
 }
@@ -172,10 +173,6 @@ CapsLock::{
 
 +Space::{
     toggle_simulation()
-}
-
-^t::{
-    update_angle_deg(200)
 }
 
 g::{
