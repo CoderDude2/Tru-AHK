@@ -401,59 +401,59 @@ y::{
 }
 
 AppsKey::{
-    BlockInput("On")
+    BlockInput("MouseMove")
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
 
     ; 1st Margin
     Click("1600 220")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send(0.025)
+    Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
 
     ; 2nd Margin
     Click("1700 222")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send(0.025)
+    Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
 
     ; 3rd Margin
     Click("1600 260")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send(0.025)
+    Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-    BlockInput("Off")
+    BlockInput("MouseMoveOff")
 }
 
-+AppsKey{
-    BlockInput("ON")
++AppsKey::{
+    BlockInput("MouseMove")
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
 
     ; 1st Margin
     Click("1600 220")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send(0.025)
+    Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
 
     ; 2nd Margin
     Click("1700 222")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send(0.025)
+    Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
 
     ; 3rd Margin
     Click("1600 260")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send(0.025)
+    Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
 
     ; 4th Margin
     Click("1700 275")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send(0.025)
+    Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-    BlockInput("Off")
+    BlockInput("MouseMoveOff")
 }
 
 q::{
@@ -472,38 +472,38 @@ w::{
 }
 
 ; Macro 2
-^Numpad1::{
+^Numpad2::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("45 105")
+}
+
+; Macro 3
+^Numpad3::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
     Click("68 105")
 }
 
-; Macro 3
-^Numpad1::{
+; Macro 4
+^Numpad4::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
     Click("90 105")
 }
 
-; Macro 4
-^Numpad1::{
+; Macro 5
+^Numpad5::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
     Click("111 105")
 }
 
-; Macro 5
-^Numpad1::{
+; Macro 6
+^Numpad6::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
     Click("137 105")
-}
-
-; Macro 6
-^Numpad1::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    Click("20 105")
 }
 
 !e::{
