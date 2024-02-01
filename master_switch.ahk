@@ -42,6 +42,13 @@ f16::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
 }
 
+f12::{
+    ProcessExist("esprit.exe")
+    pid := WinGetPID("A")
+    ProcessClose(pid)
+}
+
+
 ; ===== Remappings =====
 Space::Enter
 w::Delete
