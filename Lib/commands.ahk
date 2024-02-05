@@ -116,9 +116,6 @@ center_border_3() {
 	WinWaitActive("ahk_class #32770")
 	try{
 		ControlSetText(6, "Edit1", "ahk_class #32770")
-		Sleep(100)
-		ControlSetChecked(1,"Button2","ahk_class #32770")
-		Sleep(100)
 		ControlSetChecked(0,"Button2","ahk_class #32770")
 	} catch TargetError as err {
 		MsgBox "Select a line first"

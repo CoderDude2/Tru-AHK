@@ -1,6 +1,7 @@
 ﻿#Requires Autohotkey v2.0
 
 #SingleInstance Force
+; DetectHiddenWindows true
 SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
@@ -430,3 +431,69 @@ w::{
 f15::{
     WinMove(-500, 275, , , "esprit", "&Yes")
 }
+
+; Auto-Start
++q::{
+    WinWaitActive("ahk_exe esprit.exe")
+    esprit_title := WinGetTitle("A")
+    if(get_case_type(esprit_title) == "ASC"){
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        Click("25 105")
+        WinWaitActive("CAM Automation")
+        ControlSend("{Enter}", "Button1", "CAM Automation")
+        WinWaitActive("esprit")
+        ControlSend("{Enter}", "Button1", "esprit", "&Yes")
+        WinWaitActive("esprit")
+        ControlSend("{Enter}", "Button1", "esprit", "OK")
+        WinWaitActive("esprit")
+        ControlSend("{Enter}", "Button1", "esprit", "&Yes")
+        WinWaitActive("CAM Automation - To transform the STL")
+        ControlSend("X,90{Enter}", "Edit1", "CAM Automation - To transform the STL")
+        Sleep(100)
+
+        result := MsgBox("Is the connection correct? Is the T showing?",,"Y/N")
+        if(result == "No"){
+            return
+        } else {
+            WinActivate("STL Rotate")
+            WinWaitActive("STL Rotate")
+            Click("71 143")
+
+            WinWaitActive("CAM Automation")
+            ControlSend("{Enter}", "Button1", "CAM Automation", "[2] Generate toolpaths for [FRONT TURNING]. Please make sure the STL properly located.")
+
+            WinWaitActive("CAM Automation - For Turning Profile")
+            ControlSend("{Enter}", "Button1", "CAM Automation - For Turning Profile")
+        }
+    } else if(get_case_type(esprit_title) == "DS"){
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        Click("25 105")
+        WinWaitActive("CAM Automation")
+        ControlSend("{Enter}", "Button1", "CAM Automation")
+        WinWaitActive("esprit")
+        ControlSend("{Enter}", "Button1", "esprit", "&Yes")
+        WinWaitActive("Direction Check")
+        ControlSend("{Enter}", "Button1", "Direction Check", "OK")
+
+        result := MsgBox("Is the connection correct?",,"Y/N")
+        if(result == "No"){
+            return
+        } else {
+            WinActivate("STL Rotate")
+            WinWaitActive("STL Rotate")
+            Click("71 117")
+
+            WinWaitActive("CAM Automation")
+            ControlSend("{Enter}", "Button1", "CAM Automation", "[2] Generate toolpaths for [FRONT TURNING]. Please make sure the STL properly located.")
+
+            WinWaitActive("CAM Automation - For Turning Profile")
+            ControlSend("{Enter}", "Button1", "CAM Automation - For Turning Profile")
+        }
+    }
+}
+
+; +o::
+; MsgBox "Test", , "Y/N"
+; return
