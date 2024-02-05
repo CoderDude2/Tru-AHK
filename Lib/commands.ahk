@@ -82,7 +82,6 @@ double_sided_border() {
 		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
 		ControlSetText(11, "Edit1", "ahk_class #32770")
 		ControlSetText(1, "Edit4", "ahk_class #32770")
-		ControlSetChecked(1,"Button8","ahk_class #32770")
 		ControlSetChecked(0,"Button8","ahk_class #32770")
 	} catch TargetError as err {
 		MsgBox "Select a line first"
@@ -113,9 +112,7 @@ center_border_3() {
 	WinWaitActive("ahk_class #32770")
 	try{
 		ControlSetText(6, "Edit1", "ahk_class #32770")
-		Sleep(100)
 		ControlSetChecked(1,"Button2","ahk_class #32770")
-		Sleep(100)
 		ControlSetChecked(0,"Button2","ahk_class #32770")
 	} catch TargetError as err {
 		MsgBox "Select a line first"
@@ -137,12 +134,12 @@ draw_straight_border(){
 		ControlSetText(11, "Edit1", "ahk_class #32770")
 		ControlSetText(1, "Edit4", "ahk_class #32770")
 		ControlSetChecked(0,"Button8","ahk_class #32770")
+		Send("{Enter}")
 	} catch TargetError as err {
-		
+		BlockInput("MouseMoveOff")
 	}
 
 	BlockInput("MouseMoveOff")
-	Send("{Enter}")
 }
 
 get_case_type(title){
