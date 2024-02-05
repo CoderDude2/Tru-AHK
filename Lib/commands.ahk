@@ -120,6 +120,7 @@ center_border_3() {
 }
 
 draw_straight_border(){
+	WinActivate("ESPRIT")
 	BlockInput("MouseMove")
 	line_tool()
 	Click("Left")
