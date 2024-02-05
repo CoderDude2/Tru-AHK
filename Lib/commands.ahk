@@ -135,6 +135,7 @@ draw_straight_border(){
 		ControlSetText(11, "Edit1", "ahk_class #32770")
 		ControlSetText(1, "Edit4", "ahk_class #32770")
 		ControlSetChecked(0,"Button8","ahk_class #32770")
+		WinActivate("ahk_class #32770")
 		Send("{Enter}")
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
