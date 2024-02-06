@@ -450,9 +450,9 @@ f15::{
         ControlSend("{Enter}", "Button1", "esprit", "&Yes")
         WinWaitActive("CAM Automation - To transform the STL")
         ControlSend("X,90{Enter}", "Edit1", "CAM Automation - To transform the STL")
-        Sleep(100)
+        Sleep(200)
 
-        result := MsgBox("Is the connection correct? Is the T showing?",,"Y/N")
+        result := MsgBox("Is the connection correct? Is the T showing?",,"Y/N 0x1000")
         if(result == "No"){
             return
         } else {
@@ -476,8 +476,9 @@ f15::{
         ControlSend("{Enter}", "Button1", "esprit", "&Yes")
         WinWaitActive("Direction Check")
         ControlSend("{Enter}", "Button1", "Direction Check", "OK")
+        Sleep(200)
 
-        result := MsgBox("Is the connection correct?",,"Y/N")
+        result := MsgBox("Is the connection correct?",,"Y/N 0x1000")
         if(result == "No"){
             return
         } else {
@@ -493,7 +494,3 @@ f15::{
         }
     }
 }
-
-; +o::
-; MsgBox "Test", , "Y/N"
-; return
