@@ -452,6 +452,10 @@ f15::{
         ControlSend("X,90{Enter}", "Edit1", "CAM Automation - To transform the STL")
         Sleep(200)
 
+        WinWaitActive("STL Rotate")
+        wireframe_view()
+        deg0()
+
         result := MsgBox("Is the connection correct? Is the T showing?",,"Y/N 0x1000")
         if(result == "No"){
             return
@@ -477,6 +481,7 @@ f15::{
         WinWaitActive("Direction Check")
         ControlSend("{Enter}", "Button1", "Direction Check", "OK")
         Sleep(200)
+        deg0()
 
         result := MsgBox("Is the connection correct?",,"Y/N 0x1000")
         if(result == "No"){
