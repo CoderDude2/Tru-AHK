@@ -82,9 +82,10 @@ double_sided_border() {
 		ControlSetText(11, "Edit1", "보스 돌출/잘라내기")
 		ControlSetText(1, "Edit4", "보스 돌출/잘라내기")
 		Sleep(100)
-		ControlChooseIndex(2,"ComboBox1","보스 돌출/잘라내기")
 		ControlSetChecked(0,"Button8","보스 돌출/잘라내기")
+		ControlChooseIndex(2,"ComboBox1","보스 돌출/잘라내기")
 	} catch TargetError as err {
+		BlockInput("MouseMoveOff")
 		MsgBox "Select a line first"
 	}
 }
