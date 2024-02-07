@@ -88,6 +88,7 @@ double_sided_border() {
 		ControlSetText(1, "Edit4", "ahk_class #32770")
 		ControlSetChecked(0,"Button8","ahk_class #32770")
 	} catch TargetError as err {
+		BlockInput("MouseMoveOff")
 		MsgBox "Select a line first"
 	}
 }
