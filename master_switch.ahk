@@ -89,27 +89,19 @@ v::{
 }
 
 !WheelDown::{
-    if(WinActive("ESPRIT")){
-        increment_10_degrees()
-    }
+    increment_10_degrees()
 }
 
-+!WheelDown::{
-    if(WinActive("ESPRIT")){   
-        increment_90_degrees()
-    }
++!WheelDown::{ 
+    increment_90_degrees()
 }
 
 !WheelUp::{
-    if(WinActive("ESPRIT")){
-        decrement_10_degrees()
-    }
+    decrement_10_degrees()
 }
 
 +!WheelUp::{
-    if(WinActive("ESPRIT")){
-        decrement_90_degrees()  
-    }
+    decrement_90_degrees()  
 }
 
 f14::{
