@@ -70,6 +70,7 @@ deg0() {
 }
 
 deg90() {
+	WinActivate("ESPRIT")
 	update_angle(16)
 }
 
