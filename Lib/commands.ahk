@@ -131,6 +131,7 @@ draw_straight_border(){
 	Click("Left")
 	Send("20{Enter}0{Enter}{Esc}")
 	Click(posX, posY, 2)
+	Sleep(100)
 	double_sided_border()
 	WinActivate("보스 돌출/잘라내기")
 	ControlSend("{Enter}", "Button9", "ahk_class #32770")
