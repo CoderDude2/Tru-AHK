@@ -118,6 +118,7 @@ center_border_3() {
 	try{
 		ControlSetText(6, "Edit1", "ahk_class #32770")
 		ControlSetChecked(0,"Button2","ahk_class #32770")
+		ControlChooseIndex(1,"ComboBox1","ahk_class #32770")
 	} catch TargetError as err {
 		MsgBox "Select a line first"
 	}
