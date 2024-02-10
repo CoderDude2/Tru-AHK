@@ -162,6 +162,14 @@ get_connection_type(title){
     return StrSplit(SubPat[1], "-")[1]
 }
 
+is_non_engaging(title){
+	if(InStr(title, "CB", true)){
+		return true
+	}
+
+	return false
+}
+
 translate_selection(x := 0, y := 0, z := 0){
     WinActivate("ESPRIT")
     transformation_window()

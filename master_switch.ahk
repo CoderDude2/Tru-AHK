@@ -423,6 +423,24 @@ w::{
     Click("137 105")
 }
 
+!1::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1584 145")
+}
+
+!2::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1657 143")
+}
+
+!q::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1605 233")
+}
+
 !e::{
     show_milling_tool()
 }
@@ -467,7 +485,7 @@ f15::{
             WinWaitActive("CAM Automation - For Turning Profile")
             Send("{Enter}")
         }
-    } else if(get_case_type(esprit_title) == "DS"){
+    } else if(get_case_type(esprit_title) == "DS" && is_non_engaging(esprit_title) == false){
         SetDefaultMouseSpeed(0)
         CoordMode("Mouse", "Client")
         Click("25 105")
@@ -476,6 +494,29 @@ f15::{
         Sleep(50)
         Send("{Enter}")
         WinWaitActive("Direction Check")
+        Send("{Enter}")
+        WinWaitActive("STL Rotate")
+        deg0()
+
+        result := MsgBox("Is the connection correct?",,"Y/N 0x1000")
+        if(result == "No"){
+            return
+        } else {
+            WinActivate("STL Rotate")
+            WinWaitActive("STL Rotate")
+            Click("71 117")
+            Sleep(50)
+            Send("{Enter}")
+            WinWaitActive("CAM Automation - For Turning Profile")
+            Send("{Enter}")
+        }
+    } else if(get_case_type(esprit_title) == "DS" && is_non_engaging(esprit_title) == true){
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        Click("25 105")
+        Sleep(50)
+        Send("{Enter}")
+        Sleep(50)
         Send("{Enter}")
         WinWaitActive("STL Rotate")
         deg0()
