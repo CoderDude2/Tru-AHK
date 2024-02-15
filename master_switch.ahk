@@ -535,3 +535,19 @@ f15::{
         }
     }
 }
+
++w::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Client")
+    Click("45 105")
+    Sleep(50)
+    Send("{Enter}")
+    WinWaitActive("CAM Automation")
+    Send("{Enter}")
+    Sleep(50)
+    Send("{Enter}")
+    Sleep(50)
+    Send("{Enter}")
+    Sleep(50)
+    Send("{Enter}")
+}
