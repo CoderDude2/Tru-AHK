@@ -17,6 +17,8 @@ path_tool_active := false
 
 log_path := "C:\Users\TruUser\Desktop"
 
+passes := 5
+
 saved_values := load_values(log_path)
 if(saved_values != ""){
     text_x := saved_values[1]
@@ -214,6 +216,9 @@ f18::{
 ~Escape::{
     global click_index
     global path_tool_active
+    global passes
+
+    passes := 5
     
     click_index := 0
     path_tool_active := false
@@ -550,4 +555,52 @@ f15::{
     Send("{Enter}")
     Sleep(50)
     Send("{Enter}")
+}
+
+^Up::{
+    global passes
+    passes += 1
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1582 144")
+    Sleep(20)
+    Click("1703 317")
+    Sleep(20)
+    Send("^a" passes "{Enter}")
+    Send("^a" (-1*passes) "{Enter}")
+    Click("1662 393")
+    Sleep(20)
+    Click("1658 144")
+    Sleep(20)
+    Click("1703 317")
+    Sleep(20)
+    Send("^a" passes "{Enter}")
+    Send("^a" (-1*passes) "{Enter}")
+    Click("1662 393")
+    Sleep(20)
+    Click("1605 233")
+}
+
+^Down::{
+    global passes
+    passes -= 1
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1582 144")
+    Sleep(20)
+    Click("1703 317")
+    Sleep(20)
+    Send("^a" passes "{Enter}")
+    Send("^a" (-1*passes) "{Enter}")
+    Click("1662 393")
+    Sleep(20)
+    Click("1658 144")
+    Sleep(20)
+    Click("1703 317")
+    Sleep(20)
+    Send("^a" passes "{Enter}")
+    Send("^a" (-1*passes) "{Enter}")
+    Click("1662 393")
+    Sleep(20)
+    Click("1605 233")
 }
