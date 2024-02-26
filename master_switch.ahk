@@ -446,6 +446,24 @@ w::{
     Click("1605 233")
 }
 
+!a::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1580 83")
+}
+
+!s::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1630 83")
+}
+
+!d::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    Click("1670 83")
+}
+
 !e::{
     show_milling_tool()
 }
@@ -539,22 +557,6 @@ f15::{
             Send("{Enter}")
         }
     }
-}
-
-+w::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    Click("45 105")
-    Sleep(50)
-    Send("{Enter}")
-    WinWaitActive("CAM Automation")
-    Send("{Enter}")
-    Sleep(50)
-    Send("{Enter}")
-    Sleep(50)
-    Send("{Enter}")
-    Sleep(50)
-    Send("{Enter}")
 }
 
 ^Up::{
