@@ -57,6 +57,10 @@ save_file(){
 	PostMessage 0x111, 57603 , , , "ESPRIT"
 }
 
+open_file(){
+	PostMessage 0x111, 57601 , , , "ESPRIT"
+}
+
 transformation_window(){
 	PostMessage 0x111, 57634 , , , "ESPRIT"
 }
