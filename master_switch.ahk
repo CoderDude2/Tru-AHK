@@ -41,8 +41,13 @@ f13::{
 }
 #SuspendExempt False
 
+; G4
 f16::{
+    DetectHiddenWindows true
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
+    WinWait("CAM Automation")
+    WinActivate("CAM Automation")
+    DetectHiddenWindows true
 }
 
 f12::{
