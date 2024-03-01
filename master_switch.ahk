@@ -423,7 +423,7 @@ add_to_process_last(){
     DetectHiddenWindows false
 }
 
-x::{
+z::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
@@ -434,7 +434,7 @@ x::{
     DetectHiddenWindows false
 }
 
-z::{
+x::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
@@ -444,3 +444,4 @@ z::{
     }
     DetectHiddenWindows false
 }
+
