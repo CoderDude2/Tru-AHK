@@ -368,58 +368,49 @@ add_to_process_last(){
     save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
 }
 
-^Numpad7::{
+#HotIf WinExist("[5]DEG 경계소재 & 마진")
+!Numpad7::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 55, 140
-    }
+    WinActivate("[5]DEG 경계소재 & 마진")
+    Click 55, 140
     DetectHiddenWindows false
 }
 
-^Numpad9::{
+!Numpad9::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 170, 140
-    }
+    WinActivate("[5]DEG 경계소재 & 마진")
+    Click 170, 140
     DetectHiddenWindows false
 }
 
-^Numpad1::{
+!Numpad1::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 55, 190
-    }
+    WinActivate("[5]DEG 경계소재 & 마진")
+    Click 55, 190
     DetectHiddenWindows false
 }
 
-^Numpad3::{
+!Numpad3::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 170, 190
-    }
+    WinActivate("[5]DEG 경계소재 & 마진")
+    Click 170, 190
     DetectHiddenWindows false
 }
 
-^Numpad0::{
+!Numpad0::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 35, 235
-    }
+    WinActivate("[5]DEG 경계소재 & 마진")
+    Click 35, 235
     DetectHiddenWindows false
 }
 
@@ -427,10 +418,8 @@ z::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 40, 8
-    }
+    WinActivate("[5]DEG 경계소재 & 마진")
+    Click 40, 8
     DetectHiddenWindows false
 }
 
@@ -438,10 +427,8 @@ x::{
     DetectHiddenWindows true
     SetDefaultMouseSpeed 0
     CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 120, 8
-    }
+    WinActivate("[5]DEG 경계소재 & 마진")
+    Click 120, 8
     DetectHiddenWindows false
 }
 
