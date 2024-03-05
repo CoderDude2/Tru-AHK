@@ -24,8 +24,6 @@ if(saved_values != ""){
     process_last_asc := saved_values[4]
 }
 
-#HotIf WinActive("ahk_exe esprit.exe")
-
 #SuspendExempt
 ;G1
 f13::{
@@ -37,6 +35,8 @@ f13::{
     Suspend
 }
 #SuspendExempt False
+
+#HotIf WinActive("ahk_exe esprit.exe")
 
 f16::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
@@ -369,66 +369,61 @@ add_to_process_last(){
 }
 
 #HotIf WinExist("[5]DEG 경계소재 & 마진")
+SetDefaultMouseSpeed 0
+CoordMode "Mouse", "Client"
 !Numpad7::{
-    DetectHiddenWindows true
-    SetDefaultMouseSpeed 0
-    CoordMode "Mouse", "Client"
-    WinActivate("[5]DEG 경계소재 & 마진")
-    Click 55, 140
-    DetectHiddenWindows false
+    ; WinActivate("[5]DEG 경계소재 & 마진")
+    if(WinActive("[5]DEG 경계소재 & 마진")){
+        Click 55, 140
+    }
 }
 
 !Numpad9::{
-    DetectHiddenWindows true
-    SetDefaultMouseSpeed 0
-    CoordMode "Mouse", "Client"
-    WinActivate("[5]DEG 경계소재 & 마진")
-    Click 170, 140
-    DetectHiddenWindows false
+    ; WinActivate("[5]DEG 경계소재 & 마진")
+    
+    if(WinActive("[5]DEG 경계소재 & 마진")){    
+        Click 170, 140
+    }
 }
 
 !Numpad1::{
-    DetectHiddenWindows true
-    SetDefaultMouseSpeed 0
-    CoordMode "Mouse", "Client"
-    WinActivate("[5]DEG 경계소재 & 마진")
-    Click 55, 190
-    DetectHiddenWindows false
+    ; WinActivate("[5]DEG 경계소재 & 마진")
+    ; Send("{Click 55 190}")
+    if(WinActive("[5]DEG 경계소재 & 마진")){    
+        Click 55, 190
+    }
 }
 
 !Numpad3::{
-    DetectHiddenWindows true
-    SetDefaultMouseSpeed 0
-    CoordMode "Mouse", "Client"
-    WinActivate("[5]DEG 경계소재 & 마진")
-    Click 170, 190
-    DetectHiddenWindows false
+    ; WinActivate("[5]DEG 경계소재 & 마진")
+    if(WinActive("[5]DEG 경계소재 & 마진")){    
+        Click 170, 190
+    }
 }
 
 !Numpad0::{
-    DetectHiddenWindows true
-    SetDefaultMouseSpeed 0
-    CoordMode "Mouse", "Client"
-    WinActivate("[5]DEG 경계소재 & 마진")
-    Click 35, 235
-    DetectHiddenWindows false
+    ; WinActivate("[5]DEG 경계소재 & 마진")
+    if(WinActive("[5]DEG 경계소재 & 마진")){    
+        Click 35, 235
+    }
 }
 
 z::{
-    DetectHiddenWindows true
-    SetDefaultMouseSpeed 0
-    CoordMode "Mouse", "Client"
-    WinActivate("[5]DEG 경계소재 & 마진")
-    Click 40, 8
-    DetectHiddenWindows false
+    if(WinActive("[5]DEG 경계소재 & 마진")){    
+        Click 40, 8
+    } else {
+        WinActivate("[5]DEG 경계소재 & 마진")
+        Click 40, 8
+    }
 }
 
 x::{
-    DetectHiddenWindows true
-    SetDefaultMouseSpeed 0
-    CoordMode "Mouse", "Client"
-    WinActivate("[5]DEG 경계소재 & 마진")
-    Click 120, 8
-    DetectHiddenWindows false
+   
+    if(WinActive("[5]DEG 경계소재 & 마진")){    
+        Click 120, 8
+    } else {
+        WinActivate("[5]DEG 경계소재 & 마진")
+        Click 120, 8
+    }
 }
 
