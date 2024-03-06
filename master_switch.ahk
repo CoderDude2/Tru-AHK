@@ -370,7 +370,6 @@ add_to_process_last(){
     save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
 }
 
-#HotIf WinExist("[5]DEG 경계소재 & 마진")
 !Numpad7::{
     CoordMode "Mouse", "Client"
     if(WinExist("[5]DEG 경계소재 & 마진")){
