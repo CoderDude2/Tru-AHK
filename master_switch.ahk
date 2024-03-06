@@ -8,6 +8,8 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\load_values.ahk
 #Include %A_ScriptDir%\Lib\save_values.ahk
 
+SetDefaultMouseSpeed 0
+
 ; ===== Variables =====
 initial_pos_x := 0
 initial_pos_y := 0
@@ -369,61 +371,86 @@ add_to_process_last(){
 }
 
 #HotIf WinExist("[5]DEG 경계소재 & 마진")
-SetDefaultMouseSpeed 0
-CoordMode "Mouse", "Client"
 !Numpad7::{
-    ; WinActivate("[5]DEG 경계소재 & 마진")
-    if(WinActive("[5]DEG 경계소재 & 마진")){
-        Click 55, 140
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 55, 140
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 55, 140
+        }
     }
 }
 
 !Numpad9::{
-    ; WinActivate("[5]DEG 경계소재 & 마진")
-    
-    if(WinActive("[5]DEG 경계소재 & 마진")){    
-        Click 170, 140
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 170, 140
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 170, 140
+        }
     }
 }
 
 !Numpad1::{
-    ; WinActivate("[5]DEG 경계소재 & 마진")
-    ; Send("{Click 55 190}")
-    if(WinActive("[5]DEG 경계소재 & 마진")){    
-        Click 55, 190
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 55, 190
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 55, 190
+        }
     }
 }
 
 !Numpad3::{
-    ; WinActivate("[5]DEG 경계소재 & 마진")
-    if(WinActive("[5]DEG 경계소재 & 마진")){    
-        Click 170, 190
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 170, 190
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 170, 190
+        }
     }
 }
 
 !Numpad0::{
-    ; WinActivate("[5]DEG 경계소재 & 마진")
-    if(WinActive("[5]DEG 경계소재 & 마진")){    
-        Click 35, 235
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 35, 235
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 35, 235
+        }
     }
 }
 
 z::{
-    if(WinActive("[5]DEG 경계소재 & 마진")){    
-        Click 40, 8
-    } else {
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 40, 8
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 40, 8
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 40, 8
+        }
     }
 }
 
 x::{
-   
-    if(WinActive("[5]DEG 경계소재 & 마진")){    
-        Click 120, 8
-    } else {
-        WinActivate("[5]DEG 경계소재 & 마진")
-        Click 120, 8
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 120, 8
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 120, 8
+        }
     }
 }
-
