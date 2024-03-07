@@ -370,6 +370,7 @@ add_to_process_last(){
     save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
 }
 
+; ===== Step-5 Window Navigation =====
 !Numpad7::{
     CoordMode "Mouse", "Client"
     if(WinExist("[5]DEG 경계소재 & 마진")){
@@ -450,6 +451,43 @@ x::{
         } else {
             WinActivate("[5]DEG 경계소재 & 마진")
             Click 120, 8
+        }
+    }
+}
+
+; ===== Step-3 Window Navigation =====
+!1::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        if(WinActive("Check Rough ML & Create Border Solid")){
+            Click 32, 70
+        } else {
+            WinActivate("Check Rough ML & Create Border Solid")
+            Click 32, 70
+        }
+    }
+}
+
+!2::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        if(WinActive("Check Rough ML & Create Border Solid")){
+            Click 110, 70
+        } else {
+            WinActivate("Check Rough ML & Create Border Solid")
+            Click 110, 70
+        }
+    }
+}
+
+!q::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        if(WinActive("Check Rough ML & Create Border Solid")){
+            Click 55, 158
+        } else {
+            WinActivate("Check Rough ML & Create Border Solid")
+            Click 55, 158
         }
     }
 }
