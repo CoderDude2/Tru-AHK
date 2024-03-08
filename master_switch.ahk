@@ -146,6 +146,10 @@ XButton1::{
     extrude_tool()
 }
 
+!e::{
+    show_milling_tool()
+}
+
 CapsLock::{
     line_tool()
 }
