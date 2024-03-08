@@ -138,6 +138,7 @@ t::{
     rebuild_operation()
 }
 
+!x::
 XButton1::{
     trim_tool()
 }
@@ -200,6 +201,7 @@ f18::{
     stop_simulation()
 }
 
++CapsLock::
 XButton2::{
     global click_index
     global path_tool_active
