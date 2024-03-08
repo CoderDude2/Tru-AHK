@@ -18,6 +18,8 @@ path_tool_active := false
 
 log_path := "C:\Users\TruUser\Desktop"
 
+passes := 5
+
 saved_values := load_values(log_path)
 if(saved_values != ""){
     text_x := saved_values[1]
@@ -455,6 +457,18 @@ x::{
     }
 }
 
+y::{
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        WinActivate("[5]DEG 경계소재 & 마진")
+        CoordMode("Mouse", "Client")
+        MouseMove(180, 300, 0)
+        Click(2)
+        Send("{Delete}-5")
+        MouseMove(170, 240, 0)
+        Click(1)
+    }
+}
+
 ; ===== Step-3 Window Navigation =====
 !1::{
     CoordMode "Mouse", "Client"
@@ -489,6 +503,68 @@ x::{
             WinActivate("Check Rough ML & Create Border Solid")
             Click 55, 158
         }
+    }
+}
+
+^Up::{
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        WinActivate("Check Rough ML & Create Border Solid")
+        BlockInput("MouseMove")
+        global passes
+        passes += 1
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        Click("30 70")
+        Sleep(20)
+        Click("154 240")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("112 320")
+
+        Sleep(20)
+        Click("108 70")
+        Sleep(20)
+        Click("154 240")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("112 320")
+        Sleep(20)
+
+        Click("53 157")
+        BlockInput("MouseMoveOff")
+    }
+}
+
+^Down::{
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        WinActivate("Check Rough ML & Create Border Solid")
+        BlockInput("MouseMove")
+        global passes
+        passes -= 1
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        Click("30 70")
+        Sleep(20)
+        Click("154 240")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("112 320")
+
+        Sleep(20)
+        Click("108 70")
+        Sleep(20)
+        Click("154 240")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("112 320")
+        Sleep(20)
+
+        Click("53 157")
+        BlockInput("MouseMoveOff")
     }
 }
 
