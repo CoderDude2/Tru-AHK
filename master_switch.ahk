@@ -491,3 +491,41 @@ x::{
         }
     }
 }
+
+; ===== Macro Buttons =====
+
+^Numpad1::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+20, y+14
+}
+
+^Numpad2::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+45, y+14
+}
+
+^Numpad3::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+68, y+14
+}
+
+^Numpad4::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+90, y+14
+}
+
+^Numpad5::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+115, y+14
+}
+
+^Numpad6::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+135, y+14
+}
