@@ -493,7 +493,7 @@ x::{
 }
 
 ; ===== Macro Buttons =====
-
+#HotIf WinActive("ESPRIT")
 ^Numpad1::{
     CoordMode "Mouse", "Client"
     ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
