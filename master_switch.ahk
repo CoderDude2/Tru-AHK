@@ -179,6 +179,14 @@ e::{
     draw_straight_border()
 }
 
++q::{
+    generate_path()
+}
+
++w::{
+    swap_path()
+}
+
 ; G5 Key
 f17::{
     BlockInput true
