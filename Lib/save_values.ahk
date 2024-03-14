@@ -43,7 +43,7 @@ save_values(text_x_list, text_x_asc_list, process_last_list, process_last_asc_li
         FileAppend("NONE`n", file_path "\log.txt")
     }
 
-    FileAppend("`nProcess Last(ASC):`n", file_path "\log.txt")
+    FileAppend("`nNon Library(ASC):`n", file_path "\log.txt")
     if(IsObject(non_library_asc) and non_library_asc.Length > 0){
         for key, value in non_library_asc
             FileAppend(value "`n", file_path "\log.txt")
