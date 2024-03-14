@@ -1,6 +1,8 @@
 save_values(text_x_list, text_x_asc_list, process_last_list, process_last_asc_list, non_library, non_library_asc,file_path){
     current_date := FormatTime("A_Now", "yyyyMMdd")
-    FileDelete(file_path "\log.txt") ; Overwrite previous file.
+    if(FileExist(file_path "\log.txt")){
+        FileDelete(file_path "\log.txt") ; Overwrite previous file.
+    }
     FileAppend(current_date "`n", file_path "\log.txt")
     
     FileAppend("`nText X:`n", file_path "\log.txt")

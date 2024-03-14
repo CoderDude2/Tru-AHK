@@ -16,6 +16,10 @@ path_tool_active := false
 
 log_path := "C:\Users\TruUser\Desktop"
 
+if(not FileExist(log_path "\log.txt")){
+    save_values([],[],[],[],[],[], log_path)
+}
+
 saved_values := load_values(log_path)
 if(saved_values != ""){
     text_x := saved_values[1]
@@ -46,7 +50,7 @@ f16::{
 
 ; ===== Remappings =====
 Space::Enter
-w::Delete
+; w::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
