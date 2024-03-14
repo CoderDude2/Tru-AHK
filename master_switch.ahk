@@ -50,7 +50,7 @@ f16::{
 
 ; ===== Remappings =====
 Space::Enter
-; w::Delete
+w::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
