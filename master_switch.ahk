@@ -22,6 +22,8 @@ if(saved_values != ""){
     text_x_asc := saved_values[2]
     process_last := saved_values[3]
     process_last_asc := saved_values[4]
+    non_library := saved_values[5]
+    non_library_asc := saved_values[6]
 }
 
 #HotIf WinActive("ahk_exe esprit.exe")
@@ -281,6 +283,8 @@ add_to_text_x(){
     global text_x_asc
     global process_last
     global process_last_asc
+    global non_library
+    global non_library_asc
     esprit_title := WinGetTitle("A")
     id:=get_case_id(esprit_title)
     if(id = ""){
@@ -313,6 +317,8 @@ add_to_process_last(){
     global text_x_asc
     global process_last
     global process_last_asc
+    global non_library
+    global non_library_asc
     esprit_title := WinGetTitle("A")
     id:=get_case_id(esprit_title)
     if(id = ""){
@@ -340,18 +346,58 @@ add_to_process_last(){
     }
 }
 
+add_to_non_library(){
+    global text_x
+    global text_x_asc
+    global process_last
+    global process_last_asc
+    global non_library
+    global non_library_asc
+    esprit_title := WinGetTitle("A")
+    id:=get_case_id(esprit_title)
+    if(id = ""){
+        return
+    }
+
+    if(get_case_type(esprit_title) = "ASC"){
+        for key, value in non_library_asc
+            if(value = id){
+                non_library_asc.RemoveAt(key)
+                MsgBox(id " removed from Non-Library.")
+                return
+            }
+        non_library_asc.Push(id)
+        MsgBox(id " added to Non-Library.")
+    } else {
+        for key, value in non_library
+            if(value = id){
+                non_library.RemoveAt(key)
+                MsgBox(id " removed from Non-Library.")
+                return
+            }
+        non_library.Push(id)
+        MsgBox(id " added to Non-Library.")
+    }
+}
+
 +x::{
     global text_x
     global text_x_asc
     global process_last
     global process_last_asc
+    global non_library
+    global non_library_asc
+
     saved_values := load_values(log_path)
     text_x := saved_values[1]
     text_x_asc := saved_values[2]
     process_last := saved_values[3]
     process_last_asc := saved_values[4]
+    non_library := saved_values[5]
+    non_library_asc := saved_values[6]
+
     add_to_text_x()
-    save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
+    save_values(text_x, text_x_asc, process_last, process_last_asc, non_library, non_library_asc, log_path)
 }
 
 +z::{
@@ -359,11 +405,37 @@ add_to_process_last(){
     global text_x_asc
     global process_last
     global process_last_asc
+    global non_library
+    global non_library_asc
+
     saved_values := load_values(log_path)
     text_x := saved_values[1]
     text_x_asc := saved_values[2]
     process_last := saved_values[3]
     process_last_asc := saved_values[4]
+    non_library := saved_values[5]
+    non_library_asc := saved_values[6]
+
     add_to_process_last()
-    save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
+    save_values(text_x, text_x_asc, process_last, process_last_asc, non_library, non_library_asc, log_path)
+}
+
++d::{
+    global text_x
+    global text_x_asc
+    global process_last
+    global process_last_asc
+    global non_library
+    global non_library_asc
+
+    saved_values := load_values(log_path)
+    text_x := saved_values[1]
+    text_x_asc := saved_values[2]
+    process_last := saved_values[3]
+    process_last_asc := saved_values[4]
+    non_library := saved_values[5]
+    non_library_asc := saved_values[6]
+
+    add_to_non_library()
+    save_values(text_x, text_x_asc, process_last, process_last_asc, non_library, non_library_asc, log_path)
 }

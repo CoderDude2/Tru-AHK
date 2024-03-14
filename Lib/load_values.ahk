@@ -3,6 +3,8 @@ load_values(file_path){
     text_x_asc := []
     process_last := []
     process_last_asc := []
+    non_library := []
+    non_library_asc := []
     current_list := ""
     reset_file := False
 
@@ -26,6 +28,10 @@ load_values(file_path){
             current_list := "process-last"
         } else if(A_LoopReadLine = "Process Last(ASC):"){
             current_list := "process-last-asc"
+        } else if(A_LoopReadLine = "Non Library:"){
+            current_list := "non-library"
+        } else if(A_LoopReadLine = "Non Library(ASC):"){
+            current_list := "non-library-asc"
         }
 
         if isInteger(A_LoopReadLine)
@@ -37,6 +43,10 @@ load_values(file_path){
                 process_last.Push(A_LoopReadLine)
             } else if(current_list = "process-last-asc"){
                 process_last_asc.Push(A_LoopReadLine)
+            } else if(current_list = "non-library"){
+                non_library.Push(A_LoopReadLine)
+            } else if(current_list = "non-library-asc"){
+                non_library_asc.Push(A_LoopReadLine)
             }
     }
 
@@ -48,5 +58,5 @@ load_values(file_path){
         return
     }
 
-    return [text_x, text_x_asc, process_last, process_last_asc]
+    return [text_x, text_x_asc, process_last, process_last_asc, non_library, non_library_asc]
 }

@@ -1,4 +1,4 @@
-save_values(text_x_list, text_x_asc_list, process_last_list, process_last_asc_list, file_path){
+save_values(text_x_list, text_x_asc_list, process_last_list, process_last_asc_list, non_library, non_library_asc,file_path){
     current_date := FormatTime("A_Now", "yyyyMMdd")
     FileDelete(file_path "\log.txt") ; Overwrite previous file.
     FileAppend(current_date "`n", file_path "\log.txt")
@@ -19,6 +19,13 @@ save_values(text_x_list, text_x_asc_list, process_last_list, process_last_asc_li
     } else {
         FileAppend("NONE`n", file_path "\log.txt")
     }
+    FileAppend("`nNon Library:`n", file_path "\log.txt")
+    if(IsObject(non_library) and non_library.Length > 0){
+        for key, value in non_library
+            FileAppend(value "`n", file_path "\log.txt")
+    } else {
+        FileAppend("NONE`n", file_path "\log.txt")
+    }
 
     FileAppend("`nText X(ASC):`n", file_path "\log.txt")
     if(IsObject(text_x_asc_list) and text_x_asc_list.Length > 0){
@@ -31,6 +38,14 @@ save_values(text_x_list, text_x_asc_list, process_last_list, process_last_asc_li
     FileAppend("`nProcess Last(ASC):`n", file_path "\log.txt")
     if(IsObject(process_last_asc_list) and process_last_asc_list.Length > 0){
         for key, value in process_last_asc_list
+            FileAppend(value "`n", file_path "\log.txt")
+    } else {
+        FileAppend("NONE`n", file_path "\log.txt")
+    }
+
+    FileAppend("`nProcess Last(ASC):`n", file_path "\log.txt")
+    if(IsObject(non_library_asc) and non_library_asc.Length > 0){
+        for key, value in non_library_asc
             FileAppend(value "`n", file_path "\log.txt")
     } else {
         FileAppend("NONE`n", file_path "\log.txt")
