@@ -7,7 +7,7 @@ MyMenu := Menu()
 MyMenu.Add("New", create_item)
 MyMenu.Add("Delete", delete_item)
 
-lb := root.AddListBox("r10 vtext_x",["0000","1111","2222"])
+lb := root.AddListBox("r10 vtext_x Sort",["0000","1111","2222"])
 
 root.show()
 
@@ -23,7 +23,7 @@ Delete::{
 
 create_item(*){
     case_id := InputBox("Enter Case ID", "Get Case ID").value
-    lb.Add(case_id)
+    lb.Add([case_id])
 }
 
 delete_item(*){
