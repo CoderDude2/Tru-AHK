@@ -1,6 +1,8 @@
 #Requires Autohotkey v2.0
 #SingleInstance
 
+#Include %A_ScriptDir%\Lib\commands.ahk
+
 root := Gui()
 
 ; Right Click Menu
@@ -8,12 +10,30 @@ MyMenu := Menu()
 MyMenu.Add("New", create_item)
 MyMenu.Add("Delete", delete_item)
 
-lb := root.AddListBox("r10 vtext_x Sort Multi",["0000","1111","2222"])
+lb := root.AddListBox("r10 vtext_x Sort Multi",[])
 
 root.show()
 
++x::{
+    esprit_title := WinGetTitle("A")
+    case_id:=get_case_id(esprit_title)
+    if(case_id = ""){
+        return
+    }
+
+    ; Check if the id has already been added.
+    if(lb.Text != ""){
+        for Inbex, Field in lb.Text{
+            MsgBox(Field)
+        }
+    }
+    
+    lb.Add([case_id])
+}
+
+#HotIf WinActive("text_x.ahk")
 Delete::{
-    lb.Delete(lb.Value)
+    delete_item()
 }
 
 ~RButton::{
@@ -30,12 +50,16 @@ create_item(*){
 }
 
 delete_item(*){
-    index := lb.Value.Length
-    Loop {
-        if(index == 0){
-            break
+    index := lb.Value
+    if(index != ""){
+        index := index.Length
+        Loop {
+            if(index == 0){
+                break
+            }
+            lb.Delete(lb.Value[index])
+            index--
         }
-        lb.Delete(lb.Value[index])
-        index--
     }
 }
+
