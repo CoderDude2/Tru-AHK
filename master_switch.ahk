@@ -178,6 +178,10 @@ XButton1::{
     trim_tool()
 }
 
++XButton1::{
+    three_point_tool()
+}
+
 ^e::{
     extrude_tool()
 }
