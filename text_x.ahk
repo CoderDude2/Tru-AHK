@@ -7,10 +7,12 @@ root := Gui()
 
 ; Right Click Menu
 MyMenu := Menu()
-MyMenu.Add("New", create_item)
+MyMenu.Add("New", onCreateItem)
 MyMenu.Add("Delete", delete_item)
 
+
 lb := root.AddListBox("r10 vtext_x Sort Multi",[])
+lb_2 := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
 
 root.show()
 
@@ -20,15 +22,11 @@ root.show()
     if(case_id = ""){
         return
     }
+    create_item(case_id, "ListBox1")
+}
 
-    ; Check if the id has already been added.
-    if(lb.Text != ""){
-        for Inbex, Field in lb.Text{
-            MsgBox(Field)
-        }
-    }
-    
-    lb.Add([case_id])
+l::{
+    MsgBox(ControlGetClassNN(ControlGetFocus("text_x.ahk")))
 }
 
 #HotIf WinActive("text_x.ahk")
@@ -44,9 +42,19 @@ Delete::{
     }
 }
 
-create_item(*){
+onCreateItem(*){
     case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
-    lb.Add([case_id])
+    create_item(case_id, "ListBox1")
+}
+
+create_item(value, control){
+    Items := ControlGetItems(control, "text_x.ahk")
+    for item in Items{
+        if(item == value){
+            return
+        }
+    }
+    lb.Add([value])
 }
 
 delete_item(*){
@@ -62,4 +70,3 @@ delete_item(*){
         }
     }
 }
-
