@@ -11,8 +11,14 @@ MyMenu.Add("New", onCreateItem)
 MyMenu.Add("Delete", delete_item)
 
 
-lb := root.AddListBox("r10 vtext_x Sort Multi",[])
-lb_2 := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
+text_x_lb := root.AddListBox("r10 vtext_x Sort Multi",[])
+process_last_lb := root.AddListBox("r10 vprocess_last Sort Multi",[])
+non_library_lb := root.AddListBox("r10 vnon_library Sort Multi",[])
+
+text_x_asc_lb := root.AddListBox("r10 ys vtext_x_asc Sort Multi",[])
+process_last_asc_lb := root.AddListBox("r10 vprocess_last_asc Sort Multi",[])
+non_library_asc_lb := root.AddListBox("r10 vnon_library_asc Sort Multi",[])
+kp_asc_lb := root.AddListBox("r10 vkp_asc Sort Multi",[])
 
 root.show()
 
@@ -23,10 +29,6 @@ root.show()
         return
     }
     create_item(case_id, "ListBox1")
-}
-
-l::{
-    MsgBox(ControlGetClassNN(ControlGetFocus("text_x.ahk")))
 }
 
 #HotIf WinActive("text_x.ahk")
@@ -44,28 +46,31 @@ Delete::{
 
 onCreateItem(*){
     case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
-    create_item(case_id, "ListBox1")
+    create_item(case_id, ControlGetClassNN(ControlGetFocus("text_x.ahk")))
 }
 
 create_item(value, control){
+    listbox_hwnd := ControlGetHwnd(control, "text_x.ahk")
     Items := ControlGetItems(control, "text_x.ahk")
     for item in Items{
         if(item == value){
             return
         }
     }
-    lb.Add([value])
+    GuiCtrlFromHwnd(listbox_hwnd).Add([value])
 }
 
 delete_item(*){
-    index := lb.Value
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk")
+    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd)
+    index := selected_listbox.Value
     if(index != ""){
         index := index.Length
         Loop {
             if(index == 0){
                 break
             }
-            lb.Delete(lb.Value[index])
+            selected_listbox.Delete(selected_listbox.Value[index])
             index--
         }
     }
