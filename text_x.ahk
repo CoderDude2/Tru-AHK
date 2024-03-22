@@ -10,18 +10,25 @@ MyMenu := Menu()
 MyMenu.Add("New", onCreateItem)
 MyMenu.Add("Delete", delete_item)
 
-
+root.AddText(,"Text X")
 text_x_lb := root.AddListBox("r10 vtext_x Sort Multi",[])
+root.AddText(,"Process Last")
 process_last_lb := root.AddListBox("r10 vprocess_last Sort Multi",[])
+root.AddText(,"Non-Library")
 non_library_lb := root.AddListBox("r10 vnon_library Sort Multi",[])
 
-text_x_asc_lb := root.AddListBox("r10 ys vtext_x_asc Sort Multi",[])
+root.AddText("ys","Text X ASC")
+text_x_asc_lb := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
+root.AddText(,"Process Last ASC")
 process_last_asc_lb := root.AddListBox("r10 vprocess_last_asc Sort Multi",[])
+root.AddText(,"Non-Library ASC")
 non_library_asc_lb := root.AddListBox("r10 vnon_library_asc Sort Multi",[])
+root.AddText(,"KP ASC")
 kp_asc_lb := root.AddListBox("r10 vkp_asc Sort Multi",[])
 
 root.show()
 
+#HotIf WinActive("ahk_exe esprit.exe")
 +x::{
     esprit_title := WinGetTitle("A")
     case_id:=get_case_id(esprit_title)
