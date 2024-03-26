@@ -26,6 +26,15 @@ non_library_asc_lb := root.AddListBox("r10 vnon_library_asc Sort Multi",[])
 root.AddText(,"KP ASC")
 kp_asc_lb := root.AddListBox("r10 vkp_asc Sort Multi",[])
 
+TEXT_X := "ListBox1"
+PROCESS_LAST := "ListBox2"
+NON_LIBRARY := "ListBox3"
+
+TEXT_X_ASC := "ListBox4"
+PROCESS_LAST_ASC := "ListBox5"
+NON_LIBRARY_ASC := "ListBox6"
+KP_ASC := "ListBox7"
+
 root.show()
 
 #HotIf WinActive("ahk_exe esprit.exe")
@@ -35,7 +44,40 @@ root.show()
     if(case_id = ""){
         return
     }
-    create_item(case_id, "ListBox1")
+    if(get_case_type(esprit_title) == "ASC"){
+        create_item(case_id, TEXT_X_ASC)
+    } else {
+        create_item(case_id, TEXT_X)
+    }
+}
+
++z::{
+    esprit_title := WinGetTitle("A")
+    case_id:=get_case_id(esprit_title)
+    if(case_id = ""){
+        return
+    }
+    if(InStr(get_connection_type(esprit_title), "KP")){
+        create_item(case_id, KP_ASC)
+    } else if(get_case_type(esprit_title) == "ASC"){
+        create_item(case_id, PROCESS_LAST_ASC)
+    } else {
+        create_item(case_id, PROCESS_LAST)
+    }
+    
+}
+
++d::{
+    esprit_title := WinGetTitle("A")
+    case_id:=get_case_id(esprit_title)
+    if(case_id = ""){
+        return
+    }
+    if(get_case_type(esprit_title) == "ASC"){
+        create_item(case_id, NON_LIBRARY_ASC)
+    } else {
+        create_item(case_id, NON_LIBRARY)
+    }
 }
 
 #HotIf WinActive("text_x.ahk")
