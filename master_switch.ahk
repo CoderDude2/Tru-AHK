@@ -324,10 +324,9 @@ esprit_title := WinGetTitle("A")
 ; ===== More Keys =====
 y::{
     CoordMode("Mouse", "Screen")
-    MouseMove(1700, 370, 0)
-    Click(2)
-    Send("{Delete}-5")
-    MouseMove(1705, 315, 0)
+    MouseMove(1019, 333, 0)
+    Click(1)
+    Send("^a{Delete}-5{Tab}{Enter}")
     Click(1)
 }
 
@@ -337,22 +336,22 @@ AppsKey::{
     CoordMode("Mouse", "Screen")
 
     ; 1st Margin
-    Click("1600 220")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Click("909 180")
+    Click("1018, 300, 3") ; Click the Text box and enter 0.025
     Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
+    Click("963, 330") ; Click Re-Generate Operation
 
     ; 2nd Margin
-    Click("1700 222")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Click("1024 178")
+    Click("1018, 300, 3") ; Click the Text box and enter 0.025
     Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
+    Click("963, 330") ; Click Re-Generate Operation
 
     ; 3rd Margin
-    Click("1600 260")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Click("913 222")
+    Click("1018, 300, 3") ; Click the Text box and enter 0.025
     Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
+    Click("963, 330") ; Click Re-Generate Operation
     BlockInput("MouseMoveOff")
 }
 
@@ -362,28 +361,28 @@ AppsKey::{
     CoordMode("Mouse", "Screen")
 
     ; 1st Margin
-    Click("1600 220")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Click("909 180")
+    Click("1018, 300, 3") ; Click the Text box and enter 0.025
     Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
+    Click("963, 330") ; Click Re-Generate Operation
 
     ; 2nd Margin
-    Click("1700 222")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Click("1024 180")
+    Click("1018, 300, 3") ; Click the Text box and enter 0.025
     Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
+    Click("963, 330") ; Click Re-Generate Operation
 
     ; 3rd Margin
-    Click("1600 260")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Click("913 222")
+    Click("1018, 300, 3") ; Click the Text box and enter 0.025
     Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
+    Click("963, 330") ; Click Re-Generate Operation
 
     ; 4th Margin
-    Click("1700 275")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
+    Click("1028 222")
+    Click("1018, 300, 3") ; Click the Text box and enter 0.025
     Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
+    Click("963, 330") ; Click Re-Generate Operation
     BlockInput("MouseMoveOff")
 }
 
