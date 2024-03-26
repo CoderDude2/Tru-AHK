@@ -440,37 +440,37 @@ w::{
 !1::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1584 145")
+    Click("889 104")
 }
 
 !2::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1657 143")
+    Click("960 104")
 }
 
 !q::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1605 233")
+    Click("910 192")
 }
 
 !a::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1580 83")
+    Click("878 41")
 }
 
 !s::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1630 83")
+    Click("929 41")
 }
 
 !d::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1670 83")
+    Click("972 41")
 }
 
 !e::{
