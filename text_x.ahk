@@ -8,6 +8,7 @@ root := Gui()
 ; Right Click Menu
 MyMenu := Menu()
 MyMenu.Add("New", onCreateItem)
+MyMenu.Add("Copy", onCopy)
 MyMenu.Add("Delete", delete_item)
 
 root.AddText(,"Text X")
@@ -37,52 +38,19 @@ KP_ASC := "ListBox7"
 
 root.show()
 
-#HotIf WinActive("ahk_exe esprit.exe")
-+x::{
-    esprit_title := WinGetTitle("A")
-    case_id:=get_case_id(esprit_title)
-    if(case_id = ""){
-        return
-    }
-    if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, TEXT_X_ASC)
-    } else {
-        create_item(case_id, TEXT_X)
-    }
-}
-
-+z::{
-    esprit_title := WinGetTitle("A")
-    case_id:=get_case_id(esprit_title)
-    if(case_id = ""){
-        return
-    }
-    if(InStr(get_connection_type(esprit_title), "KP")){
-        create_item(case_id, KP_ASC)
-    } else if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, PROCESS_LAST_ASC)
-    } else {
-        create_item(case_id, PROCESS_LAST)
-    }
-    
-}
-
-+d::{
-    esprit_title := WinGetTitle("A")
-    case_id:=get_case_id(esprit_title)
-    if(case_id = ""){
-        return
-    }
-    if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, NON_LIBRARY_ASC)
-    } else {
-        create_item(case_id, NON_LIBRARY)
-    }
-}
-
-#HotIf WinActive("text_x.ahk")
+#HotIf WinActive("text_x.ahk", "Text X")
 Delete::{
     delete_item()
+}
+
+Escape::{
+    PostMessage 0x0185, 0, -1, TEXT_X
+    PostMessage 0x0185, 0, -1, PROCESS_LAST
+    PostMessage 0x0185, 0, -1, NON_LIBRARY
+    PostMessage 0x0185, 0, -1, TEXT_X_ASC
+    PostMessage 0x0185, 0, -1, PROCESS_LAST_ASC
+    PostMessage 0x0185, 0, -1, NON_LIBRARY_ASC
+    PostMessage 0x0185, 0, -1, KP_ASC
 }
 
 ^a::{
@@ -92,6 +60,18 @@ Delete::{
 }
 
 ^c::{
+    A_Clipboard := ""
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk") ; Get the focused listbox HWND.
+    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
+    listbox_text := selected_listbox.Text
+    if(listbox_text != ""){
+        For Item in listbox_text{
+            A_Clipboard .= Item . "`r`n"
+        }
+    }
+}
+
+onCopy(*){
     A_Clipboard := ""
     listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk") ; Get the focused listbox HWND.
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
@@ -140,5 +120,48 @@ delete_item(*){
             selected_listbox.Delete(selected_listbox.Value[index])
             index--
         }
+    }
+}
+
+#HotIf WinActive("ahk_exe esprit.exe")
++x::{
+    esprit_title := WinGetTitle("A")
+    case_id:=get_case_id(esprit_title)
+    if(case_id = ""){
+        return
+    }
+    if(get_case_type(esprit_title) == "ASC"){
+        create_item(case_id, TEXT_X_ASC)
+    } else {
+        create_item(case_id, TEXT_X)
+    }
+}
+
++z::{
+    esprit_title := WinGetTitle("A")
+    case_id:=get_case_id(esprit_title)
+    if(case_id = ""){
+        return
+    }
+    if(InStr(get_connection_type(esprit_title), "KP")){
+        create_item(case_id, KP_ASC)
+    } else if(get_case_type(esprit_title) == "ASC"){
+        create_item(case_id, PROCESS_LAST_ASC)
+    } else {
+        create_item(case_id, PROCESS_LAST)
+    }
+    
+}
+
++d::{
+    esprit_title := WinGetTitle("A")
+    case_id:=get_case_id(esprit_title)
+    if(case_id = ""){
+        return
+    }
+    if(get_case_type(esprit_title) == "ASC"){
+        create_item(case_id, NON_LIBRARY_ASC)
+    } else {
+        create_item(case_id, NON_LIBRARY)
     }
 }
