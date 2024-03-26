@@ -85,6 +85,24 @@ Delete::{
     delete_item()
 }
 
+^a::{
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk") ; Get the focused listbox HWND.
+    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
+    PostMessage 0x0185, 1, -1, selected_listbox ; Selects all items in listbox.
+}
+
+^c::{
+    A_Clipboard := ""
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk") ; Get the focused listbox HWND.
+    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
+    listbox_text := selected_listbox.Text
+    if(listbox_text != ""){
+        For Item in listbox_text{
+            A_Clipboard .= Item . "`r`n"
+        }
+    }
+}
+
 ~RButton::{
    CoordMode("Mouse", "Client")
    MouseGetPos(&pos_x, &pos_y, &id)
