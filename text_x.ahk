@@ -38,6 +38,97 @@ KP_ASC := "ListBox7"
 
 root.show()
 
+onCopy(*){
+    A_Clipboard := ""
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk") ; Get the focused listbox HWND.
+    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
+    listbox_text := selected_listbox.Text
+    if(listbox_text != ""){
+        For Item in listbox_text{
+            A_Clipboard .= Item . "`r`n"
+        }
+    }
+}
+
+onCreateItem(*){
+    case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
+    create_item(case_id, ControlGetClassNN(ControlGetFocus("text_x.ahk")))
+}
+
+create_item(value, control){
+    listbox_hwnd := ControlGetHwnd(control, "text_x.ahk")
+    Items := ControlGetItems(control, "text_x.ahk")
+    for item in Items{
+        if(item == value){
+            return
+        }
+    }
+    GuiCtrlFromHwnd(listbox_hwnd).Add([value])
+}
+
+delete_item(*){
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk")
+    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd)
+    index := selected_listbox.Value
+    if(index != ""){
+        index := index.Length
+        Loop {
+            if(index == 0){
+                break
+            }
+            selected_listbox.Delete(selected_listbox.Value[index])
+            index--
+        }
+    }
+}
+
+save(){
+    current_date := FormatTime("A_Now", "yyyyMMdd")
+    if(FileExist("log")){
+        FileDelete("log") ; Overwrite previous file.
+    }
+    
+    FileAppend(current_date "`n", "log")
+    FileAppend("text-x`n", "log")
+    For Item in ControlGetItems(text_x_lb){
+        FileAppend(Item "`n", "log")
+    }
+
+    FileAppend("process-last`n", "log")
+    For Item in ControlGetItems(process_last_lb){
+        FileAppend(Item "`n", "log")
+    }
+
+    FileAppend("non-library`n", "log")
+    For Item in ControlGetItems(non_library_lb){
+        FileAppend(Item "`n", "log")
+    }
+
+    FileAppend("text-x-asc`n", "log")
+    For Item in ControlGetItems(text_x_asc_lb){
+        FileAppend(Item "`n", "log")
+    }
+
+    FileAppend("process-last-asc`n", "log")
+    For Item in ControlGetItems(process_last_asc_lb){
+        FileAppend(Item "`n", "log")
+    }
+
+    FileAppend("non-library-asc`n", "log")
+    For Item in ControlGetItems(non_library_asc_lb){
+        FileAppend(Item "`n", "log")
+    }
+
+    FileAppend("kp-asc`n", "log")
+    For Item in ControlGetItems(kp_asc_lb){
+        FileAppend(Item "`n", "log")
+    }
+}
+
+load(){
+
+}
+
 #HotIf WinActive("text_x.ahk", "Text X")
 Delete::{
     delete_item()
@@ -71,16 +162,8 @@ Escape::{
     }
 }
 
-onCopy(*){
-    A_Clipboard := ""
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk") ; Get the focused listbox HWND.
-    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
-    listbox_text := selected_listbox.Text
-    if(listbox_text != ""){
-        For Item in listbox_text{
-            A_Clipboard .= Item . "`r`n"
-        }
-    }
+^s::{
+    save()
 }
 
 ~RButton::{
@@ -88,38 +171,6 @@ onCopy(*){
    MouseGetPos(&pos_x, &pos_y, &id)
     if(WinGetTitle(id) == "text_x.ahk"){
         MyMenu.show(pos_x, pos_y)
-    }
-}
-
-onCreateItem(*){
-    case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
-    create_item(case_id, ControlGetClassNN(ControlGetFocus("text_x.ahk")))
-}
-
-create_item(value, control){
-    listbox_hwnd := ControlGetHwnd(control, "text_x.ahk")
-    Items := ControlGetItems(control, "text_x.ahk")
-    for item in Items{
-        if(item == value){
-            return
-        }
-    }
-    GuiCtrlFromHwnd(listbox_hwnd).Add([value])
-}
-
-delete_item(*){
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.ahk")), "text_x.ahk")
-    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd)
-    index := selected_listbox.Value
-    if(index != ""){
-        index := index.Length
-        Loop {
-            if(index == 0){
-                break
-            }
-            selected_listbox.Delete(selected_listbox.Value[index])
-            index--
-        }
     }
 }
 
