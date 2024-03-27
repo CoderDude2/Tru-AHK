@@ -35,7 +35,7 @@ TEXT_X_ASC := "ListBox4"
 PROCESS_LAST_ASC := "ListBox5"
 NON_LIBRARY_ASC := "ListBox6"
 KP_ASC := "ListBox7"
-
+load()
 root.show()
 
 onCopy(*){
@@ -64,6 +64,7 @@ create_item(value, control){
         }
     }
     GuiCtrlFromHwnd(listbox_hwnd).Add([value])
+    save()
 }
 
 delete_item(*){
@@ -80,6 +81,7 @@ delete_item(*){
             index--
         }
     }
+    save()
 }
 
 save(){
@@ -87,7 +89,7 @@ save(){
     if(FileExist("log")){
         FileDelete("log") ; Overwrite previous file.
     }
-    
+
     FileAppend(current_date "`n", "log")
     FileAppend("text-x`n", "log")
     For Item in ControlGetItems(text_x_lb){
@@ -126,7 +128,92 @@ save(){
 }
 
 load(){
+    reset_file := False
+    current_list := ""
+    if(FileExist("log")){
+        data := FileRead("log")
+        Loop read, "log"{
+            if(A_Index == 1){
+                current_time := FormatTime(, "yyyyMMdd")
+                
+                ; If the current date is greater than the saved date,
+                ; then set the file to be reset.
+                if(current_time > A_LoopReadLine){
+                    reset_file := true
+                    break
+                }
+            }
 
+            if(A_LoopReadLine = "text-x:"){
+                current_list := "text-x"
+            }
+            
+            if(A_LoopReadLine = "process-last"){
+                current_list := "process-last"
+            }
+            
+            if(A_LoopReadLine = "non-library"){
+                current_list := "non-library"
+            }
+            
+            if(A_LoopReadLine = "text-x-asc"){
+                current_list := "text-x-asc"
+            }
+            
+            if(A_LoopReadLine = "process-last-asc"){
+                current_list := "process-last-asc"
+            }
+            
+            if(A_LoopReadLine = "non-library-asc"){
+                current_list := "non-library-asc"
+            }
+
+            if(A_LoopReadLine = "kp-asc"){
+                current_list := "kp-asc"
+            }
+
+            if isInteger(A_LoopReadLine){
+                if(current_list = "text-x"){
+                text_x_lb.Add([A_LoopReadLine])
+                }
+
+                if(current_list = "process-last"){
+                    process_last_lb.Add([A_LoopReadLine])
+                }
+                
+                if(current_list = "text-x-asc"){
+                    text_x_asc_lb.Add([A_LoopReadLine])
+                }
+                
+                if(current_list = "process-last-asc"){
+                    process_last_asc_lb.Add([A_LoopReadLine])
+                }
+                
+                if(current_list = "non-library"){
+                    non_library_lb.Add([A_LoopReadLine])
+                }
+                
+                if(current_list = "non-library-asc"){
+                    non_library_asc_lb.Add([A_LoopReadLine])
+                }
+                
+                if(current_list = "kp-asc"){
+                    kp_asc_lb.Add([A_LoopReadLine])
+                }
+            }
+            
+        }
+    }
+
+    if(reset_file = True){
+        current_date := FormatTime("A_Now", "yyyyMMdd")
+        if(FileExist("log")){
+            FileDelete("log") ; Overwrite previous file.
+        }
+        
+        FileAppend(current_date "`n","log")
+        return
+    }
 }
 
 #HotIf WinActive("text_x.ahk", "Text X")
@@ -186,6 +273,7 @@ Escape::{
     } else {
         create_item(case_id, TEXT_X)
     }
+    save()
 }
 
 +z::{
@@ -201,6 +289,7 @@ Escape::{
     } else {
         create_item(case_id, PROCESS_LAST)
     }
+    save()
     
 }
 
@@ -215,4 +304,5 @@ Escape::{
     } else {
         create_item(case_id, NON_LIBRARY)
     }
+    save()
 }
