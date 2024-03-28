@@ -178,7 +178,7 @@ XButton1::{
     trim_tool()
 }
 
-+XButton1::{
++XButton2::{
     three_point_tool()
 }
 
