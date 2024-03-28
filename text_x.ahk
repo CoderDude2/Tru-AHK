@@ -46,7 +46,7 @@ root.show()
 
 onCopy(*){
     A_Clipboard := ""
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x_new.exe")), "text_x_new.exe") ; Get the focused listbox HWND.
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
     listbox_text := selected_listbox.Text
     if(listbox_text != ""){
@@ -58,12 +58,12 @@ onCopy(*){
 
 onCreateItem(*){
     case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
-    create_item(case_id, ControlGetClassNN(ControlGetFocus("text_x_new.exe")))
+    create_item(case_id, ControlGetClassNN(ControlGetFocus("text_x.exe")))
 }
 
 create_item(value, control){
-    listbox_hwnd := ControlGetHwnd(control, "text_x_new.exe")
-    Items := ControlGetItems(control, "text_x_new.exe")
+    listbox_hwnd := ControlGetHwnd(control, "text_x.exe")
+    Items := ControlGetItems(control, "text_x.exe")
     for item in Items{
         if(item == value){
             return
@@ -74,7 +74,7 @@ create_item(value, control){
 }
 
 delete_item(*){
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x_new.exe")), "text_x_new.exe")
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe")
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd)
     index := selected_listbox.Value
     if(index != ""){
@@ -222,7 +222,7 @@ load(){
     }
 }
 
-#HotIf WinActive("text_x_new.exe", "Text X")
+#HotIf WinActive("text_x.exe", "Text X")
 Delete::{
     delete_item()
 }
@@ -238,14 +238,14 @@ Escape::{
 }
 
 ^a::{
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x_new.exe")), "text_x_new.exe") ; Get the focused listbox HWND.
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
     PostMessage 0x0185, 1, -1, selected_listbox ; Selects all items in listbox.
 }
 
 ^c::{
     A_Clipboard := ""
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x_new.exe")), "text_x_new.exe") ; Get the focused listbox HWND.
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
     listbox_text := selected_listbox.Text
     if(listbox_text != ""){
@@ -262,7 +262,7 @@ Escape::{
 ~RButton::{
    CoordMode("Mouse", "Client")
    MouseGetPos(&pos_x, &pos_y, &id)
-    if(WinGetTitle(id) == "text_x_new.exe"){
+    if(WinGetTitle(id) == "text_x.exe"){
         MyMenu.show(pos_x, pos_y)
     }
 }
