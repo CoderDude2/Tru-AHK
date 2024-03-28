@@ -5,8 +5,6 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
-#Include %A_ScriptDir%\Lib\load_values.ahk
-#Include %A_ScriptDir%\Lib\save_values.ahk
 
 SetDefaultMouseSpeed 0
 
@@ -16,17 +14,7 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
-log_path := "C:\Users\TruUser\Desktop"
-
 passes := 5
-
-saved_values := load_values(log_path)
-if(saved_values != ""){
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-}
 
 #SuspendExempt
 ;G1
@@ -295,99 +283,6 @@ esprit_title := WinGetTitle("A")
         Sleep(50)
         rotate_selection(Mod(working_degree, 10), True)
     }
-}
-
-; ===== Text-X and Process Last Tracking =====
-add_to_text_x(){
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    esprit_title := WinGetTitle("A")
-    id:=get_case_id(esprit_title)
-    if(id = ""){
-        return
-    }
-
-    if(get_case_type(esprit_title) = "ASC"){
-        for key, value in text_x_asc
-            if(value = id){
-                text_x_asc.RemoveAt(key)
-                MsgBox(id " removed from Text X.")
-                return
-            }
-        text_x_asc.Push(id)
-        MsgBox(id " added to Text X.")
-    } else {
-        for key, value in text_x
-            if(value = id){
-                text_x.RemoveAt(key)
-                MsgBox(id " removed from Text X.")
-                return
-            }
-        text_x.Push(id)
-        MsgBox(id " added to Text X.")
-    }    
-}
-
-add_to_process_last(){
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    esprit_title := WinGetTitle("A")
-    id:=get_case_id(esprit_title)
-    if(id = ""){
-        return
-    }
-
-    if(get_case_type(esprit_title) = "ASC"){
-        for key, value in process_last_asc
-            if(value = id){
-                process_last_asc.RemoveAt(key)
-                MsgBox(id " removed from Process Last.")
-                return
-            }
-        process_last_asc.Push(id)
-        MsgBox(id " added to Process Last.")
-    } else {
-        for key, value in process_last
-            if(value = id){
-                process_last.RemoveAt(key)
-                MsgBox(id " removed from Process Last.")
-                return
-            }
-        process_last.Push(id)
-        MsgBox(id " added to Process Last.")
-    }
-}
-
-+x::{
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    saved_values := load_values(log_path)
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-    add_to_text_x()
-    save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
-}
-
-+z::{
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    saved_values := load_values(log_path)
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-    add_to_process_last()
-    save_values(text_x, text_x_asc, process_last, process_last_asc, log_path)
 }
 
 ; ===== Step-5 Window Navigation =====
