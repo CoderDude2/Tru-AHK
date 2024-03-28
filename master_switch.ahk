@@ -29,6 +29,9 @@ f13::{
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
+^f1::{
+    Run A_ScriptDir "\resources\Autohotkey Keys v1.3.0.pdf"
+}
 
 f12::{
     while ProcessExist("esprit.exe"){
