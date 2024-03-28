@@ -4,6 +4,7 @@
 #Include %A_ScriptDir%\Lib\commands.ahk
 
 root := Gui()
+log_path := A_ScriptDir "\resources\log"
 
 root.OnEvent("Close", OnClose)
 onClose(*){
@@ -92,53 +93,52 @@ delete_item(*){
 
 save(){
     current_date := FormatTime("A_Now", "yyyyMMdd")
-    if(FileExist("log")){
-        FileDelete("log") ; Overwrite previous file.
+    if(FileExist(log_path)){
+        FileDelete(log_path) ; Overwrite previous file.
     }
 
-    FileAppend(current_date "`n", "log")
-    FileAppend("text-x`n", "log")
+    FileAppend(current_date "`n", log_path)
+    FileAppend("text-x`n", log_path)
     For Item in ControlGetItems(text_x_lb){
-        FileAppend(Item "`n", "log")
+        FileAppend(Item "`n", log_path)
     }
 
-    FileAppend("process-last`n", "log")
+    FileAppend("process-last`n", log_path)
     For Item in ControlGetItems(process_last_lb){
-        FileAppend(Item "`n", "log")
+        FileAppend(Item "`n", log_path)
     }
 
-    FileAppend("non-library`n", "log")
+    FileAppend("non-library`n", log_path)
     For Item in ControlGetItems(non_library_lb){
-        FileAppend(Item "`n", "log")
+        FileAppend(Item "`n", log_path)
     }
 
-    FileAppend("text-x-asc`n", "log")
+    FileAppend("text-x-asc`n", log_path)
     For Item in ControlGetItems(text_x_asc_lb){
-        FileAppend(Item "`n", "log")
+        FileAppend(Item "`n", log_path)
     }
 
-    FileAppend("process-last-asc`n", "log")
+    FileAppend("process-last-asc`n", log_path)
     For Item in ControlGetItems(process_last_asc_lb){
-        FileAppend(Item "`n", "log")
+        FileAppend(Item "`n", log_path)
     }
 
-    FileAppend("non-library-asc`n", "log")
+    FileAppend("non-library-asc`n", log_path)
     For Item in ControlGetItems(non_library_asc_lb){
-        FileAppend(Item "`n", "log")
+        FileAppend(Item "`n", log_path)
     }
 
-    FileAppend("kp-asc`n", "log")
+    FileAppend("kp-asc`n", log_path)
     For Item in ControlGetItems(kp_asc_lb){
-        FileAppend(Item "`n", "log")
+        FileAppend(Item "`n", log_path)
     }
 }
 
 load(){
     reset_file := False
     current_list := ""
-    if(FileExist("log")){
-        data := FileRead("log")
-        Loop read, "log"{
+    if(FileExist(log_path)){
+        Loop read, log_path{
             if(A_Index == 1){
                 current_time := FormatTime(, "yyyyMMdd")
                 
@@ -150,7 +150,7 @@ load(){
                 }
             }
 
-            if(A_LoopReadLine = "text-x:"){
+            if(A_LoopReadLine = "text-x"){
                 current_list := "text-x"
             }
             
@@ -180,7 +180,7 @@ load(){
 
             if isInteger(A_LoopReadLine){
                 if(current_list = "text-x"){
-                text_x_lb.Add([A_LoopReadLine])
+                    text_x_lb.Add([A_LoopReadLine])
                 }
 
                 if(current_list = "process-last"){
@@ -213,11 +213,11 @@ load(){
 
     if(reset_file = True){
         current_date := FormatTime("A_Now", "yyyyMMdd")
-        if(FileExist("log")){
-            FileDelete("log") ; Overwrite previous file.
+        if(FileExist(log_path)){
+            FileDelete(log_path) ; Overwrite previous file.
         }
         
-        FileAppend(current_date "`n","log")
+        FileAppend(current_date "`n",log_path)
         return
     }
 }
