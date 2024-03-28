@@ -8,7 +8,7 @@ root := Gui()
 root.OnEvent("Close", OnClose)
 onClose(*){
     save()
-    root.Destroy()
+    ExitApp
 }
 
 ; Right Click Menu
