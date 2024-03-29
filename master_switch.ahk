@@ -17,8 +17,6 @@ path_tool_active := false
 
 log_path := "C:\Users\TruUser\Desktop"
 
-passes := 5
-
 saved_values := load_values(log_path)
 if(saved_values != ""){
     text_x := saved_values[1]
@@ -568,55 +566,73 @@ f15::{
 }
 
 ^Up::{
-    global passes
-    passes += 1
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    ; Tab 1
+    ; Get the current number of passes
+    A_Clipboard := ""
     Click("883 105")
     Sleep(20)
     Click("1000 280")
-    Sleep(20)
-    Send("^a" passes "{Enter}")
-    Send("^a" (-1*passes) "{Enter}")
-    Click("965 355")
-    Sleep(20)
+    Send("^a^c")
+    ClipWait(2)
+    if(IsInteger(A_Clipboard)){
+        passes := A_Clipboard + 1
+        
+        ; Tab 1
+        Click("883 105")
+        Sleep(20)
+        Click("1000 280")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("965 355")
+        Sleep(20)
 
-    ; Tab 2
-    Click("960 105")
-    Sleep(20)
-    Click("1000 280")
-    Sleep(20)
-    Send("^a" passes "{Enter}")
-    Send("^a" (-1*passes) "{Enter}")
-    Click("965 355")
-    Sleep(20)
-    Click("905 188")
+        ; Tab 2
+        Click("960 105")
+        Sleep(20)
+        Click("1000 280")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("965 355")
+        Sleep(20)
+        Click("905 188")
+    }
 }
 
 ^Down::{
-    global passes
-    passes -= 1
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    ; Tab 1
+    ; Get the current number of passes
+    A_Clipboard := ""
     Click("883 105")
     Sleep(20)
     Click("1000 280")
-    Sleep(20)
-    Send("^a" passes "{Enter}")
-    Send("^a" (-1*passes) "{Enter}")
-    Click("965 355")
-    Sleep(20)
+    Send("^a^c")
+    ClipWait(2)
+    if(IsInteger(A_Clipboard)){
+        passes := A_Clipboard - 1
+        
+        ; Tab 1
+        Click("883 105")
+        Sleep(20)
+        Click("1000 280")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("965 355")
+        Sleep(20)
 
-    ; Tab 2
-    Click("960 105")
-    Sleep(20)
-    Click("1000 280")
-    Sleep(20)
-    Send("^a" passes "{Enter}")
-    Send("^a" (-1*passes) "{Enter}")
-    Click("965 355")
-    Sleep(20)
-    Click("905 188")
+        ; Tab 2
+        Click("960 105")
+        Sleep(20)
+        Click("1000 280")
+        Sleep(20)
+        Send("^a" passes "{Enter}")
+        Send("^a" (-1*passes) "{Enter}")
+        Click("965 355")
+        Sleep(20)
+        Click("905 188")
+    }
 }
