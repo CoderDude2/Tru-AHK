@@ -150,64 +150,41 @@ load(){
                 }
             }
 
-            if(A_LoopReadLine = "text-x"){
-                current_list := "text-x"
-            }
-            
-            if(A_LoopReadLine = "process-last"){
-                current_list := "process-last"
-            }
-            
-            if(A_LoopReadLine = "non-library"){
-                current_list := "non-library"
-            }
-            
-            if(A_LoopReadLine = "text-x-asc"){
-                current_list := "text-x-asc"
-            }
-            
-            if(A_LoopReadLine = "process-last-asc"){
-                current_list := "process-last-asc"
-            }
-            
-            if(A_LoopReadLine = "non-library-asc"){
-                current_list := "non-library-asc"
-            }
-
-            if(A_LoopReadLine = "kp-asc"){
-                current_list := "kp-asc"
+            switch A_LoopReadLine{
+                case "text-x":
+                    current_list := "text-x"
+                case "process-last":
+                    current_list := "process-last"
+                case "non-library":
+                    current_list := "non-library"
+                case "text-x-asc":
+                    current_list := "text-x-asc"
+                case "process-last-asc":
+                    current_list := "process-last-asc"
+                case "non-library-asc":
+                    current_list := "non-library-asc"
+                case "kp-asc":
+                    current_list := "kp-asc"
             }
 
             if isInteger(A_LoopReadLine){
-                if(current_list = "text-x"){
-                    text_x_lb.Add([A_LoopReadLine])
-                }
-
-                if(current_list = "process-last"){
-                    process_last_lb.Add([A_LoopReadLine])
-                }
-                
-                if(current_list = "text-x-asc"){
-                    text_x_asc_lb.Add([A_LoopReadLine])
-                }
-                
-                if(current_list = "process-last-asc"){
-                    process_last_asc_lb.Add([A_LoopReadLine])
-                }
-                
-                if(current_list = "non-library"){
-                    non_library_lb.Add([A_LoopReadLine])
-                }
-                
-                if(current_list = "non-library-asc"){
-                    non_library_asc_lb.Add([A_LoopReadLine])
-                }
-                
-                if(current_list = "kp-asc"){
-                    kp_asc_lb.Add([A_LoopReadLine])
+                switch current_list{
+                    case "text-x":
+                        text_x_lb.Add([A_LoopReadLine])
+                    case "process-last":
+                        process_last_lb.Add([A_LoopReadLine])
+                    case "text-x-asc":
+                        text_x_asc_lb.Add([A_LoopReadLine])
+                    case "process-last-asc":
+                        process_last_asc_lb.Add([A_LoopReadLine])
+                    case "non-library":
+                        non_library_lb.Add([A_LoopReadLine])
+                    case "non-library-asc":
+                        non_library_asc_lb.Add([A_LoopReadLine])
+                    case "kp-asc":
+                        kp_asc_lb.Add([A_LoopReadLine])
                 }
             }
-            
         }
     }
 
