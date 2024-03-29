@@ -14,8 +14,6 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
-passes := 5
-
 #SuspendExempt
 ;G1
 f13::{
@@ -432,30 +430,40 @@ y::{
     if(WinExist("Check Rough ML & Create Border Solid")){
         WinActivate("Check Rough ML & Create Border Solid")
         BlockInput("MouseMove")
-        global passes
-        passes += 1
         SetDefaultMouseSpeed(0)
         CoordMode("Mouse", "Client")
+        ; Get the current number of passes
+        A_Clipboard := ""
         Click("30 70")
         Sleep(20)
         Click("154 240")
-        Sleep(20)
-        Send("^a" passes "{Enter}")
-        Send("^a" (-1*passes) "{Enter}")
-        Click("112 320")
+        Send("^a^c")
+        ClipWait(2)
 
-        Sleep(20)
-        Click("108 70")
-        Sleep(20)
-        Click("154 240")
-        Sleep(20)
-        Send("^a" passes "{Enter}")
-        Send("^a" (-1*passes) "{Enter}")
-        Click("112 320")
-        Sleep(20)
+        if(IsInteger(A_Clipboard)){
+            passes := A_Clipboard + 1
 
-        Click("53 157")
-        BlockInput("MouseMoveOff")
+            Click("30 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+
+            Sleep(20)
+            Click("108 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+            Sleep(20)
+
+            Click("53 157")
+            BlockInput("MouseMoveOff")
+        }
     }
 }
 
@@ -463,30 +471,40 @@ y::{
     if(WinExist("Check Rough ML & Create Border Solid")){
         WinActivate("Check Rough ML & Create Border Solid")
         BlockInput("MouseMove")
-        global passes
-        passes -= 1
         SetDefaultMouseSpeed(0)
         CoordMode("Mouse", "Client")
+        ; Get the current number of passes
+        A_Clipboard := ""
         Click("30 70")
         Sleep(20)
         Click("154 240")
-        Sleep(20)
-        Send("^a" passes "{Enter}")
-        Send("^a" (-1*passes) "{Enter}")
-        Click("112 320")
+        Send("^a^c")
+        ClipWait(2)
 
-        Sleep(20)
-        Click("108 70")
-        Sleep(20)
-        Click("154 240")
-        Sleep(20)
-        Send("^a" passes "{Enter}")
-        Send("^a" (-1*passes) "{Enter}")
-        Click("112 320")
-        Sleep(20)
+        if(IsInteger(A_Clipboard)){
+            passes := A_Clipboard - 1
 
-        Click("53 157")
-        BlockInput("MouseMoveOff")
+            Click("30 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+
+            Sleep(20)
+            Click("108 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+            Sleep(20)
+
+            Click("53 157")
+            BlockInput("MouseMoveOff")
+        }
     }
 }
 
