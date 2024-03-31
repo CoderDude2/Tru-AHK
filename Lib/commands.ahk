@@ -73,6 +73,10 @@ rebuild_operation(){
 	PostMessage 0x111, 32768 , , "SysTreeView321", "ESPRIT"
 }
 
+show_milling_tool(){
+	PostMessage 0x111, 6278 , , , "ESPRIT"
+}
+
 double_sided_border() {
 	WinActivate("ESPRIT")
 	PostMessage(0x111, 3130, , , "ESPRIT")
