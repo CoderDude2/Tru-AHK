@@ -14,6 +14,8 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
+macro_bar := "Afx:00400000:8:00010003:00000010:000000001"
+
 #SuspendExempt
 ;G1
 f13::{
@@ -43,7 +45,7 @@ f16::{
 
 ; ===== Remappings =====
 Space::Enter
-w::Delete
+; w::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
@@ -512,36 +514,36 @@ y::{
 #HotIf WinActive("ESPRIT")
 ^Numpad1::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar 
     Click x+20, y+14
 }
 
 ^Numpad2::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar
     Click x+45, y+14
 }
 
 ^Numpad3::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar 
     Click x+68, y+14
 }
 
 ^Numpad4::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar
     Click x+90, y+14
 }
 
 ^Numpad5::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar 
     Click x+115, y+14
 }
 
 ^Numpad6::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar
     Click x+135, y+14
 }
