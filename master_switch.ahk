@@ -5,32 +5,14 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
-#Include %A_ScriptDir%\Lib\load_values.ahk
-#Include %A_ScriptDir%\Lib\save_values.ahk
+
+SetDefaultMouseSpeed 0
 
 ; ===== Variables =====
 initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active := false
-
-log_path := "C:\Users\TruUser\Desktop"
-
-if(not FileExist(log_path "\log.txt")){
-    save_values([],[],[],[],[],[], log_path)
-}
-
-saved_values := load_values(log_path)
-if(saved_values != ""){
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-    non_library := saved_values[5]
-    non_library_asc := saved_values[6]
-}
-
-#HotIf WinActive("ahk_exe esprit.exe")
 
 #SuspendExempt
 ;G1
@@ -43,6 +25,17 @@ f13::{
     Suspend
 }
 #SuspendExempt False
+
+#HotIf WinActive("ahk_exe esprit.exe")
+^f1::{
+    Run A_ScriptDir "\resources\Autohotkey Keys v1.3.0.pdf"
+}
+
+f12::{
+    while ProcessExist("esprit.exe"){
+        ProcessClose("esprit.exe")
+    }
+}
 
 f16::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
@@ -140,12 +133,21 @@ t::{
     rebuild_operation()
 }
 
+!x::
 XButton1::{
     trim_tool()
 }
 
++XButton2::{
+    three_point_tool()
+}
+
 ^e::{
     extrude_tool()
+}
+
+!e::{
+    show_milling_tool()
 }
 
 CapsLock::{
@@ -176,6 +178,14 @@ e::{
     draw_straight_border()
 }
 
++q::{
+    generate_path()
+}
+
++w::{
+    swap_path()
+}
+
 ; G5 Key
 f17::{
     BlockInput true
@@ -198,6 +208,7 @@ f18::{
     stop_simulation()
 }
 
++CapsLock::
 XButton2::{
     global click_index
     global path_tool_active
@@ -281,165 +292,256 @@ esprit_title := WinGetTitle("A")
     }
 }
 
-; ===== Text-X and Process Last Tracking =====
-add_to_text_x(){
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    global non_library
-    global non_library_asc
-    esprit_title := WinGetTitle("A")
-    id:=get_case_id(esprit_title)
-    if(id = ""){
-        return
-    }
-
-    if(get_case_type(esprit_title) = "ASC"){
-        for key, value in text_x_asc
-            if(value = id){
-                text_x_asc.RemoveAt(key)
-                MsgBox(id " removed from Text X.")
-                return
-            }
-        text_x_asc.Push(id)
-        MsgBox(id " added to Text X.")
-    } else {
-        for key, value in text_x
-            if(value = id){
-                text_x.RemoveAt(key)
-                MsgBox(id " removed from Text X.")
-                return
-            }
-        text_x.Push(id)
-        MsgBox(id " added to Text X.")
-    }    
-}
-
-add_to_process_last(){
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    global non_library
-    global non_library_asc
-    esprit_title := WinGetTitle("A")
-    id:=get_case_id(esprit_title)
-    if(id = ""){
-        return
-    }
-
-    if(get_case_type(esprit_title) = "ASC"){
-        for key, value in process_last_asc
-            if(value = id){
-                process_last_asc.RemoveAt(key)
-                MsgBox(id " removed from Process Last.")
-                return
-            }
-        process_last_asc.Push(id)
-        MsgBox(id " added to Process Last.")
-    } else {
-        for key, value in process_last
-            if(value = id){
-                process_last.RemoveAt(key)
-                MsgBox(id " removed from Process Last.")
-                return
-            }
-        process_last.Push(id)
-        MsgBox(id " added to Process Last.")
+; ===== Step-5 Window Navigation =====
+!Numpad7::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 55, 140
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 55, 140
+        }
     }
 }
 
-add_to_non_library(){
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    global non_library
-    global non_library_asc
-    esprit_title := WinGetTitle("A")
-    id:=get_case_id(esprit_title)
-    if(id = ""){
-        return
-    }
-
-    if(get_case_type(esprit_title) = "ASC"){
-        for key, value in non_library_asc
-            if(value = id){
-                non_library_asc.RemoveAt(key)
-                MsgBox(id " removed from Non-Library.")
-                return
-            }
-        non_library_asc.Push(id)
-        MsgBox(id " added to Non-Library.")
-    } else {
-        for key, value in non_library
-            if(value = id){
-                non_library.RemoveAt(key)
-                MsgBox(id " removed from Non-Library.")
-                return
-            }
-        non_library.Push(id)
-        MsgBox(id " added to Non-Library.")
+!Numpad9::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 170, 140
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 170, 140
+        }
     }
 }
 
-+x::{
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    global non_library
-    global non_library_asc
-
-    saved_values := load_values(log_path)
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-    non_library := saved_values[5]
-    non_library_asc := saved_values[6]
-
-    add_to_text_x()
-    save_values(text_x, text_x_asc, process_last, process_last_asc, non_library, non_library_asc, log_path)
+!Numpad1::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 55, 190
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 55, 190
+        }
+    }
 }
 
-+z::{
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    global non_library
-    global non_library_asc
-
-    saved_values := load_values(log_path)
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-    non_library := saved_values[5]
-    non_library_asc := saved_values[6]
-
-    add_to_process_last()
-    save_values(text_x, text_x_asc, process_last, process_last_asc, non_library, non_library_asc, log_path)
+!Numpad3::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 170, 190
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 170, 190
+        }
+    }
 }
 
-+d::{
-    global text_x
-    global text_x_asc
-    global process_last
-    global process_last_asc
-    global non_library
-    global non_library_asc
+!Numpad0::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 35, 235
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 35, 235
+        }
+    }
+}
 
-    saved_values := load_values(log_path)
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-    non_library := saved_values[5]
-    non_library_asc := saved_values[6]
+z::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 40, 8
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 40, 8
+        }
+    }
+}
 
-    add_to_non_library()
-    save_values(text_x, text_x_asc, process_last, process_last_asc, non_library, non_library_asc, log_path)
+x::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        if(WinActive("[5]DEG 경계소재 & 마진")){
+            Click 120, 8
+        } else {
+            WinActivate("[5]DEG 경계소재 & 마진")
+            Click 120, 8
+        }
+    }
+}
+
+y::{
+    if(WinExist("[5]DEG 경계소재 & 마진")){
+        WinActivate("[5]DEG 경계소재 & 마진")
+        CoordMode("Mouse", "Client")
+        MouseMove(180, 300, 0)
+        Click(2)
+        Send("{Delete}-5")
+        MouseMove(170, 240, 0)
+        Click(1)
+    }
+}
+
+; ===== Step-3 Window Navigation =====
+!1::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        if(WinActive("Check Rough ML & Create Border Solid")){
+            Click 32, 70
+        } else {
+            WinActivate("Check Rough ML & Create Border Solid")
+            Click 32, 70
+        }
+    }
+}
+
+!2::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        if(WinActive("Check Rough ML & Create Border Solid")){
+            Click 110, 70
+        } else {
+            WinActivate("Check Rough ML & Create Border Solid")
+            Click 110, 70
+        }
+    }
+}
+
+!q::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        if(WinActive("Check Rough ML & Create Border Solid")){
+            Click 55, 158
+        } else {
+            WinActivate("Check Rough ML & Create Border Solid")
+            Click 55, 158
+        }
+    }
+}
+
+^Up::{
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        WinActivate("Check Rough ML & Create Border Solid")
+        BlockInput("MouseMove")
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        ; Get the current number of passes
+        A_Clipboard := ""
+        Click("30 70")
+        Sleep(20)
+        Click("154 240")
+        Send("^a^c")
+        ClipWait(2)
+
+        if(IsInteger(A_Clipboard)){
+            passes := A_Clipboard + 1
+
+            Click("30 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+
+            Sleep(20)
+            Click("108 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+            Sleep(20)
+
+            Click("53 157")
+            BlockInput("MouseMoveOff")
+        }
+    }
+}
+
+^Down::{
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        WinActivate("Check Rough ML & Create Border Solid")
+        BlockInput("MouseMove")
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        ; Get the current number of passes
+        A_Clipboard := ""
+        Click("30 70")
+        Sleep(20)
+        Click("154 240")
+        Send("^a^c")
+        ClipWait(2)
+
+        if(IsInteger(A_Clipboard)){
+            passes := A_Clipboard - 1
+
+            Click("30 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+
+            Sleep(20)
+            Click("108 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+            Sleep(20)
+
+            Click("53 157")
+            BlockInput("MouseMoveOff")
+        }
+    }
+}
+
+; ===== Macro Buttons =====
+#HotIf WinActive("ESPRIT")
+^Numpad1::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+20, y+14
+}
+
+^Numpad2::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+45, y+14
+}
+
+^Numpad3::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+68, y+14
+}
+
+^Numpad4::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+90, y+14
+}
+
+^Numpad5::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+115, y+14
+}
+
+^Numpad6::{
+    CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    Click x+135, y+14
 }
