@@ -63,6 +63,10 @@ w::Delete
 
 ; ===== View Controls=====
 
+p::{
+    MsgBox "This is a new update!"
+}
+
 a::{
     deg0()
 }
