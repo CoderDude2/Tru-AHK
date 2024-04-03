@@ -339,13 +339,13 @@ AppsKey::{
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
     Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-
+    Sleep(20)
     ; 2nd Margin
     Click("1700 222")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
     Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-
+    Sleep(20)
     ; 3rd Margin
     Click("1600 260")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
@@ -364,19 +364,19 @@ AppsKey::{
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
     Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-
+    Sleep(20)
     ; 2nd Margin
     Click("1700 222")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
     Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-
+    Sleep(20)
     ; 3rd Margin
     Click("1600 260")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
     Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-
+    Sleep(20)
     ; 4th Margin
     Click("1700 275")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
