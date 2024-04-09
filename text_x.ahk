@@ -1,5 +1,5 @@
 #Requires Autohotkey v2.0
-#SingleInstance
+#SingleInstance Force
 
 #Include %A_ScriptDir%\Lib\commands.ahk
 
