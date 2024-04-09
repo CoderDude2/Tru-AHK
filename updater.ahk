@@ -9,10 +9,22 @@ if(online_version != local_version){
     Loop Files, "C:\Users\TruUser\Desktop\AHK_Update\*", "DF"{
         if(f_attr := FileExist(A_ScriptDir "\" A_LoopFileName)){
             if(f_attr == "D"){
-                DirCopy A_LoopFileName, A_ScriptDir "\" A_LoopFileName, true
+                DirCopy A_LoopFileFullPath, A_ScriptDir "\" A_LoopFileName, true
             } else {
-                FileMove A_ScriptDir "\" A_LoopFileName, A_ScriptDir "\old " A_LoopFileName
-                ; FileCopy A_LoopFileName, A_ScriptDir "\" A_LoopFileName
+                FileMove A_ScriptDir "\" A_LoopFileName, A_ScriptDir "\old_" A_LoopFileName
+                FileCopy A_LoopFileFullPath, A_ScriptDir "\" A_LoopFileName
+                if(A_LoopFileExt == "exe"){
+                    Run A_ScriptDir "\" A_LoopFileName
+                }
+                FileDelete "old_" A_LoopFileName
+            }
+        } else {
+            f_attr := FileGetAttrib(A_LoopFileFullPath)
+
+            if(f_attr := "D"){
+                DirCopy A_LoopFileFullPath, A_ScriptDir
+            } else {
+                FileCopy A_LoopFileFullPath, A_ScriptDir
             }
         }
     }
