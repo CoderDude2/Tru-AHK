@@ -265,7 +265,8 @@ Escape::{
     if(case_id = ""){
         return
     }
-    if(InStr(get_connection_type(esprit_title), "KP")){
+
+    if(InStr(get_connection_type(esprit_title), "KP") and get_case_type(esprit_title) == "ASC"){
         create_item(case_id, KP_ASC)
         create_item(case_id, PROCESS_LAST_ASC)
     } else if(get_case_type(esprit_title) == "ASC"){
