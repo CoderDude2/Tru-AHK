@@ -1,7 +1,6 @@
 #Requires Autohotkey v2.0
 SetWorkingDir A_ScriptDir
 
-; IniWrite "1.3.1", "config.ini", "info", "version"
 online_version := IniRead("C:\Users\TruUser\Desktop\AHK_Update\config.ini", "info", "version")
 local_version := IniRead("config.ini", "info", "version")
 

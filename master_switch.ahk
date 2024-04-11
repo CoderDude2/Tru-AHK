@@ -33,6 +33,73 @@ f13::{
     Reload
 }
 
+p::{
+    ; count := SendMessage(0x1105, 0, 0, "SysTreeView321")
+    ; MsgBox count
+    esprit_title := WinGetTitle("A")
+
+    if(get_case_type(esprit_title) == "ASC"){
+        ; Front Turning
+        CoordMode("Mouse", "Client")
+        MouseClickDrag("L", 105, 614, 86, 254, 2)
+        Sleep(200)
+
+        ; Cross Balls
+        MouseClick("L", 123, 640, 1, 0)
+        Send("{Shift down}")
+        MouseClickDrag("L", 108, 722, 80, 510, 3)
+        Send("{Shift up}")
+        Sleep(200)
+
+        ; Rough Endmills
+        MouseClick("L", 115, 755, 1, 0)
+        Send("{Shift down}")
+        MouseClickDrag("L", 115, 770, 90, 300, 3)
+        Send("{Shift up}")
+    } else if(get_case_type(esprit_title) == "DS"){
+        ; Front Turning
+        CoordMode("Mouse", "Client")
+        MouseClickDrag("L", 100, 545, 84, 216, 2)
+        Sleep(200)
+
+        ; Cross Balls
+        MouseClick("L", 125, 575, 1, 0)
+        Send("{Shift down}")
+        MouseClickDrag("L", 125, 655, 113, 400, 3)
+        Send("{Shift up}")
+        Sleep(200)
+
+        ; Rough Endmills
+        MouseClick("L", 110, 690, 1, 0)
+        Send("{Shift down}")
+        MouseClickDrag("L", 118, 706, 83, 269, 3)
+        Send("{Shift up}")
+    }
+}
+
++p::{
+    ; count := SendMessage(0x1105, 0, 0, "SysTreeView321")
+    ; MsgBox count
+
+    ; Front Turning
+    CoordMode("Mouse", "Client")
+    MouseClickDrag("L", 100, 545, 84, 216, 2)
+    Sleep(200)
+
+    ; Cross Balls
+    MouseClick("L", 125, 575, 1, 0)
+    Send("{Shift down}")
+    MouseClickDrag("L", 100, 687, 113, 400, 3)
+    Send("{Shift up}")
+    Sleep(200)
+
+    ; Rough Endmills
+    MouseClick("L", 107, 724, 1, 0)
+    Send("{Shift down}")
+    MouseClickDrag("L", 109, 739, 83, 269, 3)
+    Send("{Shift up}")
+}
+
 ;Ctrl+G1
 ^f13::{
     Suspend
