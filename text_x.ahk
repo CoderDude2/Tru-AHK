@@ -27,15 +27,13 @@ root.AddText("ys","Text X ASC")
 text_x_asc_lb := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
 root.AddText(,"Process Last ASC")
 process_last_asc_lb := root.AddListBox("r10 vprocess_last_asc Sort Multi",[])
-root.AddText(,"KP ASC")
-kp_asc_lb := root.AddListBox("r10 vkp_asc Sort Multi",[])
 
 TEXT_X := "ListBox1"
 PROCESS_LAST := "ListBox2"
 
 TEXT_X_ASC := "ListBox3"
 PROCESS_LAST_ASC := "ListBox4"
-KP_ASC := "ListBox5"
+
 load()
 root.show()
 
@@ -111,11 +109,6 @@ save(){
     For Item in ControlGetItems(process_last_asc_lb){
         FileAppend(Item "`n", log_path)
     }
-
-    FileAppend("kp-asc`n", log_path)
-    For Item in ControlGetItems(kp_asc_lb){
-        FileAppend(Item "`n", log_path)
-    }
 }
 
 load(){
@@ -143,8 +136,6 @@ load(){
                     current_list := "text-x-asc"
                 case "process-last-asc":
                     current_list := "process-last-asc"
-                case "kp-asc":
-                    current_list := "kp-asc"
             }
 
             if isInteger(A_LoopReadLine){
@@ -157,8 +148,6 @@ load(){
                         text_x_asc_lb.Add([A_LoopReadLine])
                     case "process-last-asc":
                         process_last_asc_lb.Add([A_LoopReadLine])
-                    case "kp-asc":
-                        kp_asc_lb.Add([A_LoopReadLine])
                 }
             }
         }
@@ -185,7 +174,6 @@ Escape::{
     PostMessage 0x0185, 0, -1, PROCESS_LAST
     PostMessage 0x0185, 0, -1, TEXT_X_ASC
     PostMessage 0x0185, 0, -1, PROCESS_LAST_ASC
-    PostMessage 0x0185, 0, -1, KP_ASC
 }
 
 ^a::{
@@ -240,10 +228,7 @@ Escape::{
         return
     }
 
-    if(InStr(get_connection_type(esprit_title), "KP") and get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, KP_ASC)
-        create_item(case_id, PROCESS_LAST_ASC)
-    } else if(get_case_type(esprit_title) == "ASC"){
+    if(get_case_type(esprit_title) == "ASC"){
         create_item(case_id, PROCESS_LAST_ASC)
     } else {
         create_item(case_id, PROCESS_LAST)
