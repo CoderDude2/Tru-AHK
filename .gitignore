@@ -1,4 +1,4 @@
 log.txt
 log
 *.exe
-/resources
+/resources/log
