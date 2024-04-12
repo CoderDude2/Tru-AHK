@@ -57,7 +57,11 @@ f13::{
 
 #HotIf WinActive("ahk_exe esprit.exe")
 ^f1::{
-    Run A_ScriptDir "\resources\Autohotkey Keys v1.3.0.pdf"
+    Run A_ScriptDir "\resources\helpfile.pdf"
+}
+
+^f2::{
+    Run A_ScriptDir "\resources\changelog.pdf"
 }
 
 f12::{
