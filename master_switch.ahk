@@ -5,6 +5,24 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
+#Include %A_ScriptDir%\Lib\updater.ahk
+
+; ===== Auto-Update =====
+if(check_for_update(A_ScriptDir, "C:\Users\TruUser\Desktop\AHK_Update")){
+    result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
+    if(result == "Yes"){
+        update("C:\Users\TruUser\Desktop\AHK_Update")
+    }
+}
+
+if(FileExist("old_master_switch.exe")){
+    FileDelete("old_master_switch.exe")
+}
+
+if(IniRead("config.ini", "info", "show_changelog") == "True"){
+    Run A_ScriptDir "\resources\changelog.pdf"
+    IniWrite("False", "config.ini", "info", "show_changelog")
+}
 
 SetDefaultMouseSpeed 0
 
