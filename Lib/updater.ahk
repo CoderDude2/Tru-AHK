@@ -20,11 +20,9 @@ update(){
             } else {
                 FileMove A_ScriptDir "\" A_LoopFileName, A_ScriptDir "\old_" A_LoopFileName
                 FileCopy A_LoopFileFullPath, A_ScriptDir
-                if(A_LoopFileExt == "exe"){
-                    Run A_ScriptDir "\" A_LoopFileName
+                if(A_LoopFileExt != "exe"){
+                     FileDelete "old_" A_LoopFileName
                 }
-                Sleep(500)
-                FileDelete "old_" A_LoopFileName
             }
         } else {
             f_attr := FileGetAttrib(A_LoopFileFullPath)
@@ -35,5 +33,19 @@ update(){
                 FileCopy A_LoopFileFullPath, A_ScriptDir
             }
         }
+    }
+    IniWrite("True", "config.ini", "info", "show_changelog")
+    Sleep(300)
+
+    if(FileExist(A_ScriptDir "\old_text_x.exe") and FileExist(A_ScriptDir "\text_x.exe")){
+        Run A_ScriptDir "\text_x.exe"
+        Sleep(300)
+        FileDelete A_ScriptDir "\old_text_x.exe"
+    }
+
+    if(FileExist(A_ScriptDir "\old_master_switch.exe") and FileExist(A_ScriptDir "\master_switch.exe")){
+        Run A_ScriptDir "\master_switch.exe"
+        Sleep(300)
+        FileDelete A_ScriptDir "\old_master_switch.exe"
     }
 }

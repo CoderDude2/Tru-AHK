@@ -6,24 +6,29 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
-#Include %A_ScriptDir%\Lib\load_values.ahk
-#Include %A_ScriptDir%\Lib\save_values.ahk
+#Include %A_ScriptDir%\Lib\updater.ahk
+
+if(check_for_update()){
+    result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
+    if(result == "Yes"){
+        update()
+    }
+}
+
+if(FileExist("old_master_switch.exe")){
+    FileDelete("old_master_switch.exe")
+}
+
+if(IniRead("config.ini", "info", "show_changelog") == "True"){
+    Run A_ScriptDir "\resources\changelog.pdf"
+    IniWrite("False", "config.ini", "info", "show_changelog")
+}
 
 ; ===== Variables =====
 initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active := false
-
-log_path := "C:\Users\TruUser\Desktop"
-
-saved_values := load_values(log_path)
-if(saved_values != ""){
-    text_x := saved_values[1]
-    text_x_asc := saved_values[2]
-    process_last := saved_values[3]
-    process_last_asc := saved_values[4]
-}
 
 #HotIf WinActive("ahk_exe esprit.exe")
 
@@ -384,16 +389,14 @@ esprit_title := WinGetTitle("A")
     }
 }
 
-; ===== Text X =====
-
 ; ===== More Keys =====
 y::{
+    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     MouseMove(1700, 370, 0)
-    Click(2)
-    Send("{Delete}-5")
-    MouseMove(1705, 315, 0)
-    Click(1)
+    Click(1700, 370)
+    Send("^a-5")
+    Click(1705, 315)
 }
 
 AppsKey::{
