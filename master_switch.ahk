@@ -42,6 +42,17 @@ f13::{
 ^f13::{
     Suspend
 }
+
+~Escape::{
+    BlockInput("MouseMoveOff")
+    global click_index
+    global path_tool_active
+    
+    click_index := 0
+    path_tool_active := false
+
+    stop_simulation()
+}
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
@@ -80,10 +91,6 @@ Space::Enter
 }
 
 ; ===== View Controls=====
-
-p::{
-    MsgBox "This is a new update!"
-}
 
 a::{
     deg0()
@@ -220,16 +227,6 @@ f18::{
 }
 
 ; ===== Auto-Complete Margins =====
-~Escape::{
-    global click_index
-    global path_tool_active
-    
-    click_index := 0
-    path_tool_active := false
-
-    stop_simulation()
-}
-
 +CapsLock::
 XButton2::{
     global click_index
