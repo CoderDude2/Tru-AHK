@@ -385,11 +385,10 @@ y::{
     if(WinExist("[5]DEG 경계소재 & 마진")){
         WinActivate("[5]DEG 경계소재 & 마진")
         CoordMode("Mouse", "Client")
-        MouseMove(180, 300, 0)
-        Click(2)
-        Send("{Delete}-5")
-        MouseMove(170, 240, 0)
-        Click(1)
+        SetDefaultMouseSpeed(0)
+        Click(180, 300)
+        Send("^a-5")
+        Click(170, 240)
     }
 }
 
