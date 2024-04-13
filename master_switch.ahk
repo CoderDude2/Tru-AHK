@@ -8,10 +8,12 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\updater.ahk
 
 ; ===== Auto-Update =====
-if(check_for_update(A_ScriptDir, "C:\Users\TruUser\Desktop\AHK_Update")){
+remote_path := IniRead("config.ini", "info", "remote_path")
+
+if(check_for_update(A_ScriptDir, remote_path)){
     result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
     if(result == "Yes"){
-        update("C:\Users\TruUser\Desktop\AHK_Update")
+        update(remote_path)
     }
 }
 
