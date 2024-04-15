@@ -66,19 +66,13 @@ f13::{
     Run A_ScriptDir "\resources\changelog.pdf"
 }
 
-f12::{
-    while ProcessExist("esprit.exe"){
-        ProcessClose("esprit.exe")
-    }
-}
-
 f16::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
 }
 
 ; ===== Remappings =====
 Space::Enter
-; w::Delete
+w::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
