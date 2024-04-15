@@ -34,6 +34,12 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
+try{
+    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
+} catch TargetError{
+    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
+}
+
 #SuspendExempt
 ;G1
 f13::{
@@ -530,36 +536,36 @@ y::{
 #HotIf WinActive("ESPRIT")
 ^Numpad1::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+20, y+14
 }
 
 ^Numpad2::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control 
     Click x+45, y+14
 }
 
 ^Numpad3::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+68, y+14
 }
 
 ^Numpad4::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+90, y+14
 }
 
 ^Numpad5::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+115, y+14
 }
 
 ^Numpad6::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, "Afx:00400000:8:00010003:00000010:000000001" 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+135, y+14
 }
