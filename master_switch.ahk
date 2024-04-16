@@ -30,6 +30,8 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
+showDebug := false
+
 #HotIf WinActive("ahk_exe esprit.exe")
 
 #SuspendExempt
@@ -38,9 +40,23 @@ f13::{
     Reload
 }
 
+SetTimer(debug, 20)
+
+debug(){
+    if(showDebug){
+        MouseGetPos(&posX, &posY, &window, &active_control)
+        ToolTip("(" posX "," posY ")`n" WinGetTitle(window) "`n" active_control, posX, posY+20)
+    } else {
+        ToolTip()
+    }
+}
+
+^f3::{
+    global showDebug
+    showDebug := !showDebug
+}
+
 p::{
-    ; count := SendMessage(0x1105, 0, 0, "SysTreeView321")
-    ; MsgBox count
     esprit_title := WinGetTitle("A")
 
     if(get_case_type(esprit_title) == "ASC"){
