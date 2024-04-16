@@ -22,26 +22,18 @@ root.AddText(,"Text X")
 text_x_lb := root.AddListBox("r10 vtext_x Sort Multi",[])
 root.AddText(,"Process Last")
 process_last_lb := root.AddListBox("r10 vprocess_last Sort Multi",[])
-root.AddText(,"Non-Library")
-non_library_lb := root.AddListBox("r10 vnon_library Sort Multi",[])
 
 root.AddText("ys","Text X ASC")
 text_x_asc_lb := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
 root.AddText(,"Process Last ASC")
 process_last_asc_lb := root.AddListBox("r10 vprocess_last_asc Sort Multi",[])
-root.AddText(,"Non-Library ASC")
-non_library_asc_lb := root.AddListBox("r10 vnon_library_asc Sort Multi",[])
-root.AddText(,"KP ASC")
-kp_asc_lb := root.AddListBox("r10 vkp_asc Sort Multi",[])
 
 TEXT_X := "ListBox1"
 PROCESS_LAST := "ListBox2"
-NON_LIBRARY := "ListBox3"
 
-TEXT_X_ASC := "ListBox4"
-PROCESS_LAST_ASC := "ListBox5"
-NON_LIBRARY_ASC := "ListBox6"
-KP_ASC := "ListBox7"
+TEXT_X_ASC := "ListBox3"
+PROCESS_LAST_ASC := "ListBox4"
+
 load()
 root.show()
 
@@ -108,11 +100,6 @@ save(){
         FileAppend(Item "`n", log_path)
     }
 
-    FileAppend("non-library`n", log_path)
-    For Item in ControlGetItems(non_library_lb){
-        FileAppend(Item "`n", log_path)
-    }
-
     FileAppend("text-x-asc`n", log_path)
     For Item in ControlGetItems(text_x_asc_lb){
         FileAppend(Item "`n", log_path)
@@ -120,16 +107,6 @@ save(){
 
     FileAppend("process-last-asc`n", log_path)
     For Item in ControlGetItems(process_last_asc_lb){
-        FileAppend(Item "`n", log_path)
-    }
-
-    FileAppend("non-library-asc`n", log_path)
-    For Item in ControlGetItems(non_library_asc_lb){
-        FileAppend(Item "`n", log_path)
-    }
-
-    FileAppend("kp-asc`n", log_path)
-    For Item in ControlGetItems(kp_asc_lb){
         FileAppend(Item "`n", log_path)
     }
 }
@@ -155,16 +132,10 @@ load(){
                     current_list := "text-x"
                 case "process-last":
                     current_list := "process-last"
-                case "non-library":
-                    current_list := "non-library"
                 case "text-x-asc":
                     current_list := "text-x-asc"
                 case "process-last-asc":
                     current_list := "process-last-asc"
-                case "non-library-asc":
-                    current_list := "non-library-asc"
-                case "kp-asc":
-                    current_list := "kp-asc"
             }
 
             if isInteger(A_LoopReadLine){
@@ -177,12 +148,6 @@ load(){
                         text_x_asc_lb.Add([A_LoopReadLine])
                     case "process-last-asc":
                         process_last_asc_lb.Add([A_LoopReadLine])
-                    case "non-library":
-                        non_library_lb.Add([A_LoopReadLine])
-                    case "non-library-asc":
-                        non_library_asc_lb.Add([A_LoopReadLine])
-                    case "kp-asc":
-                        kp_asc_lb.Add([A_LoopReadLine])
                 }
             }
         }
@@ -207,11 +172,8 @@ Delete::{
 Escape::{
     PostMessage 0x0185, 0, -1, TEXT_X
     PostMessage 0x0185, 0, -1, PROCESS_LAST
-    PostMessage 0x0185, 0, -1, NON_LIBRARY
     PostMessage 0x0185, 0, -1, TEXT_X_ASC
     PostMessage 0x0185, 0, -1, PROCESS_LAST_ASC
-    PostMessage 0x0185, 0, -1, NON_LIBRARY_ASC
-    PostMessage 0x0185, 0, -1, KP_ASC
 }
 
 ^a::{
@@ -266,28 +228,10 @@ Escape::{
         return
     }
 
-    if(InStr(get_connection_type(esprit_title), "KP") and get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, KP_ASC)
-        create_item(case_id, PROCESS_LAST_ASC)
-    } else if(get_case_type(esprit_title) == "ASC"){
+    if(get_case_type(esprit_title) == "ASC"){
         create_item(case_id, PROCESS_LAST_ASC)
     } else {
         create_item(case_id, PROCESS_LAST)
-    }
-    save()
-    
-}
-
-+d::{
-    esprit_title := WinGetTitle("A")
-    case_id:=get_case_id(esprit_title)
-    if(case_id = ""){
-        return
-    }
-    if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, NON_LIBRARY_ASC)
-    } else {
-        create_item(case_id, NON_LIBRARY)
     }
     save()
 }

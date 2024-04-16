@@ -5,6 +5,26 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
+#Include %A_ScriptDir%\Lib\updater.ahk
+
+; ===== Auto-Update =====
+remote_path := IniRead("config.ini", "info", "remote_path")
+
+if(check_for_update(A_ScriptDir, remote_path)){
+    result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
+    if(result == "Yes"){
+        update(remote_path)
+    }
+}
+
+if(FileExist("old_master_switch.exe")){
+    FileDelete("old_master_switch.exe")
+}
+
+if(IniRead("config.ini", "info", "show_changelog") == "True"){
+    Run A_ScriptDir "\resources\changelog.pdf"
+    IniWrite("False", "config.ini", "info", "show_changelog")
+}
 
 SetDefaultMouseSpeed 0
 
@@ -14,7 +34,11 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
-macro_bar := "Afx:00400000:8:00010003:00000010:000000001"
+try{
+    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
+} catch TargetError{
+    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
+}
 
 #SuspendExempt
 ;G1
@@ -26,17 +50,26 @@ f13::{
 ^f13::{
     Suspend
 }
+
+~Escape::{
+    BlockInput("MouseMoveOff")
+    global click_index
+    global path_tool_active
+    
+    click_index := 0
+    path_tool_active := false
+
+    stop_simulation()
+}
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
 ^f1::{
-    Run A_ScriptDir "\resources\Autohotkey Keys v1.3.0.pdf"
+    Run A_ScriptDir "\resources\helpfile.pdf"
 }
 
-f12::{
-    while ProcessExist("esprit.exe"){
-        ProcessClose("esprit.exe")
-    }
+^f2::{
+    Run A_ScriptDir "\resources\changelog.pdf"
 }
 
 f16::{
@@ -45,7 +78,7 @@ f16::{
 
 ; ===== Remappings =====
 Space::Enter
-; w::Delete
+w::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
@@ -160,10 +193,6 @@ CapsLock::{
     toggle_simulation()
 }
 
-^t::{
-    update_angle_deg(200)
-}
-
 g::{
     double_sided_border()
 }
@@ -200,16 +229,6 @@ f18::{
 }
 
 ; ===== Auto-Complete Margins =====
-~Escape::{
-    global click_index
-    global path_tool_active
-    
-    click_index := 0
-    path_tool_active := false
-
-    stop_simulation()
-}
-
 +CapsLock::
 XButton2::{
     global click_index
@@ -383,11 +402,10 @@ y::{
     if(WinExist("[5]DEG 경계소재 & 마진")){
         WinActivate("[5]DEG 경계소재 & 마진")
         CoordMode("Mouse", "Client")
-        MouseMove(180, 300, 0)
-        Click(2)
-        Send("{Delete}-5")
-        MouseMove(170, 240, 0)
-        Click(1)
+        SetDefaultMouseSpeed(0)
+        Click(180, 300)
+        Send("^a-5")
+        Click(170, 240)
     }
 }
 
@@ -514,36 +532,36 @@ y::{
 #HotIf WinActive("ESPRIT")
 ^Numpad1::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+20, y+14
 }
 
 ^Numpad2::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar
+    ControlGetPos &x, &y, &w, &h, macro_bar_control 
     Click x+45, y+14
 }
 
 ^Numpad3::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+68, y+14
 }
 
 ^Numpad4::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+90, y+14
 }
 
 ^Numpad5::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar 
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+115, y+14
 }
 
 ^Numpad6::{
     CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar
+    ControlGetPos &x, &y, &w, &h, macro_bar_control
     Click x+135, y+14
 }
