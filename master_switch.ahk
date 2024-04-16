@@ -193,10 +193,6 @@ CapsLock::{
     toggle_simulation()
 }
 
-^t::{
-    update_angle_deg(200)
-}
-
 g::{
     double_sided_border()
 }
