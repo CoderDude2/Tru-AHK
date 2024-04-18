@@ -66,11 +66,11 @@ try{
 }
 
 ^f1::{
-    Run A_ScriptDir "\resources\helpfile.pdf"
+    open_help()
 }
 
 ^f2::{
-    Run A_ScriptDir "\resources\changelog.pdf"
+    open_changelog()   
 }
 
 f16::{
