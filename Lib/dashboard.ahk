@@ -1,6 +1,8 @@
 #Requires Autohotkey v2.0
 #SingleInstance Force
 
+#Include "commands.ahk"
+
 root := Gui()
 root.Opt("+Resize")
 root.Title := "Tru-AHK Dashboard"
@@ -11,7 +13,11 @@ root.OnEvent("Size", Gui_Size)
 tab_control := root.Add("Tab3", "w480 h480",["Home","Settings","Help"])
 
 tab_control.UseTab("Help")
+help_button := root.Add("Button", "Default w120", "Open Help")
+help_button.OnEvent("Click", open_help)
 
+changelog_button := root.Add("Button", "Default w120", "Open Changelog")
+changelog_button.OnEvent("Click", open_changelog)
 
 Gui_Size(thisGui, MinMax, Width, Height){
     if MinMax = -1

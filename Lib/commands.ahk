@@ -1,12 +1,12 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-open_help(){
-	Run A_ScriptDir "..\resources\helpfile.pdf"
+open_help(*){
+	Run "..\resources\helpfile.pdf"
 }
 
-open_changelog(){
-	Run A_ScriptDir "..\resources\changelog.pdf"
+open_changelog(*){
+	Run "..\resources\changelog.pdf"
 }
 
 extrude_tool(){
