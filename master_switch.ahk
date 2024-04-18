@@ -34,12 +34,6 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
-try{
-    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
-} catch TargetError{
-    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
-}
-
 #SuspendExempt
 ;G1
 f13::{
@@ -64,6 +58,13 @@ f13::{
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
+
+try{
+    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
+} catch TargetError{
+    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
+}
+
 ^f1::{
     Run A_ScriptDir "\resources\helpfile.pdf"
 }
