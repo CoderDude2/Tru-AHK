@@ -1,5 +1,7 @@
 #Requires Autohotkey v2.0
 
+properties := Array()
+
 class Property{
     __New(property_name, property_text, property_type, property_value, options?){
         this.property_name := property_name
@@ -24,11 +26,9 @@ arrayContains(value, array){
     return false
 }
 
-properties := Array()
-
 AddProperty(property_name, property_text, property_type, property_value, options?){
     global properties
-    new_property := Property(property_name, property_text, property_type, property_value, options)
+    new_property := Property(property_name, property_text, property_type, property_value, options?)
     properties.Push(new_property)
 }
 
@@ -47,4 +47,19 @@ GuiFromProperty(&gui_object, property){
         Default:
             gui_object.Add("Text",,property.property_text)  
     }
+}
+
+GeneratePropertyGui(&gui_object){
+    global properties
+    Loop properties.Length{
+        GuiFromProperty(&gui_object, properties[A_Index])
+    }
+}
+
+SaveProperties(){
+    ; Implement property saving
+}
+
+LoadProperties(){
+    ; Implement property loading
 }

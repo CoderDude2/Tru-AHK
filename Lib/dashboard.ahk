@@ -14,8 +14,9 @@ root.OnEvent("Size", Gui_Size)
 tab_control := root.Add("Tab3", "w480 h480",["Home","Settings","Help"])
 
 tab_control.UseTab("Settings")
-AddProperty("f12_mode", "F12 Mode", "multi", "", ["One", "Two", "Three"])
-GuiFromProperty(&root, properties[1])
+AddProperty("f12_mode", "F12 Mode", "multi", "", ["Disabled", "Active Instance", "All Instances"])
+AddProperty("w_as_delete", "W as Delete key?", "boolean", false)
+GeneratePropertyGui(&root)
 
 tab_control.UseTab("Help")
 help_button := root.Add("Button", "Default w120", "Open Help")
