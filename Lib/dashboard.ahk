@@ -3,21 +3,39 @@
 
 #Include "commands.ahk"
 
-class property{
-    __New(property_name, property_text, property_type, property_value){
+class Property{
+    __New(property_name, property_text, property_type, property_value, options?){
         this.property_name := property_name
         this.property_text := property_text
 
         this.property_type := property_type
         this.property_value := property_value
+
+        if(IsSet(options)){
+            this.options := options
+        }
     }
 }
 
+arrayContains(value, array){
+    Loop array.Length{
+        if(array[A_Index] == value){
+            return true
+        }
+    }
 
+    return false
+}
 
 properties := Array()
-properties.Push(property("f12-mode", "F12 Mode","multi", ["Disabled", "Active Window", "All Windows"]))
-properties.Push(property("w-as-delete", "Use W as delete key?", "boolean", false))
+
+AddProperty(property_name, property_text, property_type, property_value, options?){
+    global properties
+    new_property := Property(property_name, property_text, property_type, property_value, options)
+    properties.Push(new_property)
+}
+
+AddProperty("f12_mode", "F12 Mode", "multi", "", ["One", "Two", "Three"])
 
 root := Gui()
 root.Opt("+Resize")
@@ -33,7 +51,11 @@ GuiFromProperty(property){
             c_box.Value := property.property_value
         case "multi":
             root.Add("Text",,property.property_text)
-            root.Add("ComboBox", ,property.property_value)
+            drop_down := root.Add("DropDownList", ,property.options)
+
+            if(property.property_value != "" and arrayContains(property.property_value, property.options)){
+                drop_down.Choose(property.property_value)
+            }
         Default:
             root.Add("Text",,property.property_text)  
     }
@@ -43,7 +65,6 @@ tab_control := root.Add("Tab3", "w480 h480",["Home","Settings","Help"])
 
 tab_control.UseTab("Settings")
 GuiFromProperty(properties[1])
-GuiFromProperty(properties[2])
 
 tab_control.UseTab("Help")
 help_button := root.Add("Button", "Default w120", "Open Help")
