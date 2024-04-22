@@ -563,7 +563,7 @@ w::{
 
 ; G3 Key
 f15::{
-    WinMove(-500, 275, , , "esprit", "&Yes")
+    WinMove(-600, 275, , , "esprit", "&Yes")
 }
 
 ; Auto-Start
