@@ -1,6 +1,6 @@
 #Requires Autohotkey v2.0
 
-properties := Array()
+properties := LoadProperties("..\prefs.ini")
 
 class Property{
     __New(property_name, property_text, property_type, property_value, options?){
@@ -38,7 +38,7 @@ GuiFromProperty(&gui_object, property){
             c_box := gui_object.Add("CheckBox","h20",property.property_text)
             c_box.Value := property.property_value
         case "multi":
-            root.Add("Text",,property.property_text)
+            gui_object.Add("Text",,property.property_text)
             drop_down := gui_object.Add("DropDownList", ,property.options)
 
             if(property.property_value != "" and arrayContains(property.property_value, property.options)){
@@ -60,6 +60,17 @@ SaveProperties(){
     ; Implement property saving
 }
 
-LoadProperties(){
-    ; Implement property loading
+LoadProperties(pref_path){
+    sections := IniRead(pref_path)
+    property_array := []
+    Loop Parse sections, "`n"{
+        property_text := IniRead(pref_path, A_LoopField, "text")
+        property_type := IniRead(pref_path, A_LoopField, "type")
+        property_value := IniRead(pref_path, A_LoopField, "value")
+        property_options := IniRead(pref_path, A_LoopField, "options")
+
+        property_array.Push(Property(property_text, property_type, property_value, property_options))
+    }
+
+    return property_array
 }
