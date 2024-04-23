@@ -9,6 +9,12 @@ root.Opt("+Resize")
 root.Title := "Tru-AHK Dashboard"
 root.show("w500 h500")
 
+root.OnEvent("Close", OnClose)
+onClose(*){
+    SaveProperties("..\prefs.ini")
+    ExitApp
+}
+
 root.OnEvent("Size", Gui_Size)
 
 tab_control := root.Add("Tab3", "w480 h480",["Home","Settings","Help"])
