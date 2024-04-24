@@ -1,6 +1,6 @@
 #Requires Autohotkey v2.0
 
-properties := LoadProperties("..\prefs.ini")
+properties := LoadProperties(A_ScriptDir "\prefs.ini")
 
 class Property{
     __New(property_name, property_text, property_type, property_value, options?){

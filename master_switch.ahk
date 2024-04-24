@@ -6,7 +6,7 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
-; #Include %A_ScriptDir%\Lib\dashboard.ahk
+#Include %A_ScriptDir%\Lib\dashboard.ahk
 
 ; ===== Auto-Update =====
 remote_path := IniRead("config.ini", "info", "remote_path")

@@ -3,6 +3,9 @@
 
 #Include "commands.ahk"
 #Include "property_manager.ahk"
+#Include "updater.ahk"
+
+remote_path := IniRead(A_ScriptDir "\config.ini", "info", "remote_path")
 
 root := Gui()
 root.Opt("+Resize")
@@ -11,13 +14,20 @@ root.show("w500 h500")
 
 root.OnEvent("Close", OnClose)
 onClose(*){
-    SaveProperties("..\prefs.ini")
+    SaveProperties(A_ScriptDir "\prefs.ini")
     ExitApp
 }
 
 root.OnEvent("Size", Gui_Size)
 
 tab_control := root.Add("Tab3", "w480 h480",["Home","Settings","Help"])
+
+tab_control.UseTab("Home")
+if(check_for_update(A_ScriptDir, remote_path)){
+    root.Add("Text", ,"An update is available")
+    update_btn := root.Add("Button", "Default w80", "Update Now")
+}
+
 
 tab_control.UseTab("Settings")
 GeneratePropertyGui(&root)
