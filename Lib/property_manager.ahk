@@ -14,6 +14,10 @@ class Property{
             this.options := options
         }
     }
+
+    UpdateValue(value){
+        this.property_value := value
+    }
 }
 
 arrayContains(value, array){
@@ -32,6 +36,15 @@ AddProperty(property_name, property_text, property_type, property_value, options
     properties.Push(new_property)
 }
 
+GetPropertyIndexByName(property_name){
+    global properties
+    Loop properties.Length{
+        if(properties[A_Index].property_name == property_name){
+            return A_Index
+        }
+    }
+}
+
 GuiFromProperty(&gui_object, property){
     switch property.property_type{
         case "boolean":
@@ -40,18 +53,27 @@ GuiFromProperty(&gui_object, property){
             c_box.OnEvent("Click", UpdateProperty)
         case "multi":
             gui_object.Add("Text",,property.property_text)
-            drop_down := gui_object.Add("DropDownList", ,property.options)
+            drop_down := gui_object.Add("DropDownList", "v" property.property_name, property.options)
 
             if(property.property_value != "" and arrayContains(property.property_value, property.options)){
                 drop_down.Choose(property.property_value)
             }
+
+            drop_down.OnEvent("Change", UpdateProperty)
         Default:
             gui_object.Add("Text",,property.property_text)  
     }
 }
 
 UpdateProperty(params*){
-    
+    gui_object := params[1]
+    if(gui_object.Type == "CheckBox"){
+        property_index := GetPropertyIndexByName(gui_object.Name)
+        properties[property_index].UpdateValue(gui_object.Value)
+    } else if(gui_object.Type == "DDL"){
+        property_index := GetPropertyIndexByName(gui_object.Name)
+        properties[property_index].UpdateValue(gui_object.Text)
+    }
 }
 
 GeneratePropertyGui(&gui_object){
