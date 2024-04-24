@@ -6,6 +6,7 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
+; #Include %A_ScriptDir%\Lib\dashboard.ahk
 
 ; ===== Auto-Update =====
 remote_path := IniRead("config.ini", "info", "remote_path")
@@ -55,6 +56,23 @@ f13::{
 
     stop_simulation()
 }
+
+f12::{
+    mode := IniRead("prefs.ini", "f12_mode", "value")
+
+    switch mode{
+        Case "Disabled":
+            Send("{F12}")
+        Case "Active Instance":
+            ProcessExist("esprit.exe")
+            pid := WinGetPID("A")
+            ProcessClose(pid)
+        Case "All Instances":
+            while ProcessExist("esprit.exe"){
+                ProcessClose("esprit.exe")
+            }
+    }
+}
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
@@ -79,7 +97,9 @@ f16::{
 
 ; ===== Remappings =====
 Space::Enter
-w::Delete
+if(IniRead("prefs.ini", "w_as_delete", "value") == "true"){
+    w::Delete
+}
 
 ; ===== Hotstrings =====
 :*:3-1::{
