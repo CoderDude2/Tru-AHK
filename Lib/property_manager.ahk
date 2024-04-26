@@ -45,7 +45,7 @@ GetPropertyIndexByName(property_name){
     }
 }
 
-GuiFromProperty(&gui_object, property){
+GuiFromProperty(gui_object, property){
     switch property.property_type{
         case "boolean":
             c_box := gui_object.Add("CheckBox", "v" property.property_name " h20",property.property_text)
@@ -76,10 +76,10 @@ UpdateProperty(params*){
     }
 }
 
-GeneratePropertyGui(&gui_object){
+GeneratePropertyGui(gui_object){
     global properties
     Loop properties.Length{
-        GuiFromProperty(&gui_object, properties[A_Index])
+        GuiFromProperty(gui_object, properties[A_Index])
     }
 }
 
