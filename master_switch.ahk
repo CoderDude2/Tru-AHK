@@ -145,7 +145,7 @@ f12::{
 
 ; ===== Remappings =====
 Space::Enter
-w::Delete
+LWin::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
@@ -234,7 +234,7 @@ f14::{
 }
 
 ; Tilde(~) key
-f19::{
+`::{
     wireframe_view()
 }
 
@@ -297,11 +297,6 @@ e::{
 }
 
 ; G5 Key
-f17::{
-    BlockInput true
-    Send("X,90{Enter}")
-    BlockInput false
-}
 
 f18::{
     save_file()
