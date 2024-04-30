@@ -2,46 +2,35 @@
 #SingleInstance Force
 
 #Include "commands.ahk"
-#Include "property_manager.ahk"
 #Include "updater.ahk"
 
-remote_path := IniRead(A_ScriptDir "\config.ini", "info", "remote_path")
+; if(FileExist(A_ScriptDir "\resources\prefs.ini")){
+;     remote_path := IniRead(A_ScriptDir "\resources\prefs.ini")
+; } else {
+;     IniWrite()
+; }
+
 
 root := Gui()
 root.Opt("+Resize")
 root.Title := "Tru-AHK Dashboard"
-root.show("w500 h500")
+root.show("w200 h300")
+
+root.Add("GroupBox","r2 xm ym Section w175 h200","Test")
+root.Add("Text","xs+5 ys+20","An Update is available")
+root.Add("Button",,"Update Now")
+
+root.Add("Text",,"F12 Mode")
+root.Add("DropDownList","vf12_options",["Disabled","Active Instance", "All Instances"])
+
+root.Add("CheckBox","h20","W as Delete Key")
 
 root.OnEvent("Close", OnClose)
 onClose(*){
-    SaveProperties(A_ScriptDir "\prefs.ini")
     ExitApp
 }
-
-root.OnEvent("Size", Gui_Size)
-
-tab_control := root.Add("Tab3", "w480 h480",["Home","Settings","Help"])
-
-tab_control.UseTab("Home")
-if(check_for_update(A_ScriptDir, remote_path)){
-    root.Add("Text", ,"An update is available")
-    update_btn := root.Add("Button", "Default w80", "Update Now")
-}
-
-
-tab_control.UseTab("Settings")
-GeneratePropertyGui(&root)
-
-tab_control.UseTab("Help")
-help_button := root.Add("Button", "Default w120", "Open Help")
-help_button.OnEvent("Click", open_help)
-
-changelog_button := root.Add("Button", "Default w120", "Open Changelog")
-changelog_button.OnEvent("Click", open_changelog)
 
 Gui_Size(thisGui, MinMax, Width, Height){
     if MinMax = -1
         return
-    
-    tab_control.Move(,,Width-20, Height-20)
 }
