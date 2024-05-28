@@ -12,12 +12,11 @@
 
 
 root := Gui()
-root.Opt("+Resize")
 root.Title := "Tru-AHK Dashboard"
 root.show("w200 h300")
 
-root.Add("GroupBox","r2 xm ym Section w175 h200","Test")
-root.Add("Text","xs+5 ys+20","An Update is available")
+root.Add("GroupBox","r2 xm ym Section w175 h400","Update")
+root.Add("Text","xs+5 ys+15","An Update is available")
 root.Add("Button",,"Update Now")
 
 root.Add("Text",,"F12 Mode")

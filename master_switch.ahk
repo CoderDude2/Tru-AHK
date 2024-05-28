@@ -73,6 +73,12 @@ f12::{
             }
     }
 }
+
+; G5 Key
+f17::{
+    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
+}
+
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
@@ -238,13 +244,7 @@ e::{
     swap_path()
 }
 
-; G5 Key
-f17::{
-    BlockInput true
-    Send("X,90{Enter}")
-    BlockInput false
-}
-
+; G6 Key
 f18::{
     save_file()
 }
