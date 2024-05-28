@@ -9,6 +9,8 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\dashboard.ahk
 
 ; ===== Auto-Update =====
+A_TrayMenu.Add()
+A_TrayMenu.Add("Open Dashboard", open_dashboard)
 remote_path := IniRead("config.ini", "info", "remote_path")
 
 if(check_for_update(A_ScriptDir, remote_path)){
