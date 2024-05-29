@@ -85,10 +85,12 @@ f17::{
 
 #HotIf WinActive("ahk_exe esprit.exe")
 
-try{
-    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
-} catch TargetError{
-    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
+if(WinExist("ahk_exe esprit.exe") and WinActive("ahk_exe esprit.exe")){
+    try{
+        macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
+    } catch TargetError{
+        macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
+    }
 }
 
 ^f1::{
