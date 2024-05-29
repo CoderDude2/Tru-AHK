@@ -12,7 +12,8 @@
 
 open_dashboard(*){
     static dashboard_open := False
-    mode := IniRead("prefs.ini", "f12_mode", "value")
+    f12_mode := IniRead("prefs.ini", "f12_mode", "value")
+    w_as_delete := IniRead("prefs.ini", "w_as_delete", "value")
     if(!dashboard_open){
         dashboard_open := True
         root := Gui()
@@ -25,14 +26,20 @@ open_dashboard(*){
 
         root.Add("Text",,"F12 Mode")
         f12_dropdown := root.Add("DropDownList","vf12_options",["Disabled","Active Instance", "All Instances"])
-        f12_dropdown.Choose(mode)
+        f12_dropdown.Choose(f12_mode)
         f12_dropdown.OnEvent("Change", setF12Mode)
 
-        root.Add("CheckBox","h20","W as Delete Key")
+        w_checkbox := root.Add("CheckBox","h20","W as Delete Key")
+        w_checkbox.value := w_as_delete
+        w_checkbox.OnEvent("Click", setWMode)
 
         setF12Mode(*){
             ; MsgBox(f12_dropdown.Text)
             IniWrite(f12_dropdown.Text, "prefs.ini", "f12_mode", "value")
+        }
+
+        setWMode(*){
+            IniWrite(w_checkbox.value, "prefs.ini", "w_as_delete", "value")
         }
 
         root.OnEvent("Close", OnClose)

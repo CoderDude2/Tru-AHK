@@ -107,8 +107,10 @@ f16::{
 
 ; ===== Remappings =====
 Space::Enter
-if(IniRead("prefs.ini", "w_as_delete", "value") == "true"){
-    w::Delete
+w::{
+    if(IniRead("prefs.ini", "w_as_delete", "value") == 1){
+        Send("{Delete}")
+    }
 }
 
 ; ===== Hotstrings =====
