@@ -4,16 +4,18 @@
 #Include "commands.ahk"
 #Include "updater.ahk"
 
-; if(FileExist(A_ScriptDir "\resources\prefs.ini")){
-;     remote_path := IniRead(A_ScriptDir "\resources\prefs.ini")
-; } else {
-;     IniWrite()
-; }
+
 
 open_dashboard(*){
+    prefs_file_path := IniRead("config.ini", "info", "user_preferences")
+    if(!FileExist(prefs_file_path)){
+        IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
+        IniWrite(true, prefs_file_path, "w_as_delete", "value")
+    }
+    
     static dashboard_open := False
-    f12_mode := IniRead("prefs.ini", "f12_mode", "value")
-    w_as_delete := IniRead("prefs.ini", "w_as_delete", "value")
+    f12_mode := IniRead(prefs_file_path, "f12_mode", "value")
+    w_as_delete := IniRead(prefs_file_path, "w_as_delete", "value")
     remote_path := IniRead("config.ini", "info", "remote_path")
 
     if(!dashboard_open){
@@ -39,11 +41,11 @@ open_dashboard(*){
         w_checkbox.OnEvent("Click", setWMode)
 
         setF12Mode(*){
-            IniWrite(f12_dropdown.Text, "prefs.ini", "f12_mode", "value")
+            IniWrite(f12_dropdown.Text, prefs_file_path, "f12_mode", "value")
         }
 
         setWMode(*){
-            IniWrite(w_checkbox.value, "prefs.ini", "w_as_delete", "value")
+            IniWrite(w_checkbox.value, prefs_file_path, "w_as_delete", "value")
         }
 
         onUpdatePressed(*){
