@@ -8,12 +8,12 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
 
-if(check_for_update()){
-    result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
-    if(result == "Yes"){
-        update()
-    }
-}
+; if(check_for_update()){
+;     result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
+;     if(result == "Yes"){
+;         update()
+;     }
+; }
 
 if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
