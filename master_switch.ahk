@@ -8,6 +8,12 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk
 
+prefs_file_path := IniRead("config.ini", "info", "user_preferences")
+if(!FileExist(prefs_file_path)){
+    IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
+    IniWrite(true, prefs_file_path, "w_as_delete", "value")
+}
+
 ; ===== Auto-Update =====
 A_TrayMenu.Add()
 A_TrayMenu.Add("Open Dashboard", open_dashboard)
@@ -60,7 +66,7 @@ f13::{
 }
 
 f12::{
-    mode := IniRead("prefs.ini", "f12_mode", "value")
+    mode := IniRead(prefs_file_path, "f12_mode", "value")
 
     switch mode{
         Case "Disabled":
@@ -108,7 +114,7 @@ f16::{
 ; ===== Remappings =====
 Space::Enter
 w::{
-    if(IniRead("prefs.ini", "w_as_delete", "value") == 1){
+    if(IniRead(prefs_file_path, "w_as_delete", "value") == 1){
         Send("{Delete}")
     }
 }
