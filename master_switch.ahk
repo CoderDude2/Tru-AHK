@@ -135,6 +135,22 @@ w::{
    Send "3-3. ROUGH_ENDMILL_" formatted_angle "DEG"
 }
 
+:*:2-1::{
+    esprit_title := WinGetTitle("A")
+    if(get_case_type(esprit_title) = "TLOC" || get_case_type(esprit_title) = "AOT"){
+        Send "2-1. FRONT TURNING-SHORT"
+    } else {
+        Send "2-1. FRONT TURNING"
+    }
+}
+
+:*:5-1::{
+    esprit_title := WinGetTitle("A")
+    if(get_case_type(esprit_title) = "TLOC" || get_case_type(esprit_title) = "AOT"){
+        Send "5-1. FRONT TURNING"
+    }
+}
+
 ; ===== View Controls=====
 
 a::{
