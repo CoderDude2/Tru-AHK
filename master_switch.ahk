@@ -8,7 +8,7 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk
 
-prefs_file_path := IniRead("config.ini", "info", "user_preferences")
+prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
 if(!FileExist(prefs_file_path)){
     IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
     IniWrite(true, prefs_file_path, "w_as_delete", "value")
@@ -30,9 +30,9 @@ if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
 }
 
-if(IniRead("config.ini", "info", "show_changelog") == "True"){
+if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
     Run A_ScriptDir "\resources\changelog.pdf"
-    IniWrite("False", "config.ini", "info", "show_changelog")
+    IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
 }
 
 SetDefaultMouseSpeed 0
