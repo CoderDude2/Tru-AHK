@@ -3,6 +3,14 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+if(!DirExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\")){
+    DirCreate "C:\Users\TruUser\AppData\Roaming\tru-ahk\"
+    if(!FileExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini")){
+        IniWrite("All Instances", "C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini", "f12_mode", "value")
+        IniWrite(true, "C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini", "w_as_delete", "value")
+    }
+}
+
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
