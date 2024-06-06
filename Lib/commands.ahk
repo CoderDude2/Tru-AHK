@@ -1,6 +1,14 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+open_help(*){
+	Run A_ScriptDir "\resources\helpfile.pdf"
+}
+
+open_changelog(*){
+	Run A_ScriptDir "..\resources\changelog.pdf"
+}
+
 extrude_tool(){
 	PostMessage 0x111, 3130 , , , "ESPRIT"
 }

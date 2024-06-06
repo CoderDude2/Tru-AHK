@@ -3,11 +3,28 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+if(!DirExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\")){
+    DirCreate "C:\Users\TruUser\AppData\Roaming\tru-ahk\"
+    if(!FileExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini")){
+        IniWrite("All Instances", "C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini", "f12_mode", "value")
+        IniWrite(true, "C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini", "w_as_delete", "value")
+    }
+}
+
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
+#Include %A_ScriptDir%\Lib\dashboard.ahk
+
+prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
+if(!FileExist(prefs_file_path)){
+    IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
+    IniWrite(true, prefs_file_path, "w_as_delete", "value")
+}
 
 ; ===== Auto-Update =====
+A_TrayMenu.Add()
+A_TrayMenu.Add("Open Dashboard", open_dashboard)
 remote_path := IniRead("config.ini", "info", "remote_path")
 
 if(check_for_update(A_ScriptDir, remote_path)){
@@ -21,9 +38,9 @@ if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
 }
 
-if(IniRead("config.ini", "info", "show_changelog") == "True"){
+if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
     Run A_ScriptDir "\resources\changelog.pdf"
-    IniWrite("False", "config.ini", "info", "show_changelog")
+    IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
 }
 
 SetDefaultMouseSpeed 0
@@ -33,12 +50,6 @@ initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active := false
-
-try{
-    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
-} catch TargetError{
-    macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
-}
 
 #SuspendExempt
 ;G1
@@ -61,15 +72,47 @@ f13::{
 
     stop_simulation()
 }
+
+f12::{
+    mode := IniRead(prefs_file_path, "f12_mode", "value")
+
+    switch mode{
+        Case "Disabled":
+            Send("{F12}")
+        Case "Active Instance":
+            ProcessExist("esprit.exe")
+            pid := WinGetPID("A")
+            ProcessClose(pid)
+        Case "All Instances":
+            while ProcessExist("esprit.exe"){
+                ProcessClose("esprit.exe")
+            }
+    }
+}
+
+; G5 Key
+f17::{
+    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
+}
+
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
+
+if(WinExist("ahk_exe esprit.exe") and WinActive("ahk_exe esprit.exe")){
+    try{
+        macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
+    } catch TargetError{
+        macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
+    }
+}
+
 ^f1::{
-    Run A_ScriptDir "\resources\helpfile.pdf"
+    open_help()
 }
 
 ^f2::{
-    Run A_ScriptDir "\resources\changelog.pdf"
+    open_changelog()   
 }
 
 f16::{
@@ -78,7 +121,11 @@ f16::{
 
 ; ===== Remappings =====
 Space::Enter
-w::Delete
+w::{
+    if(IniRead(prefs_file_path, "w_as_delete", "value") == 1){
+        Send("{Delete}")
+    }
+}
 
 ; ===== Hotstrings =====
 :*:3-1::{
@@ -94,6 +141,22 @@ w::Delete
 :*:3-3::{
    formatted_angle := (get_current_angle() - 7) * 10
    Send "3-3. ROUGH_ENDMILL_" formatted_angle "DEG"
+}
+
+:*:2-1::{
+    esprit_title := WinGetTitle("A")
+    if(get_case_type(esprit_title) = "TLOC" || get_case_type(esprit_title) = "AOT"){
+        Send "2-1. FRONT TURNING-SHORT"
+    } else {
+        Send "2-1. FRONT TURNING"
+    }
+}
+
+:*:5-1::{
+    esprit_title := WinGetTitle("A")
+    if(get_case_type(esprit_title) = "TLOC" || get_case_type(esprit_title) = "AOT"){
+        Send "5-1. FRONT TURNING"
+    }
 }
 
 ; ===== View Controls=====
@@ -217,13 +280,7 @@ e::{
     swap_path()
 }
 
-; G5 Key
-f17::{
-    BlockInput true
-    Send("X,90{Enter}")
-    BlockInput false
-}
-
+; G6 Key
 f18::{
     save_file()
 }
