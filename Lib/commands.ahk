@@ -81,6 +81,12 @@ show_milling_tool(){
 	PostMessage 0x111, 6278 , , , "ESPRIT"
 }
 
+click_and_return(posX, posY){
+	MouseGetPos(&mouse_posX, &mouse_posY, &window, &active_control)
+	Click(posX, posY)
+	MouseMove(mouse_posX, mouse_posY)
+}
+
 double_sided_border() {
 	WinActivate("ESPRIT")
 	PostMessage(0x111, 3130, , , "ESPRIT")

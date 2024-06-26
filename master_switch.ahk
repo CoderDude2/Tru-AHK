@@ -3,6 +3,7 @@
 #SingleInstance Force
 ; DetectHiddenWindows true
 SetWorkingDir A_ScriptDir
+SetDefaultMouseSpeed 0
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
@@ -478,78 +479,84 @@ w::{
 ^Numpad1::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
-    Click("25 105")
+    click_and_return(25, 105)
 }
 
 ; Macro 2
 ^Numpad2::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
-    Click("45 105")
+    click_and_return(45, 105)
 }
 
 ; Macro 3
 ^Numpad3::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
-    Click("68 105")
+    click_and_return(68, 105)
 }
 
 ; Macro 4
 ^Numpad4::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
-    Click("90 105")
+    click_and_return(90, 105)
 }
 
 ; Macro 5
 ^Numpad5::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
-    Click("111 105")
+    click_and_return(111, 105)
 }
 
 ; Macro 6
 ^Numpad6::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Client")
-    Click("137 105")
+    click_and_return(137, 105)
 }
 
 !1::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1584 145")
+    click_and_return(1584, 145)
 }
 
 !2::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1657 143")
+    click_and_return(1657, 143)
 }
 
 !q::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1605 233")
+    click_and_return(1590, 234)
+}
+
+!w::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(1543, 104)
 }
 
 !a::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1580 83")
+    click_and_return(1580, 83)
 }
 
 !s::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1630 83")
+    click_and_return(1630, 83)
 }
 
 !d::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    Click("1670 83")
+    click_and_return(1670, 83)
 }
 
 !e::{
