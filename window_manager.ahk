@@ -3,18 +3,38 @@
 SetWorkingDir A_ScriptDir
 
 class EspritInstance{
-    esprit_pid := 10900
+    __New(main_window_id){
+        this.main_window_id := main_window_id
+        this.esprit_pid := unset
 
-    main_window_id := 70818
-    step_3_window_id := 1450312
-    step_5_window_id := 467050
-    text_window_id := 467554
-    
-    extrude_window_id := 72174
-    transformation_window_id := 991294
+        this.step_3_window_id := unset
+        this.step_5_window_id := unset
+        this.text_window_id := unset
+
+        this.extrude_window_id := unset
+        this.transformation_window_id := unset
+    }
 }
 
-esp_window := EspritInstance()
+get_instances(){
+    esp_window_ids := WinGetList("ESPRIT")
+    esp_instances := []
+    for this_id in esp_window_ids{
+        ; WinActivate("ahk_id" this_id)
+        esp_instance := EspritInstance(this_id)
+        esp_instances.Push(esp_instance)
+    }
+
+    return esp_instances
+}
+
+
+
+~^Numpad3::{
+    instances := get_instances()
+    active_instance := WinActive("ESPRIT")
+    MsgBox(WinGetPID("ahk_id" active_instance))
+}
 
 ; TODO
 ; 1. Get all esprit instances with the ESPRIT title

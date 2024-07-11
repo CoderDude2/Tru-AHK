@@ -427,7 +427,7 @@ AppsKey::{
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
     Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-    Sleep(20)
+    Sleep(40)
     ; 3rd Margin
     Click("1600 260")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
@@ -458,7 +458,7 @@ AppsKey::{
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
     Send("0.025")
     Click("1660, 370") ; Click Re-Generate Operation
-    Sleep(20)
+    Sleep(40)
     ; 4th Margin
     Click("1700 275")
     Click("1700, 330, 3") ; Click the Text box and enter 0.025
@@ -566,6 +566,10 @@ w::{
 ; G3 Key
 f15::{
     WinMove(-600, 275, , , "esprit", "&Yes")
+}
+
+^Left::{
+    translate_selection(-0.5, 0, 0)
 }
 
 ; Auto-Start
