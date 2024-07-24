@@ -1,4 +1,13 @@
 #SingleInstance Force
+A_HotkeyInterval := 9900000  ; This is the default value (milliseconds).
+A_MaxHotkeysPerInterval := 9900000
+KeyHistory 0
+ListLines False
+ProcessSetPriority "A"
+SetKeyDelay -1
+SetMouseDelay -1
+SetDefaultMouseSpeed 0
+SetControlDelay -1
 SetWorkingDir A_ScriptDir
 
 extrude_tool(){

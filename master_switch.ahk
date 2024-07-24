@@ -1,20 +1,22 @@
 ﻿#Requires Autohotkey v2.0
 
 #SingleInstance Force
-; DetectHiddenWindows true
-SetWorkingDir A_ScriptDir
+A_HotkeyInterval := 9900000  ; This is the default value (milliseconds).
+A_MaxHotkeysPerInterval := 9900000
+KeyHistory 0
+ListLines False
+ProcessSetPriority "A"
+SetKeyDelay -1
+SetMouseDelay -1
 SetDefaultMouseSpeed 0
+SetControlDelay -1
+
+SetWorkingDir A_ScriptDir
+
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
-
-; if(check_for_update()){
-;     result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
-;     if(result == "Yes"){
-;         update()
-;     }
-; }
 
 if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
