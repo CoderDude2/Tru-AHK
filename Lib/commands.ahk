@@ -89,13 +89,13 @@ double_sided_border() {
 	WinActivate("ESPRIT")
 	PostMessage(0x111, 3130, , , "ESPRIT")
 
-	WinWaitActive("보스 돌출/잘라내기")
+	WinWaitActive("ahk_class #32770")
 	try{
-		ControlSetText(11, "Edit1", "보스 돌출/잘라내기")
-		ControlSetText(1, "Edit4", "보스 돌출/잘라내기")
+		ControlSetText(11, "Edit1", "ahk_class #32770")
+		ControlSetText(1, "Edit4", "ahk_class #32770")
 		Sleep(100)
-		ControlSetChecked(0,"Button8","보스 돌출/잘라내기")
-		ControlChooseIndex(2,"ComboBox1","보스 돌출/잘라내기")
+		ControlSetChecked(0,"Button8","ahk_class #32770")
+		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
 		MsgBox "Select a line first"
@@ -145,7 +145,7 @@ draw_straight_border(){
 	Click(posX, posY, 2)
 	Sleep(100)
 	double_sided_border()
-	WinActivate("보스 돌출/잘라내기")
+	WinActivate("ahk_class #32770")
 	ControlSend("{Enter}", "Button9", "ahk_class #32770")
 	BlockInput("MouseMoveOff")
 }
