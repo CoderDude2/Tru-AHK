@@ -491,6 +491,18 @@ y::{
     }
 }
 
+!3::{
+    CoordMode "Mouse", "Client"
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        if(WinActive("Check Rough ML & Create Border Solid")){
+            Click 188, 70
+        } else {
+            WinActivate("Check Rough ML & Create Border Solid")
+            Click 188, 70
+        }
+    }
+}
+
 !q::{
     CoordMode "Mouse", "Client"
     if(WinExist("Check Rough ML & Create Border Solid")){
