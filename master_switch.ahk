@@ -529,6 +529,12 @@ w::{
     click_and_return(1657, 143)
 }
 
+!3::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(1710, 142)
+}
+
 !q::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
