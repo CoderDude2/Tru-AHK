@@ -194,7 +194,7 @@ translate_selection(x := 0, y := 0, z := 0){
     transformation_window()
     WinWaitActive("ahk_class #32770")
 
-    ControlChooseIndex(5,"ComboBox1","ahk_class #32770")
+    ControlChooseString("Translate","ComboBox1","ahk_class #32770")
     ControlSetChecked(1,"Button7","ahk_class #32770")
 
     ControlSetText(Round(x, 4), "Edit2", "ahk_class #32770")
@@ -208,7 +208,7 @@ rotate_selection(degrees, update_on_click:=False){
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
-    ControlChooseIndex(9,"ComboBox1","ahk_class #32770")
+    ControlChooseString("Rotate","ComboBox1","ahk_class #32770")
     ControlSetText(Round(degrees, 4), "Edit6", "ahk_class #32770")
     if(update_on_click = True){
         ControlSetChecked(0,"Button10","ahk_class #32770")
@@ -222,7 +222,7 @@ scale_selection(scale){
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
-    ControlChooseIndex(7,"ComboBox1","ahk_class #32770")
+    ControlChooseString("Scale","ComboBox1","ahk_class #32770")
     ControlSetText(Round(scale, 4), "Edit8", "ahk_class #32770")
     Send("{Enter}")
 }

@@ -415,58 +415,58 @@ y::{
 
 AppsKey::{
     BlockInput("MouseMove")
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Screen")
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Screen")
 
-    ; 1st Margin
-    Click("1600 220")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
-    Sleep(20)
-    ; 2nd Margin
-    Click("1700 222")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
-    Sleep(40)
-    ; 3rd Margin
-    Click("1600 260")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
-    BlockInput("MouseMoveOff")
+        ; 1st Margin
+        Click("1600 220")
+        Click("1700, 330") ; Click the Text box and enter 0.025
+        Send("^a0.025")
+        Click("1660, 370") ; Click Re-Generate Operation
+        Sleep(20)
+        ; 2nd Margin
+        Click("1700 222")
+        Click("1700, 330") ; Click the Text box and enter 0.025
+        Send("^a0.025")
+        Click("1660, 370") ; Click Re-Generate Operation
+        Sleep(20)
+        ; 3rd Margin
+        Click("1600 260")
+        Click("1700, 330") ; Click the Text box and enter 0.025
+        Send("^a0.025")
+        Click("1660, 370") ; Click Re-Generate Operation
+        BlockInput("MouseMoveOff")
 }
 
 +AppsKey::{
-    BlockInput("MouseMove")
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Screen")
+        BlockInput("MouseMove")
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Screen")
 
-    ; 1st Margin
-    Click("1600 220")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
-    Sleep(20)
-    ; 2nd Margin
-    Click("1700 222")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
-    Sleep(20)
-    ; 3rd Margin
-    Click("1600 260")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
-    Sleep(40)
-    ; 4th Margin
-    Click("1700 275")
-    Click("1700, 330, 3") ; Click the Text box and enter 0.025
-    Send("0.025")
-    Click("1660, 370") ; Click Re-Generate Operation
-    BlockInput("MouseMoveOff")
+        ; 1st Margin
+        Click("1600 220")
+        Click("1700, 330") ; Click the Text box and enter 0.025
+        Send("^a0.025")
+        Click("1660, 370") ; Click Re-Generate Operation
+        Sleep(20)
+        ; 2nd Margin
+        Click("1700 222")
+        Click("1700, 330") ; Click the Text box and enter 0.025
+        Send("^a0.025")
+        Click("1660, 370") ; Click Re-Generate Operation
+        Sleep(20)
+        ; 3rd Margin
+        Click("1600 260")
+        Click("1700, 330") ; Click the Text box and enter 0.025
+        Send("^a0.025")
+        Click("1660, 370") ; Click Re-Generate Operation
+        Sleep(40)
+        ; 4th Margin
+        Click("1700 275")
+        Click("1700, 330") ; Click the Text box and enter 0.025
+        Send("^a0.025")
+        Click("1660, 370") ; Click Re-Generate Operation
+        BlockInput("MouseMoveOff")
 }
 
 q::{
