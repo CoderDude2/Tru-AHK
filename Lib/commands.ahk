@@ -181,8 +181,17 @@ translate_selection(x := 0, y := 0, z := 0){
     transformation_window()
     WinWaitActive("ahk_class #32770")
 
-    ControlChooseIndex(5,"ComboBox1","ahk_class #32770")
+    ; ControlChooseString("Translate","ComboBox1","ahk_class #32770")
     ControlSetChecked(1,"Button7","ahk_class #32770")
+	korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
+	english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
+	if(korean_index != 4294967296){
+		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
+	} else if(english_index != 4294967296){
+		ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
+	} else {
+		return
+	}
 
     ControlSetText(Round(x, 4), "Edit2", "ahk_class #32770")
     ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
@@ -195,7 +204,17 @@ rotate_selection(degrees, update_on_click:=False){
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
-    ControlChooseIndex(9,"ComboBox1","ahk_class #32770")
+
+	korean_index := ControlFindItem("회전", "ComboBox1", "ahk_class #32770")
+	english_index := ControlFindItem("Rotate", "ComboBox1", "ahk_class #32770")
+	if(korean_index != 4294967296){
+		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
+	} else if(english_index != 4294967296){
+		ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
+	} else {
+		return
+	}
+
     ControlSetText(Round(degrees, 4), "Edit6", "ahk_class #32770")
     if(update_on_click = True){
         ControlSetChecked(0,"Button10","ahk_class #32770")
@@ -209,7 +228,17 @@ scale_selection(scale){
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
-    ControlChooseIndex(7,"ComboBox1","ahk_class #32770")
+
+	korean_index := ControlFindItem("축척", "ComboBox1", "ahk_class #32770")
+	english_index := ControlFindItem("Scale", "ComboBox1", "ahk_class #32770")
+	if(korean_index != 4294967296){
+		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
+	} else if(english_index != 4294967296){
+		ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
+	} else {
+		return
+	}
+
     ControlSetText(Round(scale, 4), "Edit8", "ahk_class #32770")
     Send("{Enter}")
 }
