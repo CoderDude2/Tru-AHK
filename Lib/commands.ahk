@@ -180,9 +180,7 @@ translate_selection(x := 0, y := 0, z := 0){
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
-
-    ; ControlChooseString("Translate","ComboBox1","ahk_class #32770")
-    ControlSetChecked(1,"Button7","ahk_class #32770")
+    
 	korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
 	english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
 	if(korean_index != 4294967296){
@@ -192,6 +190,8 @@ translate_selection(x := 0, y := 0, z := 0){
 	} else {
 		return
 	}
+
+	ControlSetChecked(1,"Button7","ahk_class #32770")
 
     ControlSetText(Round(x, 4), "Edit2", "ahk_class #32770")
     ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
