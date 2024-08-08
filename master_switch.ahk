@@ -59,71 +59,6 @@ debug(){
     showDebug := !showDebug
 }
 
-p::{
-    esprit_title := WinGetTitle("A")
-
-    if(get_case_type(esprit_title) == "ASC"){
-        ; Front Turning
-        CoordMode("Mouse", "Client")
-        MouseClickDrag("L", 105, 614, 86, 254, 2)
-        Sleep(200)
-
-        ; Cross Balls
-        MouseClick("L", 123, 640, 1, 0)
-        Send("{Shift down}")
-        MouseClickDrag("L", 108, 722, 80, 510, 3)
-        Send("{Shift up}")
-        Sleep(200)
-
-        ; Rough Endmills
-        MouseClick("L", 115, 755, 1, 0)
-        Send("{Shift down}")
-        MouseClickDrag("L", 115, 770, 90, 300, 3)
-        Send("{Shift up}")
-    } else if(get_case_type(esprit_title) == "DS"){
-        ; Front Turning
-        CoordMode("Mouse", "Client")
-        MouseClickDrag("L", 100, 545, 84, 216, 2)
-        Sleep(200)
-
-        ; Cross Balls
-        MouseClick("L", 125, 575, 1, 0)
-        Send("{Shift down}")
-        MouseClickDrag("L", 125, 655, 113, 400, 3)
-        Send("{Shift up}")
-        Sleep(200)
-
-        ; Rough Endmills
-        MouseClick("L", 110, 690, 1, 0)
-        Send("{Shift down}")
-        MouseClickDrag("L", 118, 706, 83, 269, 3)
-        Send("{Shift up}")
-    }
-}
-
-+p::{
-    ; count := SendMessage(0x1105, 0, 0, "SysTreeView321")
-    ; MsgBox count
-
-    ; Front Turning
-    CoordMode("Mouse", "Client")
-    MouseClickDrag("L", 100, 545, 84, 216, 2)
-    Sleep(200)
-
-    ; Cross Balls
-    MouseClick("L", 125, 575, 1, 0)
-    Send("{Shift down}")
-    MouseClickDrag("L", 100, 687, 113, 400, 3)
-    Send("{Shift up}")
-    Sleep(200)
-
-    ; Rough Endmills
-    MouseClick("L", 107, 724, 1, 0)
-    Send("{Shift down}")
-    MouseClickDrag("L", 109, 739, 83, 269, 3)
-    Send("{Shift up}")
-}
-
 ;Ctrl+G1
 ^f13::{
     Suspend
@@ -141,10 +76,6 @@ f16::{
         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWaitActive("ESPRIT")
-        Sleep(3000)
-        CoordMode("Mouse", "Client")
-        click_and_return(25, 105)
     }
 }
 
@@ -428,22 +359,22 @@ AppsKey::{
         CoordMode("Mouse", "Screen")
 
         ; 1st Margin
-        Click("1600 220")
-        Click("1700, 330") ; Click the Text box and enter 0.025
+        Click("70 170")
+        Click("180, 290") ; Click the Text box and enter 0.025
         Send("^a0.025")
-        Click("1660, 370") ; Click Re-Generate Operation
+        Click("120, 325") ; Click Re-Generate Operation
         Sleep(20)
         ; 2nd Margin
-        Click("1700 222")
-        Click("1700, 330") ; Click the Text box and enter 0.025
+        Click("180 170")
+        Click("180, 290") ; Click the Text box and enter 0.025
         Send("^a0.025")
-        Click("1660, 370") ; Click Re-Generate Operation
+        Click("120, 325") ; Click Re-Generate Operation
         Sleep(20)
         ; 3rd Margin
-        Click("1600 260")
-        Click("1700, 330") ; Click the Text box and enter 0.025
+        Click("70 215")
+        Click("180, 290") ; Click the Text box and enter 0.025
         Send("^a0.025")
-        Click("1660, 370") ; Click Re-Generate Operation
+        Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
 }
 
@@ -453,28 +384,28 @@ AppsKey::{
         CoordMode("Mouse", "Screen")
 
         ; 1st Margin
-        Click("1600 220")
-        Click("1700, 330") ; Click the Text box and enter 0.025
+        Click("70 170")
+        Click("180, 290") ; Click the Text box and enter 0.025
         Send("^a0.025")
-        Click("1660, 370") ; Click Re-Generate Operation
+        Click("120, 325") ; Click Re-Generate Operation
         Sleep(20)
         ; 2nd Margin
-        Click("1700 222")
-        Click("1700, 330") ; Click the Text box and enter 0.025
+        Click("180 170")
+        Click("180, 290") ; Click the Text box and enter 0.025
         Send("^a0.025")
-        Click("1660, 370") ; Click Re-Generate Operation
+        Click("120, 325") ; Click Re-Generate Operation
         Sleep(20)
         ; 3rd Margin
-        Click("1600 260")
-        Click("1700, 330") ; Click the Text box and enter 0.025
+        Click("70 215")
+        Click("180, 290") ; Click the Text box and enter 0.025
         Send("^a0.025")
-        Click("1660, 370") ; Click Re-Generate Operation
+        Click("120, 325") ; Click Re-Generate Operation
         Sleep(40)
         ; 4th Margin
-        Click("1700 275")
-        Click("1700, 330") ; Click the Text box and enter 0.025
+        Click("180 215")
+        Click("180, 290") ; Click the Text box and enter 0.025
         Send("^a0.025")
-        Click("1660, 370") ; Click Re-Generate Operation
+        Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
 }
 
@@ -531,49 +462,49 @@ w::{
 !1::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1584, 145)
+    click_and_return(40, 101)
 }
 
 !2::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1657, 143)
+    click_and_return(120, 101)
 }
 
 !3::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1710, 142)
+    click_and_return(200, 101)
 }
 
 !q::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1590, 234)
+    click_and_return(62, 190)
 }
 
 !w::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1543, 104)
+    click_and_return(27, 62)
 }
 
 !a::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1580, 83)
+    click_and_return(31, 35)
 }
 
 !s::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1630, 83)
+    click_and_return(86, 40)
 }
 
 !d::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    click_and_return(1670, 83)
+    click_and_return(126, 40)
 }
 
 !e::{

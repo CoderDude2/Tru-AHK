@@ -75,15 +75,15 @@ transformation_window(){
 }
 
 unsuppress_operation(){
-	PostMessage 0x111, 32792 , , "SysTreeView321", "ESPRIT"
+	PostMessage 0x111, 32792 , , "SysTreeView321", "Project Manager"
 }
 
 suppress_operation(){
-	PostMessage 0x111, 32770 , , "SysTreeView321", "ESPRIT"
+	PostMessage 0x111, 32770 , , "SysTreeView321", "Project Manager"
 }
 
 rebuild_operation(){
-	PostMessage 0x111, 32768 , , "SysTreeView321", "ESPRIT"
+	PostMessage 0x111, 32768 , , "SysTreeView321", "Project Manager"
 }
 
 show_milling_tool(){
