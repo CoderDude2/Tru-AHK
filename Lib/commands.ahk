@@ -226,3 +226,33 @@ scale_selection(scale){
     ControlSetText(Round(scale, 4), "Edit8", "ahk_class #32770")
     Send("{Enter}")
 }
+
+macro_button1(){
+    CoordMode("Mouse", "Client")
+    click_and_return(25, 105)
+}
+
+macro_button2(){
+	CoordMode("Mouse", "Client")
+    click_and_return(45, 105)
+}
+
+macro_button3(){
+	CoordMode("Mouse", "Client")
+    click_and_return(68, 105)
+}
+
+macro_button4(){
+	CoordMode("Mouse", "Client")
+    click_and_return(90, 105)
+}
+
+macro_button5(){
+	CoordMode("Mouse", "Client")
+    click_and_return(111, 105)
+}
+
+macro_button_text(){
+	CoordMode("Mouse", "Client")
+    click_and_return(137, 105)
+}

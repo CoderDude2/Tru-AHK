@@ -347,10 +347,10 @@ esprit_title := WinGetTitle("A")
 y::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
-    MouseMove(1700, 370, 0)
-    Click(1700, 370)
+    MouseMove(46, 38, 0) ; Press Tab 1
+    Click(170, 325) ; Click the Entry Box
     Send("^a-5")
-    Click(1705, 315)
+    Click(175, 275) ; Click Regenerate
 }
 
 AppsKey::{
@@ -417,46 +417,29 @@ w::{
     swap_path()
 }
 
-; Macro 1
+
 ^Numpad1::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    click_and_return(25, 105)
+    macro_button1()
 }
 
-; Macro 2
 ^Numpad2::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    click_and_return(45, 105)
+    macro_button1()
 }
 
-; Macro 3
 ^Numpad3::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    click_and_return(68, 105)
+    macro_button1()
 }
 
-; Macro 4
 ^Numpad4::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    click_and_return(90, 105)
+    macro_button1()
 }
 
-; Macro 5
 ^Numpad5::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    click_and_return(111, 105)
+    macro_button1()
 }
 
-; Macro 6
 ^Numpad6::{
-    SetDefaultMouseSpeed(0)
-    CoordMode("Mouse", "Client")
-    click_and_return(137, 105)
+    macro_button_text()
 }
 
 !1::{
@@ -525,84 +508,11 @@ f15::{
     WinWaitActive("ahk_exe esprit.exe")
     esprit_title := WinGetTitle("A")
     if(get_case_type(esprit_title) == "ASC"){
-        SetDefaultMouseSpeed(0)
-        CoordMode("Mouse", "Client")
-        Click("25 105")
-        Sleep(50)
-        Send("{Enter}")
-        Sleep(50)
-        Send("{Enter}")
-        Sleep(50)
-        Send("{Enter}")
-        Sleep(50)
-        Send("{Enter}")
-        WinWaitActive("CAM Automation - To transform the STL")
-        Send("X,90{Enter}")
-        Sleep(50)
-        WinWaitActive("STL Rotate")
-        wireframe_view()
-        deg0()
-
-        result := MsgBox("Is the connection correct? Is the T showing?",,"Y/N 0x1000")
-        if(result == "No"){
-            return
-        } else {
-            WinActivate("STL Rotate")
-            WinWaitActive("STL Rotate")
-            Click("71 143")
-            Sleep(50)
-            Send("{Enter}")
-            WinWaitActive("CAM Automation - For Turning Profile")
-            Send("{Enter}")
-        }
+        
     } else if(get_case_type(esprit_title) == "DS" && is_non_engaging(esprit_title) == false){
-        SetDefaultMouseSpeed(0)
-        CoordMode("Mouse", "Client")
-        Click("25 105")
-        Sleep(50)
-        Send("{Enter}")
-        Sleep(50)
-        Send("{Enter}")
-        WinWaitActive("Direction Check")
-        Send("{Enter}")
-        WinWaitActive("STL Rotate")
-        deg0()
-
-        result := MsgBox("Is the connection correct?",,"Y/N 0x1000")
-        if(result == "No"){
-            return
-        } else {
-            WinActivate("STL Rotate")
-            WinWaitActive("STL Rotate")
-            Click("71 117")
-            Sleep(50)
-            Send("{Enter}")
-            WinWaitActive("CAM Automation - For Turning Profile")
-            Send("{Enter}")
-        }
+        
     } else if(get_case_type(esprit_title) == "DS" && is_non_engaging(esprit_title) == true){
-        SetDefaultMouseSpeed(0)
-        CoordMode("Mouse", "Client")
-        Click("25 105")
-        Sleep(50)
-        Send("{Enter}")
-        Sleep(50)
-        Send("{Enter}")
-        WinWaitActive("STL Rotate")
-        deg0()
-
-        result := MsgBox("Is the connection correct?",,"Y/N 0x1000")
-        if(result == "No"){
-            return
-        } else {
-            WinActivate("STL Rotate")
-            WinWaitActive("STL Rotate")
-            Click("71 117")
-            Sleep(50)
-            Send("{Enter}")
-            WinWaitActive("CAM Automation - For Turning Profile")
-            Send("{Enter}")
-        }
+        
     }
 }
 
