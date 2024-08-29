@@ -107,7 +107,7 @@ LWin::Delete
 }
 
 :*:2-1::{
-    esprit_title := WinGetTitle("A")
+    esprit_title := WinGetTitle("ESPRIT")
     if(get_case_type(esprit_title) = "TLOC" || get_case_type(esprit_title) = "AOT"){
         Send "2-1. FRONT TURNING-SHORT"
     } else {
@@ -116,7 +116,7 @@ LWin::Delete
 }
 
 :*:5-1::{
-    esprit_title := WinGetTitle("A")
+    esprit_title := WinGetTitle("ESPRIT")
     if(get_case_type(esprit_title) = "TLOC" || get_case_type(esprit_title) = "AOT"){
         Send "5-1. FRONT TURNING"
     }
@@ -423,19 +423,19 @@ w::{
 }
 
 ^Numpad2::{
-    macro_button1()
+    macro_button2()
 }
 
 ^Numpad3::{
-    macro_button1()
+    macro_button3()
 }
 
 ^Numpad4::{
-    macro_button1()
+    macro_button4()
 }
 
 ^Numpad5::{
-    macro_button1()
+    macro_button5()
 }
 
 ^Numpad6::{
@@ -508,11 +508,68 @@ f15::{
     WinWaitActive("ahk_exe esprit.exe")
     esprit_title := WinGetTitle("A")
     if(get_case_type(esprit_title) == "ASC"){
-        
+        macro_button1()
+        if(WinWait("esprit", "&Yes")){
+            WinActivate("esprit")
+            Send("{Enter}{Enter}{Enter}")
+        }
+
+        if(WinWait("STL Rotate")){
+            deg0()
+            yn := MsgBox("Is connection properly aligned?", "Check Connection", 3)
+            if(yn == "Yes"){
+                WinActivate("STL Rotate")
+                CoordMode("Mouse", "Client")
+                Click("60 147")
+            }
+        }
     } else if(get_case_type(esprit_title) == "DS" && is_non_engaging(esprit_title) == false){
-        
+        macro_button1()
+        if(WinWait("CAM Automation")){
+            WinActivate("CAM Automation")
+            Send("{Enter}")
+        }
+
+        if(WinWait("esprit")){
+            WinActivate("esprit")
+            Send("{Enter}")
+        }
+
+        if(WinWait("Direction Check")){
+            WinActivate("Direction Check")
+            Send("{Enter}")
+        }
+
+        if(WinWait("STL Rotate")){
+            deg0()
+            yn := MsgBox("Is connection properly aligned?", "Check Connection", 3)
+            if(yn == "Yes"){
+                WinActivate("STL Rotate")
+                CoordMode("Mouse", "Client")
+                Click("65 115")
+            }
+        }
     } else if(get_case_type(esprit_title) == "DS" && is_non_engaging(esprit_title) == true){
-        
+        macro_button1()
+        if(WinWait("CAM Automation")){
+            WinActivate("CAM Automation")
+            Send("{Enter}")
+        }
+
+        if(WinWait("esprit")){
+            WinActivate("esprit")
+            Send("{Enter}")
+        }
+
+        if(WinWait("STL Rotate")){
+            deg0()
+            yn := MsgBox("Is connection properly aligned?", "Check Connection", 3)
+            if(yn == "Yes"){
+                WinActivate("STL Rotate")
+                CoordMode("Mouse", "Client")
+                Click("65 115")
+            }
+        }
     }
 }
 
