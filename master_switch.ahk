@@ -5,10 +5,6 @@ SetWorkingDir A_ScriptDir
 
 if(!DirExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\")){
     DirCreate "C:\Users\TruUser\AppData\Roaming\tru-ahk\"
-    if(!FileExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini")){
-        IniWrite("All Instances", "C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini", "f12_mode", "value")
-        IniWrite(true, "C:\Users\TruUser\AppData\Roaming\tru-ahk\prefs.ini", "w_as_delete", "value")
-    }
 }
 
 #Include %A_ScriptDir%\Lib\views.ahk
@@ -20,6 +16,11 @@ prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences"
 if(!FileExist(prefs_file_path)){
     IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
     IniWrite(true, prefs_file_path, "w_as_delete", "value")
+
+    IniWrite("", prefs_file_path, "macro_bar_control", "control")
+
+    IniWrite("", prefs_file_path, "project_manager_control", "control")
+    IniWrite(True, prefs_file_path, "project_manager_control", "is_attached")
 }
 
 ; ===== Auto-Update =====
@@ -100,11 +101,8 @@ f17::{
 #HotIf WinActive("ahk_exe esprit.exe")
 
 if(WinExist("ahk_exe esprit.exe") and WinActive("ahk_exe esprit.exe")){
-    try{
-        macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010003:00000010:000000001", "ESPRIT")
-    } catch TargetError{
-        macro_bar_control := ControlGetClassNN("Afx:00400000:8:00010005:00000010:000000001", "ESPRIT")
-    }
+    
+    
 }
 
 ^f1::{
@@ -220,15 +218,21 @@ t::{
 }
 
 +a::{
-    unsuppress_operation()
+    try{
+        unsuppress_operation()
+    }
 }
 
 +s::{
-    suppress_operation()
+    try {
+        suppress_operation()
+    }
 }
 
 +r::{
-    rebuild_operation()
+    try {
+        rebuild_operation()
+    }
 }
 
 !x::
@@ -600,37 +604,37 @@ y::{
 ; ===== Macro Buttons =====
 #HotIf WinActive("ESPRIT")
 ^Numpad1::{
-    CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar_control
-    Click x+20, y+14
+    try{
+        macro_button_1()
+    }
 }
 
 ^Numpad2::{
-    CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar_control 
-    Click x+45, y+14
+    try{
+        macro_button_2()
+    }
 }
 
 ^Numpad3::{
-    CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar_control
-    Click x+68, y+14
+    try{
+        macro_button_3()
+    }
 }
 
 ^Numpad4::{
-    CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar_control
-    Click x+90, y+14
+    try{
+        macro_button_4()
+    }
 }
 
 ^Numpad5::{
-    CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar_control
-    Click x+115, y+14
+    try{
+        macro_button_5()
+    }
 }
 
 ^Numpad6::{
-    CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, macro_bar_control
-    Click x+135, y+14
+    try{
+        macro_button_text()
+    }
 }

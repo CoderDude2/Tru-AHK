@@ -70,15 +70,33 @@ transformation_window(){
 }
 
 unsuppress_operation(){
-	PostMessage 0x111, 32792 , , "SysTreeView321", "ESPRIT"
+	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+	if(is_attached){
+		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
+	} else {
+		PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
+	}
+	
 }
 
 suppress_operation(){
-	PostMessage 0x111, 32770 , , "SysTreeView321", "ESPRIT"
+	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+	if(is_attached) {
+		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
+	} else {
+		PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
+	}
+	
 }
 
 rebuild_operation(){
-	PostMessage 0x111, 32768 , , "SysTreeView321", "ESPRIT"
+	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+	if(is_attached){
+		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
+	} else {
+		PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
+	}
+	
 }
 
 show_milling_tool(){
@@ -241,4 +259,73 @@ scale_selection(scale){
 
     ControlSetText(Round(scale, 4), "Edit8", "ahk_class #32770")
     Send("{Enter}")
+}
+
+get_project_manager(){
+	class_nn := IniRead(prefs_file_path, "project_manager_control", "control")
+	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+
+	if class_nn == ""{
+        MsgBox("Project manager control not set!")
+    }
+
+	try {
+		if(is_attached){
+			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT")
+		} else {
+			project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
+		}
+	}
+
+	return project_manager_control
+}
+
+get_macro_bar(){
+	class_nn := IniRead(prefs_file_path, "macro_bar_control", "control")
+
+    if class_nn == ""{
+        MsgBox("Macro bar control not set!")
+    }
+    
+    try {
+        macro_bar_control := ControlGetClassNN(class_nn, "ESPRIT")
+    }
+
+	return macro_bar_control
+}
+
+macro_button_1(){
+	CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    Click x+20, y+14
+}
+
+macro_button_2(){
+	CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, get_macro_bar() 
+    Click x+45, y+14
+}
+
+macro_button_3(){
+	CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    Click x+68, y+14
+}
+
+macro_button_4(){
+	CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    Click x+90, y+14
+}
+
+macro_button_5(){
+	CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    Click x+115, y+14
+}
+
+macro_button_text(){
+	CoordMode "Mouse", "Client"
+    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    Click x+135, y+14
 }
