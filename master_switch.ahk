@@ -300,18 +300,36 @@ XButton2::{
     draw_path()
 }
 
-~LButton::{
+LButton::{
     global click_index
     global path_tool_active
     global initial_pos_x
     global initial_pos_y
 
+    global setMacroBar
+    global setProjectManager
 
     if(path_tool_active == true && click_index < 1){
         CoordMode("Mouse", "Screen")
         click_index += 1
         MouseGetPos(&initial_pos_x, &initial_pos_y)
+        Send("{LButton}")
+        return
     }
+
+    if(setMacroBar) {
+        MouseGetPos(&posX, &posY, &window, &active_control)
+        setMacroBarControl(active_control)
+        return
+    }
+
+    if(setProjectManager) {
+        MouseGetPos(&posX, &posY, &window, &active_control)
+        setProjectManagerControl(active_control)
+        return
+    }
+
+    Send("{LButton}")
 }
 
 RButton::{
