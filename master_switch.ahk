@@ -67,11 +67,12 @@ f13::{
     BlockInput("MouseMoveOff")
     global click_index
     global path_tool_active
-    
+
     click_index := 0
     path_tool_active := false
 
     stop_simulation()
+    cancel_all_set()
 }
 
 f12::{
@@ -99,11 +100,6 @@ f17::{
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
-
-if(WinExist("ahk_exe esprit.exe") and WinActive("ahk_exe esprit.exe")){
-    
-    
-}
 
 ^f1::{
     open_help()
@@ -298,38 +294,6 @@ XButton2::{
     click_index := 0
     path_tool_active := true
     draw_path()
-}
-
-LButton::{
-    global click_index
-    global path_tool_active
-    global initial_pos_x
-    global initial_pos_y
-
-    global setMacroBar
-    global setProjectManager
-
-    if(path_tool_active == true && click_index < 1){
-        CoordMode("Mouse", "Screen")
-        click_index += 1
-        MouseGetPos(&initial_pos_x, &initial_pos_y)
-        Send("{LButton}")
-        return
-    }
-
-    if(setMacroBar) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setMacroBarControl(active_control)
-        return
-    }
-
-    if(setProjectManager) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setProjectManagerControl(active_control)
-        return
-    }
-
-    Send("{LButton}")
 }
 
 RButton::{
@@ -654,5 +618,32 @@ y::{
 ^Numpad6::{
     try{
         macro_button_text()
+    }
+}
+
+#HotIf path_tool_active
+~LButton::{
+    global click_index
+    global initial_pos_x
+    global initial_pos_y
+
+    if(click_index < 1){
+        CoordMode("Mouse", "Screen")
+        click_index += 1
+        MouseGetPos(&initial_pos_x, &initial_pos_y)
+    }
+}
+
+#HotIf (setMacroBar or setProjectManager)
+LButton::{
+    global 
+    if(setMacroBar) {
+        MouseGetPos(&posX, &posY, &window, &active_control)
+        setMacroBarControl(active_control)
+    }
+
+    if(setProjectManager) {
+        MouseGetPos(&posX, &posY, &window, &active_control)
+        setProjectManagerControl(active_control)
     }
 }

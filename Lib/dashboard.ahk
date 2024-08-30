@@ -17,10 +17,7 @@ inspector(){
         } else {
             ToolTip()
         }
-    } catch {
-        MouseGetPos(&posX, &posY)
-        ToolTip("(" posX "," posY ")`n")
-    }
+    } 
 }
 
 ^f3::{
@@ -182,4 +179,17 @@ Gui_Size(thisGui, MinMax, Width, Height){
 
 open_dashboard(*){
     root.Show()
+}
+
+cancel_all_set(){
+    global showInspector
+    global setMacroBar
+    global setProjectManager
+
+    showInspector := False
+    setMacroBar := False
+    setProjectManager := False
+
+    set_macro_control_btn.Opt("-Disabled")
+    set_project_manager_control_btn.Opt("-Disabled")
 }
