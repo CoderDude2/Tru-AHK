@@ -47,8 +47,10 @@ SetTimer(debug, 20)
 
 debug(){
     if(showDebug){
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        ToolTip("(" posX "," posY ")`n" WinGetTitle(window) "`n" active_control, posX, posY+20)
+        try{
+            MouseGetPos(&posX, &posY, &window, &active_control)
+            ToolTip("(" posX "," posY ")`n" WinGetTitle(window) "`n" active_control, posX, posY+20)
+        }
     } else {
         ToolTip()
     }
@@ -488,6 +490,42 @@ w::{
     SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(126, 40)
+}
+
+!Right::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(205, 250)
+}
+
+!Left::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(155, 250)
+}
+
+!Up::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(155, 210)
+}
+
+!Down::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(205, 210)
+}
+
++Left::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(155, 290)
+}
+
++Right::{
+    SetDefaultMouseSpeed(0)
+    CoordMode("Mouse", "Screen")
+    click_and_return(205, 290)
 }
 
 !e::{
