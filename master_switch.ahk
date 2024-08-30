@@ -3,6 +3,12 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+; ===== Global Variables =====
+initial_pos_x := 0
+initial_pos_y := 0
+click_index := 0
+path_tool_active := false
+
 if(!DirExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\")){
     DirCreate "C:\Users\TruUser\AppData\Roaming\tru-ahk\"
 }
@@ -12,22 +18,7 @@ if(!DirExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\")){
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk
 
-prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
-if(!FileExist(prefs_file_path)){
-    IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
-    IniWrite(true, prefs_file_path, "w_as_delete", "value")
-
-    IniWrite("", prefs_file_path, "macro_bar_control", "control")
-
-    IniWrite("", prefs_file_path, "project_manager_control", "control")
-    IniWrite(True, prefs_file_path, "project_manager_control", "is_attached")
-}
-
-; ===== Auto-Update =====
-A_TrayMenu.Add()
-A_TrayMenu.Add("Open Dashboard", open_dashboard)
 remote_path := IniRead("config.ini", "info", "remote_path")
-
 if(check_for_update(A_ScriptDir, remote_path)){
     result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
     if(result == "Yes"){
@@ -44,13 +35,22 @@ if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
     IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
 }
 
-SetDefaultMouseSpeed 0
+prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
+if(!FileExist(prefs_file_path)){
+    IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
+    IniWrite(true, prefs_file_path, "w_as_delete", "value")
 
-; ===== Variables =====
-initial_pos_x := 0
-initial_pos_y := 0
-click_index := 0
-path_tool_active := false
+    IniWrite("", prefs_file_path, "macro_bar_control", "control")
+
+    IniWrite("", prefs_file_path, "project_manager_control", "control")
+    IniWrite(True, prefs_file_path, "project_manager_control", "is_attached")
+}
+
+; ===== Dashboard Menu =====
+A_TrayMenu.Add()
+A_TrayMenu.Add("Open Dashboard", open_dashboard)
+
+SetDefaultMouseSpeed 0
 
 #SuspendExempt
 ;G1

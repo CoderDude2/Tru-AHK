@@ -1,6 +1,8 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
+
 open_help(*){
 	Run A_ScriptDir "\resources\helpfile.pdf"
 }
@@ -70,6 +72,7 @@ transformation_window(){
 }
 
 unsuppress_operation(){
+	global prefs_file_path
 	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 	if(is_attached){
 		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
@@ -80,6 +83,7 @@ unsuppress_operation(){
 }
 
 suppress_operation(){
+	global prefs_file_path
 	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 	if(is_attached) {
 		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
@@ -90,6 +94,7 @@ suppress_operation(){
 }
 
 rebuild_operation(){
+	global prefs_file_path
 	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 	if(is_attached){
 		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
@@ -262,6 +267,7 @@ scale_selection(scale){
 }
 
 get_project_manager(){
+	global prefs_file_path
 	class_nn := IniRead(prefs_file_path, "project_manager_control", "control")
 	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 
@@ -281,6 +287,7 @@ get_project_manager(){
 }
 
 get_macro_bar(){
+	global prefs_file_path
 	class_nn := IniRead(prefs_file_path, "macro_bar_control", "control")
 
     if class_nn == ""{
