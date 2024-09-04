@@ -27,4 +27,4 @@ def release():
     # shutil.copy("config.ini", )
 
 if __name__ == "__main__":
-    build()
+    release()
