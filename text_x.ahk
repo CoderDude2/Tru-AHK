@@ -16,7 +16,8 @@ onClose(*){
 MyMenu := Menu()
 MyMenu.Add("New", onCreateItem)
 MyMenu.Add("Copy", onCopy)
-MyMenu.Add("Delete", delete_item)
+MyMenu.Add("Cut", onCut)
+MyMenu.Add("Delete", onDelete)
 
 root.AddText(,"Text X")
 text_x_lb := root.AddListBox("r10 vtext_x Sort Multi",[])
@@ -38,15 +39,15 @@ load()
 root.show()
 
 onCopy(*){
-    A_Clipboard := ""
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
-    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
-    listbox_text := selected_listbox.Text
-    if(listbox_text != ""){
-        For Item in listbox_text{
-            A_Clipboard .= Item . "`r`n"
-        }
-    }
+    copy_items()
+}
+
+onCut(*){
+    cut_items()
+}
+
+onDelete(*){
+    delete_items()
 }
 
 onCreateItem(*){
@@ -66,7 +67,7 @@ create_item(value, control){
     save()
 }
 
-delete_item(*){
+delete_items(){
     listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe")
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd)
     index := selected_listbox.Value
@@ -164,9 +165,26 @@ load(){
     }
 }
 
+copy_items(){
+    A_Clipboard := ""
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
+    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
+    listbox_text := selected_listbox.Text
+    if(listbox_text != ""){
+        For Item in listbox_text{
+            A_Clipboard .= Item . "`r`n"
+        }
+    }
+}
+
+cut_items(){
+    copy_items()
+    delete_items()
+}
+
 #HotIf WinActive("text_x.exe", "Text X")
 Delete::{
-    delete_item()
+    delete_items()
 }
 
 Escape::{
@@ -183,15 +201,11 @@ Escape::{
 }
 
 ^c::{
-    A_Clipboard := ""
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
-    selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
-    listbox_text := selected_listbox.Text
-    if(listbox_text != ""){
-        For Item in listbox_text{
-            A_Clipboard .= Item . "`r`n"
-        }
-    }
+    copy_items()
+}
+
+^x::{
+    cut_items()
 }
 
 ^s::{
