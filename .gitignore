@@ -3,3 +3,4 @@ log.txt
 /resources/log
 dist/
 build/
+__pycache__/

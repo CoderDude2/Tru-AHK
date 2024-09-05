@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import time
 
 files = [
     "master_switch.ahk",
@@ -18,13 +19,23 @@ def build():
 def release():
     if(not os.path.exists("./dist")):
         os.mkdir("./dist")
+    else:
+        shutil.rmtree("./dist")
+        os.mkdir("./dist")
     build()
     for file in os.listdir("./build"):
         shutil.copy(
             os.path.join("./build", file), 
             os.path.join("./dist", file))
     shutil.copytree("./resources/", "./dist/resources")
-    # shutil.copy("config.ini", )
+    shutil.copy("./config.ini", "./dist/config.ini", )
 
 if __name__ == "__main__":
-    release()
+    if(len(sys.argv) > 1):
+        match sys.argv[1]:
+            case 'build':
+                build()
+            case 'release':
+                release()
+            case _:
+                print("Invalid Command!")
