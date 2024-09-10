@@ -14,10 +14,10 @@ onClose(*){
 
 ; Right Click Menu
 MyMenu := Menu()
-MyMenu.Add("New", onCreateItem)
-MyMenu.Add("Copy", onCopy)
-MyMenu.Add("Cut", onCut)
-MyMenu.Add("Delete", onDelete)
+MyMenu.Add("New           Ctrl+N", onCreateItem)
+MyMenu.Add("Copy          Ctrl+C", onCopy)
+MyMenu.Add("Cut             Ctrl+X", onCut)
+MyMenu.Add("Delete         Del", onDelete)
 
 root.AddText(,"Text X")
 text_x_lb := root.AddListBox("r10 vtext_x Sort Multi",[])
@@ -192,6 +192,10 @@ Escape::{
     PostMessage 0x0185, 0, -1, PROCESS_LAST
     PostMessage 0x0185, 0, -1, TEXT_X_ASC
     PostMessage 0x0185, 0, -1, PROCESS_LAST_ASC
+}
+
+^n::{
+    onCreateItem()
 }
 
 ^a::{

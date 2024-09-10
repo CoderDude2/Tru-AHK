@@ -129,13 +129,13 @@ cut_with_border() {
 	}
 }
 
-center_border_3() {
+extrude_by(length) {
 	WinActivate("ESPRIT")
 	PostMessage(0x111, 3130, , , "ESPRIT")
 
 	WinWaitActive("ahk_class #32770")
 	try{
-		ControlSetText(6, "Edit1", "ahk_class #32770")
+		ControlSetText(length, "Edit1", "ahk_class #32770")
 		ControlSetChecked(0,"Button2","ahk_class #32770")
 		ControlChooseIndex(1,"ComboBox1","ahk_class #32770")
 	} catch TargetError as err {

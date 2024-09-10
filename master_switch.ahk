@@ -234,7 +234,11 @@ b::{
 }
 
 r::{
-    center_border_3()
+    extrude_by(5)
+}
+
+^r::{
+    extrude_by(2)
 }
 
 e::{
