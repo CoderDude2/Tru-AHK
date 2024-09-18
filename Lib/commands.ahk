@@ -256,3 +256,39 @@ macro_button_text(){
 	CoordMode("Mouse", "Client")
     click_and_return(137, 105)
 }
+
+step_5_window_0_deg(){
+	CoordMode("Mouse", "Screen")
+    click_and_return(69, 170)
+}
+
+step_5_window_120_deg(){
+	CoordMode("Mouse", "Screen")
+    click_and_return(183, 172)
+}
+
+step_5_window_240_deg(){
+	CoordMode("Mouse", "Screen")
+    click_and_return(68, 213)
+}
+
+step_5_window_270_deg(){
+	CoordMode("Mouse", "Screen")
+    click_and_return(181, 226)
+}
+
+step_5_window_90_plus_deg(){
+	CoordMode("Mouse", "Screen")
+    click_and_return(45, 259)
+}
+
+step_5_window_tab_1(){
+	CoordMode("Mouse", "Screen")
+    click_and_return(52, 36)
+}
+
+step_5_window_tab_2(){
+	CoordMode("Mouse", "Screen")
+    click_and_return(131, 39)
+}
+

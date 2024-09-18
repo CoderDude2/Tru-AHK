@@ -32,6 +32,7 @@ initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active := false
+step_5_tab := 1
 
 showDebug := false
 
@@ -423,6 +424,34 @@ w::{
     swap_path()
 }
 
+!Numpad7::{
+    step_5_window_0_deg()
+}
+
+!Numpad9::{
+    step_5_window_120_deg()
+}
+
+!Numpad1::{
+    step_5_window_240_deg()
+}
+
+!Numpad3::{
+    step_5_window_270_deg()
+}
+
+!Numpad0::{
+    step_5_window_90_plus_deg()
+}
+
+
+z::{
+    step_5_window_tab_1()
+}
+
+x::{
+    step_5_window_tab_2()
+}
 
 ^Numpad1::{
     macro_button1()
