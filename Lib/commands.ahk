@@ -10,6 +10,10 @@ SetDefaultMouseSpeed 0
 SetControlDelay -1
 SetWorkingDir A_ScriptDir
 
+highlight_tool(){
+	PostMessage 0x111, 6156 , , "msctls_statusbar322", "ESPRIT"
+}
+
 extrude_tool(){
 	PostMessage 0x111, 3130 , , , "ESPRIT"
 }
@@ -149,7 +153,7 @@ draw_straight_border(){
 	Click("Left")
 	Send("20{Enter}0{Enter}{Esc}")
 	Click("Left 2")
-	Sleep(100)
+	Sleep(150)
 	double_sided_border()
 	BlockInput("MouseMoveOff")
 	Send("{Enter}")

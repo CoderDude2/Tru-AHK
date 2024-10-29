@@ -128,50 +128,70 @@ LWin::Delete
 ; ===== View Controls=====
 
 a::{
-    deg0()
+    try{
+        deg0()
+    }
 }
 
 s::{
-    deg90()
+    try{
+        deg90()
+    }
 }
 
 d::{
-    deg180()
+    try{
+        deg180()
+    }
 }
 
 f::{
-    deg270()
+    try{
+        deg270()
+    }
 }
 
 c::{
-    face()
+    try{
+        face()
+    }
 }
 
 v::{
-    rear()
+    try{
+        rear()
+    }
 }
 
 !WheelDown::{
     if(WinActive("ESPRIT")){
-        increment_10_degrees()
+        try{
+            increment_10_degrees()
+        }
     }
 }
 
 +!WheelDown::{
-    if(WinActive("ESPRIT")){   
-        increment_90_degrees()
+    if(WinActive("ESPRIT")){
+        try{
+            increment_90_degrees()
+        }
     }
 }
 
 !WheelUp::{
     if(WinActive("ESPRIT")){
-        decrement_10_degrees()
+        try{
+            decrement_10_degrees()
+        }
     }
 }
 
 +!WheelUp::{
     if(WinActive("ESPRIT")){
-        decrement_90_degrees()  
+        try{
+            decrement_90_degrees()  
+        }
     }
 }
 
@@ -212,6 +232,14 @@ XButton1::{
 
 +XButton2::{
     three_point_tool()
+}
+
+!LButton::{
+    Send("{LButton}{RButton}{LButton}")
+}
+
+^d::{
+    highlight_tool()
 }
 
 ^e::{
@@ -383,7 +411,6 @@ esprit_title := WinGetTitle("A")
 
 ; ===== More Keys =====
 y::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     MouseMove(46, 38, 0) ; Press Tab 1
     Click(170, 325) ; Click the Entry Box
@@ -393,7 +420,7 @@ y::{
 
 AppsKey::{
     BlockInput("MouseMove")
-        SetDefaultMouseSpeed(0)
+
         CoordMode("Mouse", "Screen")
 
         ; 1st Margin
@@ -414,11 +441,12 @@ AppsKey::{
         Send("^a0.025")
         Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
+        unsuppress_operation()
 }
 
 +AppsKey::{
         BlockInput("MouseMove")
-        SetDefaultMouseSpeed(0)
+
         CoordMode("Mouse", "Screen")
 
         ; 1st Margin
@@ -445,6 +473,7 @@ AppsKey::{
         Send("^a0.025")
         Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
+        unsuppress_operation()
 }
 
 q::{
@@ -508,86 +537,82 @@ x::{
     macro_button_text()
 }
 
+^!Numpad1::{
+    CoordMode("Mouse", "Screen")
+    click_and_return(32, 1020)
+}
+
+^!Numpad3::{
+    CoordMode("Mouse", "Screen")
+    click_and_return(80, 1020)
+}
+
 !1::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(40, 101)
 }
 
 !2::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(120, 101)
 }
 
 !3::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(200, 101)
 }
 
 !q::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(62, 190)
 }
 
 !w::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(27, 62)
 }
 
 !a::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(31, 35)
 }
 
 !s::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(86, 40)
 }
 
 !d::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(126, 40)
 }
 
 !Right::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(205, 250)
 }
 
 !Left::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(155, 250)
 }
 
 !Up::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(155, 210)
 }
 
 !Down::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(205, 210)
 }
 
 +Left::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(155, 290)
 }
 
 +Right::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     click_and_return(205, 290)
 }
@@ -676,7 +701,6 @@ f15::{
 }
 
 ^Up::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     ; Get the current number of passes
     A_Clipboard := ""
@@ -712,7 +736,6 @@ f15::{
 }
 
 ^Down::{
-    SetDefaultMouseSpeed(0)
     CoordMode("Mouse", "Screen")
     ; Get the current number of passes
     A_Clipboard := ""
