@@ -583,6 +583,10 @@ y::{
     }
 }
 
+; ===== Text Placement Window Navigation =====
+
+
+
 ; ===== Macro Buttons =====
 #HotIf WinActive("ESPRIT")
 ^Numpad1::{

@@ -79,7 +79,6 @@ unsuppress_operation(){
 	} else {
 		PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
 	}
-	
 }
 
 suppress_operation(){
