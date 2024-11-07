@@ -451,52 +451,45 @@ y::{
 }
 
 ; ===== Step-3 Window Navigation =====
+
+; Degree 1
 !1::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 32, 70
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 32, 70
-        }
-    }
+    click_client_pos(32, 70, "Check Rough ML & Create Border Solid", true)
 }
 
+; Degree 2
 !2::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 110, 70
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 110, 70
-        }
-    }
+    click_client_pos(110, 70, "Check Rough ML & Create Border Solid", true)
 }
 
+; Degree 3
 !3::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 188, 70
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 188, 70
-        }
-    }
+    click_client_pos(188, 70, "Check Rough ML & Create Border Solid", true)
 }
 
+; +90 Degree
 !q::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 55, 158
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 55, 158
-        }
-    }
+    click_client_pos(55, 158, "Check Rough ML & Create Border Solid", true)
+}
+
+; Yellow Outline Checkbox
+!w::{
+    click_client_pos(8, 30, "Check Rough ML & Create Border Solid", true)
+}
+
+; Tab 1
+!a::{
+    click_client_pos(20, 4, "Check Rough ML & Create Border Solid", true)
+}
+
+; Tab 2
+!s::{
+    click_client_pos(70, 4, "Check Rough ML & Create Border Solid", true)
+}
+
+; Tab 3
+!d::{
+    click_client_pos(120, 4, "Check Rough ML & Create Border Solid", true)
 }
 
 ^Up::{
@@ -583,7 +576,35 @@ y::{
 
 ; ===== Text Placement Window Navigation =====
 
+!Up::{
+    click_client_pos(136, 180, "Engraving Program Number Text", false)
+}
 
+!Down::{
+    click_client_pos(190, 180, "Engraving Program Number Text", true)
+}
+
+!Left::{
+    click_client_pos(130, 220, "Engraving Program Number Text", true)
+}
+
+!Right::{
+    click_client_pos(190, 220, "Engraving Program Number Text", true)
+}
+
++Left::{
+    click_client_pos(130, 260, "Engraving Program Number Text", true)
+}
+
++Right::{
+    click_client_pos(190, 260, "Engraving Program Number Text", true)
+}
+
+; Create Text Projection Finishing Button
++NumpadEnter::
++Enter::{
+    click_client_pos(98, 305, "Engraving Program Number Text", true)
+}
 
 ; ===== Macro Buttons =====
 #HotIf WinActive("ESPRIT")
