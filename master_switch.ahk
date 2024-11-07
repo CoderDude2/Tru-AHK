@@ -265,7 +265,52 @@ b::{
 }
 
 r::{
-    center_border_3()
+    extrude_by(6)
+}
+
+r & Numpad1::
+r & 1::{
+    extrude_by(1)
+}
+
+r & Numpad2::
+r & 2::{
+    extrude_by(2)
+}
+
+r & Numpad3::
+r & 3::{
+    extrude_by(3)
+}
+
+r & Numpad4::
+r & 4::{
+    extrude_by(4)
+}
+
+r & Numpad5::
+r & 5::{
+    extrude_by(5)
+}
+
+r & Numpad6::
+r & 6::{
+    extrude_by(6)
+}
+
+r & Numpad7::
+r & 7::{
+    extrude_by(7)
+}
+
+r & Numpad8::
+r & 8::{
+    extrude_by(8)
+}
+
+r & Numpad9::
+r & 9::{
+    extrude_by(9)
 }
 
 e::{
