@@ -71,8 +71,10 @@ f13::{
     click_index := 0
     path_tool_active := false
 
-    stop_simulation()
-    cancel_all_set()
+    if WinActive("ahk_exe esprit.exe"){
+        stop_simulation()
+        cancel_all_set()
+    }   
 }
 
 f12::{
@@ -265,7 +267,52 @@ b::{
 }
 
 r::{
-    center_border_3()
+    extrude_by(6)
+}
+
+r & Numpad1::
+r & 1::{
+    extrude_by(1)
+}
+
+r & Numpad2::
+r & 2::{
+    extrude_by(2)
+}
+
+r & Numpad3::
+r & 3::{
+    extrude_by(3)
+}
+
+r & Numpad4::
+r & 4::{
+    extrude_by(4)
+}
+
+r & Numpad5::
+r & 5::{
+    extrude_by(5)
+}
+
+r & Numpad6::
+r & 6::{
+    extrude_by(6)
+}
+
+r & Numpad7::
+r & 7::{
+    extrude_by(7)
+}
+
+r & Numpad8::
+r & 8::{
+    extrude_by(8)
+}
+
+r & Numpad9::
+r & 9::{
+    extrude_by(9)
 }
 
 e::{
@@ -357,88 +404,39 @@ esprit_title := WinGetTitle("A")
 }
 
 ; ===== Step-5 Window Navigation =====
+	
+; Degree 1 (Top Left)
 !Numpad7::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 55, 140
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 55, 140
-        }
-    }
+    click_client_pos(55, 140, "[5]DEG 경계소재 & 마진", true)
 }
 
+; Degree 2 (Top Right)
 !Numpad9::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 170, 140
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 170, 140
-        }
-    }
+    click_client_pos(170, 140, "[5]DEG 경계소재 & 마진", true)
 }
 
+; Degree 3 (Bottom Left)
 !Numpad1::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 55, 190
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 55, 190
-        }
-    }
+    click_client_pos(55, 190, "[5]DEG 경계소재 & 마진", true)
 }
+
+; Degree 4 (Bottom Right)
 
 !Numpad3::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 170, 190
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 170, 190
-        }
-    }
+    click_client_pos(170, 190, "[5]DEG 경계소재 & 마진", true)
 }
 
+; +90 Degree
 !Numpad0::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 35, 235
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 35, 235
-        }
-    }
+    click_client_pos(35, 235, "[5]DEG 경계소재 & 마진", true)
 }
 
 z::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 40, 8
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 40, 8
-        }
-    }
+    click_client_pos(40, 8, "[5]DEG 경계소재 & 마진", true)
 }
 
 x::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 120, 8
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 120, 8
-        }
-    }
+    click_client_pos(120, 8, "[5]DEG 경계소재 & 마진", true)
 }
 
 y::{
@@ -453,52 +451,45 @@ y::{
 }
 
 ; ===== Step-3 Window Navigation =====
+
+; Degree 1
 !1::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 32, 70
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 32, 70
-        }
-    }
+    click_client_pos(32, 70, "Check Rough ML & Create Border Solid", true)
 }
 
+; Degree 2
 !2::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 110, 70
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 110, 70
-        }
-    }
+    click_client_pos(110, 70, "Check Rough ML & Create Border Solid", true)
 }
 
+; Degree 3
 !3::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 188, 70
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 188, 70
-        }
-    }
+    click_client_pos(188, 70, "Check Rough ML & Create Border Solid", true)
 }
 
+; +90 Degree
 !q::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("Check Rough ML & Create Border Solid")){
-        if(WinActive("Check Rough ML & Create Border Solid")){
-            Click 55, 158
-        } else {
-            WinActivate("Check Rough ML & Create Border Solid")
-            Click 55, 158
-        }
-    }
+    click_client_pos(55, 158, "Check Rough ML & Create Border Solid", true)
+}
+
+; Yellow Outline Checkbox
+!w::{
+    click_client_pos(8, 30, "Check Rough ML & Create Border Solid", true)
+}
+
+; Tab 1
+!a::{
+    click_client_pos(20, 4, "Check Rough ML & Create Border Solid", true)
+}
+
+; Tab 2
+!s::{
+    click_client_pos(70, 4, "Check Rough ML & Create Border Solid", true)
+}
+
+; Tab 3
+!d::{
+    click_client_pos(120, 4, "Check Rough ML & Create Border Solid", true)
 }
 
 ^Up::{
@@ -581,6 +572,38 @@ y::{
             BlockInput("MouseMoveOff")
         }
     }
+}
+
+; ===== Text Placement Window Navigation =====
+
+!Up::{
+    click_client_pos(136, 180, "Engraving Program Number Text", false)
+}
+
+!Down::{
+    click_client_pos(190, 180, "Engraving Program Number Text", true)
+}
+
+!Left::{
+    click_client_pos(130, 220, "Engraving Program Number Text", true)
+}
+
+!Right::{
+    click_client_pos(190, 220, "Engraving Program Number Text", true)
+}
+
++Left::{
+    click_client_pos(130, 260, "Engraving Program Number Text", true)
+}
+
++Right::{
+    click_client_pos(190, 260, "Engraving Program Number Text", true)
+}
+
+; Create Text Projection Finishing Button
++NumpadEnter::
++Enter::{
+    click_client_pos(98, 305, "Engraving Program Number Text", true)
 }
 
 ; ===== Macro Buttons =====

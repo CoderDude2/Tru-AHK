@@ -6,7 +6,7 @@
 root := Gui()
 log_path := A_ScriptDir "\resources\log"
 
-root.OnEvent("Close", OnCloseText)
+root.OnEvent("Close", onCloseText)
 onCloseText(*){
     save()
     ExitApp
