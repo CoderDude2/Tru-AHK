@@ -71,8 +71,10 @@ f13::{
     click_index := 0
     path_tool_active := false
 
-    stop_simulation()
-    cancel_all_set()
+    if WinActive("ahk_exe esprit.exe"){
+        stop_simulation()
+        cancel_all_set()
+    }   
 }
 
 f12::{
@@ -402,88 +404,39 @@ esprit_title := WinGetTitle("A")
 }
 
 ; ===== Step-5 Window Navigation =====
+	
+; Degree 1 (Top Left)
 !Numpad7::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 55, 140
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 55, 140
-        }
-    }
+    click_client_pos(55, 140, "[5]DEG 경계소재 & 마진", true)
 }
 
+; Degree 2 (Top Right)
 !Numpad9::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 170, 140
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 170, 140
-        }
-    }
+    click_client_pos(170, 140, "[5]DEG 경계소재 & 마진", true)
 }
 
+; Degree 3 (Bottom Left)
 !Numpad1::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 55, 190
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 55, 190
-        }
-    }
+    click_client_pos(55, 190, "[5]DEG 경계소재 & 마진", true)
 }
+
+; Degree 4 (Bottom Right)
 
 !Numpad3::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 170, 190
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 170, 190
-        }
-    }
+    click_client_pos(170, 190, "[5]DEG 경계소재 & 마진", true)
 }
 
+; +90 Degree
 !Numpad0::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 35, 235
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 35, 235
-        }
-    }
+    click_client_pos(35, 235, "[5]DEG 경계소재 & 마진", true)
 }
 
 z::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 40, 8
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 40, 8
-        }
-    }
+    click_client_pos(40, 8, "[5]DEG 경계소재 & 마진", true)
 }
 
 x::{
-    CoordMode "Mouse", "Client"
-    if(WinExist("[5]DEG 경계소재 & 마진")){
-        if(WinActive("[5]DEG 경계소재 & 마진")){
-            Click 120, 8
-        } else {
-            WinActivate("[5]DEG 경계소재 & 마진")
-            Click 120, 8
-        }
-    }
+    click_client_pos(120, 8, "[5]DEG 경계소재 & 마진", true)
 }
 
 y::{

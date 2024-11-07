@@ -156,6 +156,26 @@ extrude_by(length) {
 	}
 }
 
+click_client_pos(posX, posY, window_name, block_input := false){
+	if(block_input){
+		BlockInput("MouseMove")
+	}
+	CoordMode "Mouse", "Screen"
+	MouseGetPos(&mouse_screen_posX, &mouse_screen_posY)
+	CoordMode "Mouse", "Client"
+	if WinExist(window_name){
+		if WinActive(window_name){
+			Click(posX, posY)
+		} else{
+			WinActivate(window_name)
+			Click(posX, posY)
+		}
+	}
+	CoordMode "Mouse", "Screen"
+	MouseMove mouse_screen_posX, mouse_screen_posY
+	BlockInput("MouseMoveOff")
+}
+
 draw_straight_border(){
 	WinActivate("ESPRIT")
 	CoordMode("Mouse", "Screen")
