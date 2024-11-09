@@ -21,18 +21,40 @@ body{
     background-color: var(--clr-neutral-900);
     color: var(--clr-neutral-100);
     font-family: Arial, Helvetica, sans-serif;
+    padding: 1em;
 }
 
 h1{
     font-size: 2rem;
-    margin: 0.2em;
+    font-weight: bold;
+    /* margin: 0.2em; */
+}
+
+h2{
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .key{
     border: 1px solid var(--clr-neutral-100);
     border-radius: calc(1.618em / 6);
-    padding: 2px 10px;
+    padding: 5px 10px;
     text-align: center;
     text-anchor: middle;
     font-weight: bold;
+}
+
+.keymap{
+    display: inline-block;
+    border: 1px solid var(--clr-neutral-100);
+    padding: 10px;
+}
+
+.keymap > h2{
+    margin-bottom: 0em;
+}
+
+td{
+    /* border: 1px solid white; */
+    padding: 10px;
 }
