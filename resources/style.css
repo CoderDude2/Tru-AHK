@@ -54,7 +54,11 @@ h2{
     margin-bottom: 0em;
 }
 
-td{
+td{ 
     /* border: 1px solid white; */
     padding: 10px;
+}
+
+td:first-child{
+    text-align: right;
 }
