@@ -60,5 +60,5 @@ td{
 }
 
 td:first-child{
-    text-align: right;
+    text-align: left;
 }
