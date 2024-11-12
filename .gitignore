@@ -2,3 +2,4 @@ log.txt
 log
 *.exe
 /resources/log
+.DS_Store
