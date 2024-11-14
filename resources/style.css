@@ -8,6 +8,7 @@
     --clr-neutral-100: #eeeeee;
     --clr-neutral-900: #333333;
     --clr-tru-blue: #55bbec;
+    --clr-tru-blue-active: #49a1ca;
 }
 
 img,
@@ -49,14 +50,35 @@ a{
     color: var(--clr-tru-blue);
 }
 
-.index{
-    font-size: 1.2rem;
-    width: 100%;
-    margin: auto;
+.go-back-container{
     max-width: 2000px;
-    list-style-type: none;
+    margin: auto;
 }
 
+.go-back{
+    display: inline-block;
+    border: 1px solid var(--clr-neutral-100);
+    padding: 10px;
+    margin-bottom: 0.5em;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.4s;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.go-back:hover{
+    background-color: var(--clr-tru-blue-active);
+    border-color: var(--clr-tru-blue-active);
+    color: var(--clr-neutral-100);
+}
+
+.index-container{
+    width: 100%;
+    max-width: 2000px;
+    margin: auto;
+    margin-left: 1rem;
+}
 
 .key{
     display: inline-block;
