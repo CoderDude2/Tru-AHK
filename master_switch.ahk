@@ -111,6 +111,7 @@ f17::{
     open_changelog()   
 }
 
+; G4
 f16::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
 }
@@ -477,21 +478,6 @@ y::{
     click_client_pos(8, 30, "Check Rough ML & Create Border Solid", true)
 }
 
-; Tab 1
-!a::{
-    click_client_pos(20, 4, "Check Rough ML & Create Border Solid", true)
-}
-
-; Tab 2
-!s::{
-    click_client_pos(70, 4, "Check Rough ML & Create Border Solid", true)
-}
-
-; Tab 3
-!d::{
-    click_client_pos(120, 4, "Check Rough ML & Create Border Solid", true)
-}
-
 ^Up::{
     if(WinExist("Check Rough ML & Create Border Solid")){
         WinActivate("Check Rough ML & Create Border Solid")
@@ -577,7 +563,7 @@ y::{
 ; ===== Text Placement Window Navigation =====
 
 !Up::{
-    click_client_pos(136, 180, "Engraving Program Number Text", false)
+    click_client_pos(136, 180, "Engraving Program Number Text", true)
 }
 
 !Down::{

@@ -4,7 +4,7 @@ SetWorkingDir A_ScriptDir
 prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
 
 open_help(*){
-	Run A_ScriptDir "\resources\helpfile.pdf"
+	Run A_ScriptDir "\resources\keymap.html"
 }
 
 open_changelog(*){

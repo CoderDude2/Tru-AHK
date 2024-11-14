@@ -66,6 +66,18 @@ h2{
     padding: 10px;
 }
 
+
+.remap{
+    width: 50%;
+}
+.remap td{
+    width: 30%;
+}
+
+.arrows{
+    text-align: center;
+}
+
 .sections {
     display: grid;
     margin: auto;
