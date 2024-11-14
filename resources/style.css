@@ -7,6 +7,7 @@
 :root{
     --clr-neutral-100: #eeeeee;
     --clr-neutral-900: #333333;
+    --clr-tru-blue: #55bbec;
 }
 
 img,
@@ -43,6 +44,19 @@ h2{
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+a{
+    color: var(--clr-tru-blue);
+}
+
+.index{
+    font-size: 1.2rem;
+    width: 100%;
+    margin: auto;
+    max-width: 2000px;
+    list-style-type: none;
+}
+
 
 .key{
     display: inline-block;
