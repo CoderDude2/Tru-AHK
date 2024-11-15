@@ -31,7 +31,7 @@ if(FileExist("old_master_switch.exe")){
 }
 
 if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
-    Run A_ScriptDir "\resources\changelog.pdf"
+    Run A_ScriptDir "\resources\changelog.html"
     IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
 }
 

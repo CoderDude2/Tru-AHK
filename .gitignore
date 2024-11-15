@@ -3,3 +3,5 @@ log
 *.exe
 /resources/log
 .DS_Store
+/dist
+/build
