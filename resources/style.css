@@ -30,15 +30,16 @@ main{
     width: 90%;
     height: 100vh;
     margin: auto;
+    border: 1px solid white;
+    max-width: 2000px;
 }
 
 h1{
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 0.5em;
-    max-width: 2000px;
     margin: auto;
     margin-bottom: 0.5em;
+    
 }
 
 h2{
@@ -51,7 +52,6 @@ a{
 }
 
 .go-back-container{
-    max-width: 2000px;
     margin: auto;
 }
 
@@ -75,7 +75,6 @@ a{
 
 .index-container{
     width: 100%;
-    max-width: 2000px;
     margin: auto;
     margin-left: 1rem;
 }
@@ -117,8 +116,6 @@ a{
 .sections {
     display: grid;
     margin: auto;
-    
-    max-width: 2000px;
 
     gap: 0.5em;
     grid-template-columns: 1fr 1fr;
