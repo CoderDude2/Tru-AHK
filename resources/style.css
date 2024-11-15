@@ -139,3 +139,39 @@ td{
     padding: 10px;
     width: 50%;
 }
+
+.help-section{
+    margin-top: 2em;
+}
+
+.help-contents{
+    margin-left: 1em;
+}
+
+.help-section h2{
+    margin-bottom: 0.5em;
+    text-decoration: underline;
+}
+
+.help-section img{
+    margin-bottom: 0.5em;
+    width: 400px;
+}
+
+.help-section ol{
+    margin-left: 1rem;
+}
+
+.help-section li{
+    padding: 0.5em 0em;
+}
+
+dt{
+    font-weight: bold;
+}
+
+dd{
+    margin-left: 1em;
+    margin-bottom: 1em;
+    font-size: 0.9rem;
+}
