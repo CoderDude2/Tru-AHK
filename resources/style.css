@@ -6,6 +6,7 @@
 
 :root{
     --clr-neutral-100: #eeeeee;
+    --clr-neutral-800: #444444;
     --clr-neutral-900: #333333;
     --clr-tru-blue: #55bbec;
     --clr-tru-blue-active: #49a1ca;
@@ -31,6 +32,12 @@ main{
     height: 100vh;
     margin: auto;
     max-width: 2000px;
+    background-color: var(--clr-neutral-800);
+    padding: 1em;
+}
+
+.full-main{
+    height: 100%;
 }
 
 h1{
@@ -43,6 +50,11 @@ h1{
 
 h2{
     font-size: 1.5rem;
+    font-weight: bold;
+}
+
+h3{
+    font-size: 1.1rem;
     font-weight: bold;
 }
 
@@ -100,7 +112,6 @@ a{
     padding: 10px;
 }
 
-
 .remap{
     width: 50%;
 }
@@ -153,9 +164,26 @@ td{
     text-decoration: underline;
 }
 
-.help-section img{
-    margin-bottom: 0.5em;
-    width: 400px;
+.help-contents img{
+    width: 100%;
+    min-width: 200px;
+    max-width: 400px;
+}
+
+.help-contents dl .macro-bar-img{
+    width: 200px;
+}
+
+.help-contents dl .project-manager-img{
+    width:200px;
+}
+
+.help-section h3{
+    margin: 0.5em 0em 0.15em 0em;
+}
+
+.help-section p{
+    margin: 1em 0em;
 }
 
 .help-section ol{
@@ -166,12 +194,21 @@ td{
     padding: 0.5em 0em;
 }
 
+.index-container li{
+    padding: 0.5em 0em;
+}
+
+dl{
+    margin-top: 0.5em;
+}
+
 dt{
+    margin-top: 0.75em;
     font-weight: bold;
 }
 
 dd{
     margin-left: 1em;
-    margin-bottom: 1em;
     font-size: 0.9rem;
+    margin-top: 0.25em;
 }

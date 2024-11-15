@@ -7,55 +7,99 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-    <h1>Tru-AHK Dashboard</h1>
-    
-    <div class="go-back-container">
-        <a class="go-back" href="help.html">Go back</a>
-    </div>
-    
-    <div class="index-container">
-        <ol>
-            <li><a href="#open-dashboard-section">Opening the Dashboard</a></li>
-            <li><a href="#help-section">The Help Section</a></li>
-            <li><a href="#settings-section">The Settings Section</a></li>
-            <li><a href="#esprit-controls-section">Esprit Control Settings</a></li>
-        </ol>
-    </div>
-
-    <div class="help-section">
-        <h2 id="open-dashboard-section">Opening the Dashboard</h2>
-        <div class="help-contents">
-            <img src="images/open_dashboard.gif" alt="">
+    <main class="full-main">
+        <h1>Tru-AHK Dashboard</h1>
+        
+        <div class="go-back-container">
+            <a class="go-back" href="help.html">Go back</a>
+        </div>
+        
+        <div class="index-container">
             <ol>
-                <li>Click the system tray icon.</li>
-                <li>Right click the master_switch.exe icon.</li>
-                <li>Select the "Open Dashboard" option.</li>
+                <li><a href="#open-dashboard-section">Opening the Dashboard</a></li>
+                <li><a href="#help-section">The Help Section</a></li>
+                <li><a href="#settings-section">The Settings Section</a></li>
+                <li><a href="#esprit-controls-section">Esprit Control Settings</a></li>
             </ol>
         </div>
-    </div>
 
-    <div class="help-section">
-        <h2 id="help-section">The Help Section</h2>
-        <div class="help-contents">
-            <img src="images/help_section.PNG" alt="">
-            <dl>
-                <dt>Hotkey List</dt>
-                <dd>Opens the documents listing all the available hotkeys.</dd>
-
-                <dt>Open Changelog</dt>
-                <dd>Opens the document that outlines the changes done to the current version of the hotkey system.</dd>
-            </dl>
+        <div class="help-section">
+            <h2 id="open-dashboard-section">Opening the Dashboard</h2>
+            <div class="help-contents">
+                <img src="images/open_dashboard.gif" alt="">
+                <ol>
+                    <li>Click the system tray icon.</li>
+                    <li>Right click the master_switch.exe icon.</li>
+                    <li>Select the "Open Dashboard" option.</li>
+                </ol>
+            </div>
         </div>
-    </div>
 
-    <div class="help-section">
-        <h2 id="settings-section">The Settings Section</h2>
-    </div>
+        <div class="help-section">
+            <h2 id="help-section">The Help Section</h2>
+            <div class="help-contents">
+                <img src="images/help_section.PNG" alt="">
+                <dl>
+                    <dt>Hotkey List</dt>
+                    <dd>Opens the <a href="keymap.html">document</a> listing all the available hotkeys.</dd>
 
-    <div class="help-section">
-        <h2 id="esprit-controls-section">Esprit Control Settings</h2>
-    </div>
+                    <dt>Open Changelog</dt>
+                    <dd>Opens the document that outlines the changes done to the current version of the hotkey system.</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2 id="settings-section">The Settings Section</h2>
+            <div class="help-contents">
+                <img src="images/settings_section.PNG" alt="">
+                <dl>
+                    <dt>F12 Mode</dt>
+                    <dd>
+                        <dl>
+                            <dt>Disabled</dt>
+                            <dd>Pressing <span class="key">F12</span> will not close any ESPRIT instances.
+
+                            <dt>Active Instance</dt>
+                            <dd>Will only close the currently active ESPRIT instance.</dd>
+
+                            <dt>All Instances</dt>
+                            <dd>Will close all ESPRIT instances.</dd>
+                        </dl>
+                    </dd>
+
+                    <dt>W as Delete Key</dt>
+                    <dd>If enabled, the <span class="key">W</span> key will be remapped to the <span class="key">Delete</span> key.</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2 id="esprit-controls-section">Esprit Control Settings</h2>
+            <div class="help-contents">
+                <img src="images/esprit_controls.PNG" alt="">
+                <p>In order for some of the hotkeys to function, the program must know the ID of the element it has to interact with. Unfortunately the IDs for some of the elements vary, so they must be set manually.</p>
+
+                <dl>
+                    <dt>Macro Bar Control</dt>
+                    <dd><img class="macro-bar-img" src="images/macro_bar.PNG" alt=""></dd>
+                    <dd>This one must be set for the <a href="keymap.html#macro-keys">macro bar hotkeys</a> to work.</dd>
+
+                    <dt>Project Manager Control</dt>
+                    <dd><img class="project-manager-img" src="images/the_project_manager.PNG" alt=""></dd>
+                    <dd>This one must be set for some of the <a href="keymap.html#operation-keys">operation hotkeys</a> to work.</dd>
+                    <dd>If the macro bar is attached to the ESPRIT window, check the "Is Attached" checkbox. Otherwise, if it is unattached, leave it unchecked.</dd>
+                </dl>
+
+                <h3 style="font-weight: bold;">How to set a control</h3>
+                <img src="images/set_control.gif" alt="">
+                <ol>
+                    <li>Press the set button on the dashboard.</li>
+                    <li>Hover over the corresponding control and left click.</li>
+                </ol>
+                
+            </div>
+        </div>
 
     </main>
 </body>
