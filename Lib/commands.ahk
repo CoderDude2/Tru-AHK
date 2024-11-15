@@ -8,7 +8,7 @@ open_help(*){
 }
 
 open_changelog(*){
-	Run A_ScriptDir "..\resources\changelog.pdf"
+	Run A_ScriptDir "..\resources\changelog.html"
 }
 
 extrude_tool(){

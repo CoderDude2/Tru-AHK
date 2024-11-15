@@ -84,6 +84,18 @@ a{
     color: var(--clr-neutral-100);
 }
 
+.changelog-main h2{
+    margin-top: 1em;
+}
+
+.content{
+    margin-left: 1rem;
+}
+
+.content li{
+    margin-left: 1rem;
+}
+
 .index-container{
     width: 100%;
     margin: auto;
@@ -182,8 +194,8 @@ td{
     margin: 0.5em 0em 0.15em 0em;
 }
 
-.help-section p{
-    margin: 1em 0em;
+p{
+    margin: 0.5em 0em;
 }
 
 .help-section ol{
