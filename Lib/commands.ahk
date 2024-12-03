@@ -14,6 +14,10 @@ highlight_tool(){
 	PostMessage 0x111, 6156 , , "msctls_statusbar322", "ESPRIT"
 }
 
+generate_nc(){
+	PostMessage 0x111, 3323, , , "ESPRIT"
+}
+
 extrude_tool(){
 	PostMessage 0x111, 3130 , , , "ESPRIT"
 }
@@ -153,10 +157,10 @@ draw_straight_border(){
 	Click("Left")
 	Send("20{Enter}0{Enter}{Esc}")
 	Click("Left 2")
-	Sleep(150)
-	double_sided_border()
+	; Sleep(150)
+	; double_sided_border()
+	; Send("{Enter}")
 	BlockInput("MouseMoveOff")
-	Send("{Enter}")
 }
 
 get_case_type(title){

@@ -68,19 +68,24 @@ debug(){
 }
 #SuspendExempt False
 
+; I want to save the open file when building the NC code.
+~f9::{
+    save_file()
+}
+
 ; G4
 f16::{
-    ; selected_file := FileSelect(,"C:\Users\TruUser\Desktop\작업\스캔파일")
-    ; if(selected_file != ""){
-    ;     SplitPath(selected_file, &name)
-    ;     found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
-    ;     open_file()
-    ;     WinWaitActive("ahk_class #32770")
-    ;     ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-    ;     ControlSetChecked(0,"Button5","ahk_class #32770")
-    ;     ControlSend("{Enter}", "Button2","ahk_class #32770")
-    ; }
-    Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
+    selected_file := FileSelect(,"C:\Users\TruUser\Desktop\작업\스캔파일")
+    if(selected_file != ""){
+        SplitPath(selected_file, &name)
+        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+        open_file()
+        WinWaitActive("ahk_class #32770")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+    }
+    ; Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
 }
 
 f12::{
