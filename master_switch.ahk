@@ -9,14 +9,16 @@ initial_pos_y := 0
 click_index := 0
 path_tool_active := false
 
-if(!DirExist("C:\Users\TruUser\AppData\Roaming\tru-ahk\")){
-    DirCreate "C:\Users\TruUser\AppData\Roaming\tru-ahk\"
-}
-
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk
+
+if(!DirExist(A_AppData "\tru-ahk\")){
+    create_default_prefs_file()
+}
+
+prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
 
 remote_path := IniRead("config.ini", "info", "remote_path")
 if(check_for_update(A_ScriptDir, remote_path)){
@@ -33,17 +35,6 @@ if(FileExist("old_master_switch.exe")){
 if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
     Run A_ScriptDir "\resources\changelog.html"
     IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
-}
-
-prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
-if(!FileExist(prefs_file_path)){
-    IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
-    IniWrite(true, prefs_file_path, "w_as_delete", "value")
-
-    IniWrite("", prefs_file_path, "macro_bar_control", "control")
-
-    IniWrite("", prefs_file_path, "project_manager_control", "control")
-    IniWrite(True, prefs_file_path, "project_manager_control", "is_attached")
 }
 
 ; ===== Dashboard Menu =====
@@ -78,7 +69,13 @@ f13::{
 }
 
 f12::{
-    mode := IniRead(prefs_file_path, "f12_mode", "value")
+    try{
+        mode := IniRead(prefs_file_path, "f12_mode", "value")    
+    } catch OSError {
+        create_default_prefs_file()
+        mode := IniRead(prefs_file_path, "f12_mode", "value")  
+    }
+    
 
     switch mode{
         Case "Disabled":
@@ -119,7 +116,14 @@ f16::{
 ; ===== Remappings =====
 Space::Enter
 w::{
-    if(IniRead(prefs_file_path, "w_as_delete", "value") == 1){
+    try {
+        w_pref := IniRead(prefs_file_path, "w_as_delete", "value")
+    } catch OSError {
+        create_default_prefs_file()
+        w_pref := IniRead(prefs_file_path, "w_as_delete", "value")
+    }
+
+    if(w_pref = 1){
         Send("{Delete}")
     }
 }

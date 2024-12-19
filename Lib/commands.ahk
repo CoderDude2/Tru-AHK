@@ -1,7 +1,16 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-prefs_file_path := IniRead(A_ScriptDir "\config.ini", "info", "user_preferences")
+prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
+
+create_default_prefs_file(){
+	DirCreate(A_AppData "\tru-ahk\")
+	IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
+	IniWrite(true, prefs_file_path, "w_as_delete", "value")
+	IniWrite("", prefs_file_path, "macro_bar_control", "control")
+	IniWrite("", prefs_file_path, "project_manager_control", "control")
+	IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
+}
 
 open_help(*){
 	Run A_ScriptDir "\resources\keymap.html"
@@ -72,7 +81,6 @@ transformation_window(){
 }
 
 unsuppress_operation(){
-	global prefs_file_path
 	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 	if(is_attached){
 		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
@@ -82,7 +90,6 @@ unsuppress_operation(){
 }
 
 suppress_operation(){
-	global prefs_file_path
 	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 	if(is_attached) {
 		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"

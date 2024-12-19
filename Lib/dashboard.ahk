@@ -4,6 +4,9 @@
 #Include "commands.ahk"
 #Include "updater.ahk"
 
+prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
+prefs_directory := A_AppData "\tru-ahk"
+
 showInspector := False
 setMacroBar := False
 setProjectManager := False
@@ -25,11 +28,10 @@ inspector(){
     showInspector := !showInspector
 }
 
-prefs_file_path := IniRead("config.ini", "info", "user_preferences")
-
 try {
     f12_mode := IniRead(prefs_file_path, "f12_mode", "value")
 } catch {
+    create_default_prefs_file()
     IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
     f12_mode := "All Instances"
 }
@@ -37,6 +39,7 @@ try {
 try {
     w_as_delete := IniRead(prefs_file_path, "w_as_delete", "value")
 } catch {
+    create_default_prefs_file()
     IniWrite(true, prefs_file_path, "w_as_delete", "value")
     w_as_delete := true
 }
@@ -44,6 +47,7 @@ try {
 try {
     macro_bar_control := IniRead(prefs_file_path, "macro_bar_control", "control")
 } catch {
+    create_default_prefs_file()
     IniWrite("", prefs_file_path, "macro_bar_control", "control")
     macro_bar_control := ""
 }
@@ -51,6 +55,7 @@ try {
 try {
     project_manager_control := IniRead(prefs_file_path, "project_manager_control", "control")
 } catch {
+    create_default_prefs_file()
     IniWrite("", prefs_file_path, "project_manager_control", "control")
     project_manager_control := ""
 }
@@ -58,6 +63,7 @@ try {
 try {
     is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 } catch {
+    create_default_prefs_file()
     IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
     is_attached := true
 }
@@ -66,7 +72,6 @@ remote_path := IniRead("config.ini", "info", "remote_path")
 
 root := Gui()
 root.Title := "Tru-AHK Dashboard"
-; root.show("w300 h325")
 
 root.AddGroupBox("r2.5 Section w275 y+5","Help")
 hotkey_list_btn := root.Add("Button","xp+5 yp+15","Hotkey List")
@@ -104,14 +109,26 @@ is_attached_checkbox.value := is_attached
 is_attached_checkbox.OnEvent("Click", setProjectManagerControlIsAttached)
 
 setF12Mode(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
     IniWrite(f12_dropdown.Text, prefs_file_path, "f12_mode", "value")
 }
 
 setWMode(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
     IniWrite(w_checkbox.value, prefs_file_path, "w_as_delete", "value")
 }
 
 setMacroBarControlCallback(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -124,6 +141,10 @@ setMacroBarControlCallback(*){
 }
 
 setProjectManagerControlCallback(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -136,6 +157,10 @@ setProjectManagerControlCallback(*){
 }
 
 setMacroBarControl(class_nn){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -150,6 +175,10 @@ setMacroBarControl(class_nn){
 }
 
 setProjectManagerControl(class_nn){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -164,6 +193,10 @@ setProjectManagerControl(class_nn){
 }
 
 setProjectManagerControlIsAttached(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
     IniWrite(is_attached_checkbox.value, prefs_file_path, "project_manager_control", "is_attached")
 }
 
