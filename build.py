@@ -13,7 +13,7 @@ def build():
     
     for file in files:
         f_name = file.split(".")[0]
-        os.system(fr'C:\Users\TruUser\AppData\Local\Programs\AutoHotkey\Compiler\Ahk2Exe.exe /in .\{file} /out ./build/{f_name}.exe')
+        os.system(fr'C:\Windows.old\Users\TruUser\AppData\Local\Programs\AutoHotkey\Compiler\Ahk2Exe.exe /in .\{file} /out ./build/{f_name}.exe')
 
 def release():
     if(not os.path.exists("./dist")):
