@@ -16,7 +16,7 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
-#Include %A_ScriptDir%\Lib\updater.ahk
+; #Include %A_ScriptDir%\Lib\updater.ahk
 
 if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
@@ -65,6 +65,11 @@ debug(){
 ;Ctrl+G1
 ^f13::{
     Suspend
+}
+
+;G5 Key
+f17::{
+    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe" 
 }
 #SuspendExempt False
 
