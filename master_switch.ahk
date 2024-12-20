@@ -36,8 +36,6 @@ step_5_tab := 1
 
 showDebug := false
 
-#HotIf WinActive("ahk_exe esprit.exe")
-
 #SuspendExempt
 ;G1
 f13::{
@@ -66,12 +64,13 @@ debug(){
 ^f13::{
     Suspend
 }
-
 ;G5 Key
 f17::{
     Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe" 
 }
 #SuspendExempt False
+
+#HotIf WinActive("ahk_exe esprit.exe")
 
 ; I want to save the open file when building the NC code.
 ~f9::{
