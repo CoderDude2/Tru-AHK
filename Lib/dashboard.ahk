@@ -31,15 +31,20 @@ inspector(){
 try {
     f12_mode := IniRead(prefs_file_path, "f12_mode", "value")
 } catch {
-    create_default_prefs_file()
     IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
     f12_mode := "All Instances"
 }
 
 try {
+    e_key_functionality := IniRead(prefs_file_path, "e_key_functionality", "value")
+} catch {
+    IniWrite("Line and Border", prefs_file_path, "e_key_functionality", "value")
+    e_key_functionality := "Line and Border"
+}
+
+try {
     w_as_delete := IniRead(prefs_file_path, "w_as_delete", "value")
 } catch {
-    create_default_prefs_file()
     IniWrite(true, prefs_file_path, "w_as_delete", "value")
     w_as_delete := true
 }
@@ -47,7 +52,6 @@ try {
 try {
     macro_bar_control := IniRead(prefs_file_path, "macro_bar_control", "control")
 } catch {
-    create_default_prefs_file()
     IniWrite("", prefs_file_path, "macro_bar_control", "control")
     macro_bar_control := ""
 }
@@ -55,7 +59,6 @@ try {
 try {
     project_manager_control := IniRead(prefs_file_path, "project_manager_control", "control")
 } catch {
-    create_default_prefs_file()
     IniWrite("", prefs_file_path, "project_manager_control", "control")
     project_manager_control := ""
 }
@@ -63,28 +66,30 @@ try {
 try {
     is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 } catch {
-    create_default_prefs_file()
     IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
     is_attached := true
 }
 
-remote_path := IniRead("config.ini", "info", "remote_path")
-
 root := Gui()
 root.Title := "Tru-AHK Dashboard"
 
-root.AddGroupBox("r2.5 Section w275 y+5","Help")
+root.AddGroupBox("r2.6 Section w275 y+5","Help")
 hotkey_list_btn := root.Add("Button","xp+5 yp+15","Hotkey List")
 hotkey_list_btn.OnEvent("Click", open_help)
 
 changelog_btn := root.Add("Button"," yp+30","Open Changelog")
 changelog_btn.OnEvent("Click", open_changelog)
 
-root.AddGroupBox("r3.4 xs w275", "Settings")
+root.AddGroupBox("r6.25 xs w275", "Settings")
 root.Add("Text","xp+5 yp+20","F12 Mode")
 f12_dropdown := root.Add("DropDownList","vf12_options xp+0 yp+15",["Disabled","Active Instance", "All Instances"])
 f12_dropdown.Choose(f12_mode)
 f12_dropdown.OnEvent("Change", setF12Mode)
+
+root.Add("Text","xp+0 yp+30","E Key Functionality")
+e_key_functionality_dropdown := root.Add("DropDownList","ve_key_options xp+0 yp+15",["Line","Line and Border"])
+e_key_functionality_dropdown.Choose(e_key_functionality)
+e_key_functionality_dropdown.OnEvent("Change", setEKeyFunctionality)
 
 w_checkbox := root.Add("CheckBox","h20 yp+30","W as Delete Key")
 w_checkbox.value := w_as_delete
@@ -114,6 +119,14 @@ setF12Mode(*){
     }
 
     IniWrite(f12_dropdown.Text, prefs_file_path, "f12_mode", "value")
+}
+
+setEKeyFunctionality(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
+    IniWrite(e_key_functionality_dropdown.Text, prefs_file_path, "e_key_functionality", "value")
 }
 
 setWMode(*){

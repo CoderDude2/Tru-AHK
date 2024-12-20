@@ -108,6 +108,10 @@ f17::{
     open_changelog()   
 }
 
+^,::{
+    open_dashboard()
+}
+
 ; G4
 f16::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
@@ -322,7 +326,18 @@ r & 9::{
 }
 
 e::{
-    draw_straight_border()
+    try {
+        e_key_functionality := IniRead(prefs_file_path, "e_key_functionality", "value")
+    } catch {
+        IniWrite("Line and Border", prefs_file_path, "e_key_functionality", "value")
+        e_key_functionality := "Line and Border"
+    }
+
+    if e_key_functionality = "Line and Border"{
+        draw_straight_border()
+    } else if e_key_functionality = "Line" {
+        draw_straight_line()
+    }
 }
 
 +q::{

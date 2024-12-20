@@ -6,6 +6,7 @@ prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
 create_default_prefs_file(){
 	DirCreate(A_AppData "\tru-ahk\")
 	IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
+	IniWrite("Line and Border", prefs_file_path, "e_key_functionality", "value")
 	IniWrite(true, prefs_file_path, "w_as_delete", "value")
 	IniWrite("", prefs_file_path, "macro_bar_control", "control")
 	IniWrite("", prefs_file_path, "project_manager_control", "control")
@@ -196,6 +197,17 @@ draw_straight_border(){
 	double_sided_border()
 	WinActivate("ahk_class #32770")
 	ControlSend("{Enter}", "Button9", "ahk_class #32770")
+	BlockInput("MouseMoveOff")
+}
+
+draw_straight_line(){
+	WinActivate("ESPRIT")
+	CoordMode("Mouse", "Screen")
+	BlockInput("MouseMove")
+	MouseGetPos(&posX, &posY)
+	line_tool()
+	Click("Left")
+	Send("20{Enter}0{Enter}{Esc}")
 	BlockInput("MouseMoveOff")
 }
 
