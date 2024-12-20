@@ -8,17 +8,16 @@ initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active := false
+prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk
 
-if(!DirExist(A_AppData "\tru-ahk\")){
+if(!FileExist(prefs_file_path)){
     create_default_prefs_file()
 }
-
-prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
 
 remote_path := IniRead("config.ini", "info", "remote_path")
 if(check_for_update(A_ScriptDir, remote_path)){
@@ -45,12 +44,14 @@ SetDefaultMouseSpeed 0
 
 #SuspendExempt
 ;G1
-f13::{
+f13::
+^.::{
     Reload
 }
 
 ;Ctrl+G1
-^f13::{
+^f13::
+^+,::{
     Suspend
 }
 
@@ -92,7 +93,8 @@ f12::{
 }
 
 ; G5 Key
-f17::{
+f17::
+^+o::{
     Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
 }
 
@@ -113,7 +115,8 @@ f17::{
 }
 
 ; G4
-f16::{
+f16::
+^o::{
     Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
 }
 
@@ -462,12 +465,21 @@ x::{
 
 y::{
     if(WinExist("[5]DEG 경계소재 & 마진")){
-        WinActivate("[5]DEG 경계소재 & 마진")
-        CoordMode("Mouse", "Client")
-        SetDefaultMouseSpeed(0)
-        Click(180, 300)
-        Send("^a-5")
-        Click(170, 240)
+        esprit_window_pid := WinGetPID("A")
+        target_window_pid := WinGetPID("[5]DEG 경계소재 & 마진")
+        
+        if target_window_pid = esprit_window_pid{
+            WinActivate("[5]DEG 경계소재 & 마진")
+            CoordMode "Mouse", "Screen"
+            MouseGetPos(&mouse_screen_posX, &mouse_screen_posY)
+            CoordMode("Mouse", "Client")
+            SetDefaultMouseSpeed(0)
+            Click(180, 300)
+            Send("^a-5")
+            Click(170, 240)
+            CoordMode "Mouse", "Screen"
+            MouseMove mouse_screen_posX, mouse_screen_posY
+        }
     }
 }
 

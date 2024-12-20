@@ -165,23 +165,28 @@ extrude_by(length) {
 }
 
 click_client_pos(posX, posY, window_name, block_input := false){
-	if(block_input){
-		BlockInput("MouseMove")
-	}
-	CoordMode "Mouse", "Screen"
-	MouseGetPos(&mouse_screen_posX, &mouse_screen_posY)
-	CoordMode "Mouse", "Client"
 	if WinExist(window_name){
-		if WinActive(window_name){
-			Click(posX, posY)
-		} else{
-			WinActivate(window_name)
-			Click(posX, posY)
+		esprit_window_pid := WinGetPID("A")
+		target_window_pid := WinGetPID(window_name)
+
+		if target_window_pid = esprit_window_pid{
+			if(block_input){
+				BlockInput("MouseMove")
+			}
+			CoordMode "Mouse", "Screen"
+			MouseGetPos(&mouse_screen_posX, &mouse_screen_posY)
+			CoordMode "Mouse", "Client"
+			if WinActive(window_name){
+				Click(posX, posY)
+			} else{
+				WinActivate(window_name)
+				Click(posX, posY)
+			}
+			CoordMode "Mouse", "Screen"
+			MouseMove mouse_screen_posX, mouse_screen_posY
+			BlockInput("MouseMoveOff")
 		}
 	}
-	CoordMode "Mouse", "Screen"
-	MouseMove mouse_screen_posX, mouse_screen_posY
-	BlockInput("MouseMoveOff")
 }
 
 draw_straight_border(){

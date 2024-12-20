@@ -28,6 +28,10 @@ inspector(){
     showInspector := !showInspector
 }
 
+if(!FileExist(prefs_file_path)){
+    create_default_prefs_file()
+}
+
 try {
     f12_mode := IniRead(prefs_file_path, "f12_mode", "value")
 } catch {
@@ -70,7 +74,7 @@ try {
     is_attached := true
 }
 
-root := Gui()
+root := Gui("AlwaysOnTop")
 root.Title := "Tru-AHK Dashboard"
 
 root.AddGroupBox("r2.6 Section w275 y+5","Help")
