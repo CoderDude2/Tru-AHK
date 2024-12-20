@@ -207,6 +207,7 @@ f14::{
 }
 
 ; Tilde(~) key
+`::
 f19::{
     wireframe_view()
 }
