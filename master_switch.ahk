@@ -3,6 +3,10 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+if(FileExist("old_master_switch.exe")){
+    FileDelete("old_master_switch.exe")
+}
+
 ; ===== Global Variables =====
 initial_pos_x := 0
 initial_pos_y := 0
@@ -25,10 +29,6 @@ if(check_for_update(A_ScriptDir, remote_path)){
     if(result == "Yes"){
         update(remote_path)
     }
-}
-
-if(FileExist("old_master_switch.exe")){
-    FileDelete("old_master_switch.exe")
 }
 
 if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
