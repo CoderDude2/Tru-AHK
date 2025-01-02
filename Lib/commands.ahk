@@ -86,7 +86,11 @@ unsuppress_operation(){
 	if(is_attached){
 		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
 	} else {
-		PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
+		if WinActive("Project Manager"){
+			PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
+		} else if WinActive("프로젝트 매니저"){
+			PostMessage 0x111, 32792 , , get_project_manager(), "프로젝트 매니저"
+		}
 	}
 }
 
@@ -95,9 +99,12 @@ suppress_operation(){
 	if(is_attached) {
 		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
 	} else {
-		PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
+		if WinActive("Project Manager"){
+			PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
+		} else if WinActive("프로젝트 매니저"){
+			PostMessage 0x111, 32770 , , get_project_manager(), "프로젝트 매니저"
+		}
 	}
-	
 }
 
 rebuild_operation(){
@@ -106,9 +113,12 @@ rebuild_operation(){
 	if(is_attached){
 		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
 	} else {
-		PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
+		if WinActive("Project Manager"){
+			PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
+		} else if WinActive("프로젝트 매니저"){
+			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
+		}
 	}
-	
 }
 
 show_milling_tool(){
@@ -249,7 +259,6 @@ translate_selection(x := 0, y := 0, z := 0){
 
 	try{
 		korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
-
 		if(korean_index != 4294967296){
 			ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
 			ControlSetChecked(1,"Button7","ahk_class #32770")
@@ -262,7 +271,6 @@ translate_selection(x := 0, y := 0, z := 0){
 
 	try{
 		english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
-	 	
 		if(english_index != 4294967296){
 			ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
 			ControlSetChecked(1,"Button7","ahk_class #32770")
@@ -276,7 +284,6 @@ translate_selection(x := 0, y := 0, z := 0){
 }
 
 rotate_selection(degrees, update_on_click:=False){
-	
     WinActivate("ESPRIT")
     transformation_window()
 	WinWaitActive("ahk_class #32770")
