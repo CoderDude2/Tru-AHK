@@ -247,8 +247,8 @@ translate_selection(x := 0, y := 0, z := 0){
     transformation_window()
     WinWaitActive("ahk_class #32770")
     
-	korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
-	english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
+	try korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
+	try english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
 	if(korean_index != 4294967296){
 		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
 	} else if(english_index != 4294967296){
@@ -267,17 +267,26 @@ translate_selection(x := 0, y := 0, z := 0){
 }
 
 rotate_selection(degrees, update_on_click:=False){
+	
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
 
-	korean_index := ControlFindItem("회전", "ComboBox1", "ahk_class #32770")
-	english_index := ControlFindItem("Rotate", "ComboBox1", "ahk_class #32770")
-	if(korean_index != 4294967296){
-		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
-	} else if(english_index != 4294967296){
-		ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
-	} else {
+	try{
+		korean_index := ControlFindItem("회전", "ComboBox1", "ahk_class #32770")
+		if(korean_index != 4294967296){
+			ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
+		}
+	} catch {
+		return
+	}
+	
+	try{
+		try english_index := ControlFindItem("Rotate", "ComboBox1", "ahk_class #32770")
+		if(english_index != 4294967296){
+			ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
+		}
+	} catch { 
 		return
 	}
 
@@ -288,6 +297,7 @@ rotate_selection(degrees, update_on_click:=False){
         ControlSetChecked(1,"Button10","ahk_class #32770")
     }
     Send("{Enter}")
+	
 }
 
 scale_selection(scale){
@@ -295,8 +305,8 @@ scale_selection(scale){
     transformation_window()
     WinWaitActive("ahk_class #32770")
 
-	korean_index := ControlFindItem("축척", "ComboBox1", "ahk_class #32770")
-	english_index := ControlFindItem("Scale", "ComboBox1", "ahk_class #32770")
+	try korean_index := ControlFindItem("축척", "ComboBox1", "ahk_class #32770")
+	try english_index := ControlFindItem("Scale", "ComboBox1", "ahk_class #32770")
 	if(korean_index != 4294967296){
 		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
 	} else if(english_index != 4294967296){
