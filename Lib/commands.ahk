@@ -94,6 +94,16 @@ rebuild_operation(){
 	PostMessage 0x111, 32768 , , "SysTreeView321", "Project Manager"
 }
 
+set_point(x, y, z){
+	try{
+    	PostMessage 0x111, 10425, , , "Point"
+		ControlSetText(x, "Edit1", "ahk_class #32770")
+		ControlSetText(y, "Edit2", "ahk_class #32770")
+		ControlSetText(z, "Edit3", "ahk_class #32770")
+		PostMessage 0x111, 12321, , , "Point"
+	}
+}
+
 show_milling_tool(){
 	PostMessage 0x111, 6278 , , , "ESPRIT"
 }
