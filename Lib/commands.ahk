@@ -104,6 +104,70 @@ set_point(x, y, z){
 	}
 }
 
+set_bounding_points(){
+	if not WinExist("Point"){
+        PostMessage 0x111, 3014, , , "ESPRIT"
+        Sleep(50)
+        WinActivate "Point"
+    } else {
+        WinActivate "Point"
+    }
+    deg0()
+    Sleep(50)
+
+    set_point(17, 7, 0)
+    Sleep(50)
+
+    set_point(-5, 7, 0)
+    Sleep(50)
+
+    set_point(-5, -7, 0)
+    Sleep(50)
+
+    set_point(17, -7, 0)
+    Sleep(50)
+
+    face()
+    Sleep(50)
+
+    set_point(7, 0, 0)
+    Sleep(50)
+
+    set_point(-7, 0, 0)
+    Sleep(50)
+
+    set_point(0, 7, 0)
+    Sleep(50)
+
+    set_point(0, -7, 0)
+    Sleep(50)
+
+    deg0()
+    Sleep(50)
+
+    WinClose("Point")
+}
+
+ds_startup_commands(){
+	WinWaitActive("esprit", "&Yes")
+	Send("{Enter}")
+	WinWaitActive("Direction Check", "OK")
+	Send("{Enter}")
+	WinActivate("ESPRIT")
+	deg0()
+}
+
+asc_startup_commands(){
+	WinWaitActive("esprit", "&Yes")
+	Send("{Enter}")
+	WinWaitActive("esprit", "OK")
+	Send("{Enter}")
+	WinWaitActive("esprit", "&Yes")
+	Send("{Enter}")
+	WinActivate("ESPRIT")
+	deg0()
+}
+
 show_milling_tool(){
 	PostMessage 0x111, 6278 , , , "ESPRIT"
 }
