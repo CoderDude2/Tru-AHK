@@ -14,9 +14,11 @@ SetControlDelay -1
 SetWorkingDir A_ScriptDir
 
 
+#Include %A_ScriptDir%\Lib\Const_Treeview.ahk
+#Include %A_ScriptDir%\Lib\Const_Process.ahk
+#Include %A_ScriptDir%\Lib\Const_Memory.ahk
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
-; #Include %A_ScriptDir%\Lib\updater.ahk
 
 if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
@@ -91,7 +93,6 @@ f17::{
 ; G4
 +f16::{
     selected_file := FileSelect(,"C:\Users\TruUser\Desktop\작업\스캔파일")
-    
     if(selected_file != ""){
         SplitPath(selected_file, &name)
         file_map[name] := true
@@ -117,9 +118,17 @@ f17::{
         Send("{Enter}")
         switch get_case_type(name) {
             case "DS":
-                ds_startup_commands()
+                if is_non_engaging(name) {
+                    ds_non_engaging_startup_commands()
+                } else {
+                    ds_startup_commands()
+                }
             case "ASC":
-                asc_startup_commands()
+                if is_non_engaging(name){
+                    asc_non_engaging_startup_commands()
+                } else {
+                    asc_startup_commands()
+                }
             default: 
                 return
         }
@@ -567,15 +576,6 @@ x::{
 
 ^Numpad3::{
     macro_button3()
-    window_title := WinGetTitle("A")
-    found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
-    if found_pos{
-        esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
-        stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
-        if FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename){
-            FileRecycle("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename)        
-        }
-    }
 }
 
 ^Numpad4::{
@@ -838,30 +838,45 @@ f16::{
         }
     }
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
-    open_file()
-    WinWaitActive("ahk_class #32770")
-    ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-    ControlSetChecked(0,"Button5","ahk_class #32770")
-    ControlSend("{Enter}", "Button2","ahk_class #32770")
-    yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
-    if yn != "Yes"{
-        return
-    }
-    WinActivate("ESPRIT")
-    ; set_bounding_points()
-    macro_button1()
-    WinWaitActive("CAM Automation")
-    Send("{Enter}")
-    WinWaitActive("Select file to open")
-    Sleep(200)
-    ControlSetText(selected_file, "Edit1", "Select file to open")
-    Send("{Enter}")
-    switch get_case_type(selected_file) {
-        case "DS":
-            ds_startup_commands()
-        case "ASC":
-            asc_startup_commands()
-        default: 
+    if found_pos {
+        open_file()
+        WinWaitActive("Open")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
+        if yn != "Yes"{
             return
+        }
+        WinActivate("ESPRIT")
+        ; set_bounding_points()
+        macro_button1()
+        WinWaitActive("CAM Automation")
+        Send("{Enter}")
+        WinWaitActive("Select file to open")
+        Sleep(200)
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
+        switch get_case_type(selected_file) {
+            case "DS":
+                if is_non_engaging(selected_file) {
+                    ds_non_engaging_startup_commands()
+                } else {
+                    ds_startup_commands()
+                }
+            case "ASC":
+                if is_non_engaging(selected_file){
+                    asc_non_engaging_startup_commands()
+                } else {
+                    asc_startup_commands()
+                }
+            default: 
+                return
+        }
     }
+}
+
++3::{
+    res := SendMessage(TVM_GETCOUNT, , , "SysTreeView321", "Project Manager")
+    MsgBox(res)
 }

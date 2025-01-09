@@ -155,6 +155,33 @@ ds_startup_commands(){
 	Send("{Enter}")
 	WinActivate("ESPRIT")
 	deg0()
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+    if yn != "Yes"{
+        return
+    }
+	WinActivate("STL Rotate")
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	WinWaitActive("Base Work Plane(Degree)")
+	WinWaitClose("Base Work Plane(Degree)")
+	macro_button3()
+}
+
+ds_non_engaging_startup_commands(){
+	WinWaitActive("esprit", "&Yes")
+	Send("{Enter}")
+	WinActivate("ESPRIT")
+	deg0()
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+    if yn != "Yes"{
+        return
+    }
+	WinActivate("STL Rotate")
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	WinWaitActive("Base Work Plane(Degree)")
+	WinWaitClose("Base Work Plane(Degree)")
+	macro_button3()
 }
 
 asc_startup_commands(){
@@ -164,8 +191,41 @@ asc_startup_commands(){
 	Send("{Enter}")
 	WinWaitActive("esprit", "&Yes")
 	Send("{Enter}")
+	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT")
 	deg0()
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+    if yn != "Yes"{
+        return
+    }
+	WinActivate("STL Rotate")
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	WinWaitActive("Base Work Plane(Degree)")
+	WinWaitClose("Base Work Plane(Degree)")
+	macro_button3()
+}
+
+asc_non_engaging_startup_commands(){
+	WinWaitActive("esprit", "&Yes")
+	Send("{Enter}")
+	WinWaitActive("esprit", "OK")
+	Send("{Enter}")
+	WinWaitActive("esprit", "&Yes")
+	Send("{Enter}")
+	WinWaitActive("STL Rotate")
+	WinActivate("ESPRIT")
+	deg0()
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+    if yn != "Yes"{
+        return
+    }
+	WinActivate("STL Rotate")
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	WinWaitActive("Base Work Plane(Degree)")
+	WinWaitClose("Base Work Plane(Degree)")
+	macro_button3()
 }
 
 show_milling_tool(){
@@ -322,6 +382,16 @@ macro_button2(){
 macro_button3(){
 	CoordMode("Mouse", "Client")
     click_and_return(68, 105)
+
+	window_title := WinGetTitle("A")
+    found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
+    if found_pos{
+        esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
+        stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
+        if FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename){
+            FileRecycle("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename)        
+        }
+    }
 }
 
 macro_button4(){
