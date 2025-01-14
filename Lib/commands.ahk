@@ -272,16 +272,39 @@ cut_with_border() {
 }
 
 extrude_by(length) {
-	WinActivate("ESPRIT")
-	PostMessage(0x111, 3130, , , "ESPRIT")
-
-	WinWaitActive("ahk_class #32770")
+	if not WinActive("Extrude Boss/Cut"){
+		PostMessage(0x111, 3130, , , "ESPRIT")
+	}
+	
+	WinWaitActive("Extrude Boss/Cut")
 	try{
 		ControlSetText(length, "Edit1", "ahk_class #32770")
 		ControlSetChecked(0,"Button2","ahk_class #32770")
 		ControlChooseIndex(1,"ComboBox1","ahk_class #32770")
 	} catch TargetError as err {
 		MsgBox "Select a line first"
+	}
+}
+
+toggle_extrude_window_reverse_side(){
+	if WinActive("Extrude Boss/Cut"){
+		val := ControlGetChecked("Button8", "ahk_class #32770")
+		if val {
+			ControlSetChecked(0,"Button8", "ahk_class #32770")
+		} else {
+			ControlSetChecked(1,"Button8", "ahk_class #32770")
+		}
+	}
+}
+
+toggle_extrude_window_reverse_direction(){
+	if WinActive("Extrude Boss/Cut"){
+		val := ControlGetChecked("Button2", "ahk_class #32770")
+		if val {
+			ControlSetChecked(0,"Button2", "ahk_class #32770")
+		} else {
+			ControlSetChecked(1,"Button2", "ahk_class #32770")
+		}
 	}
 }
 
@@ -346,6 +369,25 @@ translate_selection(x := 0, y := 0, z := 0){
     Send("{Enter}")
 }
 
+translate_selection_click(){
+	WinActivate("ESPRIT")
+    transformation_window()
+    WinWaitActive("ahk_class #32770")
+
+	ControlChooseString("Translate","ComboBox1","ahk_class #32770")
+	ControlSetChecked(1,"Button8","ahk_class #32770")
+	Send("{Enter}")
+}
+
+translate(){
+	WinActivate("ESPRIT")
+    transformation_window()
+	WinWaitActive("ahk_class #32770")
+
+    ControlChooseString("Translate","ComboBox1","ahk_class #32770")
+    ControlSetChecked(1,"Button7","ahk_class #32770")
+}
+
 rotate_selection(degrees, update_on_click:=False){
     WinActivate("ESPRIT")
     transformation_window()
@@ -370,11 +412,13 @@ scale_selection(scale){
 }
 
 macro_button1(){
+	WinActivate("ESPRIT - ")
     CoordMode("Mouse", "Client")
     click_and_return(25, 105)
 }
 
 macro_button2(){
+	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(45, 105)
 }
@@ -395,16 +439,19 @@ macro_button3(){
 }
 
 macro_button4(){
+	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(90, 105)
 }
 
 macro_button5(){
+	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(111, 105)
 }
 
 macro_button_text(){
+	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(137, 105)
 }

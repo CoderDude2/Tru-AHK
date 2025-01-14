@@ -40,6 +40,8 @@ showDebug := false
 
 file_map := Map()
 
+STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
+
 #SuspendExempt
 ;G1
 f13::{
@@ -50,7 +52,7 @@ SetTimer(debug, 20)
 SetTimer(update_file_map, 1000)
 
 update_file_map(){
-    Loop Files, "C:\Users\TruUser\Desktop\작업\스캔파일\*", "F"{
+    Loop Files, STL_FILE_PATH "\*", "F"{
         if not file_map.Has(A_LoopFileName){
             file_map[A_LoopFileName] := false
         } 
@@ -92,7 +94,7 @@ f17::{
 
 ; G4
 +f16::{
-    selected_file := FileSelect(,"C:\Users\TruUser\Desktop\작업\스캔파일")
+    selected_file := FileSelect(, STL_FILE_PATH)
     if(selected_file != ""){
         SplitPath(selected_file, &name)
         file_map[name] := true
@@ -262,6 +264,14 @@ t::{
     transformation_window()
 }
 
+^t::{
+    translate_selection_click()
+}
+
+^r::{
+    rotate_selection(90)
+}
+
 +c::{
     circle_tool()
 }
@@ -308,7 +318,11 @@ CapsLock::{
 }
 
 g::{
-    double_sided_border()
+    if not WinExist("Extrude Boss/Cut"){
+        double_sided_border()
+    } else {
+        toggle_extrude_window_reverse_side()
+    }
 }
 
 b::{
@@ -316,42 +330,112 @@ b::{
 }
 
 r::{
-    extrude_by(5)
+    distance_val := 5
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad1::{
-    extrude_by(1)
+    distance_val := 1
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad2::{
-    extrude_by(2)
+    distance_val := 2
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad3::{
-    extrude_by(3)
+    distance_val := 3
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad4::{
-    extrude_by(4)
+    distance_val := 4
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad5::{
-    extrude_by(5)
+    distance_val := 5
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad6::{
-    extrude_by(6)
+    distance_val := 6
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad7::{
-    extrude_by(7)
+    distance_val := 7
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 r & Numpad8::{
-    extrude_by(8)
+    distance_val := 8
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 r & Numpad9::{
-    extrude_by(9)
+    distance_val := 9
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
 e::{
@@ -754,72 +838,84 @@ f15::{
 }
 
 ^Up::{
-    CoordMode("Mouse", "Screen")
-    ; Get the current number of passes
-    A_Clipboard := ""
-    Click("1582 144")
-    Sleep(20)
-    Click("1703 317")
-    Send("^a^c")
-    ClipWait(2)
-    if(IsInteger(A_Clipboard)){
-        passes := A_Clipboard + 1
-        
-        ; Tab 1
-        Click("1582 144")
-    	Sleep(20)
-    	Click("1703 317")
-    	Sleep(20)
-    	Send("^a" passes "{Enter}")
-    	Send("^a" (-1*passes) "{Enter}")
-    	Click("1662 393")
-    	Sleep(20)
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        WinActivate("Check Rough ML & Create Border Solid")
+        BlockInput("MouseMove")
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        ; Get the current number of passes
+        A_Clipboard := ""
+        Click("30 70")
+        Sleep(20)
+        Click("154 240")
+        Send("^a^c")
+        ClipWait(2)
 
-        ; Tab 2
-    	Click("1658 144")
-    	Sleep(20)
-    	Click("1703 317")
-    	Sleep(20)
-    	Send("^a" passes "{Enter}")
-    	Send("^a" (-1*passes) "{Enter}")
-    	Click("1662 393")
-    	Sleep(20)
-    	Click("1605 233")
+        if(IsInteger(A_Clipboard)){
+            passes := A_Clipboard + 1
+
+            Click("30 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+
+            Sleep(20)
+            Click("108 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+            Sleep(20)
+
+            Click("53 157")
+            BlockInput("MouseMoveOff")
+        }
     }
 }
 
 ^Down::{
-    CoordMode("Mouse", "Screen")
-    ; Get the current number of passes
-    A_Clipboard := ""
-    Click("1582 144")
-    Sleep(20)
-    Click("1703 317")
-    Send("^a^c")
-    ClipWait(2)
-    if(IsInteger(A_Clipboard)){
-        passes := A_Clipboard - 1
-        
-        ; Tab 1
-        Click("1582 144")
-    	Sleep(20)
-    	Click("1703 317")
-    	Sleep(20)
-    	Send("^a" passes "{Enter}")
-    	Send("^a" (-1*passes) "{Enter}")
-    	Click("1662 393")
-    	Sleep(20)
+    if(WinExist("Check Rough ML & Create Border Solid")){
+        WinActivate("Check Rough ML & Create Border Solid")
+        BlockInput("MouseMove")
+        SetDefaultMouseSpeed(0)
+        CoordMode("Mouse", "Client")
+        ; Get the current number of passes
+        A_Clipboard := ""
+        Click("30 70")
+        Sleep(20)
+        Click("154 240")
+        Send("^a^c")
+        ClipWait(2)
 
-        ; Tab 2
-    	Click("1658 144")
-    	Sleep(20)
-    	Click("1703 317")
-    	Sleep(20)
-    	Send("^a" passes "{Enter}")
-    	Send("^a" (-1*passes) "{Enter}")
-    	Click("1662 393")
-    	Sleep(20)
-    	Click("1605 233")
+        if(IsInteger(A_Clipboard)){
+            passes := A_Clipboard - 1
+
+            Click("30 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+
+            Sleep(20)
+            Click("108 70")
+            Sleep(20)
+            Click("154 240")
+            Sleep(20)
+            Send("^a" passes "{Enter}")
+            Send("^a" (-1*passes) "{Enter}")
+            Click("112 320")
+            Sleep(20)
+
+            Click("53 157")
+            BlockInput("MouseMoveOff")
+        }
     }
 }
 
@@ -831,7 +927,7 @@ f15::{
 f16::{
     selected_file := ""
     For k,v in file_map{
-        if v = False and FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" k){
+        if v = False and FileExist(STL_FILE_PATH "\" k){
             selected_file := k
             file_map[k] := true
             break
@@ -879,4 +975,6 @@ f16::{
 +3::{
     res := SendMessage(TVM_GETCOUNT, , , "SysTreeView321", "Project Manager")
     MsgBox(res)
+
+    TV_ID := ControlGetHwnd("SysTreeView321", "Project Manager")
 }
