@@ -79,9 +79,10 @@ debug(){
 ^f13::{
     Suspend
 }
+
 ;G5 Key
 f17::{
-    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe" 
+    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
 }
 #SuspendExempt False
 
@@ -90,6 +91,14 @@ f17::{
 ; I want to save the open file when building the NC code.
 ~f9::{
     save_file()
+}
+
+^f16::{
+    ids := WinGetList("ESPRIT - ")
+    for this_id in ids{
+        WinActivate(this_id)
+        open_and_start_next_file()
+    }
 }
 
 ; G4
@@ -211,34 +220,39 @@ v::{
 }
 
 !WheelDown::{
-    if(WinActive("ESPRIT")){
-        try{
-            increment_10_degrees()
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
         }
+        
+        increment_10_degrees()
     }
 }
 
 +!WheelDown::{
-    if(WinActive("ESPRIT")){
-        try{
-            increment_90_degrees()
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
         }
+        increment_90_degrees()
     }
 }
 
 !WheelUp::{
-    if(WinActive("ESPRIT")){
-        try{
-            decrement_10_degrees()
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
         }
+        decrement_10_degrees()
     }
 }
 
 +!WheelUp::{
-    if(WinActive("ESPRIT")){
-        try{
-            decrement_90_degrees()  
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
         }
+        decrement_90_degrees()  
     }
 }
 
@@ -643,26 +657,44 @@ x::{
 }
 
 ^Numpad1::{
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
     macro_button1()
 }
 
 ^Numpad2::{
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
     macro_button2()
 }
 
 ^Numpad3::{
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
     macro_button3()
 }
 
 ^Numpad4::{
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
     macro_button4()
 }
 
 ^Numpad5::{
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
     macro_button5()
 }
 
 ^Numpad6::{
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
     macro_button_text()
 }
 
@@ -956,9 +988,106 @@ f16::{
     }
 }
 
+OpenProcess(DesiredAccess, InheritHandle, ProcessID){
+    return DllCall("OpenProcess",
+                   "Int", DesiredAccess,
+                   "Int", InheritHandle,
+                   "Int", ProcessID,
+                   "Ptr")
+}
+
+VirtualAllocEx(hProcess, Address, Size, AllocationType, ProtectType)
+{
+	return DllCall("VirtualAllocEx"
+				 , "Ptr", hProcess
+				 , "Ptr", Address
+				 , "UInt", Size
+				 , "UInt", AllocationType
+				 , "UInt", ProtectType
+				 , "Ptr")
+}
+
+VirtualFreeEx(hProcess, Address, Size, FType)
+{
+	return DllCall("VirtualFreeEx"
+				 , "Ptr", hProcess
+				 , "Ptr", Address
+				 , "UINT", Size
+				 , "UInt", FType
+				 , "Int")
+}
+
+WriteProcessMemory(hProcess, BaseAddress, Buffer, Size, &NumberOfBytesWritten := 0)
+{
+	return DllCall("WriteProcessMemory"
+				 , "Ptr", hProcess
+				 , "Ptr", BaseAddress
+				 , "Ptr", Buffer
+				 , "Uint", Size
+				 , "UInt*", NumberOfBytesWritten
+				 , "Int")
+}
+
+ReadProcessMemory(hProcess, BaseAddress, &Buffer, Size, &NumberOfBytesRead := 0)
+{
+	return DllCall("ReadProcessMemory"
+	             , "Ptr", hProcess
+				 , "Ptr", BaseAddress
+				 , "Ptr", &Buffer
+				 , "UInt", Size
+				 , "UInt*", NumberOfBytesRead
+				 , "Int")
+}
+
+CloseHandle(hObject)
+{
+	return DllCall("CloseHandle"
+	             , "Ptr", hObject
+				 , "Int")
+}
+
 +3::{
+    pItem := 0
     res := SendMessage(TVM_GETCOUNT, , , "SysTreeView321", "Project Manager")
     MsgBox(res)
 
-    TV_ID := ControlGetHwnd("SysTreeView321", "Project Manager")
+    ; TV_ID := ControlGetHwnd("SysTreeView321", "Project Manager")
+    ; TVM_GETITEM := TVM_GETITEMW
+    ; ProcessID := WinGetPID("ahk_id" TV_ID)
+
+    ; hProcess := OpenProcess(PROCESS_VM_OPERATION|PROCESS_VM_READ|PROCESS_VM_WRITE|PROCESS_QUERY_INFORMATION|PROCESS_QUERY_LIMITED_INFORMATION, false, ProcessID)
+    ; ProcessIs32Bit := A_PtrSize = 8 ? False : True
+    ; WinActivate("Project Manager")
+    ; WOW64 := DllCall("Kernel32.dll\IsWow64Process", "Ptr", hProcess, "UIntP")
+    ; if (A_Is64bitOS) && WOW64{
+    ;     ProcessIs32Bit := WOW64
+    ; }
+
+    ; Size := ProcessIs32Bit ? 60 : 80
+
+    ; _tvi := VirtualAllocEx(hProcess, 0, Size, MEM_COMMIT, PAGE_READWRITE)
+    ; _txt := VirtualAllocEx(hProcess, 0, 256, MEM_COMMIT, PAGE_READWRITE)
+
+    ; VarSetStrCapacity(&tvi, Size)
+    ; NumPut(TVIF_TEXT|TVIF_HANDLE, tvi, 0, "UInt")
+    ; If ProcessIs32Bit{
+    ;     NumPut(pItem, tvi,  4   "UInt")
+    ;     NumPut(_txt,  tvi, 16,  "UInt")
+    ;     NumPut(127,   tvi, 20,  "UInt")
+    ; } else {
+    ;     NumPut(pItem, tvi,  8, "UInt64")
+    ;     NumPut(_txt , tvi, 24, "UInt64")
+    ;     NumPut(127  , tvi, 32, "UInt")
+    ; }
+
+    ; VarSetStrCapacity(&txt, 256)
+    ; WriteProcessMemory(hProcess, _tvi, &tvi, Size)
+    ; SendMessage(TVM_GETITEM, 0, _tvi, , "ahk_id" TV_ID)
+    ; ReadProcessMemory(hProcess, _txt, &txt, 256)
+
+    ; VirtualFreeEx(hProcess, _txt, 0, MEM_RELEASE)
+    ; VirtualFreeEx(hProcess, _tvi, 0, MEM_RELEASE)
+    ; CloseHandle(hProcess)
+
+    ; MsgBox(txt)
 }

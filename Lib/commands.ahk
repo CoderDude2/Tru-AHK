@@ -115,31 +115,31 @@ set_bounding_points(){
     deg0()
     Sleep(50)
 
-    set_point(17, 7, 0)
+    set_point(17, 5, 0)
     Sleep(50)
 
-    set_point(-5, 7, 0)
+    set_point(-5, 5, 0)
     Sleep(50)
 
-    set_point(-5, -7, 0)
+    set_point(-5, -5, 0)
     Sleep(50)
 
-    set_point(17, -7, 0)
+    set_point(17, -5, 0)
     Sleep(50)
 
     face()
     Sleep(50)
 
-    set_point(7, 0, 0)
+    set_point(5, 0, 0)
     Sleep(50)
 
-    set_point(-7, 0, 0)
+    set_point(-5, 0, 0)
     Sleep(50)
 
-    set_point(0, 7, 0)
+    set_point(0, 5, 0)
     Sleep(50)
 
-    set_point(0, -7, 0)
+    set_point(0, -5, 0)
     Sleep(50)
 
     deg0()
@@ -187,6 +187,82 @@ asc_startup_commands(){
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
 	macro_button3()
+}
+
+open_and_start_file(){
+	selected_file := FileSelect(, STL_FILE_PATH)
+    if(selected_file != ""){
+        SplitPath(selected_file, &name)
+        file_map[name] := true
+
+        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+        open_file()
+        WinWaitActive("ahk_class #32770")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
+        if yn != "Yes"{
+            return
+        }
+        WinActivate("ESPRIT")
+		set_bounding_points()
+        macro_button1()
+        WinWaitActive("CAM Automation")
+        Send("{Enter}")
+        WinWaitActive("Select file to open")
+        Sleep(200)
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
+        switch get_case_type(name) {
+            case "DS":
+                ds_startup_commands()
+            case "ASC":
+                asc_startup_commands()
+            default: 
+                return
+        }
+    }
+}
+
+open_and_start_next_file(){
+	selected_file := ""
+    For k,v in file_map{
+        if v = False and FileExist(STL_FILE_PATH "\" k){
+            selected_file := k
+            file_map[k] := true
+            break
+        }
+    }
+    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    if found_pos {
+        open_file()
+        WinWaitActive("Open")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
+        if yn != "Yes"{
+            return
+        }
+        WinActivate("ESPRIT")
+		set_bounding_points()
+        macro_button1()
+        WinWaitActive("CAM Automation")
+        Send("{Enter}")
+        WinWaitActive("Select file to open")
+        Sleep(200)
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
+        switch get_case_type(selected_file) {
+            case "DS":
+                ds_startup_commands()
+            case "ASC":
+                asc_startup_commands()
+            default: 
+                return
+        }
+    }
 }
 
 show_milling_tool(){
