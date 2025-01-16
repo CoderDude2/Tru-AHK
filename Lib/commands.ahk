@@ -77,6 +77,10 @@ save_file(){
 	PostMessage 0x111, 57603 , , , "ESPRIT"
 }
 
+open_file(){
+	PostMessage 0x111, 57601 , , , "ESPRIT"
+}
+
 transformation_window(){
 	PostMessage 0x111, 57634 , , , "ESPRIT"
 }
@@ -119,6 +123,47 @@ rebuild_operation(){
 			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
+}
+
+ds_startup_commands(){
+	while not WinExist("STL Rotate"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+			Send("{Enter}")
+		}
+	}
+	WinActivate("ESPRIT -")
+	deg0()
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+    if yn != "Yes"{
+        return
+    }
+	WinActivate("STL Rotate")
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	WinWaitActive("Base Work Plane(Degree)")
+	WinWaitClose("Base Work Plane(Degree)")
+	macro_button_3()
+}
+
+asc_startup_commands(){
+	while not WinExist("STL Rotate"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+			Send("{Enter}")
+		}
+	}
+	WinWaitActive("STL Rotate")
+	WinActivate("ESPRIT -")
+	deg0()
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+    if yn != "Yes"{
+        return
+    }
+	WinActivate("STL Rotate")
+	CoordMode("Mouse", "Client")
+	Click("60 147")
+	WinWaitActive("Base Work Plane(Degree)")
+	WinWaitClose("Base Work Plane(Degree)")
+	macro_button_3()
 }
 
 show_milling_tool(){
