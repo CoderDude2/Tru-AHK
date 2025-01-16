@@ -14,6 +14,9 @@ click_index := 0
 path_tool_active := false
 prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
 
+STL_FILE_PATH := "C:\Users\" A_UserName "\Desktop\작업\스캔파일"
+file_map := Map()
+
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
@@ -43,6 +46,17 @@ A_TrayMenu.Add("Open Dashboard", open_dashboard)
 SetDefaultMouseSpeed 0
 
 #SuspendExempt
+
+SetTimer(update_file_map, 100)
+
+update_file_map(){
+    Loop Files, STL_FILE_PATH "\*", "F"{
+        if not file_map.Has(A_LoopFileName){
+            file_map[A_LoopFileName] := false
+        } 
+    }        
+}
+
 ;G1
 f13::
 ^.::{
@@ -114,10 +128,13 @@ f17::
     open_dashboard()
 }
 
-; G4
-f16::
 ^o::{
-    Run "C:\Users\TruUser\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
+    Run "C:\Users\" A_UserName "\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
+}
+
+; G4
+f16::{
+
 }
 
 ; ===== Remappings =====
