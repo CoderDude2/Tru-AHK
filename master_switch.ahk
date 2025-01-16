@@ -120,17 +120,9 @@ f17::{
         Send("{Enter}")
         switch get_case_type(name) {
             case "DS":
-                if is_non_engaging(name) {
-                    ds_non_engaging_startup_commands()
-                } else {
-                    ds_startup_commands()
-                }
+                ds_startup_commands()
             case "ASC":
-                if is_non_engaging(name){
-                    asc_non_engaging_startup_commands()
-                } else {
-                    asc_startup_commands()
-                }
+                asc_startup_commands()
             default: 
                 return
         }
@@ -318,7 +310,7 @@ CapsLock::{
 }
 
 g::{
-    if not WinExist("Extrude Boss/Cut"){
+    if not WinActive("Extrude Boss/Cut"){
         double_sided_border()
     } else {
         toggle_extrude_window_reverse_side()
@@ -955,17 +947,9 @@ f16::{
         Send("{Enter}")
         switch get_case_type(selected_file) {
             case "DS":
-                if is_non_engaging(selected_file) {
-                    ds_non_engaging_startup_commands()
-                } else {
-                    ds_startup_commands()
-                }
+                ds_startup_commands()
             case "ASC":
-                if is_non_engaging(selected_file){
-                    asc_non_engaging_startup_commands()
-                } else {
-                    asc_startup_commands()
-                }
+                asc_startup_commands()
             default: 
                 return
         }

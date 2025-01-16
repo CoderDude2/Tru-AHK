@@ -149,27 +149,11 @@ set_bounding_points(){
 }
 
 ds_startup_commands(){
-	WinWaitActive("esprit", "&Yes")
-	Send("{Enter}")
-	WinWaitActive("Direction Check", "OK")
-	Send("{Enter}")
-	WinActivate("ESPRIT -")
-	deg0()
-	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
-    if yn != "Yes"{
-        return
-    }
-	WinActivate("STL Rotate")
-	CoordMode("Mouse", "Client")
-	Click("65 115")
-	WinWaitActive("Base Work Plane(Degree)")
-	WinWaitClose("Base Work Plane(Degree)")
-	macro_button3()
-}
-
-ds_non_engaging_startup_commands(){
-	WinWaitActive("esprit", "&Yes")
-	Send("{Enter}")
+	while not WinExist("STL Rotate"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+			Send("{Enter}")
+		}
+	}
 	WinActivate("ESPRIT -")
 	deg0()
 	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
@@ -185,34 +169,11 @@ ds_non_engaging_startup_commands(){
 }
 
 asc_startup_commands(){
-	WinWaitActive("esprit", "&Yes")
-	Send("{Enter}")
-	WinWaitActive("esprit", "OK")
-	Send("{Enter}")
-	WinWaitActive("esprit", "&Yes")
-	Send("{Enter}")
-	WinWaitActive("STL Rotate")
-	WinActivate("ESPRIT -")
-	deg0()
-	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
-    if yn != "Yes"{
-        return
-    }
-	WinActivate("STL Rotate")
-	CoordMode("Mouse", "Client")
-	Click("60 147")
-	WinWaitActive("Base Work Plane(Degree)")
-	WinWaitClose("Base Work Plane(Degree)")
-	macro_button3()
-}
-
-asc_non_engaging_startup_commands(){
-	WinWaitActive("esprit", "&Yes")
-	Send("{Enter}")
-	WinWaitActive("esprit", "OK")
-	Send("{Enter}")
-	WinWaitActive("esprit", "&Yes")
-	Send("{Enter}")
+	while not WinExist("STL Rotate"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+			Send("{Enter}")
+		}
+	}
 	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
 	deg0()
