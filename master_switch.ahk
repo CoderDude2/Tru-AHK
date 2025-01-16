@@ -83,6 +83,16 @@ f13::
     }   
 }
 
+; G5 Key
+f17::
+^+o::{
+    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
+}
+
+#SuspendExempt False
+
+#HotIf WinActive("ahk_exe esprit.exe")
+
 f12::{
     try{
         mode := IniRead(prefs_file_path, "f12_mode", "value")    
@@ -105,16 +115,6 @@ f12::{
             }
     }
 }
-
-; G5 Key
-f17::
-^+o::{
-    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
-}
-
-#SuspendExempt False
-
-#HotIf WinActive("ahk_exe esprit.exe")
 
 ^f1::{
     open_help()
@@ -304,19 +304,40 @@ v::{
 }
 
 !WheelDown::{
-    increment_10_degrees()
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        
+        increment_10_degrees()
+    }
 }
 
-+!WheelDown::{ 
-    increment_90_degrees()
++!WheelDown::{
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        increment_90_degrees()
+    }
 }
 
 !WheelUp::{
-    decrement_10_degrees()
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        decrement_10_degrees()
+    }
 }
 
 +!WheelUp::{
-    decrement_90_degrees()  
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        decrement_90_degrees()  
+    }
 }
 
 f14::{
