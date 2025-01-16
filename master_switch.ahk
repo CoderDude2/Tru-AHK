@@ -129,12 +129,105 @@ f17::
 }
 
 ^o::{
-    Run "C:\Users\" A_UserName "\Desktop\SelectSTLFile_R3\SelectSTLFile.exe"
+    selected_file := FileSelect(, STL_FILE_PATH)
+    if(selected_file != ""){
+        SplitPath(selected_file, &name)
+        file_map[name] := true
+
+        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+        open_file()
+        WinWaitActive("ahk_class #32770")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        if yn != "Yes"{
+            return
+        }
+        WinActivate("ESPRIT")
+        macro_button_1()
+        WinWaitActive("CAM Automation")
+        Send("{Enter}")
+        WinWaitActive("Select file to open")
+        ControlSetText("C:\Users\TruUser\Desktop\작업\스캔파일", "Edit2", "Select file to open")
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
+    }
 }
 
 ; G4
 f16::{
-    
+    selected_file := ""
+    For k,v in file_map{
+        if v = False and FileExist(STL_FILE_PATH "\" k){
+            selected_file := k
+            file_map[k] := true
+            break
+        }
+    }
+    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    if found_pos {
+        open_file()
+        WinWaitActive("Open")
+        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        if yn != "Yes"{
+            return
+        }
+        WinActivate("ESPRIT - ")
+        macro_button_1()
+        WinWaitActive("CAM Automation")
+        Send("{Enter}")
+        WinWaitActive("Select file to open")
+        Sleep(200)
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
+        switch get_case_type(selected_file) {
+            case "DS":
+                ds_startup_commands()
+            case "ASC":
+                asc_startup_commands()
+            default: 
+                return
+        }
+    }
+}
+
++f16::{
+    selected_file := FileSelect(, STL_FILE_PATH)
+    if(selected_file != ""){
+        SplitPath(selected_file, &name)
+        file_map[name] := true
+
+        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+        open_file()
+        WinWaitActive("ahk_class #32770")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
+        if yn != "Yes"{
+            return
+        }
+        WinActivate("ESPRIT - ")
+        macro_button_1()
+        WinWaitActive("CAM Automation")
+        Send("{Enter}")
+        WinWaitActive("Select file to open")
+        Sleep(200)
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
+        switch get_case_type(name) {
+            case "DS":
+                ds_startup_commands()
+            case "ASC":
+                asc_startup_commands()
+            default: 
+                return
+        }
+    }
 }
 
 ; ===== Remappings =====

@@ -142,6 +142,7 @@ ds_startup_commands(){
 	Click("65 115")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
+	recycle_active_file()
 	macro_button_3()
 }
 
@@ -163,6 +164,7 @@ asc_startup_commands(){
 	Click("60 147")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
+	recycle_active_file()
 	macro_button_3()
 }
 
@@ -416,44 +418,62 @@ get_macro_bar(){
     }
     
     try {
-        macro_bar_control := ControlGetClassNN(class_nn, "ESPRIT")
-    }
-
-	return macro_bar_control
+        macro_bar_control := ControlGetClassNN(class_nn, "ESPRIT - ")
+		return macro_bar_control
+    }	
 }
 
 macro_button_1(){
+	WinActivate("ESPRIT - ")
 	CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
     Click x+20, y+14
 }
 
 macro_button_2(){
+	WinActivate("ESPRIT - ")
 	CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, get_macro_bar() 
+    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
     Click x+45, y+14
 }
 
 macro_button_3(){
+	WinActivate("ESPRIT - ")
 	CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
     Click x+68, y+14
 }
 
 macro_button_4(){
+	WinActivate("ESPRIT - ")
 	CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
     Click x+90, y+14
 }
 
 macro_button_5(){
+	WinActivate("ESPRIT - ")
 	CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
     Click x+115, y+14
 }
 
 macro_button_text(){
+	WinActivate("ESPRIT - ")
 	CoordMode "Mouse", "Client"
-    ControlGetPos &x, &y, &w, &h, get_macro_bar()
+    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
     Click x+135, y+14
+}
+
+recycle_active_file(){
+	WinActivate("ESPRIT - ")
+	window_title := WinGetTitle("A")
+    found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
+    if found_pos{
+        esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
+        stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
+        if FileExist("C:\Users\" A_UserName "\Desktop\작업\스캔파일\" stl_filename){
+            FileRecycle("C:\Users\" A_UserName "\Desktop\작업\스캔파일\" stl_filename)        
+        }
+    }
 }
