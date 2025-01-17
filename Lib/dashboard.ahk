@@ -74,18 +74,39 @@ try {
     is_attached := true
 }
 
+try {
+    language := IniRead(prefs_file_path, "language", "value")
+} catch {
+    IniWrite("en", prefs_file_path, "language", "value")
+    language := "en"
+}
+
 root := Gui("AlwaysOnTop")
 root.Title := "Tru-AHK Dashboard"
 
-root.AddGroupBox("r2.6 Section w275 y+5","Help")
-hotkey_list_btn := root.Add("Button","xp+5 yp+15","Hotkey List")
+Tab := root.AddTab3(, ["Settings", "Controls", "Help"])
+
+Tab.UseTab("Help")
+hotkey_list_btn := root.Add("Button", ,"Hotkey List")
 hotkey_list_btn.OnEvent("Click", open_help)
 
-changelog_btn := root.Add("Button"," yp+30","Open Changelog")
+changelog_btn := root.Add("Button", ,"Open Changelog")
 changelog_btn.OnEvent("Click", open_changelog)
 
-root.AddGroupBox("r6.25 xs w275", "Settings")
-root.Add("Text","xp+5 yp+20","F12 Mode")
+Tab.UseTab("Settings")
+root.Add("Text", ,"Language")
+language_dropdown := root.Add("DropDownList","vuser_language xp+0 yp+15",["English", "Korean"])
+switch language{
+    case "en":
+        language_dropdown.Choose("English")
+    case "ko":
+        language_dropdown.Choose("Korean")
+    default:
+        language_dropdown.Choose("English")
+} 
+language_dropdown.OnEvent("Change", setLanguage)
+
+root.Add("Text", ,"F12 Mode")
 f12_dropdown := root.Add("DropDownList","vf12_options xp+0 yp+15",["Disabled","Active Instance", "All Instances"])
 f12_dropdown.Choose(f12_mode)
 f12_dropdown.OnEvent("Change", setF12Mode)
@@ -99,8 +120,9 @@ w_checkbox := root.Add("CheckBox","h20 yp+30","W as Delete Key")
 w_checkbox.value := w_as_delete
 w_checkbox.OnEvent("Click", setWMode)
 
-root.AddText("Section xs","Macro Bar Control")
-macro_edit := root.AddEdit("r1 Section w225")
+Tab.UseTab("Controls")
+root.AddText(,"Macro Bar Control")
+macro_edit := root.AddEdit("r1 Section vMacroBarEdit w225")
 macro_edit.value := macro_bar_control
 set_macro_control_btn := root.AddButton("ys xp+225 w50 h20","Set")
 set_macro_control_btn.OnEvent("Click", setMacroBarControlCallback)
@@ -123,6 +145,22 @@ setF12Mode(*){
     }
 
     IniWrite(f12_dropdown.Text, prefs_file_path, "f12_mode", "value")
+}
+
+setLanguage(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
+    switch language_dropdown.Text{
+        case "English":
+            IniWrite("en", prefs_file_path, "language", "value")
+        case "Korean":
+            IniWrite("ko", prefs_file_path, "language", "value")
+        default:
+            IniWrite("en", prefs_file_path, "language", "value")
+    }
+    
 }
 
 setEKeyFunctionality(*){

@@ -11,6 +11,7 @@ create_default_prefs_file(){
 	IniWrite("", prefs_file_path, "macro_bar_control", "control")
 	IniWrite("", prefs_file_path, "project_manager_control", "control")
 	IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
+	IniWrite("en", prefs_file_path, "language", "value")
 }
 
 open_help(*){
