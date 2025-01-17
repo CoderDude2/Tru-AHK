@@ -204,51 +204,49 @@ toggle_extrude_window_reverse_direction(){
 }
 
 double_sided_border() {
-	if not WinActive(extrude_window_name){
-		PostMessage(0x111, 3130, , , "ESPRIT")
-	}
-	WinWaitActive(extrude_window_name)
+	PostMessage(0x111, 3130, , , "ESPRIT")
+	WinWait(extrude_window_name,,0.1)
+	
 	try{
-		ControlSetText(11, "Edit1", "ahk_class #32770")
-		ControlSetText(1, "Edit4", "ahk_class #32770")
-		Sleep(100)
-		ControlSetChecked(0,"Button8","ahk_class #32770")
-		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
+		_id := WinGetID(extrude_window_name)
+		ControlSetText(11, "Edit1", "ahk_id" _id)
+		ControlSetText(1, "Edit4", "ahk_id" _id)
+		; Sleep(50)
+		ControlSetChecked(0,"Button8","ahk_id" _id)
+		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
-		BlockInput("MouseMoveOff")
-		MsgBox "No geometry was selected."
+		ControlSendText("`n[Tru-AHK] No geometry was selected.", "Edit1", "ESPRIT - ")
 	}
 }
 
 cut_with_border() {
-	WinActivate("ESPRIT")
 	PostMessage(0x111, 3130, , , "ESPRIT")
-
-	WinWaitActive("ahk_class #32770")
+	WinWait(extrude_window_name,,0.1)
 	try{
-		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
-		ControlSetText(11, "Edit1", "ahk_class #32770")
-		ControlSetText(4, "Edit4", "ahk_class #32770")
-		ControlChooseIndex(2,"ComboBox2","ahk_class #32770")
-		Sleep(100)
-		ControlSetChecked(1,"Button8","ahk_class #32770")
-		ControlSetChecked(1,"Button3","ahk_class #32770")
+		_id := WinGetID(extrude_window_name)
+		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
+		ControlSetText(11, "Edit1", "ahk_id" _id)
+		ControlSetText(4, "Edit4", "ahk_id" _id)
+		ControlChooseIndex(2,"ComboBox2","ahk_id" _id)
+		; Sleep(50)
+		ControlSetChecked(1,"Button8","ahk_id" _id)
+		ControlSetChecked(1,"Button3","ahk_id" _id)
 	} catch TargetError as err {
-		MsgBox "No geometry was selected."
+		ControlSendText("`n[Tru-AHK] No geometry was selected.", "Edit1", "ESPRIT - ")
 	}
 }
 
 extrude_by(length) {
-	if not WinActive(extrude_window_name){
-		PostMessage(0x111, 3130, , , "ESPRIT")
-	}
-	WinWaitActive(extrude_window_name)
+	PostMessage(0x111, 3130, , , "ESPRIT")
+	WinWait(extrude_window_name,,0.1)
+
 	try{
-		ControlSetText(length, "Edit1", extrude_window_name)
-		ControlSetChecked(0,"Button2", extrude_window_name)
-		ControlChooseIndex(1,"ComboBox1",extrude_window_name)
+		_id := WinGetID(extrude_window_name)
+		ControlSetText(length, "Edit1", "ahk_id" _id)
+		ControlSetChecked(0,"Button2", "ahk_id" _id)
+		ControlChooseIndex(1,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
-		MsgBox "No geometry was selected."
+		ControlSendText("`n[Tru-AHK] No geometry was selected.", "Edit1", "ESPRIT - ")
 	}
 }
 
@@ -291,10 +289,9 @@ draw_straight_border(){
 	Click("Left")
 	Send("20{Enter}0{Enter}{Esc}")
 	Click(posX, posY, 2)
-	Sleep(100)
 	double_sided_border()
-	WinActivate("ahk_class #32770")
-	ControlSend("{Enter}", "Button9", "ahk_class #32770")
+	_id := WinGetID(extrude_window_name)
+	ControlSend("{Enter}", "Button9", "ahk_id" _id)
 	BlockInput("MouseMoveOff")
 }
 
@@ -339,30 +336,23 @@ translate_selection(x := 0, y := 0, z := 0){
     transformation_window()
     WinWaitActive("ahk_class #32770")
 
-	try{
-		korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
-		if(korean_index != 4294967296){
-			ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
-			ControlSetChecked(1,"Button7","ahk_class #32770")
-			ControlSetText(Round(x, 4), "Edit2", "ahk_class #32770")
-			ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
-			ControlSetText(Round(z, 4), "Edit4", "ahk_class #32770")
-			Send("{Enter}")
-		}
-	}
-
-	try{
+	if USER_LANGUAGE == "en"{
 		english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
-		if(english_index != 4294967296){
-			ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
-			ControlSetChecked(1,"Button7","ahk_class #32770")
-			ControlSetText(Round(x, 4), "Edit2", "ahk_class #32770")
-			ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
-			ControlSetText(Round(z, 4), "Edit4", "ahk_class #32770")
-			Send("{Enter}")
-		} 
+		ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
+		ControlSetChecked(1,"Button7","ahk_class #32770")
+		ControlSetText(Round(x, 4), "Edit2", "ahk_class #32770")
+		ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
+		ControlSetText(Round(z, 4), "Edit4", "ahk_class #32770")
+		Send("{Enter}")
+	} else if USER_LANGUAGE == "ko"{
+		korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
+		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
+		ControlSetChecked(1,"Button7","ahk_class #32770")
+		ControlSetText(Round(x, 4), "Edit2", "ahk_class #32770")
+		ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
+		ControlSetText(Round(z, 4), "Edit4", "ahk_class #32770")
+		Send("{Enter}")
 	}
-	
 }
 
 rotate_selection(degrees, update_on_click:=False){
