@@ -451,7 +451,7 @@ CapsLock::{
 }
 
 g::{
-    if not WinActive(extrude_window_name){
+    if not WinExist(extrude_window_name){
         double_sided_border()
     } else {
         toggle_extrude_window_reverse_side()

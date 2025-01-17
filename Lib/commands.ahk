@@ -182,23 +182,25 @@ show_milling_tool(){
 }
 
 toggle_extrude_window_reverse_side(){
-	if WinActive(extrude_window_name){
-		val := ControlGetChecked("Button8", extrude_window_name)
+	try{
+		_id := WinGetID(extrude_window_name)
+		val := ControlGetChecked("Button8", "ahk_id" _id)
 		if val {
-			ControlSetChecked(0,"Button8", extrude_window_name)
+			ControlSetChecked(0,"Button8", "ahk_id" _id)
 		} else {
-			ControlSetChecked(1,"Button8", extrude_window_name)
+			ControlSetChecked(1,"Button8", "ahk_id" _id)
 		}
 	}
 }
 
 toggle_extrude_window_reverse_direction(){
-	if WinActive(extrude_window_name){
-		val := ControlGetChecked("Button2", extrude_window_name)
+	try{
+		_id := WinGetID(extrude_window_name)
+		val := ControlGetChecked("Button2", "ahk_id" _id)
 		if val {
-			ControlSetChecked(0,"Button2", extrude_window_name)
+			ControlSetChecked(0,"Button2", "ahk_id" _id)
 		} else {
-			ControlSetChecked(1,"Button2", extrude_window_name)
+			ControlSetChecked(1,"Button2", "ahk_id" _id)
 		}
 	}
 }
@@ -211,11 +213,12 @@ double_sided_border() {
 		_id := WinGetID(extrude_window_name)
 		ControlSetText(11, "Edit1", "ahk_id" _id)
 		ControlSetText(1, "Edit4", "ahk_id" _id)
-		; Sleep(50)
+		Sleep(50)
 		ControlSetChecked(0,"Button8","ahk_id" _id)
 		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
-		ControlSendText("`n[Tru-AHK] No geometry was selected.", "Edit1", "ESPRIT - ")
+		WinActivate("ESPRIT - ")
+		ControlSendText("[Tru-AHK] No geometry was selected.`n", "Edit1", "ESPRIT - ", , "ahk_class #32770")
 	}
 }
 
@@ -232,7 +235,8 @@ cut_with_border() {
 		ControlSetChecked(1,"Button8","ahk_id" _id)
 		ControlSetChecked(1,"Button3","ahk_id" _id)
 	} catch TargetError as err {
-		ControlSendText("`n[Tru-AHK] No geometry was selected.", "Edit1", "ESPRIT - ")
+		WinActivate("ESPRIT - ")
+		ControlSendText("[Tru-AHK] No geometry was selected.`n", "Edit1", "ESPRIT - ", , "ahk_class #32770")
 	}
 }
 
@@ -246,7 +250,8 @@ extrude_by(length) {
 		ControlSetChecked(0,"Button2", "ahk_id" _id)
 		ControlChooseIndex(1,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
-		ControlSendText("`n[Tru-AHK] No geometry was selected.", "Edit1", "ESPRIT - ")
+		WinActivate("ESPRIT - ")
+		ControlSendText("[Tru-AHK] No geometry was selected.`n", "Edit1", "ESPRIT - ", , "ahk_class #32770")
 	}
 }
 
@@ -282,17 +287,22 @@ click_client_pos(posX, posY, window_name, block_input := false, return_to_start 
 }
 
 draw_straight_border(){
-	CoordMode("Mouse", "Screen")
-	BlockInput("MouseMove")
-	MouseGetPos(&posX, &posY)
-	line_tool()
-	Click("Left")
-	Send("20{Enter}0{Enter}{Esc}")
-	Click(posX, posY, 2)
-	double_sided_border()
-	_id := WinGetID(extrude_window_name)
-	ControlSend("{Enter}", "Button9", "ahk_id" _id)
-	BlockInput("MouseMoveOff")
+	try{
+		CoordMode("Mouse", "Screen")
+		BlockInput("MouseMove")
+		MouseGetPos(&posX, &posY)
+		line_tool()
+		Click("Left")
+		Send("20{Enter}0{Enter}{Esc}")
+		Click(posX, posY, 2)
+		double_sided_border()
+		Sleep(50)
+		_id := WinGetID(extrude_window_name)
+		ControlSend("{Enter}", "Button9", "ahk_id" _id)
+		BlockInput("MouseMoveOff")
+	} catch {
+		BlockInput("MouseMoveOff")
+	}
 }
 
 draw_straight_line(){
