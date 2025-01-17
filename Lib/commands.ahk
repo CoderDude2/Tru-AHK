@@ -172,6 +172,28 @@ show_milling_tool(){
 	PostMessage 0x111, 6278 , , , "ESPRIT"
 }
 
+toggle_extrude_window_reverse_side(){
+	if WinActive("Extrude Boss/Cut"){
+		val := ControlGetChecked("Button8", "ahk_class #32770")
+		if val {
+			ControlSetChecked(0,"Button8", "ahk_class #32770")
+		} else {
+			ControlSetChecked(1,"Button8", "ahk_class #32770")
+		}
+	}
+}
+
+toggle_extrude_window_reverse_direction(){
+	if WinActive("Extrude Boss/Cut"){
+		val := ControlGetChecked("Button2", "ahk_class #32770")
+		if val {
+			ControlSetChecked(0,"Button2", "ahk_class #32770")
+		} else {
+			ControlSetChecked(1,"Button2", "ahk_class #32770")
+		}
+	}
+}
+
 double_sided_border() {
 	WinActivate("ESPRIT")
 	PostMessage(0x111, 3130, , , "ESPRIT")
@@ -208,10 +230,11 @@ cut_with_border() {
 }
 
 extrude_by(length) {
-	WinActivate("ESPRIT")
-	PostMessage(0x111, 3130, , , "ESPRIT")
-
-	WinWaitActive("ahk_class #32770")
+	if not WinActive("Extrude Boss/Cut"){
+		PostMessage(0x111, 3130, , , "ESPRIT")
+	}
+	
+	WinWaitActive("Extrude Boss/Cut")
 	try{
 		ControlSetText(length, "Edit1", "ahk_class #32770")
 		ControlSetChecked(0,"Button2","ahk_class #32770")
@@ -221,8 +244,8 @@ extrude_by(length) {
 	}
 }
 
-click_client_pos(posX, posY, window_name, block_input := false){
-	if WinExist(window_name){
+click_client_pos(posX, posY, window_name, block_input := false, return_to_start := true){
+	try{
 		esprit_window_pid := WinGetPID("A")
 		target_window_pid := WinGetPID(window_name)
 
@@ -230,8 +253,10 @@ click_client_pos(posX, posY, window_name, block_input := false){
 			if(block_input){
 				BlockInput("MouseMove")
 			}
+
 			CoordMode "Mouse", "Screen"
 			MouseGetPos(&mouse_screen_posX, &mouse_screen_posY)
+		
 			CoordMode "Mouse", "Client"
 			if WinActive(window_name){
 				Click(posX, posY)
@@ -239,8 +264,12 @@ click_client_pos(posX, posY, window_name, block_input := false){
 				WinActivate(window_name)
 				Click(posX, posY)
 			}
-			CoordMode "Mouse", "Screen"
-			MouseMove mouse_screen_posX, mouse_screen_posY
+
+			if return_to_start {
+				CoordMode "Mouse", "Screen"
+				MouseMove mouse_screen_posX, mouse_screen_posY
+			}
+			
 			BlockInput("MouseMoveOff")
 		}
 	}

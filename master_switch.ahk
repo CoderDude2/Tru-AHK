@@ -403,7 +403,11 @@ CapsLock::{
 }
 
 g::{
-    double_sided_border()
+    if not WinActive("Extrude Boss/Cut"){
+        double_sided_border()
+    } else {
+        toggle_extrude_window_reverse_side()
+    }
 }
 
 b::{
@@ -411,53 +415,114 @@ b::{
 }
 
 r::{
-    extrude_by(6)
+    distance_val := 5
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad1::
-r & 1::{
-    extrude_by(1)
+r & Numpad1::{
+    distance_val := 1
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad2::
-r & 2::{
-    extrude_by(2)
+r & Numpad2::{
+    distance_val := 2
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad3::
-r & 3::{
-    extrude_by(3)
+r & Numpad3::{
+    distance_val := 3
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad4::
-r & 4::{
-    extrude_by(4)
+r & Numpad4::{
+    distance_val := 4
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad5::
-r & 5::{
-    extrude_by(5)
+r & Numpad5::{
+    distance_val := 5
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad6::
-r & 6::{
-    extrude_by(6)
+r & Numpad6::{
+    distance_val := 6
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad7::
-r & 7::{
-    extrude_by(7)
+r & Numpad7::{
+    distance_val := 7
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad8::
-r & 8::{
-    extrude_by(8)
+r & Numpad8::{
+    distance_val := 8
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
+}
+r & Numpad9::{
+    distance_val := 9
+    if not WinActive("Extrude Boss/Cut"){
+        extrude_by(distance_val)
+    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
 }
 
-r & Numpad9::
-r & 9::{
-    extrude_by(9)
-}
 
 e::{
     try {
@@ -631,6 +696,18 @@ y::{
     click_client_pos(188, 70, "Check Rough ML & Create Border Solid", true)
 }
 
+!a::{
+    click_client_pos(23, 8, "Check Rough ML & Create Border Solid", true)
+}
+
+!s::{
+    click_client_pos(75, 8, "Check Rough ML & Create Border Solid", true)
+}
+
+!d::{
+    click_client_pos(117, 8, "Check Rough ML & Create Border Solid", true)
+}
+
 ; +90 Degree
 !q::{
     click_client_pos(55, 158, "Check Rough ML & Create Border Solid", true)
@@ -724,6 +801,9 @@ y::{
 }
 
 ; ===== Text Placement Window Navigation =====
+^Left::{
+    translate_selection(-0.5, 0, 0)
+}
 
 !Up::{
     click_client_pos(136, 180, "Engraving Program Number Text", true)
