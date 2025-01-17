@@ -22,6 +22,14 @@ file_map := Map()
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk
 
+USER_LANGUAGE := get_language()
+
+if USER_LANGUAGE == "en" {
+    extrude_window_name := "Extrude Boss/Cut"
+} else if USER_LANGUAGE == "ko" {
+    extrude_window_name := "보스 돌출/잘라내기"
+}   
+
 if(!FileExist(prefs_file_path)){
     create_default_prefs_file()
 }
@@ -403,7 +411,7 @@ CapsLock::{
 }
 
 g::{
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         double_sided_border()
     } else {
         toggle_extrude_window_reverse_side()
@@ -416,9 +424,9 @@ b::{
 
 r::{
     distance_val := 5
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -427,9 +435,9 @@ r::{
 
 r & Numpad1::{
     distance_val := 1
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -438,9 +446,9 @@ r & Numpad1::{
 
 r & Numpad2::{
     distance_val := 2
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -449,9 +457,9 @@ r & Numpad2::{
 
 r & Numpad3::{
     distance_val := 3
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -460,9 +468,9 @@ r & Numpad3::{
 
 r & Numpad4::{
     distance_val := 4
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -471,9 +479,9 @@ r & Numpad4::{
 
 r & Numpad5::{
     distance_val := 5
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -482,9 +490,9 @@ r & Numpad5::{
 
 r & Numpad6::{
     distance_val := 6
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -493,9 +501,9 @@ r & Numpad6::{
 
 r & Numpad7::{
     distance_val := 7
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
@@ -504,25 +512,25 @@ r & Numpad7::{
 
 r & Numpad8::{
     distance_val := 8
-    if not WinActive("Extrude Boss/Cut"){
+    if not WinActive(extrude_window_name){
         extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
-        extrude_by(distance_val)
-    } else {
-        toggle_extrude_window_reverse_direction()
-    }
-}
-r & Numpad9::{
-    distance_val := 9
-    if not WinActive("Extrude Boss/Cut"){
-        extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
         extrude_by(distance_val)
     } else {
         toggle_extrude_window_reverse_direction()
     }
 }
 
+r & Numpad9::{
+    distance_val := 9
+    if not WinActive(extrude_window_name){
+        extrude_by(distance_val)
+    } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{
+        extrude_by(distance_val)
+    } else {
+        toggle_extrude_window_reverse_direction()
+    }
+}
 
 e::{
     try {

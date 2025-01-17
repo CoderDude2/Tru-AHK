@@ -91,9 +91,9 @@ unsuppress_operation(){
 	if(is_attached){
 		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
 	} else {
-		if WinActive("Project Manager"){
+		if USER_LANGUAGE == "en"{
 			PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
-		} else if WinActive("프로젝트 매니저"){
+		} else if USER_LANGUAGE == "ko"{
 			PostMessage 0x111, 32792 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
@@ -104,9 +104,9 @@ suppress_operation(){
 	if(is_attached) {
 		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
 	} else {
-		if WinActive("Project Manager"){
+		if USER_LANGUAGE == "en"{
 			PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
-		} else if WinActive("프로젝트 매니저"){
+		} else if USER_LANGUAGE == "ko"{
 			PostMessage 0x111, 32770 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
@@ -118,9 +118,9 @@ rebuild_operation(){
 	if(is_attached){
 		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
 	} else {
-		if WinActive("Project Manager"){
+		if USER_LANGUAGE == "en"{
 			PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
-		} else if WinActive("프로젝트 매니저"){
+		} else if USER_LANGUAGE == "ko"{
 			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
@@ -174,23 +174,23 @@ show_milling_tool(){
 }
 
 toggle_extrude_window_reverse_side(){
-	if WinActive("Extrude Boss/Cut"){
-		val := ControlGetChecked("Button8", "ahk_class #32770")
+	if WinActive(extrude_window_name){
+		val := ControlGetChecked("Button8", extrude_window_name)
 		if val {
-			ControlSetChecked(0,"Button8", "ahk_class #32770")
+			ControlSetChecked(0,"Button8", extrude_window_name)
 		} else {
-			ControlSetChecked(1,"Button8", "ahk_class #32770")
+			ControlSetChecked(1,"Button8", extrude_window_name)
 		}
 	}
 }
 
 toggle_extrude_window_reverse_direction(){
-	if WinActive("Extrude Boss/Cut"){
-		val := ControlGetChecked("Button2", "ahk_class #32770")
+	if WinActive(extrude_window_name){
+		val := ControlGetChecked("Button2", extrude_window_name)
 		if val {
-			ControlSetChecked(0,"Button2", "ahk_class #32770")
+			ControlSetChecked(0,"Button2", extrude_window_name)
 		} else {
-			ControlSetChecked(1,"Button2", "ahk_class #32770")
+			ControlSetChecked(1,"Button2", extrude_window_name)
 		}
 	}
 }
@@ -231,15 +231,14 @@ cut_with_border() {
 }
 
 extrude_by(length) {
-	if not WinActive("Extrude Boss/Cut"){
+	if not WinActive(extrude_window_name){
 		PostMessage(0x111, 3130, , , "ESPRIT")
 	}
-	
-	WinWaitActive("Extrude Boss/Cut")
+	WinWaitActive(extrude_window_name)
 	try{
-		ControlSetText(length, "Edit1", "ahk_class #32770")
-		ControlSetChecked(0,"Button2","ahk_class #32770")
-		ControlChooseIndex(1,"ComboBox1","ahk_class #32770")
+		ControlSetText(length, "Edit1", extrude_window_name)
+		ControlSetChecked(0,"Button2", extrude_window_name)
+		ControlChooseIndex(1,"ComboBox1",extrude_window_name)
 	} catch TargetError as err {
 		MsgBox "No geometry was selected."
 	}
@@ -277,7 +276,6 @@ click_client_pos(posX, posY, window_name, block_input := false, return_to_start 
 }
 
 draw_straight_border(){
-	WinActivate("ESPRIT")
 	CoordMode("Mouse", "Screen")
 	BlockInput("MouseMove")
 	MouseGetPos(&posX, &posY)
@@ -293,7 +291,6 @@ draw_straight_border(){
 }
 
 draw_straight_line(){
-	WinActivate("ESPRIT")
 	CoordMode("Mouse", "Screen")
 	BlockInput("MouseMove")
 	MouseGetPos(&posX, &posY)
@@ -419,6 +416,12 @@ scale_selection(scale){
 
 }
 
+get_language(){
+	global prefs_file_path
+	language := IniRead(prefs_file_path, "language", "value")
+	return language
+}
+
 get_project_manager(){
 	global prefs_file_path
 	class_nn := IniRead(prefs_file_path, "project_manager_control", "control")
@@ -432,7 +435,11 @@ get_project_manager(){
 		if(is_attached){
 			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT")
 		} else {
-			project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
+			if USER_LANGUAGE == "en"{
+				project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
+			} else if USER_LANGUAGE == "ko" {
+				project_manager_control := ControlGetClassNN(class_nn, "프로젝트 매니저")
+			}
 		}
 	}
 
