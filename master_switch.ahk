@@ -136,7 +136,7 @@ f12::{
 
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         open_file()
-        WinWaitActive("ahk_class #32770")
+        WinWaitActive("ahk_class #32770", "&Open")
         ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
@@ -168,10 +168,10 @@ f16::{
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
     if found_pos {
         open_file()
-        WinWaitActive("Open")
-        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-        ControlSetChecked(0,"Button5","ahk_class #32770")
-        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        WinWaitActive("ahk_class #32770", "&Open")
+        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
+        ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
+        ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
         yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
             return
@@ -203,10 +203,10 @@ f16::{
 
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         open_file()
-        WinWaitActive("ahk_class #32770")
-        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-        ControlSetChecked(0,"Button5","ahk_class #32770")
-        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        WinWaitActive("ahk_class #32770", "&Open")
+        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
+        ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
+        ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
         yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
             return
