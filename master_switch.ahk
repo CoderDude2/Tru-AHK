@@ -256,18 +256,58 @@ w::{
 ; ===== Hotstrings =====
 :*:3-1::{
    formatted_angle := (get_current_angle() - 7) * 10
-   Send "3-1. ROUGH_ENDMILL_" formatted_angle "DEG"
+   Send("3-1. ROUGH_ENDMILL_" formatted_angle "DEG")
 }
 
 :*:3-2::{
    formatted_angle := (get_current_angle() - 7) * 10
-   Send "3-2. ROUGH_ENDMILL_" formatted_angle "DEG"
+   Send("3-2. ROUGH_ENDMILL_" formatted_angle "DEG")
 }
 
 :*:3-3::{
    formatted_angle := (get_current_angle() - 7) * 10
-   Send "3-3. ROUGH_ENDMILL_" formatted_angle "DEG"
+   Send("3-3. ROUGH_ENDMILL_" formatted_angle "DEG")
 }
+
+:*:8-1::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-1. " formatted_angle "DEG CROSS BALL ENDMILL R0.75")
+ }
+
+ :*:8-2::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-2. " formatted_angle "DEG-1 CROSS BALL ENDMILL R0.75")
+ }
+
+ :*:8-3::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-3. " formatted_angle "DEG CROSS BALL ENDMILL R0.75")
+ }
+
+ :*:8-4::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-4. " formatted_angle "DEG-1 CROSS BALL ENDMILL R0.75")
+ }
+
+ :*:8-5::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-5. " formatted_angle "DEG CROSS BALL ENDMILL R0.75")
+ }
+
+ :*:8-6::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-6. " formatted_angle "DEG-1 CROSS BALL ENDMILL R0.75")
+ }
+
+ :*:8-7::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-7. " formatted_angle "DEG CROSS BALL ENDMILL R0.75")
+ }
+
+ :*:8-8::{
+    formatted_angle := (get_current_angle() - 7) * 10
+    Send("8-8. " formatted_angle "DEG-1 CROSS BALL ENDMILL R0.75")
+ }
 
 :*:2-1::{
     esprit_title := WinGetTitle("A")

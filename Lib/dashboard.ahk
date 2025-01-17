@@ -77,8 +77,18 @@ try {
 try {
     language := IniRead(prefs_file_path, "language", "value")
 } catch {
-    IniWrite("en", prefs_file_path, "language", "value")
-    language := "en"
+    switch A_Language{
+		case 0409:
+			IniWrite("en", prefs_file_path, "language", "value")
+            language := "en"
+		case 0012:
+			IniWrite("ko", prefs_file_path, "language", "value")
+            language := "ko"
+		case 0412:
+			IniWrite("ko", prefs_file_path, "language", "value")
+            language := "ko"
+	}
+    
 }
 
 root := Gui("AlwaysOnTop")
@@ -94,7 +104,7 @@ changelog_btn := root.Add("Button", ,"Open Changelog")
 changelog_btn.OnEvent("Click", open_changelog)
 
 Tab.UseTab("Settings")
-root.Add("Text", ,"Language")
+root.Add("Text", ,"Language (Reloads script)")
 language_dropdown := root.Add("DropDownList","vuser_language xp+0 yp+15",["English", "Korean"])
 switch language{
     case "en":
@@ -160,7 +170,7 @@ setLanguage(*){
         default:
             IniWrite("en", prefs_file_path, "language", "value")
     }
-    
+    Reload
 }
 
 setEKeyFunctionality(*){

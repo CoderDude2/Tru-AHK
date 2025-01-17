@@ -11,7 +11,15 @@ create_default_prefs_file(){
 	IniWrite("", prefs_file_path, "macro_bar_control", "control")
 	IniWrite("", prefs_file_path, "project_manager_control", "control")
 	IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
-	IniWrite("en", prefs_file_path, "language", "value")
+	switch A_Language{
+		case 0409:
+			IniWrite("en", prefs_file_path, "language", "value")
+		case 0012:
+			IniWrite("ko", prefs_file_path, "language", "value")
+		case 0412:
+			IniWrite("ko", prefs_file_path, "language", "value")
+	}
+	
 }
 
 open_help(*){
@@ -196,10 +204,10 @@ toggle_extrude_window_reverse_direction(){
 }
 
 double_sided_border() {
-	WinActivate("ESPRIT")
-	PostMessage(0x111, 3130, , , "ESPRIT")
-
-	WinWaitActive("ahk_class #32770")
+	if not WinActive(extrude_window_name){
+		PostMessage(0x111, 3130, , , "ESPRIT")
+	}
+	WinWaitActive(extrude_window_name)
 	try{
 		ControlSetText(11, "Edit1", "ahk_class #32770")
 		ControlSetText(1, "Edit4", "ahk_class #32770")
