@@ -94,6 +94,10 @@ transformation_window(){
 	PostMessage 0x111, 57634 , , , "ESPRIT"
 }
 
+show_milling_tool(){
+	PostMessage 0x111, 6278 , , , "ESPRIT"
+}
+
 unsuppress_operation(){
 	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 	if(is_attached){
@@ -177,10 +181,6 @@ asc_startup_commands(){
 	macro_button_3()
 }
 
-show_milling_tool(){
-	PostMessage 0x111, 6278 , , , "ESPRIT"
-}
-
 toggle_extrude_window_reverse_side(){
 	try{
 		_id := WinGetID(extrude_window_name)
@@ -217,8 +217,7 @@ double_sided_border() {
 		ControlSetChecked(0,"Button8","ahk_id" _id)
 		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
-		WinActivate("ESPRIT - ")
-		ControlSendText("[Tru-AHK] No geometry was selected.`n", "Edit1", "ESPRIT - ", , "ahk_class #32770")
+		BlockInput("MouseMoveOff")
 	}
 }
 
@@ -231,12 +230,11 @@ cut_with_border() {
 		ControlSetText(11, "Edit1", "ahk_id" _id)
 		ControlSetText(4, "Edit4", "ahk_id" _id)
 		ControlChooseIndex(2,"ComboBox2","ahk_id" _id)
-		; Sleep(50)
+		Sleep(50)
 		ControlSetChecked(1,"Button8","ahk_id" _id)
 		ControlSetChecked(1,"Button3","ahk_id" _id)
 	} catch TargetError as err {
-		WinActivate("ESPRIT - ")
-		ControlSendText("[Tru-AHK] No geometry was selected.`n", "Edit1", "ESPRIT - ", , "ahk_class #32770")
+		BlockInput("MouseMoveOff")
 	}
 }
 
@@ -250,8 +248,7 @@ extrude_by(length) {
 		ControlSetChecked(0,"Button2", "ahk_id" _id)
 		ControlChooseIndex(1,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
-		WinActivate("ESPRIT - ")
-		ControlSendText("[Tru-AHK] No geometry was selected.`n", "Edit1", "ESPRIT - ", , "ahk_class #32770")
+		BlockInput("MouseMoveOff")
 	}
 }
 
