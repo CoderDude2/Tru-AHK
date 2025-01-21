@@ -86,7 +86,7 @@ f17::{
 }
 #SuspendExempt False
 
-#HotIf WinActive("ahk_exe esprit.exe")
+#HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
 
 ; I want to save the open file when building the NC code.
 ~f9::{
@@ -780,6 +780,18 @@ x::{
 +Right::{
     CoordMode("Mouse", "Screen")
     click_and_return(205, 290)
+}
+
+^+Enter::{
+    CoordMode("Mouse", "Screen")
+    click_and_return(106, 126)
+    WinWaitActive("esprit", "OK")
+    WinClose("esprit", "OK")
+}
+
+^!Enter::{
+    CoordMode("Mouse", "Screen")
+    click_and_return(103, 336)
 }
 
 !e::{
