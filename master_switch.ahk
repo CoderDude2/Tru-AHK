@@ -482,7 +482,7 @@ b::{
 }
 
 r::{
-    distance_val := 5
+    distance_val := 6
     if not WinActive(extrude_window_name){
         extrude_by(distance_val)
     } else if WinActive(extrude_window_name) and ControlGetText("Edit1", extrude_window_name) != distance_val{

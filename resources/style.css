@@ -156,6 +156,13 @@ table{
 
 .info{
     color: lightcoral;
+    font-size: 0.9rem;
+}
+
+.new{
+    color: var(--clr-tru-blue);
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 td{ 
