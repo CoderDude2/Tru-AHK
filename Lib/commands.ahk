@@ -188,6 +188,17 @@ asc_startup_commands(){
 	macro_button_3()
 }
 
+tl_aot_startup_commands(){
+    while not WinExist("STL Rotate"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+			Send("{Enter}")
+		}
+	}
+    WinWaitActive("STL Rotate")
+	WinActivate("ESPRIT -")
+    deg0()
+}
+
 toggle_extrude_window_reverse_side(){
 	try{
 		_id := WinGetID(extrude_window_name)

@@ -204,6 +204,10 @@ f16::{
                 ds_startup_commands()
             case "ASC":
                 asc_startup_commands()
+            case "TLOC":
+                tl_aot_startup_commands()
+            case "AOT":
+                tl_aot_startup_commands()
             default: 
                 return
         }
@@ -243,6 +247,10 @@ f16::{
                 ds_startup_commands()
             case "ASC":
                 asc_startup_commands()
+            case "TLOC":
+                tl_aot_startup_commands()
+            case "AOT":
+                tl_aot_startup_commands()
             default: 
                 return
         }
