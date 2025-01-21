@@ -316,6 +316,7 @@ draw_straight_line(){
 	line_tool()
 	Click("Left")
 	Send("20{Enter}0{Enter}{Esc}")
+	Click(posX, posY, 2)
 	BlockInput("MouseMoveOff")
 }
 
