@@ -119,10 +119,10 @@ root.Title := "Tru-AHK Dashboard"
 Tab := root.AddTab3(, ["Settings", "Locations", "Controls", "Help"])
 
 Tab.UseTab("Help")
-hotkey_list_btn := root.Add("Button", ,"Hotkey List")
+hotkey_list_btn := root.Add("Button", "w100","Hotkey List")
 hotkey_list_btn.OnEvent("Click", open_help)
 
-changelog_btn := root.Add("Button", ,"Open Changelog")
+changelog_btn := root.Add("Button", "w100","Open Changelog")
 changelog_btn.OnEvent("Click", open_changelog)
 
 Tab.UseTab("Settings")
@@ -171,16 +171,16 @@ set_stl_path_btn.OnEvent("Click", setSTLPathCallback)
 
 Tab.UseTab("Controls")
 root.AddText(,"Macro Bar Control")
-macro_edit := root.AddEdit("r1 Section vMacroBarEdit w225")
+macro_edit := root.AddEdit("r1 Section vMacroBarEdit w250")
 macro_edit.value := macro_bar_control
-set_macro_control_btn := root.AddButton("ys xp+225 w50 h20","Set")
+set_macro_control_btn := root.AddButton("ys xp+250 w50 h20","Set")
 set_macro_control_btn.OnEvent("Click", setMacroBarControlCallback)
 
 
 root.AddText("Section xs y+15","Project Manager Control")
-project_manager_edit := root.AddEdit("r1 Section vProjectManagerEdit w225")
+project_manager_edit := root.AddEdit("r1 Section vProjectManagerEdit w250")
 project_manager_edit.value := project_manager_control
-set_project_manager_control_btn := root.AddButton("ys xp+225 w50 h20","Set")
+set_project_manager_control_btn := root.AddButton("ys xp+250 w50 h20","Set")
 set_project_manager_control_btn.OnEvent("Click", setProjectManagerControlCallback)
 
 is_attached_checkbox := root.AddCheckbox("xs","Is Attached")
