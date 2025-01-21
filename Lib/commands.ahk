@@ -8,9 +8,12 @@ create_default_prefs_file(){
 	IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
 	IniWrite("Line and Border", prefs_file_path, "e_key_functionality", "value")
 	IniWrite(true, prefs_file_path, "w_as_delete", "value")
+	IniWrite(true, prefs_file_path, "auto_recycle_STL", "value")
 	IniWrite("", prefs_file_path, "macro_bar_control", "control")
 	IniWrite("", prefs_file_path, "project_manager_control", "control")
 	IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
+	IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", prefs_file_path, "locations", "basic_setting_path")
+	IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", prefs_file_path, "locations", "stl_path")
 	switch A_Language{
 		case 0409:
 			IniWrite("en", prefs_file_path, "language", "value")
@@ -155,7 +158,9 @@ ds_startup_commands(){
 	Click("65 115")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
-	recycle_active_file()
+	if IniRead(prefs_file_path, "auto_recycle_STL", "value") == true{
+		recycle_active_file()
+	}
 	macro_button_3()
 }
 
@@ -177,7 +182,9 @@ asc_startup_commands(){
 	Click("60 147")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
-	recycle_active_file()
+	if IniRead(prefs_file_path, "auto_recycle_STL", "value") == true{
+		recycle_active_file()
+	}
 	macro_button_3()
 }
 
@@ -425,6 +432,18 @@ get_language(){
 	global prefs_file_path
 	language := IniRead(prefs_file_path, "language", "value")
 	return language
+}
+
+get_basic_setting_path(){
+	global prefs_file_path
+	basic_setting_path := IniRead(prefs_file_path, "locations", "basic_setting_path")
+	return basic_setting_path
+}
+
+get_stl_path(){
+	global prefs_file_path
+	stl_path := IniRead(prefs_file_path, "locations", "stl_path")
+	return stl_path
 }
 
 get_project_manager(){

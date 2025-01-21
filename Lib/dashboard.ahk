@@ -68,11 +68,33 @@ try {
 }
 
 try {
+    basic_setting_path := IniRead(prefs_file_path, "locations", "basic_setting_path")
+} catch {
+    IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", prefs_file_path, "locations", "basic_setting_path")
+    basic_setting_path := "C:\Users\" A_UserName "\Desktop\Basic Setting"
+}
+
+try {
+    stl_path := IniRead(prefs_file_path, "locations", "stl_path")
+} catch {
+    IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", prefs_file_path, "locations", "stl_path")
+    stl_path := "C:\Users\" A_UserName "\Desktop\작업\스캔파일"
+}
+
+try {
     is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
 } catch {
     IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
     is_attached := true
 }
+
+try {
+    auto_recycle_STL := IniRead(prefs_file_path, "auto_recycle_STL", "value")
+} catch {
+    IniWrite(true, prefs_file_path, "auto_recycle_STL", "value")
+    auto_recycle_STL := true
+}
+
 
 try {
     language := IniRead(prefs_file_path, "language", "value")
@@ -94,7 +116,7 @@ try {
 root := Gui("AlwaysOnTop")
 root.Title := "Tru-AHK Dashboard"
 
-Tab := root.AddTab3(, ["Settings", "Controls", "Help"])
+Tab := root.AddTab3(, ["Settings", "Locations", "Controls", "Help"])
 
 Tab.UseTab("Help")
 hotkey_list_btn := root.Add("Button", ,"Hotkey List")
@@ -104,8 +126,8 @@ changelog_btn := root.Add("Button", ,"Open Changelog")
 changelog_btn.OnEvent("Click", open_changelog)
 
 Tab.UseTab("Settings")
-root.Add("Text", ,"Language (Reloads script)")
-language_dropdown := root.Add("DropDownList","vuser_language xp+0 yp+15",["English", "Korean"])
+root.Add("Text","Section","Language (Reloads script)")
+language_dropdown := root.Add("DropDownList","vuser_language yp+15",["English", "Korean"])
 switch language{
     case "en":
         language_dropdown.Choose("English")
@@ -116,19 +138,36 @@ switch language{
 } 
 language_dropdown.OnEvent("Change", setLanguage)
 
-root.Add("Text", ,"F12 Mode")
+w_checkbox := root.Add("CheckBox","h20 ys","W as Delete Key")
+w_checkbox.value := w_as_delete
+w_checkbox.OnEvent("Click", setWMode)
+
+auto_recycle_STL_checkbox := root.Add("CheckBox","h20","Auto-recycle STL Files")
+auto_recycle_STL_checkbox.value := auto_recycle_STL
+auto_recycle_STL_checkbox.OnEvent("Click", setAutoRecycleSTL)
+
+root.Add("Text","xs yp+15","F12 Mode")
 f12_dropdown := root.Add("DropDownList","vf12_options xp+0 yp+15",["Disabled","Active Instance", "All Instances"])
 f12_dropdown.Choose(f12_mode)
 f12_dropdown.OnEvent("Change", setF12Mode)
 
-root.Add("Text","xp+0 yp+30","E Key Functionality")
+root.Add("Text","yp+30 Section xs","E Key Functionality")
 e_key_functionality_dropdown := root.Add("DropDownList","ve_key_options xp+0 yp+15",["Line","Line and Border"])
 e_key_functionality_dropdown.Choose(e_key_functionality)
 e_key_functionality_dropdown.OnEvent("Change", setEKeyFunctionality)
 
-w_checkbox := root.Add("CheckBox","h20 yp+30","W as Delete Key")
-w_checkbox.value := w_as_delete
-w_checkbox.OnEvent("Click", setWMode)
+Tab.UseTab("Locations")
+root.AddText("Section", "Basic Setting Path")
+basic_setting_path_edit := root.AddEdit("r1 Section w275", "")
+basic_setting_path_edit.value := basic_setting_path
+set_basic_setting_path_btn := root.AddButton("ys xp+275 w20 h20","...")
+set_basic_setting_path_btn.OnEvent("Click", setBasicSettingPathCallback)
+
+root.AddText("xs", "STL Path")
+stl_path_edit := root.AddEdit("r1 w275", "")
+stl_path_edit.value := stl_path
+set_stl_path_btn := root.AddButton("xp+275 w20 h20","...")
+set_stl_path_btn.OnEvent("Click", setSTLPathCallback)
 
 Tab.UseTab("Controls")
 root.AddText(,"Macro Bar Control")
@@ -141,7 +180,6 @@ set_macro_control_btn.OnEvent("Click", setMacroBarControlCallback)
 root.AddText("Section xs y+15","Project Manager Control")
 project_manager_edit := root.AddEdit("r1 Section vProjectManagerEdit w225")
 project_manager_edit.value := project_manager_control
-
 set_project_manager_control_btn := root.AddButton("ys xp+225 w50 h20","Set")
 set_project_manager_control_btn.OnEvent("Click", setProjectManagerControlCallback)
 
@@ -181,12 +219,44 @@ setEKeyFunctionality(*){
     IniWrite(e_key_functionality_dropdown.Text, prefs_file_path, "e_key_functionality", "value")
 }
 
+setAutoRecycleSTL(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
+    IniWrite(auto_recycle_STL_checkbox.Value, prefs_file_path, "auto_recycle_STL", "value")
+}
+
 setWMode(*){
     if not DirExist(prefs_directory){
         create_default_prefs_file()
     }
 
     IniWrite(w_checkbox.value, prefs_file_path, "w_as_delete", "value")
+}
+
+setBasicSettingPathCallback(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
+    folder_path := FileSelect("D", "C:\Users\" A_UserName "\Desktop")
+    if folder_path != ""{
+        IniWrite(folder_path, prefs_file_path, "locations", "basic_setting_path")
+        basic_setting_path_edit.value := folder_path
+    }
+}
+
+setSTLPathCallback(*){
+    if not DirExist(prefs_directory){
+        create_default_prefs_file()
+    }
+
+    folder_path := FileSelect("D", "C:\Users\" A_UserName "\Desktop")
+    if folder_path != ""{
+        IniWrite(folder_path, prefs_file_path, "locations", "stl_path")
+        stl_path_edit.value := folder_path
+    }
 }
 
 setMacroBarControlCallback(*){

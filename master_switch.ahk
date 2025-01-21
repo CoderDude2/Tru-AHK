@@ -14,7 +14,6 @@ click_index := 0
 path_tool_active := false
 prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
 
-STL_FILE_PATH := "C:\Users\" A_UserName "\Desktop\작업\스캔파일"
 file_map := Map()
 
 #Include %A_ScriptDir%\Lib\views.ahk
@@ -58,7 +57,7 @@ SetDefaultMouseSpeed 0
 SetTimer(update_file_map, 100)
 
 update_file_map(){
-    Loop Files, STL_FILE_PATH "\*", "F"{
+    Loop Files, get_stl_path() "\*", "F"{
         if not file_map.Has(A_LoopFileName){
             file_map[A_LoopFileName] := false
         } 
@@ -137,15 +136,19 @@ f12::{
 }
 
 ^o::{
-    selected_file := FileSelect(, STL_FILE_PATH)
+    selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
         file_map[name] := true
 
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+        if not FileExist(get_basic_setting_path() "\" sub_pat[1] ".esp"){
+            MsgBox("Basic setting `"" sub_pat[1] ".esp`" does not exist!")
+            return
+        }
         open_file()
         WinWaitActive("ahk_class #32770", "&Open")
-        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
         yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
@@ -157,7 +160,7 @@ f12::{
         WinWaitActive("CAM Automation")
         Send("{Enter}")
         WinWaitActive("Select file to open")
-        ControlSetText("C:\Users\" A_UserName "\Desktop\작업\스캔파일", "Edit2", "Select file to open")
+        ControlSetText(get_stl_path(), "Edit2", "Select file to open")
         ControlSetText(selected_file, "Edit1", "Select file to open")
         Send("{Enter}")
     }
@@ -167,7 +170,7 @@ f12::{
 f16::{
     selected_file := ""
     For k,v in file_map{
-        if v = False and FileExist(STL_FILE_PATH "\" k){
+        if v = False and FileExist(get_stl_path() "\" k){
             selected_file := k
             file_map[k] := true
             break
@@ -175,9 +178,13 @@ f16::{
     }
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
     if found_pos {
+        if not FileExist(get_basic_setting_path() "\" sub_pat[1] ".esp"){
+            MsgBox("Basic setting `"" sub_pat[1] ".esp`" does not exist!")
+            return
+        }
         open_file()
         WinWaitActive("ahk_class #32770", "&Open")
-        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
+        ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
         ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
         ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
         yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
@@ -204,15 +211,19 @@ f16::{
 }
 
 +f16::{
-    selected_file := FileSelect(, STL_FILE_PATH)
+    selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
         file_map[name] := true
 
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+        if not FileExist(get_basic_setting_path() "\" sub_pat[1] ".esp"){
+            MsgBox("Basic setting `"" sub_pat[1] ".esp`" does not exist!")
+            return
+        }
         open_file()
         WinWaitActive("ahk_class #32770", "&Open")
-        ControlSetText("C:\Users\" A_UserName "\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
+        ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
         ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
         ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
         yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
