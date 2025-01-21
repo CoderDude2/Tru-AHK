@@ -165,6 +165,7 @@ ds_startup_commands(){
 	Click("65 115")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
+    save_file()
 	macro_button3()
 }
 
@@ -186,7 +187,58 @@ asc_startup_commands(){
 	Click("60 147")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
+    save_file()
 	macro_button3()
+}
+
+tl_aot_startup_commands(){
+    while not WinExist("STL Rotate"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+			Send("{Enter}")
+		}
+	}
+    WinWaitActive("STL Rotate")
+	WinActivate("ESPRIT -")
+    deg0()
+}
+
+align_tl_aot_cap(){
+    WinWaitActive("ahk_exe esprit.exe")
+    esprit_title := WinGetTitle("A")
+        if(get_case_type(esprit_title) = "TLOC"){
+            FoundPos := RegExMatch(esprit_title, "#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", &SubPat)
+            working_degree := SubPat[1]
+            rotate_stl_by := SubPat[2]
+            y_pos := SubPat[3]
+            z_pos := SubPat[4]
+            x_pos := SubPat[5]
+
+            update_angle_deg(working_degree)
+            Sleep(50)
+            rotate_selection(rotate_stl_by)
+            Sleep(50)
+            translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
+            Sleep(50)
+            rotate_selection(Mod(working_degree, 10), True)
+
+        } else if(get_case_type(esprit_title) = "AOT"){
+            FoundPos := RegExMatch(esprit_title, "#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", &SubPat)
+            working_degree := SubPat[1]
+            rotate_stl_by := SubPat[2]
+            y_pos := SubPat[3]
+            z_pos := SubPat[4]
+            x_pos := SubPat[5]
+
+            update_angle_deg(working_degree)
+            Sleep(50)
+            translate_selection(20, 0, 0)
+            Sleep(50)
+            rotate_selection(rotate_stl_by)
+            Sleep(50)
+            translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
+            Sleep(50)
+            rotate_selection(Mod(working_degree, 10), True)
+        }
 }
 
 open_and_start_file(){
@@ -246,7 +298,6 @@ open_and_start_next_file(){
             return
         }
         WinActivate("ESPRIT")
-		set_bounding_points()
         macro_button1()
         WinWaitActive("CAM Automation")
         Send("{Enter}")
