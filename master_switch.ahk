@@ -14,8 +14,6 @@ click_index := 0
 path_tool_active := false
 prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
 
-file_map := Map()
-
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
@@ -52,21 +50,64 @@ A_TrayMenu.Add("Open Dashboard", open_dashboard)
 
 SetDefaultMouseSpeed 0
 
-#SuspendExempt
+save_completed_files(file_map){
+    if FileExist(A_AppData "\tru-ahk\completed_files"){
+        FileDelete(A_AppData "\tru-ahk\completed_files")
+    }
+    
+    for k,v in file_map{
+        FileAppend(k "==" v "`n", A_AppData "\tru-ahk\completed_files")
+    }
+}
+loads_completed_files(){
+    result := Map()
+    if FileExist(A_AppData "\tru-ahk\completed_files"){
+        contents := FileRead(A_AppData "\tru-ahk\completed_files")
+        Loop Read A_AppData "\tru-ahk\completed_files"{
+            if A_LoopReadLine != ""{
+                line := StrSplit(A_LoopReadLine, "==")
 
+                switch line[2]{
+                    case "0":
+                        result.Set(line[1], False)
+                    case "1": 
+                        result.Set(line[1], True)
+                }
+            }
+        }
+    }
+    return result
+}
+
+
+file_map := loads_completed_files()
+
+save_on_exit_callback(*){
+    save_completed_files(file_map)   
+}
+OnExit(save_on_exit_callback)
+
+#SuspendExempt
 SetTimer(update_file_map, 100)
 
 update_file_map(){
     Loop Files, get_stl_path() "\*", "F"{
         if not file_map.Has(A_LoopFileName){
             file_map[A_LoopFileName] := false
-        } 
-    }        
+        }
+    }
+
+    for k,v in file_map{
+        if not FileExist(get_stl_path() "\" k){
+            file_map.Delete(k)
+        }
+    }
 }
 
 ;G1
 f13::
 ^.::{
+    save_completed_files(file_map)
     Reload
 }
 
@@ -173,6 +214,7 @@ f16::{
         if v = False and FileExist(get_stl_path() "\" k){
             selected_file := k
             file_map[k] := true
+            MsgBox(k " " v)
             break
         }
     }
