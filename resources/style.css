@@ -231,3 +231,11 @@ dd{
     font-size: 0.9rem;
     margin-top: 0.25em;
 }
+
+ul{
+    line-height: 1.5em;
+}
+
+ul > ul {
+   margin-left: 1em; 
+}
