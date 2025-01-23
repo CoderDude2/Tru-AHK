@@ -214,7 +214,6 @@ f16::{
         if v = False and FileExist(get_stl_path() "\" k){
             selected_file := k
             file_map[k] := true
-            MsgBox(k " " v)
             break
         }
     }
