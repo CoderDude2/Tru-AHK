@@ -169,8 +169,6 @@ f12::{
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
-        file_map[name] := true
-
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         if not FileExist(get_basic_setting_path() "\" sub_pat[1] ".esp"){
             MsgBox("Basic setting `"" sub_pat[1] ".esp`" does not exist!")
@@ -189,6 +187,7 @@ f12::{
         if yn != "Yes"{
             return
         }
+        file_map[name] := true
         WinActivate("ESPRIT")
         macro_button_1()
         WinWaitActive("CAM Automation")
@@ -206,12 +205,12 @@ f16::{
     For k,v in file_map{
         if v = False and FileExist(get_stl_path() "\" k){
             selected_file := k
-            file_map[k] := true
             break
         }
     }
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
     if found_pos {
+        SplitPath(selected_file, &name)
         if not FileExist(get_basic_setting_path() "\" sub_pat[1] ".esp"){
             MsgBox("Basic setting `"" sub_pat[1] ".esp`" does not exist!")
             return
@@ -229,6 +228,7 @@ f16::{
         if yn != "Yes"{
             return
         }
+        file_map[name] := true
         WinActivate("ESPRIT - ")
         macro_button_1()
         WinWaitActive("CAM Automation")
@@ -256,8 +256,6 @@ f16::{
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
-        file_map[name] := true
-
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         if not FileExist(get_basic_setting_path() "\" sub_pat[1] ".esp"){
             MsgBox("Basic setting `"" sub_pat[1] ".esp`" does not exist!")
@@ -276,6 +274,7 @@ f16::{
         if yn != "Yes"{
             return
         }
+        file_map[name] := true
         WinActivate("ESPRIT - ")
         macro_button_1()
         WinWaitActive("CAM Automation")
