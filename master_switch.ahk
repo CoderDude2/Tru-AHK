@@ -192,6 +192,10 @@ f12::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
+        WinWait("ahk_class #32770", "&Yes", 0.5)
+        if WinExist("ahk_class #32770", "&Yes"){
+            WinWaitClose("ahk_class #32770", "&Yes")
+        }
         yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
             return
@@ -228,6 +232,10 @@ f16::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
         ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
         ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
+        WinWait("ahk_class #32770", "&Yes", 0.5)
+        if WinExist("ahk_class #32770", "&Yes"){
+            WinWaitClose("ahk_class #32770", "&Yes")
+        }
         yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
             return
@@ -271,6 +279,10 @@ f16::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
         ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
         ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
+        WinWait("ahk_class #32770", "&Yes", 0.5)
+        if WinExist("ahk_class #32770", "&Yes"){
+            WinWaitClose("ahk_class #32770", "&Yes")
+        }
         yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
             return
