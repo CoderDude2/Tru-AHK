@@ -1,26 +1,24 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
-
 create_default_prefs_file(){
 	DirCreate(A_AppData "\tru-ahk\")
-	IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
-	IniWrite("Line and Border", prefs_file_path, "e_key_functionality", "value")
-	IniWrite(true, prefs_file_path, "w_as_delete", "value")
-	IniWrite(true, prefs_file_path, "auto_recycle_STL", "value")
-	IniWrite("", prefs_file_path, "macro_bar_control", "control")
-	IniWrite("", prefs_file_path, "project_manager_control", "control")
-	IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
-	IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", prefs_file_path, "locations", "basic_setting_path")
-	IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", prefs_file_path, "locations", "stl_path")
+	IniWrite("All Instances", PREFS_FILE_PATH, "f12_mode", "value")
+	IniWrite("Line and Border", PREFS_FILE_PATH, "e_key_functionality", "value")
+	IniWrite(true, PREFS_FILE_PATH, "w_as_delete", "value")
+	IniWrite(true, PREFS_FILE_PATH, "auto_recycle_STL", "value")
+	IniWrite("", PREFS_FILE_PATH, "macro_bar_control", "control")
+	IniWrite("", PREFS_FILE_PATH, "project_manager_control", "control")
+	IniWrite(true, PREFS_FILE_PATH, "project_manager_control", "is_attached")
+	IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", PREFS_FILE_PATH, "locations", "basic_setting_path")
+	IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", PREFS_FILE_PATH, "locations", "stl_path")
 	switch A_Language{
 		case 0409:
-			IniWrite("en", prefs_file_path, "language", "value")
+			IniWrite("en", PREFS_FILE_PATH, "language", "value")
 		case 0012:
-			IniWrite("ko", prefs_file_path, "language", "value")
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
 		case 0412:
-			IniWrite("ko", prefs_file_path, "language", "value")
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
 	}
 	
 }
@@ -102,43 +100,39 @@ show_milling_tool(){
 }
 
 unsuppress_operation(){
-	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 	if(is_attached){
 		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
 	} else {
-        lang := get_language()
-		if lang == "en"{
+		if USER_LANGUAGE == "en"{
 			PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
-		} else if lang == "ko"{
+		} else if USER_LANGUAGE == "ko"{
 			PostMessage 0x111, 32792 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
 }
 
 suppress_operation(){
-	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 	if(is_attached) {
 		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
 	} else {
-        lang := get_language()
-		if lang == "en"{
+		if USER_LANGUAGE == "en"{
 			PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
-		} else if lang == "ko"{
+		} else if USER_LANGUAGE == "ko"{
 			PostMessage 0x111, 32770 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
 }
 
 rebuild_operation(){
-	global prefs_file_path
-	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 	if(is_attached){
 		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
 	} else {
-        lang := get_language()
-		if lang == "en"{
+		if USER_LANGUAGE == "en"{
 			PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
-		} else if lang == "ko"{
+		} else if USER_LANGUAGE == "ko"{
 			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
@@ -161,7 +155,7 @@ ds_startup_commands(){
 	Click("65 115")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
-	if IniRead(prefs_file_path, "auto_recycle_STL", "value") == true{
+	if IniRead(PREFS_FILE_PATH, "auto_recycle_STL", "value") == true{
 		recycle_active_file()
 	}
 	macro_button_3()
@@ -185,7 +179,7 @@ asc_startup_commands(){
 	Click("60 147")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
-	if IniRead(prefs_file_path, "auto_recycle_STL", "value") == true{
+	if IniRead(PREFS_FILE_PATH, "auto_recycle_STL", "value") == true{
 		recycle_active_file()
 	}
 	macro_button_3()
@@ -361,12 +355,11 @@ get_connection_type(title){
 }
 
 translate_selection(x := 0, y := 0, z := 0){
-    lang := get_language()
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
 
-	if lang == "en"{
+	if USER_LANGUAGE == "en"{
 		english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
 		ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
 		ControlSetChecked(1,"Button7","ahk_class #32770")
@@ -374,7 +367,7 @@ translate_selection(x := 0, y := 0, z := 0){
 		ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
 		ControlSetText(Round(z, 4), "Edit4", "ahk_class #32770")
 		Send("{Enter}")
-	} else if lang == "ko"{
+	} else if USER_LANGUAGE == "ko"{
 		korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
 		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
 		ControlSetChecked(1,"Button7","ahk_class #32770")
@@ -445,21 +438,21 @@ scale_selection(scale){
 }
 
 get_basic_setting_path(){
-	global prefs_file_path
-	basic_setting_path := IniRead(prefs_file_path, "locations", "basic_setting_path")
+	
+	basic_setting_path := IniRead(PREFS_FILE_PATH, "locations", "basic_setting_path")
 	return basic_setting_path
 }
 
 get_stl_path(){
-	global prefs_file_path
-	stl_path := IniRead(prefs_file_path, "locations", "stl_path")
+	
+	stl_path := IniRead(PREFS_FILE_PATH, "locations", "stl_path")
 	return stl_path
 }
 
 get_project_manager(){
-	global prefs_file_path
-	class_nn := IniRead(prefs_file_path, "project_manager_control", "control")
-	is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+	
+	class_nn := IniRead(PREFS_FILE_PATH, "project_manager_control", "control")
+	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 
 	if class_nn == ""{
         MsgBox("Project manager control not set!")
@@ -469,10 +462,9 @@ get_project_manager(){
 		if(is_attached){
 			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT")
 		} else {
-            lang := get_language()
-			if lang == "en"{
+			if USER_LANGUAGE == "en"{
 				project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
-			} else if lang == "ko" {
+			} else if USER_LANGUAGE == "ko" {
 				project_manager_control := ControlGetClassNN(class_nn, "프로젝트 매니저")
 			}
 		}
@@ -482,8 +474,8 @@ get_project_manager(){
 }
 
 get_macro_bar(){
-	global prefs_file_path
-	class_nn := IniRead(prefs_file_path, "macro_bar_control", "control")
+	
+	class_nn := IniRead(PREFS_FILE_PATH, "macro_bar_control", "control")
 
     if class_nn == ""{
         MsgBox("Macro bar control not set!")
@@ -544,8 +536,8 @@ recycle_active_file(){
     if found_pos{
         esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
         stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
-        if FileExist("C:\Users\" A_UserName "\Desktop\작업\스캔파일\" stl_filename){
-            FileRecycle("C:\Users\" A_UserName "\Desktop\작업\스캔파일\" stl_filename)        
+        if FileExist(get_stl_path() "\" stl_filename){
+            FileRecycle(get_stl_path() "\" stl_filename)        
         }
     }
 }

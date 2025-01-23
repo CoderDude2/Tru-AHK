@@ -1,6 +1,6 @@
 ﻿#Requires Autohotkey v2.0
-
 #SingleInstance Force
+
 SetWorkingDir A_ScriptDir
 
 if(FileExist("old_master_switch.exe")){
@@ -9,26 +9,21 @@ if(FileExist("old_master_switch.exe")){
 
 #Include %A_ScriptDir%\Lib\globals.ahk
 #Include %A_ScriptDir%\Lib\constants.ahk
+
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
+
 #Include %A_ScriptDir%\Lib\updater.ahk
-#Include %A_ScriptDir%\Lib\dashboard.ahk
+#Include %A_ScriptDir%\Lib\dashboard.ahk  
 
-if USER_LANGUAGE == "en" {
-    extrude_window_name := "Extrude Boss/Cut"
-} else if USER_LANGUAGE == "ko" {
-    extrude_window_name := "보스 돌출/잘라내기"
-}   
-
-if(!FileExist(prefs_file_path)){
+if(!FileExist(PREFS_FILE_PATH)){
     create_default_prefs_file()
 }
 
-remote_path := IniRead("config.ini", "info", "remote_path")
-if(check_for_update(A_ScriptDir, remote_path)){
+if(check_for_update(A_ScriptDir, REMOTE_PATH)){
     result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
     if(result == "Yes"){
-        update(remote_path)
+        update(REMOTE_PATH)
     }
 }
 
@@ -136,10 +131,10 @@ f17::
 
 f12::{
     try{
-        mode := IniRead(prefs_file_path, "f12_mode", "value")    
+        mode := IniRead(PREFS_FILE_PATH, "f12_mode", "value")    
     } catch OSError {
         create_default_prefs_file()
-        mode := IniRead(prefs_file_path, "f12_mode", "value")  
+        mode := IniRead(PREFS_FILE_PATH, "f12_mode", "value")  
     }
     
 
@@ -307,10 +302,10 @@ f16::{
 Space::Enter
 w::{
     try {
-        w_pref := IniRead(prefs_file_path, "w_as_delete", "value")
+        w_pref := IniRead(PREFS_FILE_PATH, "w_as_delete", "value")
     } catch OSError {
         create_default_prefs_file()
-        w_pref := IniRead(prefs_file_path, "w_as_delete", "value")
+        w_pref := IniRead(PREFS_FILE_PATH, "w_as_delete", "value")
     }
 
     if(w_pref = 1){
@@ -639,9 +634,9 @@ r & Numpad9::{
 
 e::{
     try {
-        e_key_functionality := IniRead(prefs_file_path, "e_key_functionality", "value")
+        e_key_functionality := IniRead(PREFS_FILE_PATH, "e_key_functionality", "value")
     } catch {
-        IniWrite("Line and Border", prefs_file_path, "e_key_functionality", "value")
+        IniWrite("Line and Border", PREFS_FILE_PATH, "e_key_functionality", "value")
         e_key_functionality := "Line and Border"
     }
 

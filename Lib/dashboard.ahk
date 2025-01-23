@@ -1,11 +1,9 @@
 #Requires Autohotkey v2.0
 #SingleInstance Force
 
+#Include "constants.ahk"
 #Include "commands.ahk"
 #Include "updater.ahk"
-
-prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
-prefs_directory := A_AppData "\tru-ahk"
 
 showInspector := False
 setMacroBar := False
@@ -28,86 +26,86 @@ inspector(){
     showInspector := !showInspector
 }
 
-if(!FileExist(prefs_file_path)){
+if(!FileExist(PREFS_FILE_PATH)){
     create_default_prefs_file()
 }
 
 try {
-    f12_mode := IniRead(prefs_file_path, "f12_mode", "value")
+    f12_mode := IniRead(PREFS_FILE_PATH, "f12_mode", "value")
 } catch {
-    IniWrite("All Instances", prefs_file_path, "f12_mode", "value")
+    IniWrite("All Instances", PREFS_FILE_PATH, "f12_mode", "value")
     f12_mode := "All Instances"
 }
 
 try {
-    e_key_functionality := IniRead(prefs_file_path, "e_key_functionality", "value")
+    e_key_functionality := IniRead(PREFS_FILE_PATH, "e_key_functionality", "value")
 } catch {
-    IniWrite("Line and Border", prefs_file_path, "e_key_functionality", "value")
+    IniWrite("Line and Border", PREFS_FILE_PATH, "e_key_functionality", "value")
     e_key_functionality := "Line and Border"
 }
 
 try {
-    w_as_delete := IniRead(prefs_file_path, "w_as_delete", "value")
+    w_as_delete := IniRead(PREFS_FILE_PATH, "w_as_delete", "value")
 } catch {
-    IniWrite(true, prefs_file_path, "w_as_delete", "value")
+    IniWrite(true, PREFS_FILE_PATH, "w_as_delete", "value")
     w_as_delete := true
 }
 
 try {
-    macro_bar_control := IniRead(prefs_file_path, "macro_bar_control", "control")
+    macro_bar_control := IniRead(PREFS_FILE_PATH, "macro_bar_control", "control")
 } catch {
-    IniWrite("", prefs_file_path, "macro_bar_control", "control")
+    IniWrite("", PREFS_FILE_PATH, "macro_bar_control", "control")
     macro_bar_control := ""
 }
 
 try {
-    project_manager_control := IniRead(prefs_file_path, "project_manager_control", "control")
+    project_manager_control := IniRead(PREFS_FILE_PATH, "project_manager_control", "control")
 } catch {
-    IniWrite("", prefs_file_path, "project_manager_control", "control")
+    IniWrite("", PREFS_FILE_PATH, "project_manager_control", "control")
     project_manager_control := ""
 }
 
 try {
-    basic_setting_path := IniRead(prefs_file_path, "locations", "basic_setting_path")
+    basic_setting_path := IniRead(PREFS_FILE_PATH, "locations", "basic_setting_path")
 } catch {
-    IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", prefs_file_path, "locations", "basic_setting_path")
+    IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", PREFS_FILE_PATH, "locations", "basic_setting_path")
     basic_setting_path := "C:\Users\" A_UserName "\Desktop\Basic Setting"
 }
 
 try {
-    stl_path := IniRead(prefs_file_path, "locations", "stl_path")
+    stl_path := IniRead(PREFS_FILE_PATH, "locations", "stl_path")
 } catch {
-    IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", prefs_file_path, "locations", "stl_path")
+    IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", PREFS_FILE_PATH, "locations", "stl_path")
     stl_path := "C:\Users\" A_UserName "\Desktop\작업\스캔파일"
 }
 
 try {
-    is_attached := IniRead(prefs_file_path, "project_manager_control", "is_attached")
+    is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 } catch {
-    IniWrite(true, prefs_file_path, "project_manager_control", "is_attached")
+    IniWrite(true, PREFS_FILE_PATH, "project_manager_control", "is_attached")
     is_attached := true
 }
 
 try {
-    auto_recycle_STL := IniRead(prefs_file_path, "auto_recycle_STL", "value")
+    auto_recycle_STL := IniRead(PREFS_FILE_PATH, "auto_recycle_STL", "value")
 } catch {
-    IniWrite(true, prefs_file_path, "auto_recycle_STL", "value")
+    IniWrite(true, PREFS_FILE_PATH, "auto_recycle_STL", "value")
     auto_recycle_STL := true
 }
 
 
 try {
-    language := IniRead(prefs_file_path, "language", "value")
+    language := IniRead(PREFS_FILE_PATH, "language", "value")
 } catch {
     switch A_Language{
 		case 0409:
-			IniWrite("en", prefs_file_path, "language", "value")
+			IniWrite("en", PREFS_FILE_PATH, "language", "value")
             language := "en"
 		case 0012:
-			IniWrite("ko", prefs_file_path, "language", "value")
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
             language := "ko"
 		case 0412:
-			IniWrite("ko", prefs_file_path, "language", "value")
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
             language := "ko"
 	}
     
@@ -188,79 +186,79 @@ is_attached_checkbox.value := is_attached
 is_attached_checkbox.OnEvent("Click", setProjectManagerControlIsAttached)
 
 setF12Mode(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
-    IniWrite(f12_dropdown.Text, prefs_file_path, "f12_mode", "value")
+    IniWrite(f12_dropdown.Text, PREFS_FILE_PATH, "f12_mode", "value")
 }
 
 setLanguage(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
     switch language_dropdown.Text{
         case "English":
-            IniWrite("en", prefs_file_path, "language", "value")
+            IniWrite("en", PREFS_FILE_PATH, "language", "value")
         case "Korean":
-            IniWrite("ko", prefs_file_path, "language", "value")
+            IniWrite("ko", PREFS_FILE_PATH, "language", "value")
         default:
-            IniWrite("en", prefs_file_path, "language", "value")
+            IniWrite("en", PREFS_FILE_PATH, "language", "value")
     }
     Reload
 }
 
 setEKeyFunctionality(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
-    IniWrite(e_key_functionality_dropdown.Text, prefs_file_path, "e_key_functionality", "value")
+    IniWrite(e_key_functionality_dropdown.Text, PREFS_FILE_PATH, "e_key_functionality", "value")
 }
 
 setAutoRecycleSTL(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
-    IniWrite(auto_recycle_STL_checkbox.Value, prefs_file_path, "auto_recycle_STL", "value")
+    IniWrite(auto_recycle_STL_checkbox.Value, PREFS_FILE_PATH, "auto_recycle_STL", "value")
 }
 
 setWMode(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
-    IniWrite(w_checkbox.value, prefs_file_path, "w_as_delete", "value")
+    IniWrite(w_checkbox.value, PREFS_FILE_PATH, "w_as_delete", "value")
 }
 
 setBasicSettingPathCallback(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
     folder_path := FileSelect("D", "C:\Users\" A_UserName "\Desktop")
     if folder_path != ""{
-        IniWrite(folder_path, prefs_file_path, "locations", "basic_setting_path")
+        IniWrite(folder_path, PREFS_FILE_PATH, "locations", "basic_setting_path")
         basic_setting_path_edit.value := folder_path
     }
 }
 
 setSTLPathCallback(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
     folder_path := FileSelect("D", "C:\Users\" A_UserName "\Desktop")
     if folder_path != ""{
-        IniWrite(folder_path, prefs_file_path, "locations", "stl_path")
+        IniWrite(folder_path, PREFS_FILE_PATH, "locations", "stl_path")
         stl_path_edit.value := folder_path
     }
 }
 
 setMacroBarControlCallback(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
@@ -276,7 +274,7 @@ setMacroBarControlCallback(*){
 }
 
 setProjectManagerControlCallback(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
@@ -292,7 +290,7 @@ setProjectManagerControlCallback(*){
 }
 
 setMacroBarControl(class_nn){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
@@ -304,13 +302,13 @@ setMacroBarControl(class_nn){
     setProjectManager := False
     setMacroBar := False
 
-    IniWrite(class_nn, prefs_file_path, "macro_bar_control", "control")
+    IniWrite(class_nn, PREFS_FILE_PATH, "macro_bar_control", "control")
     set_macro_control_btn.Opt("-Disabled")
     macro_edit.value := class_nn
 }
 
 setProjectManagerControl(class_nn){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
@@ -322,17 +320,17 @@ setProjectManagerControl(class_nn){
     setProjectManager := False
     setMacroBar := False
 
-    IniWrite(class_nn, prefs_file_path, "project_manager_control", "control")
+    IniWrite(class_nn, PREFS_FILE_PATH, "project_manager_control", "control")
     set_project_manager_control_btn.Opt("-Disabled")
     project_manager_edit.value := class_nn
 }
 
 setProjectManagerControlIsAttached(*){
-    if not DirExist(prefs_directory){
+    if not DirExist(PREFS_DIRECTORY){
         create_default_prefs_file()
     }
 
-    IniWrite(is_attached_checkbox.value, prefs_file_path, "project_manager_control", "is_attached")
+    IniWrite(is_attached_checkbox.value, PREFS_FILE_PATH, "project_manager_control", "is_attached")
 }
 
 root.OnEvent("Close", OnClose)
