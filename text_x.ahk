@@ -1,6 +1,7 @@
 #Requires Autohotkey v2.0
 #SingleInstance Force
 
+#Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 
 root := Gui()

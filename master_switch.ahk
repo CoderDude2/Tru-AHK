@@ -7,19 +7,12 @@ if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
 }
 
-; ===== Global Variables =====
-initial_pos_x := 0
-initial_pos_y := 0
-click_index := 0
-path_tool_active := false
-prefs_file_path := A_AppData "\tru-ahk\prefs.ini"
-
+#Include %A_ScriptDir%\Lib\globals.ahk
+#Include %A_ScriptDir%\Lib\constants.ahk
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk
-
-USER_LANGUAGE := get_language()
 
 if USER_LANGUAGE == "en" {
     extrude_window_name := "Extrude Boss/Cut"

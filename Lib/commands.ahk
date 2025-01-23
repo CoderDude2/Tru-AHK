@@ -106,9 +106,10 @@ unsuppress_operation(){
 	if(is_attached){
 		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
 	} else {
-		if USER_LANGUAGE == "en"{
+        lang := get_language()
+		if lang == "en"{
 			PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
+		} else if lang == "ko"{
 			PostMessage 0x111, 32792 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
@@ -119,9 +120,10 @@ suppress_operation(){
 	if(is_attached) {
 		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
 	} else {
-		if USER_LANGUAGE == "en"{
+        lang := get_language()
+		if lang == "en"{
 			PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
+		} else if lang == "ko"{
 			PostMessage 0x111, 32770 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
@@ -133,9 +135,10 @@ rebuild_operation(){
 	if(is_attached){
 		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
 	} else {
-		if USER_LANGUAGE == "en"{
+        lang := get_language()
+		if lang == "en"{
 			PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
+		} else if lang == "ko"{
 			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
 		}
 	}
@@ -358,11 +361,12 @@ get_connection_type(title){
 }
 
 translate_selection(x := 0, y := 0, z := 0){
+    lang := get_language()
     WinActivate("ESPRIT")
     transformation_window()
     WinWaitActive("ahk_class #32770")
 
-	if USER_LANGUAGE == "en"{
+	if lang == "en"{
 		english_index := ControlFindItem("Translate", "ComboBox1", "ahk_class #32770")
 		ControlChooseIndex(english_index, "ComboBox1", "ahk_class #32770")
 		ControlSetChecked(1,"Button7","ahk_class #32770")
@@ -370,7 +374,7 @@ translate_selection(x := 0, y := 0, z := 0){
 		ControlSetText(Round(y, 4), "Edit3", "ahk_class #32770")
 		ControlSetText(Round(z, 4), "Edit4", "ahk_class #32770")
 		Send("{Enter}")
-	} else if USER_LANGUAGE == "ko"{
+	} else if lang == "ko"{
 		korean_index := ControlFindItem("이동", "ComboBox1", "ahk_class #32770")
 		ControlChooseIndex(korean_index, "ComboBox1", "ahk_class #32770")
 		ControlSetChecked(1,"Button7","ahk_class #32770")
@@ -440,12 +444,6 @@ scale_selection(scale){
 
 }
 
-get_language(){
-	global prefs_file_path
-	language := IniRead(prefs_file_path, "language", "value")
-	return language
-}
-
 get_basic_setting_path(){
 	global prefs_file_path
 	basic_setting_path := IniRead(prefs_file_path, "locations", "basic_setting_path")
@@ -471,9 +469,10 @@ get_project_manager(){
 		if(is_attached){
 			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT")
 		} else {
-			if USER_LANGUAGE == "en"{
+            lang := get_language()
+			if lang == "en"{
 				project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
-			} else if USER_LANGUAGE == "ko" {
+			} else if lang == "ko" {
 				project_manager_control := ControlGetClassNN(class_nn, "프로젝트 매니저")
 			}
 		}
