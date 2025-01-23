@@ -114,7 +114,7 @@ f17::{
         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 1)
+        WinWait("ahk_class #32770", "&Yes", 0.5)
         if WinExist("ahk_class #32770", "&Yes"){
             WinWaitClose("ahk_class #32770", "&Yes")
         }
@@ -984,7 +984,7 @@ f16::{
         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 1)
+        WinWait("ahk_class #32770", "&Yes", 0.5)
         if WinExist("ahk_class #32770", "&Yes"){
             WinWaitClose("ahk_class #32770", "&Yes")
         }
