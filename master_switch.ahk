@@ -10,6 +10,7 @@ if(FileExist("old_master_switch.exe")){
 #Include %A_ScriptDir%\Lib\globals.ahk
 #Include %A_ScriptDir%\Lib\constants.ahk
 
+#Include %A_ScriptDir%\Lib\util.ahk
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 
