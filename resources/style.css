@@ -33,9 +33,9 @@ main{
     width: 80%;
     padding: 1em;
     height: 100vh;
+    font-size: 1.2rem;
     background-color: var(--clr-neutral-800);
     overflow-y: scroll;
-    
 }
 
 #side-nav{
@@ -57,19 +57,26 @@ main{
     list-style-type: none;
 }
 
+#side-nav li a.active{
+    /* border-right: 20px solid var(--clr-tru-blue); */
+    background-color: var(--clr-tru-blue);
+    color: #333333;
+}
+
 #side-nav li a{
     display: block;
     background-color: #333333;
     padding: 0.5em 1em;
     text-decoration: none;
-    transition: 0.4s ease-in-out;
+    transition: 0.3s ease-in-out;
     font-weight: bold;
     font-size: 1.1rem;
+    border-radius: 0.5em;
 }
 
 #side-nav li a:hover{
     color: #333333;
-    background-color: var(--clr-tru-blue);
+    background-color: var(--clr-tru-blue-active);
 
 }
 
