@@ -664,6 +664,46 @@ x::{
     step_5_window_tab_2()
 }
 
+^!Up::{
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        
+        decrement_10_degrees()
+    }
+}
+
+^!Down::{
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        
+        increment_10_degrees()
+    }
+}
+
+^+Up::{
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        
+        decrement_90_degrees()
+    }
+}
+
+^+Down::{
+    try{
+        if not WinActive("ESPRIT - "){
+            WinActivate("ESPRIT - ")
+        }
+        
+        increment_90_degrees()
+    }
+}
+
 ^Numpad1::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
