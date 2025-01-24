@@ -36,7 +36,6 @@ main{
     height: 100%;
     font-size: 1.1rem;
     background-color: var(--clr-neutral-800);
-    overflow-y: scroll;
 }
 
 #side-nav{
