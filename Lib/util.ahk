@@ -21,6 +21,14 @@ create_default_prefs_file(){
 		case 0412:
 			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
 	}
+	switch A_Language{
+		case 0409:
+			IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
+		case 0012:
+			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
+		case 0412:
+			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
+	}
 	
 }
 
