@@ -119,14 +119,13 @@ f13::
         cancel_all_set()
     }   
 }
+#SuspendExempt False
 
 ; G5 Key
 f17::
 ^+o::{
     Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
 }
-
-#SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe")
 
