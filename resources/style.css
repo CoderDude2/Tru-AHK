@@ -39,7 +39,8 @@ main{
 }
 
 #side-nav{
-    width: 15%;
+    width: 300px;
+    min-width: 300px;
     height: 100vh;
     padding: 1em;
     background-color: var(--clr-neutral-800);
