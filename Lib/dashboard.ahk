@@ -141,7 +141,7 @@ changelog_btn := root.Add("Button", "w100","Open Changelog")
 changelog_btn.OnEvent("Click", open_changelog)
 
 Tab.UseTab("Settings")
-root.Add("Text","","Language (Reloads script)")
+root.Add("Text","Section","Language (Reloads script)")
 language_dropdown := root.Add("DropDownList","vuser_language yp+15",["English", "Korean"])
 switch language{
     case "en":
@@ -153,9 +153,9 @@ switch language{
 } 
 language_dropdown.OnEvent("Change", setLanguage)
 
-root.Add("Text","Section","System Language (Reloads script)")
+root.Add("Text","xs yp+30","System Language (Reloads script)")
 system_language_dropdown := root.Add("DropDownList","vsystem_language yp+15",["English", "Korean"])
-switch language{
+switch system_language{
     case "en":
         system_language_dropdown.Choose("English")
     case "ko":
@@ -163,7 +163,7 @@ switch language{
     default:
         system_language_dropdown.Choose("English")
 } 
-; system_language_dropdown.OnEvent("Change", setLanguage)
+system_language_dropdown.OnEvent("Change", setSystemLanguage)
 
 w_checkbox := root.Add("CheckBox","h20 ys","W as Delete Key")
 w_checkbox.value := w_as_delete
@@ -173,13 +173,13 @@ auto_recycle_STL_checkbox := root.Add("CheckBox","h20","Auto-recycle STL Files")
 auto_recycle_STL_checkbox.value := auto_recycle_STL
 auto_recycle_STL_checkbox.OnEvent("Click", setAutoRecycleSTL)
 
-root.Add("Text","Section xs yp+15","F12 Mode")
-f12_dropdown := root.Add("DropDownList","vf12_options xp+0 yp+15",["Disabled","Active Instance", "All Instances"])
+root.Add("Text","","F12 Mode")
+f12_dropdown := root.Add("DropDownList","vf12_options",["Disabled","Active Instance", "All Instances"])
 f12_dropdown.Choose(f12_mode)
 f12_dropdown.OnEvent("Change", setF12Mode)
 
-root.Add("Text","yp+30 xs","E Key Functionality")
-e_key_functionality_dropdown := root.Add("DropDownList","ve_key_options xp+0 yp+15",["Line","Line and Border"])
+root.Add("Text","","E Key Functionality")
+e_key_functionality_dropdown := root.Add("DropDownList","ve_key_options",["Line","Line and Border"])
 e_key_functionality_dropdown.Choose(e_key_functionality)
 e_key_functionality_dropdown.OnEvent("Change", setEKeyFunctionality)
 
@@ -233,6 +233,22 @@ setLanguage(*){
             IniWrite("ko", PREFS_FILE_PATH, "language", "value")
         default:
             IniWrite("en", PREFS_FILE_PATH, "language", "value")
+    }
+    Reload
+}
+
+setSystemLanguage(*){
+    if not DirExist(PREFS_DIRECTORY){
+        create_default_prefs_file()
+    }
+
+    switch system_language_dropdown.Text{
+        case "English":
+            IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
+        case "Korean":
+            IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
+        default:
+            IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
     }
     Reload
 }
