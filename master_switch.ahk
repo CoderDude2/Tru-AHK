@@ -165,6 +165,16 @@ f12::{
 }
 
 ^o::{
+    if SYSTEM_LANGUAGE == "ko"{
+        open_file_dialog := "열기"
+        open_button_text := "열기(&O)"
+        esprit_are_you_sure_text := "예(&Y)"
+    } else {
+        open_file_dialog := "Open"
+        open_button_text := "&Open"
+        esprit_are_you_sure_text := "&Yes"
+    }
+
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
@@ -174,13 +184,13 @@ f12::{
             return
         }
         open_file()
-        WinWaitActive("ahk_class #32770", "&Open")
+        WinWaitActive("ahk_class #32770", open_button_text)
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 0.5)
-        if WinExist("ahk_class #32770", "&Yes"){
-            WinWaitClose("ahk_class #32770", "&Yes")
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        if WinExist("ahk_class #32770", esprit_are_you_sure_text){
+            WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
         yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
@@ -200,6 +210,16 @@ f12::{
 
 ; G4
 f16::{
+    if SYSTEM_LANGUAGE == "ko"{
+        open_file_dialog := "열기"
+        open_button_text := "열기(&O)"
+        esprit_are_you_sure_text := "예(&Y)"
+    } else {
+        open_file_dialog := "Open"
+        open_button_text := "&Open"
+        esprit_are_you_sure_text := "&Yes"
+    }
+
     selected_file := ""
     For k,v in file_map{
         if v = False and FileExist(get_stl_path() "\" k){
@@ -215,13 +235,13 @@ f16::{
             return
         }
         open_file()
-        WinWaitActive("ahk_class #32770", "&Open")
-        ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
-        ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
-        ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
-        WinWait("ahk_class #32770", "&Yes", 0.5)
-        if WinExist("ahk_class #32770", "&Yes"){
-            WinWaitClose("ahk_class #32770", "&Yes")
+        WinWaitActive("ahk_class #32770", open_button_text)
+        ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        if WinExist("ahk_class #32770", esprit_are_you_sure_text){
+            WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
         yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
@@ -252,6 +272,16 @@ f16::{
 }
 
 +f16::{
+    if SYSTEM_LANGUAGE == "ko"{
+        open_file_dialog := "열기"
+        open_button_text := "열기(&O)"
+        esprit_are_you_sure_text := "예(&Y)"
+    } else {
+        open_file_dialog := "Open"
+        open_button_text := "&Open"
+        esprit_are_you_sure_text := "&Yes"
+    }
+
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
@@ -261,15 +291,15 @@ f16::{
             return
         }
         open_file()
-        WinWaitActive("ahk_class #32770", "&Open")
-        ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770", "&Open")
-        ControlSetChecked(0,"Button5","ahk_class #32770", "&Open")
-        ControlSend("{Enter}", "Button2","ahk_class #32770", "&Open")
-        WinWait("ahk_class #32770", "&Yes", 0.5)
-        if WinExist("ahk_class #32770", "&Yes"){
-            WinWaitClose("ahk_class #32770", "&Yes")
+        WinWaitActive("ahk_class #32770", open_button_text)
+        ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        if WinExist("ahk_class #32770", esprit_are_you_sure_text){
+            WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
+        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
         if yn != "Yes"{
             return
         }
