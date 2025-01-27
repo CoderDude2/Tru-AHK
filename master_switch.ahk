@@ -165,16 +165,6 @@ f12::{
 }
 
 ^o::{
-    if SYSTEM_LANGUAGE == "ko"{
-        open_file_dialog := "열기"
-        open_button_text := "열기(&O)"
-        esprit_are_you_sure_text := "예(&Y)"
-    } else {
-        open_file_dialog := "Open"
-        open_button_text := "&Open"
-        esprit_are_you_sure_text := "&Yes"
-    }
-
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)

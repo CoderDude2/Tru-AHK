@@ -118,7 +118,8 @@ rebuild_operation(){
 
 ds_startup_commands(){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK") or 
+		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인") or WinActive("Direction Check", "확인")){
 			Send("{Enter}")
 		}
 	}
@@ -141,7 +142,8 @@ ds_startup_commands(){
 
 asc_startup_commands(){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK") or 
+		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인") or WinActive("Direction Check", "확인")){
 			Send("{Enter}")
 		}
 	}
@@ -165,7 +167,8 @@ asc_startup_commands(){
 
 tl_aot_startup_commands(){
     while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK") or 
+		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인") or WinActive("Direction Check", "확인")){
 			Send("{Enter}")
 		}
 	}
