@@ -274,8 +274,9 @@ dt{
 
 dd{
     margin-left: 1em;
-    font-size: 0.9rem;
-    margin-top: 0.25em;
+    font-size: 1rem;
+    /* margin-top: 0.25em; */
+    
 }
 
 ul{
