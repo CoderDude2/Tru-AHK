@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tru-AHK Help</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div id="side-nav">
+        <ul>
+            <li><a href="index.html">Getting Started</a></li>
+            <li><a href="changelog.html">Release Notes</a></li>
+            <li><a href="keymap.html">Keymap</a></li>
+            <ul>
+                <li><a href="script_and_file_management.html">Script & File Management</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="views.html">View Controls</a></li>
+                <li><a href="borders_and_geometry.html" class="active">Borders and Geometry</a></li>
+                <li><a href="">Operations and Simulation</a></li>
+                <li><a href="">Macro Bar</a></li>
+                <li><a href="">Window Navigation</a></li>
+                <ul>
+                    <li><a href="">Step 3 Window</a></li>
+                    <li><a href="">Step 5 Window</a></li>
+                    <li><a href="">Text Placement Window</a></li>
+                </ul>
+            </ul>
+            <li><a href="dashboard.html">The Dashboard</a></li>
+            <li><a href="text-x.html">Text-X Program</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <h1>Tools</h1>
+
+        <div class="hotkey-entry">
+            <h2>Double Sided Border</h2>
+             <div class="hotkey-list">
+                 <ul>
+                     <li>
+                         <span class="key">G</span>
+                     </li>
+                 </ul>
+             </div>
+             <h3 class="highlight">Description</h3>
+             <p>Creates a border with the selected geometry.</p>
+             <h3 class="highlight">Notes</h3>
+             <p>If the border is already extruded, pressing the again will reverse the direction of extrusion.</p>
+        </div>
+        <div class="hotkey-entry">
+            <h2>Cut Solid with Geometry</h2>
+             <div class="hotkey-list">
+                 <ul>
+                     <li>
+                         <span class="key">G</span>
+                     </li>
+                 </ul>
+             </div>
+             <h3 class="highlight">Description</h3>
+             <p>Will extrude and cut a solid with the selected geometry.</p>
+             <h3 class="highlight">Notes</h3>
+             <p>If the border is already extruded, pressing the hotkey again will reverse the direction of extrusion.</p>
+        </div>
+        <div class="hotkey-entry">
+            <h2>Draw Straight Line</h2>
+             <div class="hotkey-list">
+                 <ul>
+                     <li>
+                         <span class="key">E</span>
+                     </li>
+                 </ul>
+             </div>
+             <h3 class="highlight">Description</h3>
+             <p>Will draw a 20 mm line.</p>
+             <h3 class="highlight">Notes</h3>
+             <p>If the "E Key Functionality" setting is set to "Line and Border" in the <a href="dashboard.html">dashboard</a>, it will also extrude the line.</p>
+        </div>
+        <div class="hotkey-entry">
+            <h2>Extrude to Length</h2>
+             <div class="hotkey-list">
+                 <ul>
+                     <li>
+                         <span class="key">R</span>
+                     </li>
+                     <li>
+                        <span class="key">R</span> +
+                        <span class="key">Numpad1...9</span>
+                    </li>
+                 </ul>
+             </div>
+             <h3 class="highlight">Description</h3>
+             <p>If <span class="key">R</span> is pressed by itself, it will extrude the selected geometry to 6 mm.</p>
+             <p>If <span class="key">R</span> is pressed with a numeric numpad key, it will extrude the selected geometry to the specified length.</p>
+             <p>Examples:</p>
+             <div class="content">
+                <p>Pressing <span class="key">R</span> + <span class="key">Numpad3</span> will extrude the selected geometry to 3 mm.</p>
+                <p>Pressing <span class="key">R</span> + <span class="key">Numpad9</span> will extrude the selected geometry to 9 mm.</p>
+             </div>
+              
+             <h3 class="highlight">Notes</h3>
+             <p>When pressed if the geometry is not set to the specified length, it will set it to the specified length. If the geometry is already set to the specified length, it will reverse its direction of extrusion.</p>
+        </div>
+    </main>
+</body>
+</html>
