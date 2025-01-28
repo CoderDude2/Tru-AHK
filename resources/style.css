@@ -141,12 +141,6 @@ a{
     margin-left: 1rem;
 }
 
-.index-container{
-    width: 100%;
-    margin: auto;
-    margin-left: 1rem;
-}
-
 .key{
     display: inline-block;
     border: 1px solid var(--clr-neutral-100);
@@ -218,6 +212,9 @@ td{
 
 .help-section{
     margin-top: 2em;
+    background-color: #555555;
+    padding: 1em;
+    border-radius: 0.5em;
 }
 
 .help-contents{
@@ -240,7 +237,7 @@ td{
 }
 
 .help-contents dl .project-manager-img{
-    width:200px;
+    width: 200px;
 }
 
 .help-section h3{
@@ -259,10 +256,6 @@ p{
     padding: 0.5em 0em;
 }
 
-.index-container li{
-    padding: 0.5em 0em;
-}
-
 dl{
     margin-top: 0.5em;
 }
@@ -270,12 +263,15 @@ dl{
 dt{
     margin-top: 0.75em;
     font-weight: bold;
+    text-decoration: underline;
+}
+
+dd > dt{
+    text-decoration: none;
 }
 
 dd{
     margin-left: 1em;
-    font-size: 1rem;
-    /* margin-top: 0.25em; */
     
 }
 
@@ -315,6 +311,12 @@ ul > ul {
     width: 40px;
     margin-left: 1em;
     margin-top: 0.25em;
+}
+
+.hotkey-entry img{
+    margin-top: 0.25em;
+    margin-left: 1em;
+    width: 200px;
 }
 
 .hotkey-list{
