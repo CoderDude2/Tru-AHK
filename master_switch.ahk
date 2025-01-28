@@ -58,8 +58,39 @@ initial_pos_x := 0
 initial_pos_y := 0
 click_index := 0
 path_tool_active := false
-USER_LANGUAGE := get_language()
-SYSTEM_LANGUAGE := get_system_language()
+try{
+    USER_LANGUAGE := get_language()
+} catch {
+    switch A_Language{
+		case 0409:
+			IniWrite("en", PREFS_FILE_PATH, "language", "value")
+            USER_LANGUAGE := "en"
+		case 0012:
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
+            USER_LANGUAGE := "ko"
+		case 0412:
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
+            USER_LANGUAGE := "ko"
+	}  
+} 
+
+try {
+    SYSTEM_LANGUAGE := get_system_language()
+} catch {
+    switch A_Language{
+		case 0409:
+			IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
+            SYSTEM_LANGUAGE := "en"
+		case 0012:
+			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
+            SYSTEM_LANGUAGE := "ko"
+		case 0412:
+			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
+            SYSTEM_LANGUAGE := "ko"
+	}
+    
+}
+
 REMOTE_PATH := IniRead("config.ini", "info", "remote_path")
 if USER_LANGUAGE == "en" {
     extrude_window_name := "Extrude Boss/Cut"
