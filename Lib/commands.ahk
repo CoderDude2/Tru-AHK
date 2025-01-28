@@ -118,8 +118,8 @@ rebuild_operation(){
 
 ds_startup_commands(){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인") or WinActive("Direction Check", "확인")){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
+		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
 			Send("{Enter}")
 		}
 	}
@@ -142,8 +142,8 @@ ds_startup_commands(){
 
 asc_startup_commands(){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인") or WinActive("Direction Check", "확인")){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
+		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
 			Send("{Enter}")
 		}
 	}
@@ -167,8 +167,8 @@ asc_startup_commands(){
 
 tl_aot_startup_commands(){
     while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인") or WinActive("Direction Check", "확인")){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
+		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
 			Send("{Enter}")
 		}
 	}
@@ -281,17 +281,13 @@ click_client_pos(posX, posY, window_name, block_input := false, return_to_start 
 
 draw_straight_border(){
 	try{
-		CoordMode("Mouse", "Screen")
 		BlockInput("MouseMove")
-		MouseGetPos(&posX, &posY)
 		line_tool()
 		Click("Left")
 		Send("20{Enter}0{Enter}{Esc}")
-		Click(posX, posY, 2)
+		Click("Left 2")
+		WinWaitClose("ahk_class #32770", "PIN")
 		double_sided_border()
-		Sleep(50)
-		_id := WinGetID(extrude_window_name)
-		ControlSend("{Enter}", "Button9", "ahk_id" _id)
 		BlockInput("MouseMoveOff")
 	} catch {
 		BlockInput("MouseMoveOff")
@@ -487,7 +483,7 @@ recycle_active_file(){
     found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
     if found_pos{
         esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
-        stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
+        stl_filename := StrSplit(esp_filename, '.esp')[1] ".stl"
         if FileExist(get_stl_path() "\" stl_filename){
             FileRecycle(get_stl_path() "\" stl_filename)        
         }

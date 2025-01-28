@@ -1,7 +1,5 @@
 #Requires AutoHotkey v2.0
 
-#include "constants.ahk"
-
 get_case_type(title){
     if InStr(title, "AOT", true) {
         return "AOT"

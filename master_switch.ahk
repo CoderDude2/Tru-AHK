@@ -7,8 +7,75 @@ if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
 }
 
-#Include %A_ScriptDir%\Lib\globals.ahk
-#Include %A_ScriptDir%\Lib\constants.ahk
+PREFS_FILE_PATH := A_AppData "\tru-ahk\prefs.ini"
+PREFS_DIRECTORY := A_AppData "\tru-ahk"
+
+create_default_prefs_file(){
+	DirCreate(A_AppData "\tru-ahk\")
+	IniWrite("All Instances", PREFS_FILE_PATH, "f12_mode", "value")
+	IniWrite("Line and Border", PREFS_FILE_PATH, "e_key_functionality", "value")
+	IniWrite(true, PREFS_FILE_PATH, "w_as_delete", "value")
+	IniWrite(true, PREFS_FILE_PATH, "auto_recycle_STL", "value")
+	IniWrite("", PREFS_FILE_PATH, "macro_bar_control", "control")
+	IniWrite("", PREFS_FILE_PATH, "project_manager_control", "control")
+	IniWrite(true, PREFS_FILE_PATH, "project_manager_control", "is_attached")
+	IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", PREFS_FILE_PATH, "locations", "basic_setting_path")
+	IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", PREFS_FILE_PATH, "locations", "stl_path")
+	switch A_Language{
+		case 0409:
+			IniWrite("en", PREFS_FILE_PATH, "language", "value")
+		case 0012:
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
+		case 0412:
+			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
+	}
+	switch A_Language{
+		case 0409:
+			IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
+		case 0012:
+			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
+		case 0412:
+			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
+	}
+}
+
+if(!FileExist(PREFS_FILE_PATH)){
+    create_default_prefs_file()
+}
+
+get_language(){
+	language := IniRead(prefs_file_path, "language", "value")
+	return language
+}
+
+get_system_language(){
+    system_language := IniRead(prefs_file_path, "system_language", "value")
+	return system_language
+}
+
+; global variables
+initial_pos_x := 0
+initial_pos_y := 0
+click_index := 0
+path_tool_active := false
+USER_LANGUAGE := get_language()
+SYSTEM_LANGUAGE := get_system_language()
+REMOTE_PATH := IniRead("config.ini", "info", "remote_path")
+if USER_LANGUAGE == "en" {
+    extrude_window_name := "Extrude Boss/Cut"
+} else if USER_LANGUAGE == "ko" {
+    extrude_window_name := "보스 돌출/잘라내기"
+}
+
+if SYSTEM_LANGUAGE == "ko"{
+    open_file_dialog := "열기"
+    open_button_text := "열기(&O)"
+    esprit_are_you_sure_text := "예(&Y)"
+} else {
+    open_file_dialog := "Open"
+    open_button_text := "&Open"
+    esprit_are_you_sure_text := "&Yes"
+}
 
 #Include %A_ScriptDir%\Lib\util.ahk
 #Include %A_ScriptDir%\Lib\views.ahk
@@ -16,10 +83,6 @@ if(FileExist("old_master_switch.exe")){
 
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk  
-
-if(!FileExist(PREFS_FILE_PATH)){
-    create_default_prefs_file()
-}
 
 if(check_for_update(A_ScriptDir, REMOTE_PATH)){
     result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
@@ -137,17 +200,17 @@ f12::{
         mode := IniRead(PREFS_FILE_PATH, "f12_mode", "value")  
     }
     
-
     switch mode{
         Case "Disabled":
             Send("{F12}")
         Case "Active Instance":
-            ProcessExist("esprit.exe")
             pid := WinGetPID("A")
             ProcessClose(pid)
         Case "All Instances":
-            while ProcessExist("esprit.exe"){
-                ProcessClose("esprit.exe")
+            ids := WinGetList("ESPRIT - ")
+            for this_id in ids{
+                pid := WinGetPID("ahk_id" this_id)
+                ProcessClose(pid)
             }
     }
 }
@@ -643,8 +706,11 @@ e::{
         e_key_functionality := "Line and Border"
     }
 
+    
     if e_key_functionality = "Line and Border"{
-        draw_straight_border()
+        if not WinExist(extrude_window_name){
+            draw_straight_border()
+        }
     } else if e_key_functionality = "Line" {
         draw_straight_line()
     }

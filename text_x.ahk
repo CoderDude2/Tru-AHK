@@ -1,5 +1,6 @@
 #Requires Autohotkey v2.0
 #SingleInstance Force
+#Warn LocalSameAsGlobal, Off
 
 #Include %A_ScriptDir%\Lib\util.ahk
 

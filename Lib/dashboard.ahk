@@ -1,9 +1,7 @@
 #Requires Autohotkey v2.0
 #SingleInstance Force
 
-#Include "constants.ahk"
 #Include "commands.ahk"
-#Include "updater.ahk"
 
 showInspector := False
 setMacroBar := False
@@ -24,10 +22,6 @@ inspector(){
 ^f3::{
     global showInspector
     showInspector := !showInspector
-}
-
-if(!FileExist(PREFS_FILE_PATH)){
-    create_default_prefs_file()
 }
 
 try {
@@ -141,7 +135,7 @@ changelog_btn := root.Add("Button", "w100","Open Changelog")
 changelog_btn.OnEvent("Click", open_changelog)
 
 Tab.UseTab("Settings")
-root.Add("Text","Section","Language (Reloads script)")
+root.Add("Text","Section","Language (Requires Reload)")
 language_dropdown := root.Add("DropDownList","vuser_language yp+15",["English", "Korean"])
 switch language{
     case "en":
@@ -153,7 +147,7 @@ switch language{
 } 
 language_dropdown.OnEvent("Change", setLanguage)
 
-root.Add("Text","xs yp+30","System Language (Reloads script)")
+root.Add("Text","xs yp+30","System Language (Requires Reload)")
 system_language_dropdown := root.Add("DropDownList","vsystem_language yp+15",["English", "Korean"])
 switch system_language{
     case "en":
@@ -214,18 +208,10 @@ is_attached_checkbox.value := is_attached
 is_attached_checkbox.OnEvent("Click", setProjectManagerControlIsAttached)
 
 setF12Mode(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     IniWrite(f12_dropdown.Text, PREFS_FILE_PATH, "f12_mode", "value")
 }
 
 setLanguage(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     switch language_dropdown.Text{
         case "English":
             IniWrite("en", PREFS_FILE_PATH, "language", "value")
@@ -234,14 +220,12 @@ setLanguage(*){
         default:
             IniWrite("en", PREFS_FILE_PATH, "language", "value")
     }
-    Reload
+    if (MsgBox("This setting requires Tru-AHK to be reloaded, would you like to reload now?","Reload Tru-AHK", "YesNo 0x1000") == "Yes"){
+        Reload
+    }
 }
 
 setSystemLanguage(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     switch system_language_dropdown.Text{
         case "English":
             IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
@@ -250,38 +234,24 @@ setSystemLanguage(*){
         default:
             IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
     }
-    Reload
+    if (MsgBox("This setting requires Tru-AHK to be reloaded, would you like to reload now?","Reload Tru-AHK", "YesNo 0x1000") == "Yes"){
+        Reload
+    }
 }
 
 setEKeyFunctionality(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     IniWrite(e_key_functionality_dropdown.Text, PREFS_FILE_PATH, "e_key_functionality", "value")
 }
 
 setAutoRecycleSTL(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     IniWrite(auto_recycle_STL_checkbox.Value, PREFS_FILE_PATH, "auto_recycle_STL", "value")
 }
 
 setWMode(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     IniWrite(w_checkbox.value, PREFS_FILE_PATH, "w_as_delete", "value")
 }
 
 setBasicSettingPathCallback(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     folder_path := FileSelect("D", "C:\Users\" A_UserName "\Desktop")
     if folder_path != ""{
         IniWrite(folder_path, PREFS_FILE_PATH, "locations", "basic_setting_path")
@@ -290,10 +260,6 @@ setBasicSettingPathCallback(*){
 }
 
 setSTLPathCallback(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     folder_path := FileSelect("D", "C:\Users\" A_UserName "\Desktop")
     if folder_path != ""{
         IniWrite(folder_path, PREFS_FILE_PATH, "locations", "stl_path")
@@ -302,10 +268,6 @@ setSTLPathCallback(*){
 }
 
 setMacroBarControlCallback(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -318,10 +280,6 @@ setMacroBarControlCallback(*){
 }
 
 setProjectManagerControlCallback(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -334,10 +292,6 @@ setProjectManagerControlCallback(*){
 }
 
 setMacroBarControl(class_nn){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -352,10 +306,6 @@ setMacroBarControl(class_nn){
 }
 
 setProjectManagerControl(class_nn){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     global showInspector
     global setMacroBar
     global setProjectManager
@@ -370,10 +320,6 @@ setProjectManagerControl(class_nn){
 }
 
 setProjectManagerControlIsAttached(*){
-    if not DirExist(PREFS_DIRECTORY){
-        create_default_prefs_file()
-    }
-
     IniWrite(is_attached_checkbox.value, PREFS_FILE_PATH, "project_manager_control", "is_attached")
 }
 
