@@ -311,6 +311,12 @@ ul > ul {
     margin-left: 1em;
 }
 
+.hotkey-entry .icon{
+    width: 40px;
+    margin-left: 1em;
+    margin-top: 0.25em;
+}
+
 .hotkey-list{
     background-color: #666;
     font-size: 1rem;
