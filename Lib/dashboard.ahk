@@ -169,7 +169,7 @@ w_checkbox := root.Add("CheckBox","h20 ys","W as Delete Key")
 w_checkbox.value := w_as_delete
 w_checkbox.OnEvent("Click", setWMode)
 
-auto_recycle_STL_checkbox := root.Add("CheckBox","h20","Auto-recycle STL Files")
+auto_recycle_STL_checkbox := root.Add("CheckBox","h20","Automatic File Deletion")
 auto_recycle_STL_checkbox.value := auto_recycle_STL
 auto_recycle_STL_checkbox.OnEvent("Click", setAutoRecycleSTL)
 

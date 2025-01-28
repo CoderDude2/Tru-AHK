@@ -518,7 +518,11 @@ g::{
 }
 
 b::{
-    cut_with_border()
+    if not WinExist(extrude_window_name){
+        cut_with_border()
+    } else {
+        toggle_extrude_window_reverse_side()
+    }
 }
 
 r::{
