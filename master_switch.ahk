@@ -108,31 +108,6 @@ if SYSTEM_LANGUAGE == "ko"{
     esprit_are_you_sure_text := "&Yes"
 }
 
-#Include %A_ScriptDir%\Lib\util.ahk
-#Include %A_ScriptDir%\Lib\views.ahk
-#Include %A_ScriptDir%\Lib\commands.ahk
-
-#Include %A_ScriptDir%\Lib\updater.ahk
-#Include %A_ScriptDir%\Lib\dashboard.ahk  
-
-if(check_for_update(A_ScriptDir, REMOTE_PATH)){
-    result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
-    if(result == "Yes"){
-        update(REMOTE_PATH)
-    }
-}
-
-if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
-    Run A_ScriptDir "\resources\changelog.html"
-    IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
-}
-
-; ===== Dashboard Menu =====
-A_TrayMenu.Add()
-A_TrayMenu.Add("Open Dashboard", open_dashboard)
-
-SetDefaultMouseSpeed 0
-
 save_completed_files(file_map){
     if FileExist(A_AppData "\tru-ahk\completed_files"){
         FileDelete(A_AppData "\tru-ahk\completed_files")
@@ -142,6 +117,7 @@ save_completed_files(file_map){
         FileAppend(k "==" v "`n", A_AppData "\tru-ahk\completed_files")
     }
 }
+
 loads_completed_files(){
     result := Map()
     if FileExist(A_AppData "\tru-ahk\completed_files"){
@@ -168,10 +144,8 @@ file_map := loads_completed_files()
 save_on_exit_callback(*){
     save_completed_files(file_map)   
 }
-OnExit(save_on_exit_callback)
 
-#SuspendExempt
-SetTimer(update_file_map, 100)
+OnExit(save_on_exit_callback)
 
 update_file_map(){
     Loop Files, get_stl_path() "\*", "F"{
@@ -187,6 +161,34 @@ update_file_map(){
     }
 }
 
+SetTimer(update_file_map, 50)
+
+#Include %A_ScriptDir%\Lib\util.ahk
+#Include %A_ScriptDir%\Lib\views.ahk
+#Include %A_ScriptDir%\Lib\commands.ahk
+
+#Include %A_ScriptDir%\Lib\updater.ahk
+#Include %A_ScriptDir%\Lib\dashboard.ahk  
+
+if(check_for_update(A_ScriptDir, REMOTE_PATH)){
+    result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
+    if(result == "Yes"){
+        update(REMOTE_PATH)
+    }
+}
+
+if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
+    Run A_ScriptDir "\resources\changelog.html"
+    IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
+}
+
+; ===== Dashboard Menu =====
+A_TrayMenu.Add()
+A_TrayMenu.Add("Open Dashboard", open_dashboard)
+
+SetDefaultMouseSpeed 0
+
+#SuspendExempt
 ;G1
 f13::
 ^.::{
