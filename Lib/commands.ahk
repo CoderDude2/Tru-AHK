@@ -249,6 +249,7 @@ extrude_by(length) {
 }
 
 click_client_pos(posX, posY, window_name, block_input := false, return_to_start := true){
+	SetDefaultMouseSpeed 0
 	try{
 		esprit_window_pid := WinGetPID("A")
 		target_window_pid := WinGetPID(window_name)
