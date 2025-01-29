@@ -13,7 +13,6 @@ SetControlDelay -1
 
 SetWorkingDir A_ScriptDir
 
-
 #Include %A_ScriptDir%\Lib\Const_Treeview.ahk
 #Include %A_ScriptDir%\Lib\Const_Process.ahk
 #Include %A_ScriptDir%\Lib\Const_Memory.ahk
@@ -30,10 +29,6 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 }
 
 ; ===== Variables =====
-initial_pos_x := 0
-initial_pos_y := 0
-click_index := 0
-path_tool_active := false
 step_5_tab := 1
 
 showDebug := false
@@ -89,8 +84,10 @@ f17::{
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
 
 ; I want to save the open file when building the NC code.
-~f9::{
+^b::
+f9::{
     save_file()
+    Send("{F9}")
 }
 
 ^f16::{
@@ -464,60 +461,24 @@ f18::{
 
 ; ===== Auto-Complete Margins =====
 ~Escape::{
-    global click_index
-    global path_tool_active
     global passes
 
     passes := 5
-    
-    click_index := 0
-    path_tool_active := false
-
+    draw_path("cancel")
     stop_simulation()
 }
 
 +CapsLock::
 XButton2::{
-    global click_index
-    global path_tool_active
-
-    click_index := 0
-    path_tool_active := true
-    draw_path()
+    draw_path("start")
 }
 
 ~LButton::{
-    global click_index
-    global path_tool_active
-    global initial_pos_x
-    global initial_pos_y
-
-
-    if(path_tool_active == true && click_index < 1){
-        CoordMode("Mouse", "Screen")
-        click_index += 1
-        MouseGetPos(&initial_pos_x, &initial_pos_y)
-    }
+    draw_path("click")
 }
 
 RButton::{
-    global path_tool_active
-    global click_index
-    global initial_pos_x
-    global initial_pos_y
-
-    if(path_tool_active == true){
-        ; Snap to original position and click to complete the path
-        CoordMode("Mouse", "Screen")
-        MouseMove(initial_pos_x, initial_pos_y, 0)
-        Click()
-        path_tool_active := false
-        click_index := 0
-        initial_pos_x := 0
-        initial_pos_y := 0
-    } else {
-        SendInput("{RButton}")
-    }
+    draw_path("complete")
 }
 
 ; ===== Auto-Fill TLOC cases =====

@@ -58,8 +58,39 @@ swap_path(){
 	PostMessage 0x111, 3145 , , , "ESPRIT"
 }
 
-draw_path(){
-	PostMessage 0x111, 3057, , , "ESPRIT"
+draw_path(command){
+    static click_index
+    static path_tool_active
+    static initial_pos_x, initial_pos_y
+    switch command{
+        case "start":
+            click_index := 0
+            path_tool_active := true
+            PostMessage 0x111, 3057, , , "ESPRIT"
+        case "click":
+            if path_tool_active && click_index < 1{
+                CoordMode("Mouse", "Screen")
+                MouseGetPos(&initial_pos_x, &initial_pos_y)
+                click_index += 1
+            }
+        case "cancel":
+            path_tool_active := false
+            click_index := 0
+            initial_pos_x := 0
+            initial_pos_y := 0
+        case "complete":
+             if path_tool_active{
+                CoordMode("Mouse", "Screen")
+                MouseMove(initial_pos_x, initial_pos_y, 0)
+                Click()
+                path_tool_active := false
+                click_index := 0
+                initial_pos_x := 0
+                initial_pos_y := 0
+             } else {
+                Send("{RButton}")
+             }
+    }
 }
 
 toggle_simulation(){
