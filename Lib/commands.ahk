@@ -59,9 +59,9 @@ swap_path(){
 }
 
 draw_path(command){
-    static click_index
-    static path_tool_active
-    static initial_pos_x, initial_pos_y
+    static click_index := 0
+    static path_tool_active := false
+    static initial_pos_x, initial_pos_y := 0
     switch command{
         case "start":
             click_index := 0

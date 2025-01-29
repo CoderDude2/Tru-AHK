@@ -29,8 +29,6 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 }
 
 ; ===== Variables =====
-step_5_tab := 1
-
 showDebug := false
 
 file_map := Map()
