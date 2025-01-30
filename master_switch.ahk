@@ -54,10 +54,6 @@ get_system_language(){
 }
 
 ; global variables
-initial_pos_x := 0
-initial_pos_y := 0
-click_index := 0
-path_tool_active := false
 try{
     USER_LANGUAGE := get_language()
 } catch {
@@ -204,15 +200,11 @@ f13::
 
 ~Escape::{
     BlockInput("MouseMoveOff")
-    global click_index
-    global path_tool_active
-
-    click_index := 0
-    path_tool_active := false
 
     if WinActive("ahk_exe esprit.exe"){
         stop_simulation()
         cancel_all_set()
+        draw_path("cancel")
     }   
 }
 #SuspendExempt False
@@ -762,35 +754,18 @@ f18::{
     save_file()
 }
 
-; ===== Auto-Complete Margins =====
+; ===== Auto-Complete Path =====
 +CapsLock::
 XButton2::{
-    global click_index
-    global path_tool_active
+    draw_path("start")
+}
 
-    click_index := 0
-    path_tool_active := true
-    draw_path()
+~LButton::{
+    draw_path("click")
 }
 
 RButton::{
-    global path_tool_active
-    global click_index
-    global initial_pos_x
-    global initial_pos_y
-
-    if(path_tool_active == true){
-        ; Snap to original position and click to complete the path
-        CoordMode("Mouse", "Screen")
-        MouseMove(initial_pos_x, initial_pos_y, 0)
-        Click()
-        path_tool_active := false
-        click_index := 0
-        initial_pos_x := 0
-        initial_pos_y := 0
-    } else {
-        SendInput("{RButton}")
-    }
+    draw_path("complete")
 }
 
 ; ===== Auto-Fill TLOC cases =====
@@ -1080,19 +1055,6 @@ y::{
 ^Numpad6::{
     try{
         macro_button_text()
-    }
-}
-
-#HotIf path_tool_active
-~LButton::{
-    global click_index
-    global initial_pos_x
-    global initial_pos_y
-
-    if(click_index < 1){
-        CoordMode("Mouse", "Screen")
-        click_index += 1
-        MouseGetPos(&initial_pos_x, &initial_pos_y)
     }
 }
 

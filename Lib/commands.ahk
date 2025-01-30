@@ -49,8 +49,51 @@ swap_path(){
 	PostMessage 0x111, 3145 , , , "ESPRIT"
 }
 
-draw_path(){
-	PostMessage 0x111, 3057, , , "ESPRIT"
+draw_path(command){
+    static click_index
+    static path_tool_active := false
+    static initial_pos_x, initial_pos_y
+    switch command{
+        case "start":
+			if path_tool_active {
+				Send("{Escape}")
+			}
+			Sleep(50)
+            click_index := 0
+            path_tool_active := true
+            PostMessage 0x111, 3057, , , "ESPRIT"
+        case "click":
+			if path_tool_active{
+				if click_index < 1{
+					CoordMode("Mouse", "Screen")
+					MouseGetPos(&initial_pos_x, &initial_pos_y)
+					click_index += 1
+				} else {
+					click_index += 1
+				}
+			}
+        case "cancel":
+            path_tool_active := false
+            click_index := 0
+            initial_pos_x := 0
+            initial_pos_y := 0
+        case "complete":
+             if path_tool_active{
+				if click_index > 2 {
+					CoordMode("Mouse", "Screen")
+					MouseMove(initial_pos_x, initial_pos_y, 0)
+					Click()
+					path_tool_active := false
+					click_index := 0
+					initial_pos_x := 0
+					initial_pos_y := 0
+				} else {
+					MsgBox("Must have 3 or more points to complete a path.")
+				}
+             } else {
+                Send("{RButton}")
+             }
+    }
 }
 
 toggle_simulation(){
