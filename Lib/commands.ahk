@@ -10,6 +10,17 @@ SetDefaultMouseSpeed 0
 SetControlDelay -1
 SetWorkingDir A_ScriptDir
 
+consolelog(msg){
+    msg := msg "`r`n"
+    previous_clipboard := A_Clipboard
+    A_Clipboard := msg
+    ControlFocus("Edit1", "ESPRIT - ")
+    Send("^{End}")
+    PostMessage(0x111, 57637, , "Edit1", "ESPRIT - ")
+    Sleep(200)
+    A_Clipboard := previous_clipboard
+}
+
 highlight_tool(){
 	PostMessage 0x111, 6156 , , "msctls_statusbar322", "ESPRIT"
 }
