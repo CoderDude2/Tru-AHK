@@ -551,6 +551,7 @@ AppsKey::{
         Send("^a0.025")
         Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
+        face()
         unsuppress_operation()
 }
 
@@ -583,6 +584,7 @@ AppsKey::{
         Send("^a0.025")
         Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
+        face()
         unsuppress_operation()
 }
 
