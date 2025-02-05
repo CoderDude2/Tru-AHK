@@ -385,50 +385,46 @@ click_and_return(posX, posY){
 }
 
 double_sided_border() {
-	WinActivate("ESPRIT")
 	PostMessage(0x111, 3130, , , "ESPRIT")
-
-	WinWaitActive("ahk_class #32770")
+	_id := WinWait("Extrude Boss/Cut",,0.1)
+	
 	try{
-		ControlSetText(11, "Edit1", "ahk_class #32770")
-		ControlSetText(1, "Edit4", "ahk_class #32770")
-		ControlSetChecked(0,"Button8","ahk_class #32770")
-		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
+		ControlSetText(11, "Edit1", "ahk_id" _id)
+		ControlSetText(1, "Edit4", "ahk_id" _id)
+		ControlSetChecked(0,"Button8","ahk_id" _id)
+		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
-		MsgBox "Select a line first"
 	}
 }
 
 cut_with_border() {
-	WinActivate("ESPRIT")
-	extrude_tool()
-
-	WinWaitActive("ahk_class #32770")
+	PostMessage(0x111, 3130, , , "ESPRIT")
+	_id := WinWait("Extrude Boss/Cut",,0.1)
 	try{
-		ControlChooseIndex(2,"ComboBox1","ahk_class #32770")
-		ControlSetText(11, "Edit1", "ahk_class #32770")
-		ControlSetText(4, "Edit4", "ahk_class #32770")
-		ControlChooseIndex(2,"ComboBox2","ahk_class #32770")
-		ControlSetChecked(1,"Button8","ahk_class #32770")
-		ControlSetChecked(1,"Button3","ahk_class #32770")
+		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
+		ControlSetText(11, "Edit1", "ahk_id" _id)
+		ControlSetText(4, "Edit4", "ahk_id" _id)
+		ControlChooseIndex(2,"ComboBox2","ahk_id" _id)
+		ControlSetChecked(1,"Button8","ahk_id" _id)
+		ControlSetChecked(1,"Button3","ahk_id" _id)
 	} catch TargetError as err {
-		MsgBox "Select a line first"
+		BlockInput("MouseMoveOff")
+        consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
 extrude_by(length) {
-	if not WinActive("Extrude Boss/Cut"){
-		PostMessage(0x111, 3130, , , "ESPRIT")
-	}
-	
-	WinWaitActive("Extrude Boss/Cut")
+	PostMessage(0x111, 3130, , , "ESPRIT")
+	_id := WinWait("Extrude Boss/Cut",,0.1)
+
 	try{
-		ControlSetText(length, "Edit1", "ahk_class #32770")
-		ControlSetChecked(0,"Button2","ahk_class #32770")
-		ControlChooseIndex(1,"ComboBox1","ahk_class #32770")
+		ControlSetText(length, "Edit1", "ahk_id" _id)
+		ControlSetChecked(0,"Button2", "ahk_id" _id)
+		ControlChooseIndex(1,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
-		MsgBox "Select a line first"
+		BlockInput("MouseMoveOff")
+        consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -460,9 +456,6 @@ draw_straight_border(){
 	Click("Left")
 	Send("20{Enter}0{Enter}{Esc}")
 	Click("Left 2")
-	; Sleep(150)
-	; double_sided_border()
-	; Send("{Enter}")
 	BlockInput("MouseMoveOff")
 }
 
