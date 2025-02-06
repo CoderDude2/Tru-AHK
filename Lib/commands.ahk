@@ -169,7 +169,7 @@ set_bounding_points(){
     deg0()
     Sleep(50)
 
-    set_point(17, 5, 0)
+    set_point(10, 5, 0)
     Sleep(50)
 
     set_point(-5, 5, 0)
@@ -178,7 +178,7 @@ set_bounding_points(){
     set_point(-5, -5, 0)
     Sleep(50)
 
-    set_point(17, -5, 0)
+    set_point(10, -5, 0)
     Sleep(50)
 
     face()
@@ -395,6 +395,7 @@ double_sided_border() {
 		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+        consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 

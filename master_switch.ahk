@@ -32,6 +32,7 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 showDebug := false
 
 file_map := Map()
+step_5_tab := 1
 
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 
@@ -466,7 +467,10 @@ f18::{
     global passes
 
     passes := 5
-    draw_path("cancel")
+
+    if not WinActive("ahk_class #32770","No Intersections P->L"){
+        draw_path("cancel")
+    }
     stop_simulation()
 }
 
@@ -601,19 +605,39 @@ w::{
 }
 
 !Numpad7::{
+    global step_5_tab
     step_5_window_0_deg()
+    Sleep(20)
+    if step_5_tab = 1{
+        step_5_window_90_plus_deg()
+    }
 }
 
 !Numpad9::{
+    global step_5_tab
     step_5_window_120_deg()
+    Sleep(20)
+    if step_5_tab = 1{
+        step_5_window_90_plus_deg()
+    }
 }
 
 !Numpad1::{
+    global step_5_tab
     step_5_window_240_deg()
+    Sleep(20)
+    if step_5_tab = 1{
+        step_5_window_90_plus_deg()
+    }
 }
 
 !Numpad3::{
+    global step_5_tab
     step_5_window_270_deg()
+    Sleep(20)
+    if step_5_tab = 1{
+        step_5_window_90_plus_deg()
+    }
 }
 
 !Numpad0::{
@@ -622,11 +646,15 @@ w::{
 
 
 z::{
+    global step_5_tab
     step_5_window_tab_1()
+    step_5_tab := 1
 }
 
 x::{
+    global step_5_tab
     step_5_window_tab_2()
+    step_5_tab := 2
 }
 
 ^!Up::{
@@ -702,6 +730,7 @@ x::{
         WinActivate("ESPRIT - ")
     }
     macro_button5()
+    step_5_tab := 2
 }
 
 ^Numpad6::{
