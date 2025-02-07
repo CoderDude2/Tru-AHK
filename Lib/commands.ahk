@@ -1,6 +1,17 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+consolelog(msg){
+    msg := msg "`r`n"
+    previous_clipboard := A_Clipboard
+    A_Clipboard := msg
+    ControlFocus("Edit1", "ESPRIT - ")
+    Send("^{End}")
+    PostMessage(0x111, 57637, , "Edit1", "ESPRIT - ")
+    Sleep(200)
+    A_Clipboard := previous_clipboard
+}
+
 open_help(*){
 	Run A_ScriptDir "\resources\keymap.html"
 }
