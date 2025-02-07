@@ -500,9 +500,7 @@ macro_button_1(){
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
 		CoordMode "Mouse", "Client"
-		try{
-			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
-		}
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+20, y+14
 	}
 }
@@ -512,9 +510,7 @@ macro_button_2(){
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
 		CoordMode "Mouse", "Client"
-		try{
-			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
-		}
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+45, y+14
 	}    
 }
@@ -524,9 +520,7 @@ macro_button_3(){
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
 		CoordMode "Mouse", "Client"
-		try{
-			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
-		}
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+68, y+14
 	}
 }
@@ -536,9 +530,7 @@ macro_button_4(){
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
 		CoordMode "Mouse", "Client"
-		try{
-			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
-		}
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+90, y+14
 	}
 }
@@ -548,9 +540,7 @@ macro_button_5(){
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
 		CoordMode "Mouse", "Client"
-		try{
-			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
-		}
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+115, y+14
 	}
 }
@@ -560,9 +550,7 @@ macro_button_text(){
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
 		CoordMode "Mouse", "Client"
-		try{
-			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
-		}
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+135, y+14
 	}
 }
