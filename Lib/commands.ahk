@@ -1,6 +1,17 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+consolelog(msg){
+    msg := msg "`r`n"
+    previous_clipboard := A_Clipboard
+    A_Clipboard := msg
+    ControlFocus("Edit1", "ESPRIT - ")
+    Send("^{End}")
+    PostMessage(0x111, 57637, , "Edit1", "ESPRIT - ")
+    Sleep(200)
+    A_Clipboard := previous_clipboard
+}
+
 open_help(*){
 	Run A_ScriptDir "\resources\keymap.html"
 }
@@ -257,6 +268,7 @@ double_sided_border() {
 		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -274,6 +286,7 @@ cut_with_border() {
 		ControlSetChecked(1,"Button3","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -288,6 +301,7 @@ extrude_by(length) {
 		ControlChooseIndex(1,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
