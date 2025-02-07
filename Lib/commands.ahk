@@ -483,7 +483,8 @@ get_macro_bar(){
 	class_nn := IniRead(PREFS_FILE_PATH, "macro_bar_control", "control")
 
     if class_nn == ""{
-        MsgBox("Macro bar control not set!")
+        MsgBox("Macro bar control not set. Go to the dashboard to set it.", "Error - Macro bar not set", "0x30")
+		return ""
     }
     
     try {

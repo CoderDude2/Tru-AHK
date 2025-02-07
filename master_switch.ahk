@@ -253,6 +253,10 @@ f12::{
 }
 
 ^o::{
+    if get_macro_bar() == ""{
+        return
+    }
+
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
@@ -288,6 +292,10 @@ f12::{
 
 ; G4
 f16::{
+    if get_macro_bar() == ""{
+        return
+    }
+
     selected_file := ""
     For k,v in file_map{
         if v = False and FileExist(get_stl_path() "\" k){
@@ -340,6 +348,10 @@ f16::{
 }
 
 +f16::{
+    if get_macro_bar() == ""{
+        return
+    }
+    
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
