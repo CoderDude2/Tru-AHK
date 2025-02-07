@@ -560,6 +560,8 @@ AppsKey::{
         Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
         face()
+        Sleep(20)
+        face()
         unsuppress_operation()
 }
 
@@ -593,10 +595,13 @@ AppsKey::{
         Click("120, 325") ; Click Re-Generate Operation
         BlockInput("MouseMoveOff")
         face()
+        Sleep(20)
+        face()
         unsuppress_operation()
 }
 
 q::{
+    swap_path()
     generate_path()
 }
 
@@ -722,6 +727,14 @@ x::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
+    ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("14 '경계소재-4'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("15 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
     macro_button4()
 }
 
