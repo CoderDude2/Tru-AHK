@@ -480,7 +480,6 @@ get_project_manager(){
 }
 
 get_macro_bar(){
-	
 	class_nn := IniRead(PREFS_FILE_PATH, "macro_bar_control", "control")
 
     if class_nn == ""{
@@ -490,49 +489,82 @@ get_macro_bar(){
     try {
         macro_bar_control := ControlGetClassNN(class_nn, "ESPRIT - ")
 		return macro_bar_control
-    }	
+    } catch{
+		MsgBox("Macro bar control not found, try setting it in the dashboard.", "Error - Macro bar not found", "0x10")
+		return ""
+	}
 }
 
 macro_button_1(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+20, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		try{
+			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
+		}
+		Click x+20, y+14
+	}
 }
 
 macro_button_2(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+45, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		try{
+			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
+		}
+		Click x+45, y+14
+	}    
 }
 
 macro_button_3(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+68, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		try{
+			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
+		}
+		Click x+68, y+14
+	}
 }
 
 macro_button_4(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+90, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		try{
+			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
+		}
+		Click x+90, y+14
+	}
 }
 
 macro_button_5(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+115, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		try{
+			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
+		}
+		Click x+115, y+14
+	}
 }
 
 macro_button_text(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+135, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		try{
+			ControlGetPos(&x, &y, &w, &h, , "ESPRIT - ")
+		}
+		Click x+135, y+14
+	}
 }
 
 recycle_active_file(){

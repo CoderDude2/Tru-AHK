@@ -760,8 +760,17 @@ XButton2::{
     draw_path("start")
 }
 
-~LButton::{
+LButton::{
     draw_path("click")
+    if(setMacroBar) {
+        MouseGetPos(&posX, &posY, &window, &active_control)
+        setMacroBarControl(active_control)
+    } else if (setProjectManager) {
+        MouseGetPos(&posX, &posY, &window, &active_control)
+        setProjectManagerControl(active_control)
+    } else {
+        Send("{LButton}")
+    }
 }
 
 RButton::{
@@ -1023,51 +1032,25 @@ y::{
 ; ===== Macro Buttons =====
 #HotIf WinActive("ESPRIT")
 ^Numpad1::{
-    try{
-        macro_button_1()
-    }
+    macro_button_1()
 }
 
 ^Numpad2::{
-    try{
-        macro_button_2()
-    }
+    macro_button_2()
 }
 
 ^Numpad3::{
-    try{
-        macro_button_3()
-    }
+    macro_button_3()
 }
 
 ^Numpad4::{
-    try{
-        macro_button_4()
-    }
+    macro_button_4()
 }
 
 ^Numpad5::{
-    try{
-        macro_button_5()
-    }
+    macro_button_5()
 }
 
 ^Numpad6::{
-    try{
-        macro_button_text()
-    }
-}
-
-#HotIf (setMacroBar or setProjectManager)
-LButton::{
-    global 
-    if(setMacroBar) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setMacroBarControl(active_control)
-    }
-
-    if(setProjectManager) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setProjectManagerControl(active_control)
-    }
+    macro_button_text()
 }
