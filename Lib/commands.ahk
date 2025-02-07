@@ -461,7 +461,8 @@ get_project_manager(){
 	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 
 	if class_nn == ""{
-        MsgBox("Project manager control not set!")
+		MsgBox("Project manager control not set. Go to the dashboard to set it.", "Error - Project manager not set", "0x30")
+		return ""
     }
 
 	try {
@@ -474,6 +475,9 @@ get_project_manager(){
 				project_manager_control := ControlGetClassNN(class_nn, "프로젝트 매니저")
 			}
 		}
+	} catch TargetError {
+		MsgBox("Project manager control not found, try setting it in the dashboard.", "Error - Project manager not found", "0x10")
+		return ""
 	}
 
 	return project_manager_control
@@ -490,7 +494,7 @@ get_macro_bar(){
     try {
         macro_bar_control := ControlGetClassNN(class_nn, "ESPRIT - ")
 		return macro_bar_control
-    } catch{
+    } catch TargetError {
 		MsgBox("Macro bar control not found, try setting it in the dashboard.", "Error - Macro bar not found", "0x10")
 		return ""
 	}
