@@ -1,20 +1,9 @@
-#SingleInstance Force
-A_HotkeyInterval := 9900000  ; This is the default value (milliseconds).
-A_MaxHotkeysPerInterval := 9900000
-KeyHistory 0
-ListLines False
-ProcessSetPriority "A"
-SetKeyDelay -1
-SetMouseDelay -1
-SetDefaultMouseSpeed 0
-SetControlDelay -1
-SetWorkingDir A_ScriptDir
-
 consolelog(msg){
     msg := msg "`r`n"
     previous_clipboard := A_Clipboard
     A_Clipboard := msg
     ControlFocus("Edit1", "ESPRIT - ")
+    Sleep(20)
     Send("^{End}")
     PostMessage(0x111, 57637, , "Edit1", "ESPRIT - ")
     Sleep(200)

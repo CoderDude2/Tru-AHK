@@ -6,7 +6,7 @@ A_MaxHotkeysPerInterval := 9900000
 KeyHistory 0
 ListLines False
 ProcessSetPriority "A"
-SetKeyDelay -1
+SetKeyDelay 0
 SetMouseDelay -1
 SetDefaultMouseSpeed 0
 SetControlDelay -1
