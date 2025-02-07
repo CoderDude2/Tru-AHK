@@ -132,40 +132,49 @@ show_milling_tool(){
 }
 
 unsuppress_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached){
-		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32792 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached){
+			PostMessage 0x111, 32792 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32792 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32792 , , project_manager, "프로젝트 매니저"
+			}
 		}
-	}
+	}	
 }
 
 suppress_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached) {
-		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32770 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached) {
+			PostMessage 0x111, 32770 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32770 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32770 , , project_manager, "프로젝트 매니저"
+			}
 		}
 	}
 }
 
 rebuild_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached){
-		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached) {
+			PostMessage 0x111, 32768 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32768 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32768 , , project_manager, "프로젝트 매니저"
+			}
 		}
 	}
 }
@@ -461,12 +470,13 @@ get_project_manager(){
 	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 
 	if class_nn == ""{
-        MsgBox("Project manager control not set!")
+		MsgBox("Project manager control not set. Go to the dashboard to set it.", "Error - Project manager not set", "0x30")
+		return ""
     }
 
 	try {
 		if(is_attached){
-			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT")
+			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT - ")
 		} else {
 			if USER_LANGUAGE == "en"{
 				project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
@@ -474,65 +484,89 @@ get_project_manager(){
 				project_manager_control := ControlGetClassNN(class_nn, "프로젝트 매니저")
 			}
 		}
+	} catch TargetError {
+		MsgBox("Project manager control not found, try setting it in the dashboard.", "Error - Project manager not found", "0x10")
+		return ""
 	}
 
 	return project_manager_control
 }
 
 get_macro_bar(){
-	
 	class_nn := IniRead(PREFS_FILE_PATH, "macro_bar_control", "control")
 
     if class_nn == ""{
-        MsgBox("Macro bar control not set!")
+        MsgBox("Macro bar control not set. Go to the dashboard to set it.", "Error - Macro bar not set", "0x30")
+		return ""
     }
     
     try {
         macro_bar_control := ControlGetClassNN(class_nn, "ESPRIT - ")
 		return macro_bar_control
-    }	
+    } catch TargetError {
+		MsgBox("Macro bar control not found, try setting it in the dashboard.", "Error - Macro bar not found", "0x10")
+		return ""
+	}
 }
 
 macro_button_1(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+20, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+20, y+14
+	}
 }
 
 macro_button_2(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+45, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+45, y+14
+	}    
 }
 
 macro_button_3(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+68, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+68, y+14
+	}
 }
 
 macro_button_4(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+90, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+90, y+14
+	}
 }
 
 macro_button_5(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+115, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+115, y+14
+	}
 }
 
 macro_button_text(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+135, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+135, y+14
+	}
 }
 
 recycle_active_file(){
