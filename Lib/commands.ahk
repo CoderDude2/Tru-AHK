@@ -268,6 +268,7 @@ double_sided_border() {
 		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -285,6 +286,7 @@ cut_with_border() {
 		ControlSetChecked(1,"Button3","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -299,6 +301,7 @@ extrude_by(length) {
 		ControlChooseIndex(1,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
