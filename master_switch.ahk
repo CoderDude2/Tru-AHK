@@ -215,8 +215,7 @@ f17::
     Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
 }
 
-#HotIf WinActive("ahk_exe esprit.exe")
-
+#HotIf (WinActive("ahk_exe esprit.exe") && setMacroBar == False && setProjectManager == False)
 f12::{
     try{
         mode := IniRead(PREFS_FILE_PATH, "f12_mode", "value")    
@@ -351,7 +350,7 @@ f16::{
     if get_macro_bar() == ""{
         return
     }
-    
+
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
@@ -567,21 +566,15 @@ t::{
 }
 
 +a::{
-    try{
-        unsuppress_operation()
-    }
+    unsuppress_operation()
 }
 
 +s::{
-    try {
-        suppress_operation()
-    }
+    suppress_operation()
 }
 
 +r::{
-    try {
-        rebuild_operation()
-    }
+    rebuild_operation()
 }
 
 !x::
@@ -772,17 +765,8 @@ XButton2::{
     draw_path("start")
 }
 
-LButton::{
+~LButton::{
     draw_path("click")
-    if(setMacroBar) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setMacroBarControl(active_control)
-    } else if (setProjectManager) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setProjectManagerControl(active_control)
-    } else {
-        Send("{LButton}")
-    }
 }
 
 RButton::{
@@ -1065,4 +1049,16 @@ y::{
 
 ^Numpad6::{
     macro_button_text()
+}
+
+#HotIf setMacroBar == true
+LButton::{
+    MouseGetPos(&posX, &posY, &window, &active_control)
+    setMacroBarControl(active_control)
+}
+
+#HotIf setProjectManager == true
+LButton::{
+    MouseGetPos(&posX, &posY, &window, &active_control)
+    setProjectManagerControl(active_control)
 }

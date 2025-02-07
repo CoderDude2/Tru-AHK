@@ -132,40 +132,49 @@ show_milling_tool(){
 }
 
 unsuppress_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached){
-		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32792 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached){
+			PostMessage 0x111, 32792 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32792 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32792 , , project_manager, "프로젝트 매니저"
+			}
 		}
-	}
+	}	
 }
 
 suppress_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached) {
-		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32770 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached) {
+			PostMessage 0x111, 32770 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32770 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32770 , , project_manager, "프로젝트 매니저"
+			}
 		}
 	}
 }
 
 rebuild_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached){
-		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached) {
+			PostMessage 0x111, 32768 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32768 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32768 , , project_manager, "프로젝트 매니저"
+			}
 		}
 	}
 }
@@ -467,7 +476,7 @@ get_project_manager(){
 
 	try {
 		if(is_attached){
-			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT")
+			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT - ")
 		} else {
 			if USER_LANGUAGE == "en"{
 				project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
