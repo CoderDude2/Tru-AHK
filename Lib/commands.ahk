@@ -1,6 +1,33 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+show_custom_dialog(msg, title){
+    response := ""
+    custom_dialog_gui := Gui()
+    custom_dialog_gui.BackColor := "0xFFFFFF"
+    custom_dialog_gui.Title := title
+    custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
+
+    custom_dialog_gui.AddButton("x27 y68 w75 h23","Yes").OnEvent("Click", (*) => (
+        response := "Yes"
+        custom_dialog_gui.Hide()
+    ))
+
+    custom_dialog_gui.AddButton("x110 y68 w75 h23","No").OnEvent("Click", (*) => (
+        response := "No"
+        custom_dialog_gui.Hide()
+    ))
+
+    custom_dialog_gui.AddButton("x194 y68 w75 h23","Cancel").OnEvent("Click", (*) => (
+        response := "Cancel"
+        custom_dialog_gui.Hide()
+    ))
+    
+    custom_dialog_gui.Show("w284 h101")
+    WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
+    return response
+}
+
 consolelog(msg){
     msg := msg "`r`n"
     previous_clipboard := A_Clipboard
