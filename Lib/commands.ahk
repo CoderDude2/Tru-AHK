@@ -8,7 +8,7 @@ show_custom_dialog(msg, title){
     custom_dialog_gui.Title := title
     custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
 
-    custom_dialog_gui.AddButton("x27 y68 w75 h23","Yes").OnEvent("Click", (*) => (
+    custom_dialog_gui.AddButton("x27 y68 w75 h23 +Default","Yes").OnEvent("Click", (*) => (
         response := "Yes"
         custom_dialog_gui.Hide()
     ))
@@ -22,7 +22,7 @@ show_custom_dialog(msg, title){
         response := "Cancel"
         custom_dialog_gui.Hide()
     ))
-    
+
     custom_dialog_gui.Show("w284 h101")
     WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
     return response
