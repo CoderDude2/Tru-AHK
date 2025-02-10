@@ -216,6 +216,7 @@ f17::
 }
 
 #HotIf (WinActive("ahk_exe esprit.exe") && setMacroBar == False && setProjectManager == False)
+
 f12::{
     try{
         mode := IniRead(PREFS_FILE_PATH, "f12_mode", "value")    
@@ -273,7 +274,7 @@ f12::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
         if yn != "Yes"{
             return
         }
@@ -318,7 +319,7 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
         if yn != "Yes"{
             return
         }
@@ -368,7 +369,7 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
         if yn != "Yes"{
             return
         }
