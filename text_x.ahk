@@ -2,6 +2,7 @@
 #SingleInstance Force
 
 #Include %A_ScriptDir%\Lib\commands.ahk
+#Include %A_ScriptDir%\Lib\views.ahk
 
 root := Gui()
 log_path := A_ScriptDir "\resources\log"

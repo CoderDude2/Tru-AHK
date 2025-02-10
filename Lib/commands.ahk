@@ -284,8 +284,8 @@ align_tl_aot_cap(){
         }
 }
 
-open_and_start_file(){
-	selected_file := FileSelect(, STL_FILE_PATH)
+open_and_start_file(file_path, &file_map){
+	selected_file := FileSelect(, file_path)
     if(selected_file != ""){
         SplitPath(selected_file, &name)
         file_map[name] := true
@@ -320,10 +320,10 @@ open_and_start_file(){
     }
 }
 
-open_and_start_next_file(){
+open_and_start_next_file(file_path, &file_map){
 	selected_file := ""
     For k,v in file_map{
-        if v = False and FileExist(STL_FILE_PATH "\" k){
+        if v = False and FileExist(file_path "\" k){
             selected_file := k
             file_map[k] := true
             break
@@ -467,12 +467,21 @@ get_case_type(title){
 
 get_case_id(title){
     FoundPos := RegExMatch(title, ",([0-9]+)", &SubPat)
-    return SubPat[1]
+
+    if FoundPos{
+        return SubPat[1]
+    }
+
+    return ""
 }
 
 get_connection_type(title){
     FoundPos := RegExMatch(title, "\(([A-Za-z0-9;-]+),", &SubPat)
-    return StrSplit(SubPat[1], "-")[1]
+    if FoundPos {
+        return StrSplit(SubPat[1], "-")[1]
+    }
+
+    return ""
 }
 
 is_non_engaging(title){
@@ -556,15 +565,15 @@ macro_button3(){
 	CoordMode("Mouse", "Client")
     click_and_return(68, 105)
 
-	window_title := WinGetTitle("A")
-    found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
-    if found_pos{
-        esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
-        stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
-        if FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename){
-            FileRecycle("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename)        
-        }
-    }
+	; window_title := WinGetTitle("A")
+    ; found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
+    ; if found_pos{
+    ;     esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
+    ;     stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
+    ;     if FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename){
+    ;         FileRecycle("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename)        
+    ;     }
+    ; }
 }
 
 macro_button4(){

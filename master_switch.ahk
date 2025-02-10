@@ -16,6 +16,7 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\Const_Treeview.ahk
 #Include %A_ScriptDir%\Lib\Const_Process.ahk
 #Include %A_ScriptDir%\Lib\Const_Memory.ahk
+
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 
@@ -90,10 +91,11 @@ f9::{
 }
 
 ^f16::{
+    global file_map
     ids := WinGetList("ESPRIT - ")
     for this_id in ids{
         WinActivate(this_id)
-        open_and_start_next_file()
+        open_and_start_next_file(STL_FILE_PATH, &file_map)
     }
 }
 
