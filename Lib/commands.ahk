@@ -2,6 +2,15 @@
 SetWorkingDir A_ScriptDir
 
 show_custom_dialog(msg, title){
+    WINDOW_INFO_PATH := PREFS_DIRECTORY "\windows.ini"
+
+    if not FileExist(WINDOW_INFO_PATH){
+        FileAppend("", WINDOW_INFO_PATH)
+    }
+
+    ui_pos_x := IniRead(WINDOW_INFO_PATH, title "_" msg, "x", A_ScreenWidth/2 - 142)
+    ui_pos_y := IniRead(WINDOW_INFO_PATH, title "_" msg, "y", A_ScreenHeight/2 - 51)
+    
     response := ""
     custom_dialog_gui := Gui()
     custom_dialog_gui.BackColor := "0xFFFFFF"
@@ -10,22 +19,37 @@ show_custom_dialog(msg, title){
 
     custom_dialog_gui.AddButton("x27 y68 w75 h23 +Default","Yes").OnEvent("Click", (*) => (
         response := "Yes"
+        save_coordinates()
         custom_dialog_gui.Hide()
     ))
 
     custom_dialog_gui.AddButton("x110 y68 w75 h23","No").OnEvent("Click", (*) => (
         response := "No"
+        save_coordinates()
         custom_dialog_gui.Hide()
     ))
 
     custom_dialog_gui.AddButton("x194 y68 w75 h23","Cancel").OnEvent("Click", (*) => (
         response := "Cancel"
+        save_coordinates()
         custom_dialog_gui.Hide()
+        
     ))
 
-    custom_dialog_gui.Show("w284 h101")
+    custom_dialog_gui.OnEvent("Close", (*) => (
+        save_coordinates()
+        response := ""
+    ))
+    
+    custom_dialog_gui.Show("w284 h101 x" ui_pos_x " y" ui_pos_y)
     WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
     return response
+
+    save_coordinates(){
+        custom_dialog_gui.GetPos(&posx, &posy)
+        IniWrite(posx, WINDOW_INFO_PATH, title "_" msg, "x")
+        IniWrite(posy, WINDOW_INFO_PATH, title "_" msg, "y")
+    }
 }
 
 consolelog(msg){

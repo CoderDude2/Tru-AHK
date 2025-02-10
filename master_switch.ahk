@@ -216,6 +216,7 @@ f17::
 }
 
 #HotIf (WinActive("ahk_exe esprit.exe") && setMacroBar == False && setProjectManager == False)
+
 f12::{
     try{
         mode := IniRead(PREFS_FILE_PATH, "f12_mode", "value")    
