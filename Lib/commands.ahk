@@ -58,6 +58,7 @@ consolelog(msg){
     A_Clipboard := msg
     ControlFocus("Edit1", "ESPRIT - ")
     Send("^{End}")
+	Sleep(100)
     PostMessage(0x111, 57637, , "Edit1", "ESPRIT - ")
     Sleep(200)
     A_Clipboard := previous_clipboard
