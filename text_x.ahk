@@ -5,7 +5,7 @@
 #Include %A_ScriptDir%\Lib\views.ahk
 
 root := Gui()
-log_path := A_ScriptDir "\resources\log"
+log_path := A_AppData "\tru-ahk\log"
 
 root.OnEvent("Close", OnClose)
 onClose(*){

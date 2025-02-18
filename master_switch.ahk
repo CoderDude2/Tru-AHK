@@ -104,8 +104,6 @@ f9::{
     selected_file := FileSelect(, STL_FILE_PATH)
     if(selected_file != ""){
         SplitPath(selected_file, &name)
-        file_map[name] := true
-
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         open_file()
         WinWaitActive("ahk_class #32770")
@@ -116,10 +114,11 @@ f9::{
         if WinExist("ahk_class #32770", "&Yes"){
             WinWaitClose("ahk_class #32770", "&Yes")
         }
-        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
+        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
         if yn != "Yes"{
             return
         }
+        file_map[name] := true
         WinActivate("ESPRIT")
         ; set_bounding_points()
         macro_button1()
@@ -540,66 +539,88 @@ y::{
 
 AppsKey::{
     BlockInput("MouseMove")
+    CoordMode("Mouse", "Screen")
 
-        CoordMode("Mouse", "Screen")
-
-        ; 1st Margin
-        Click("70 170")
-        Click("180, 290") ; Click the Text box and enter 0.025
-        Send("^a0.025")
-        Click("120, 325") ; Click Re-Generate Operation
-        Sleep(20)
-        ; 2nd Margin
-        Click("180 170")
-        Click("180, 290") ; Click the Text box and enter 0.025
-        Send("^a0.025")
-        Click("120, 325") ; Click Re-Generate Operation
-        Sleep(20)
-        ; 3rd Margin
-        Click("70 215")
-        Click("180, 290") ; Click the Text box and enter 0.025
-        Send("^a0.025")
-        Click("120, 325") ; Click Re-Generate Operation
-        BlockInput("MouseMoveOff")
-        face()
-        Sleep(20)
-        face()
-        unsuppress_operation()
+    ; 1st Margin
+    Click("70 170")
+    Click("180, 290") ; Click the Text box and enter 0.025
+    Send("^a0.025")
+    Click("120, 325") ; Click Re-Generate Operation
+    Sleep(20)
+    ; 2nd Margin
+    Click("180 170")
+    Click("180, 290") ; Click the Text box and enter 0.025
+    Send("^a0.025")
+    Click("120, 325") ; Click Re-Generate Operation
+    Sleep(20)
+    ; 3rd Margin
+    Click("70 215")
+    Click("180, 290") ; Click the Text box and enter 0.025
+    Send("^a0.025")
+    Click("120, 325") ; Click Re-Generate Operation
+    BlockInput("MouseMoveOff")
+    face()
+    Sleep(20)
+    face()
+    unsuppress_operation()
+    ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("30 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("31 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("14 '경계소재-4'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("15 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
 }
 
 +AppsKey::{
-        BlockInput("MouseMove")
+    BlockInput("MouseMove")
+    CoordMode("Mouse", "Screen")
 
-        CoordMode("Mouse", "Screen")
-
-        ; 1st Margin
-        Click("70 170")
-        Click("180, 290") ; Click the Text box and enter 0.025
-        Send("^a0.025")
-        Click("120, 325") ; Click Re-Generate Operation
-        Sleep(20)
-        ; 2nd Margin
-        Click("180 170")
-        Click("180, 290") ; Click the Text box and enter 0.025
-        Send("^a0.025")
-        Click("120, 325") ; Click Re-Generate Operation
-        Sleep(20)
-        ; 3rd Margin
-        Click("70 215")
-        Click("180, 290") ; Click the Text box and enter 0.025
-        Send("^a0.025")
-        Click("120, 325") ; Click Re-Generate Operation
-        Sleep(40)
-        ; 4th Margin
-        Click("180 215")
-        Click("180, 290") ; Click the Text box and enter 0.025
-        Send("^a0.025")
-        Click("120, 325") ; Click Re-Generate Operation
-        BlockInput("MouseMoveOff")
-        face()
-        Sleep(20)
-        face()
-        unsuppress_operation()
+    ; 1st Margin
+    Click("70 170")
+    Click("180, 290") ; Click the Text box and enter 0.025
+    Send("^a0.025")
+    Click("120, 325") ; Click Re-Generate Operation
+    Sleep(20)
+    ; 2nd Margin
+    Click("180 170")
+    Click("180, 290") ; Click the Text box and enter 0.025
+    Send("^a0.025")
+    Click("120, 325") ; Click Re-Generate Operation
+    Sleep(20)
+    ; 3rd Margin
+    Click("70 215")
+    Click("180, 290") ; Click the Text box and enter 0.025
+    Send("^a0.025")
+    Click("120, 325") ; Click Re-Generate Operation
+    Sleep(40)
+    ; 4th Margin
+    Click("180 215")
+    Click("180, 290") ; Click the Text box and enter 0.025
+    Send("^a0.025")
+    Click("120, 325") ; Click Re-Generate Operation
+    BlockInput("MouseMoveOff")
+    face()
+    Sleep(20)
+    face()
+    unsuppress_operation()
+    ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("30 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("31 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("14 '경계소재-4'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
+    ControlChooseString("15 '경계소재-5'", "ComboBox2", "ESPRIT - ")
+    Sleep(20)
 }
 
 q::{
@@ -1022,12 +1043,12 @@ f16::{
     For k,v in file_map{
         if v = False and FileExist(STL_FILE_PATH "\" k){
             selected_file := k
-            file_map[k] := true
             break
         }
     }
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
     if found_pos {
+        SplitPath(selected_file, &name)
         open_file()
         WinWaitActive("Open")
         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
@@ -1037,10 +1058,11 @@ f16::{
         if WinExist("ahk_class #32770", "&Yes"){
             WinWaitClose("ahk_class #32770", "&Yes")
         }
-        yn := MsgBox("Is the file loaded?",,"YesNoCancel")
+        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
         if yn != "Yes"{
             return
         }
+        file_map[name] := true
         WinActivate("ESPRIT")
         macro_button1()
         WinWaitActive("CAM Automation")

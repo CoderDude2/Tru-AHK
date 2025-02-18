@@ -1,3 +1,54 @@
+show_custom_dialog(msg, title){
+    WINDOW_INFO_PATH := A_AppData "\tru-ahk\windows.ini"
+
+    if not FileExist(WINDOW_INFO_PATH){
+        FileAppend("", WINDOW_INFO_PATH)
+    }
+
+    ui_pos_x := IniRead(WINDOW_INFO_PATH, title "_" msg, "x", A_ScreenWidth/2 - 142)
+    ui_pos_y := IniRead(WINDOW_INFO_PATH, title "_" msg, "y", A_ScreenHeight/2 - 51)
+    
+    response := ""
+    custom_dialog_gui := Gui("+AlwaysOnTop")
+    custom_dialog_gui.BackColor := "0xFFFFFF"
+    custom_dialog_gui.Title := title
+    custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
+
+    custom_dialog_gui.AddButton("x27 y68 w75 h23 +Default","Yes").OnEvent("Click", (*) => (
+        response := "Yes"
+        save_coordinates()
+        custom_dialog_gui.Hide()
+    ))
+
+    custom_dialog_gui.AddButton("x110 y68 w75 h23","No").OnEvent("Click", (*) => (
+        response := "No"
+        save_coordinates()
+        custom_dialog_gui.Hide()
+    ))
+
+    custom_dialog_gui.AddButton("x194 y68 w75 h23","Cancel").OnEvent("Click", (*) => (
+        response := "Cancel"
+        save_coordinates()
+        custom_dialog_gui.Hide()
+        
+    ))
+
+    custom_dialog_gui.OnEvent("Close", (*) => (
+        save_coordinates()
+        response := ""
+    ))
+    
+    custom_dialog_gui.Show("w284 h101 x" ui_pos_x " y" ui_pos_y)
+    WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
+    return response
+
+    save_coordinates(){
+        custom_dialog_gui.GetPos(&posx, &posy)
+        IniWrite(posx, WINDOW_INFO_PATH, title "_" msg, "x")
+        IniWrite(posy, WINDOW_INFO_PATH, title "_" msg, "y")
+    }
+}
+
 consolelog(msg){
     msg := msg "`r`n"
     previous_clipboard := A_Clipboard
@@ -199,7 +250,7 @@ ds_startup_commands(){
 	}
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+    yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
     if yn != "Yes"{
         return
     }
@@ -221,7 +272,7 @@ asc_startup_commands(){
 	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
     if yn != "Yes"{
         return
     }
@@ -564,16 +615,15 @@ macro_button2(){
 macro_button3(){
 	CoordMode("Mouse", "Client")
     click_and_return(68, 105)
-
-	; window_title := WinGetTitle("A")
-    ; found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
-    ; if found_pos{
-    ;     esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
-    ;     stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
-    ;     if FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename){
-    ;         FileRecycle("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename)        
-    ;     }
-    ; }
+	window_title := WinGetTitle("A")
+    found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
+    if found_pos{
+        esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
+        stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
+        if FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename){
+            FileRecycle("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename)        
+        }
+    }
 }
 
 macro_button4(){
