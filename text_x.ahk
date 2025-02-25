@@ -39,6 +39,25 @@ PROCESS_LAST_ASC := "ListBox4"
 load()
 root.show()
 
+showFadingMessage(msg) {
+    fadingGui := Gui()
+    fadingGui.Opt("+AlwaysOnTop -Caption +ToolWindow")
+    fadingGui.BackColor := "000000"
+    fadingGui.SetFont("s24")
+    CoordText := fadingGui.Add("Text", "cLime", msg)
+    WinSetTransColor(" 255", fadingGui)
+    CoordText.Value := msg
+    fadingGui.Show("x20 y20 NoActivate")
+    Sleep(500)
+    val := 255
+    while val != 0{
+        WinSetTransColor(" " val, fadingGui)
+        val -= 5
+        Sleep(20)
+    }
+    fadingGui.Destroy()
+}
+
 onCopy(*){
     copy_items()
 }
@@ -53,12 +72,23 @@ onDelete(*){
 
 onCreateItem(*){
     case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
-    create_item(case_id, ControlGetClassNN(ControlGetFocus("text_x.exe")))
+    create_item(case_id, ControlGetClassNN(ControlGetFocus("ahk_id" root.Hwnd)))
+}
+
+listbox_contains(value, control){
+    listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
+    Items := ControlGetItems(control, "ahk_id " root.Hwnd)
+    for item in Items{
+        if(item == value){
+            return True
+        }
+    }
+    return False
 }
 
 create_item(value, control){
-    listbox_hwnd := ControlGetHwnd(control, "text_x.exe")
-    Items := ControlGetItems(control, "text_x.exe")
+    listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
+    Items := ControlGetItems(control, "ahk_id " root.Hwnd)
     for item in Items{
         if(item == value){
             return
@@ -68,8 +98,21 @@ create_item(value, control){
     save()
 }
 
+delete_item(value, control) {
+    listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
+    Items := ControlGetItems(control, "ahk_id " root.Hwnd)
+    index := unset
+    for item in Items{
+        if value == item{
+            index := A_Index
+            break
+        }
+    }
+    ControlDeleteItem(index, listbox_hwnd)
+}
+
 delete_items(){
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe")
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("ahk_id " root.Hwnd)), "ahk_id " root.Hwnd)
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd)
     index := selected_listbox.Value
     if(index != ""){
@@ -168,7 +211,7 @@ load(){
 
 copy_items(){
     A_Clipboard := ""
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("ahk_id " root.Hwnd)), "ahk_id " root.Hwnd) ; Get the focused listbox HWND.
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
     listbox_text := selected_listbox.Text
     if(listbox_text != ""){
@@ -183,7 +226,7 @@ cut_items(){
     delete_items()
 }
 
-#HotIf WinActive("text_x.exe", "Text X")
+#HotIf WinActive("ahk_id " root.Hwnd, "Text X")
 Delete::{
     delete_items()
 }
@@ -200,7 +243,7 @@ Escape::{
 }
 
 ^a::{
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("ahk_id " root.Hwnd)), "ahk_id " root.Hwnd) ; Get the focused listbox HWND.
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
     PostMessage 0x0185, 1, -1, selected_listbox ; Selects all items in listbox.
 }
@@ -220,12 +263,13 @@ Escape::{
 ~RButton::{
    CoordMode("Mouse", "Client")
    MouseGetPos(&pos_x, &pos_y, &id)
-    if(WinGetTitle(id) == "text_x.exe"){
+    if(id == root.Hwnd){
         MyMenu.show(pos_x, pos_y)
     }
 }
 
 #HotIf WinActive("ahk_exe esprit.exe")
+DetectHiddenWindows(True)
 +x::{
     esprit_title := WinGetTitle("A")
     case_id:=get_case_id(esprit_title)
@@ -233,11 +277,24 @@ Escape::{
         return
     }
     if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, TEXT_X_ASC)
+        if not listbox_contains(case_id, TEXT_X_ASC){
+            create_item(case_id, TEXT_X_ASC)
+            showFadingMessage(case_id " added to Text-X")
+        } else {
+            delete_item(case_id, TEXT_X_ASC)
+            showFadingMessage(case_id " removed from Text-X")
+        }
     } else {
-        create_item(case_id, TEXT_X)
+        if not listbox_contains(case_id, TEXT_X){
+            create_item(case_id, TEXT_X)
+            showFadingMessage(case_id " added to Text-X")
+        } else {
+            delete_item(case_id, TEXT_X)
+            showFadingMessage(case_id " removed from Text-X")
+        }
     }
     save()
+    
 }
 
 +z::{
@@ -248,9 +305,21 @@ Escape::{
     }
 
     if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, PROCESS_LAST_ASC)
+        if not listbox_contains(case_id, PROCESS_LAST_ASC){
+            create_item(case_id, PROCESS_LAST_ASC)
+            showFadingMessage(case_id " added to Text-X")
+        } else {
+            delete_item(case_id, PROCESS_LAST_ASC)
+            showFadingMessage(case_id " removed from Text-X")
+        }
     } else {
-        create_item(case_id, PROCESS_LAST)
+        if not listbox_contains(case_id, PROCESS_LAST){
+            create_item(case_id, PROCESS_LAST)
+            showFadingMessage(case_id " added to Process-Last")
+        } else {
+            delete_item(case_id, PROCESS_LAST)
+            showFadingMessage(case_id " removed from Process-Last")
+        }
     }
     save()
 }
