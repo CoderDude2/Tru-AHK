@@ -38,3 +38,11 @@ restore_checkpoint(tag, file_name) {
         FileCopy(ESP_CHECKPOINT_DIRECTORY "\" file_name "\" tag "\" file_name, ESP_DIRECTORY, true)
     }
 }
+
+; create_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
+; restore_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
+
+^f18::{
+    inp := InputBox("Enter a tag for the checkpoint", "New Checkpoint")
+    MsgBox(inp.Value == "")
+}

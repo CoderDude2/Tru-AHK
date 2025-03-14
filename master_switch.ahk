@@ -7,85 +7,14 @@ if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
 }
 
-PREFS_FILE_PATH := A_AppData "\tru-ahk\prefs.ini"
-PREFS_DIRECTORY := A_AppData "\tru-ahk"
-
-create_default_prefs_file(){
-	DirCreate(A_AppData "\tru-ahk\")
-	IniWrite("All Instances", PREFS_FILE_PATH, "f12_mode", "value")
-	IniWrite("Line and Border", PREFS_FILE_PATH, "e_key_functionality", "value")
-	IniWrite(true, PREFS_FILE_PATH, "w_as_delete", "value")
-	IniWrite(true, PREFS_FILE_PATH, "auto_recycle_STL", "value")
-	IniWrite("", PREFS_FILE_PATH, "macro_bar_control", "control")
-	IniWrite("", PREFS_FILE_PATH, "project_manager_control", "control")
-	IniWrite(true, PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	IniWrite("C:\Users\" A_UserName "\Desktop\Basic Setting", PREFS_FILE_PATH, "locations", "basic_setting_path")
-	IniWrite("C:\Users\" A_UserName "\Desktop\작업\스캔파일", PREFS_FILE_PATH, "locations", "stl_path")
-	switch A_Language{
-		case 0409:
-			IniWrite("en", PREFS_FILE_PATH, "language", "value")
-		case 0012:
-			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
-		case 0412:
-			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
-	}
-	switch A_Language{
-		case 0409:
-			IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
-		case 0012:
-			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
-		case 0412:
-			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
-	}
-}
+#Include %A_ScriptDir%\Lib\prefs.ahk
 
 if(!FileExist(PREFS_FILE_PATH)){
     create_default_prefs_file()
 }
 
-get_language(){
-	language := IniRead(prefs_file_path, "language", "value")
-	return language
-}
-
-get_system_language(){
-    system_language := IniRead(prefs_file_path, "system_language", "value")
-	return system_language
-}
-
-; global variables
-try{
-    USER_LANGUAGE := get_language()
-} catch {
-    switch A_Language{
-		case 0409:
-			IniWrite("en", PREFS_FILE_PATH, "language", "value")
-            USER_LANGUAGE := "en"
-		case 0012:
-			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
-            USER_LANGUAGE := "ko"
-		case 0412:
-			IniWrite("ko", PREFS_FILE_PATH, "language", "value")
-            USER_LANGUAGE := "ko"
-	}  
-} 
-
-try {
-    SYSTEM_LANGUAGE := get_system_language()
-} catch {
-    switch A_Language{
-		case 0409:
-			IniWrite("en", PREFS_FILE_PATH, "system_language", "value")
-            SYSTEM_LANGUAGE := "en"
-		case 0012:
-			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
-            SYSTEM_LANGUAGE := "ko"
-		case 0412:
-			IniWrite("ko", PREFS_FILE_PATH, "system_language", "value")
-            SYSTEM_LANGUAGE := "ko"
-	}
-    
-}
+USER_LANGUAGE := get_language()
+SYSTEM_LANGUAGE := get_system_language()
 
 REMOTE_PATH := IniRead("config.ini", "info", "remote_path")
 if USER_LANGUAGE == "en" {
@@ -105,20 +34,20 @@ if SYSTEM_LANGUAGE == "ko"{
 }
 
 save_completed_files(file_map){
-    if FileExist(A_AppData "\tru-ahk\completed_files"){
-        FileDelete(A_AppData "\tru-ahk\completed_files")
+    if FileExist(PREFS_DIRECTORY "\completed_files"){
+        FileDelete(PREFS_DIRECTORY "\completed_files")
     }
     
     for k,v in file_map{
-        FileAppend(k "==" v "`n", A_AppData "\tru-ahk\completed_files")
+        FileAppend(k "==" v "`n", PREFS_DIRECTORY "\completed_files")
     }
 }
 
 loads_completed_files(){
     result := Map()
-    if FileExist(A_AppData "\tru-ahk\completed_files"){
-        contents := FileRead(A_AppData "\tru-ahk\completed_files")
-        Loop Read A_AppData "\tru-ahk\completed_files"{
+    if FileExist(PREFS_DIRECTORY "\completed_files"){
+        contents := FileRead(PREFS_DIRECTORY "\completed_files")
+        Loop Read PREFS_DIRECTORY "\completed_files"{
             if A_LoopReadLine != ""{
                 line := StrSplit(A_LoopReadLine, "==")
 
