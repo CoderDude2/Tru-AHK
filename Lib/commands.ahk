@@ -177,11 +177,13 @@ transformation_window(){
 }
 
 unsuppress_operation(){
-	PostMessage 0x111, 32792 , , "SysTreeView321", "Project Manager"
+    _id := WinGetID("Project Manager")
+	PostMessage 0x111, 32792 , , "SysTreeView321", "ahk_id" _id
 }
 
 suppress_operation(){
-	PostMessage 0x111, 32770 , , "SysTreeView321", "Project Manager"
+    _id := WinGetID("Project Manager")
+	PostMessage 0x111, 32770 , , "SysTreeView321", "ahk_id" _id
 }
 
 rebuild_operation(){

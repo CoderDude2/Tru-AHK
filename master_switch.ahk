@@ -86,7 +86,9 @@ f17::{
 ; I want to save the open file when building the NC code.
 ^b::
 f9::{
+    _id := WinGetID("A")
     save_file()
+    ControlSend("{F9}", , "ahk_id" _id)
     Send("{F9}")
 }
 
@@ -562,7 +564,7 @@ AppsKey::{
     face()
     Sleep(20)
     face()
-    unsuppress_operation()
+    ; unsuppress_operation()
     ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
     Sleep(20)
     ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
@@ -608,7 +610,7 @@ AppsKey::{
     face()
     Sleep(20)
     face()
-    unsuppress_operation()
+    ; unsuppress_operation()
     ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
     Sleep(20)
     ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
@@ -747,9 +749,8 @@ x::{
 }
 
 ^Numpad4::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
+    ; unsuppress_operation()
+    Sleep(20)
     ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
     Sleep(20)
     ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
@@ -757,7 +758,6 @@ x::{
     ControlChooseString("14 '경계소재-4'", "ComboBox2", "ESPRIT - ")
     Sleep(20)
     ControlChooseString("15 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
     macro_button4()
 }
 
