@@ -1,8 +1,10 @@
+#SingleInstance Force
 #Requires Autohotkey v2.0
 
-PREFS_FILE_PATH := A_AppData "\tru-ahk\prefs.ini"
+#Include "prefs.ahk"
+
 ESP_DIRECTORY := "C:\Users\TruUser\Desktop\작업\작업저장"
-ESP_CHECKPOINT_DIRECTORY := A_AppData "\tru-ahk\checkpoints"
+ESP_CHECKPOINT_DIRECTORY := PREFS_DIRECTORY "\checkpoints"
 
 if not DirExist(ESP_CHECKPOINT_DIRECTORY){
     DirCreate(ESP_CHECKPOINT_DIRECTORY)
@@ -42,7 +44,22 @@ restore_checkpoint(tag, file_name) {
 ; create_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
 ; restore_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
 
+#HotIf WinActive("ESPRIT - ")
 ^f18::{
-    inp := InputBox("Enter a tag for the checkpoint", "New Checkpoint")
-    MsgBox(inp.Value == "")
+    esprit_title := WinGetTitle("A")
+    FoundPos := RegExMatch(esprit_title, "(\w+-\w+-\d+)__\(([A-Za-z0-9;\-]+),(\d+)\) ?\[?([#0-9-=. ]+)?\]?[_0-9]*?(\.\w+)", &SubPat)
+    
+    if FoundPos{
+        inp := InputBox("Enter a tag for the checkpoint", "New Checkpoint")
+        if inp.Value != "" {
+            create_checkpoint(inp.Value, SubPat[0])
+        }
+    }
+}
+
+^+r::{
+    root := Gui()
+
+    root.Show()
+    WinWaitClose("ahk_id " root.Hwnd)
 }
