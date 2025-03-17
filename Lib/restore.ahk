@@ -42,6 +42,14 @@ restore_checkpoint(tag, file_name) {
     }
 }
 
+load_esp_file(file_name){
+	PostMessage 0x111, 57601 , , , "ESPRIT"
+    WinWaitActive("ahk_class #32770", "&Open")
+    ControlSetText(ESP_DIRECTORY "\" file_name, "Edit1", "ahk_class #32770")
+    ControlSetChecked(0,"Button5","ahk_class #32770")
+    ControlSend("{Enter}", "Button2","ahk_class #32770")
+}
+
 onCheckpointListboxDoubleClick(gui_element, dbl_click_index, file_name, *){
     tag := ""
 
@@ -85,5 +93,6 @@ onCheckpointListboxDoubleClick(gui_element, dbl_click_index, file_name, *){
 
         root.Show()
         WinWaitClose("ahk_id " root.Hwnd)
+        load_esp_file(SubPat[0])
     }
 }
