@@ -58,8 +58,19 @@ restore_checkpoint(tag, file_name) {
 }
 
 ^+r::{
-    root := Gui()
+    esprit_title := WinGetTitle("A")
+    FoundPos := RegExMatch(esprit_title, "(\w+-\w+-\d+)__\(([A-Za-z0-9;\-]+),(\d+)\) ?\[?([#0-9-=. ]+)?\]?[_0-9]*?(\.\w+)", &SubPat)
+    
+    if FoundPos {
+        root := Gui()
+        FileList := []
+        Loop Files, ESP_CHECKPOINT_DIRECTORY "\" SubPat[0] "\*", "D"{
+            FileList.InsertAt(1, A_LoopFileName "`n")
+        }
+        root.AddText(, "Select a checkpoint to restore from")
+        checkpoint_listbox := root.AddListBox("r5 vCheckpointChoice", FileList) 
 
-    root.Show()
-    WinWaitClose("ahk_id " root.Hwnd)
+        root.Show()
+        WinWaitClose("ahk_id " root.Hwnd)
+    }
 }
