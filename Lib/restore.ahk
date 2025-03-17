@@ -36,11 +36,23 @@ create_checkpoint(tag, file_name){
 
 ; Returns the checkpoint with name
 restore_checkpoint(tag, file_name) {
+    MsgBox(file_name "\" tag "\" file_name)
     if FileExist(ESP_CHECKPOINT_DIRECTORY "\" file_name "\" tag "\" file_name){
         FileCopy(ESP_CHECKPOINT_DIRECTORY "\" file_name "\" tag "\" file_name, ESP_DIRECTORY, true)
     }
 }
 
+onCheckpointListboxDoubleClick(gui_element, dbl_click_index, file_name, *){
+    tag := ""
+
+    if InStr(gui_element.Text, "`n"){
+        tag := SubStr(gui_element.Text, 1, StrLen(gui_element.Text) - 1)
+    } else {
+        tag := gui_element.Text
+    }
+   MsgBox(tag, gui_element.Value " " file_name)
+   restore_checkpoint(tag, file_name)
+}
 ; create_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
 ; restore_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
 
@@ -69,6 +81,7 @@ restore_checkpoint(tag, file_name) {
         }
         root.AddText(, "Select a checkpoint to restore from")
         checkpoint_listbox := root.AddListBox("r5 vCheckpointChoice", FileList) 
+        checkpoint_listbox.OnEvent("DoubleClick", onCheckpointListboxDoubleClick.Bind(,, SubPat[0]))
 
         root.Show()
         WinWaitClose("ahk_id " root.Hwnd)
