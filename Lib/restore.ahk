@@ -50,16 +50,44 @@ load_esp_file(file_name){
     ControlSend("{Enter}", "Button2","ahk_class #32770")
 }
 
-onCheckpointListboxDoubleClick(gui_element, dbl_click_index, file_name, *){
-    tag := ""
 
-    if InStr(gui_element.Text, "`n"){
-        tag := SubStr(gui_element.Text, 1, StrLen(gui_element.Text) - 1)
-    } else {
-        tag := gui_element.Text
+
+restore_gui(){
+    esprit_title := WinGetTitle("A")
+    FoundPos := RegExMatch(esprit_title, "(\w+-\w+-\d+)__\(([A-Za-z0-9;\-]+),(\d+)\) ?\[?([#0-9-=. ]+)?\]?[_0-9]*?(\.\w+)", &SubPat)
+
+    if FoundPos{
+        root := Gui()
+        tag := ""
+        
+        root.AddText(, "Select a checkpoint to restore from")
+        FileList := []
+        Loop Files, ESP_CHECKPOINT_DIRECTORY "\" SubPat[0] "\*", "D"{
+            FileList.InsertAt(1, A_LoopFileName "`n")
+        }
+        checkpoint_listbox := root.AddListBox("r5 vCheckpointChoice", FileList) 
+
+        onCheckpointListboxDoubleClick(gui_element, dbl_click_index, file_name, *){
+
+            if InStr(gui_element.Text, "`n"){
+                tag := SubStr(gui_element.Text, 1, StrLen(gui_element.Text) - 1)
+            } else {
+                tag := gui_element.Text
+            }
+            WinClose("ahk_id" root.Hwnd)
+        ;    MsgBox(tag, gui_element.Value " " file_name)
+        ;    restore_checkpoint(tag, file_name)
+        }
+        
+        
+        
+        checkpoint_listbox.OnEvent("DoubleClick", onCheckpointListboxDoubleClick.Bind(,, SubPat[0]))
+
+        root.Show()
+        WinWaitClose("ahk_id " root.Hwnd)
     }
-   MsgBox(tag, gui_element.Value " " file_name)
-   restore_checkpoint(tag, file_name)
+    
+    return tag
 }
 ; create_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
 ; restore_checkpoint("front_turning", "PDO-PL-0556164__(ZV3-CS-TA10,6164).esp")
@@ -80,19 +108,14 @@ onCheckpointListboxDoubleClick(gui_element, dbl_click_index, file_name, *){
 ^+r::{
     esprit_title := WinGetTitle("A")
     FoundPos := RegExMatch(esprit_title, "(\w+-\w+-\d+)__\(([A-Za-z0-9;\-]+),(\d+)\) ?\[?([#0-9-=. ]+)?\]?[_0-9]*?(\.\w+)", &SubPat)
-    
-    if FoundPos {
-        root := Gui()
-        FileList := []
-        Loop Files, ESP_CHECKPOINT_DIRECTORY "\" SubPat[0] "\*", "D"{
-            FileList.InsertAt(1, A_LoopFileName "`n")
-        }
-        root.AddText(, "Select a checkpoint to restore from")
-        checkpoint_listbox := root.AddListBox("r5 vCheckpointChoice", FileList) 
-        checkpoint_listbox.OnEvent("DoubleClick", onCheckpointListboxDoubleClick.Bind(,, SubPat[0]))
 
-        root.Show()
-        WinWaitClose("ahk_id " root.Hwnd)
-        load_esp_file(SubPat[0])
+    tag := restore_gui()
+    if tag != ""{
+        load_esp_file(restore_checkpoint(tag, SubPat[0]))
     }
+    
+    
+    ; if FoundPos {
+    ;             
+    ; }
 }
