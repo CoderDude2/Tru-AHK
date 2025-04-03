@@ -46,6 +46,7 @@ f13::{
 SetTimer(debug, 20)
 SetTimer(update_file_map, 1000)
 
+
 update_file_map(){
     Loop Files, STL_FILE_PATH "\*", "F"{
         if not file_map.Has(A_LoopFileName){
@@ -82,6 +83,34 @@ f17::{
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
+
+Tab::{
+    static esprit_ids := Map()
+    active_index := 1
+    active_id := WinGetID("ESPRIT - ")
+
+    for this_id in WinGetList("ESPRIT - ") {
+        esprit_ids[this_id] := this_id 
+    }
+
+    sorted_ids := []
+    for k,v in esprit_ids {
+        sorted_ids.Push(v)
+    }
+
+    for this_id in sorted_ids {
+        if this_id == active_id {
+            active_index := A_Index
+        }
+    }
+
+    active_index += 1
+    if active_index > sorted_ids.Length {
+        active_index := 1
+    }
+
+    WinActivate("ahk_id" sorted_ids[active_index])
+}
 
 ; I want to save the open file when building the NC code.
 ^b::
