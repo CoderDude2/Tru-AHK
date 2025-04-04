@@ -1,0 +1,9 @@
+1. Check Connection
+2. Front Turning
+3. Face limitation
+4. Layer 13
+5. Step 4
+6. Cross Balls
+7. Margins (maybe)
+8. Text-Placement
+9. Generate NC

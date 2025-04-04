@@ -1,0 +1,10 @@
+connection_check	True
+front_turning		True
+rough_endmills		True
+face_limitation		False
+layer_13		    False
+step_4			    False
+cross_balls		    False
+margins			    False
+text_placement		False
+generate_nc		    False

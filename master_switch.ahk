@@ -101,6 +101,19 @@ f9::{
     }
 }
 
+!f16::{
+    esp_id := WinGetID("ESPRIT - ")
+    esp_pid := WinGetPID("ahk_id" esp_id)
+
+    selected_file := FileSelect(, STL_FILE_PATH)
+    if(selected_file != ""){
+        SplitPath(selected_file, &name, &dir, &ext, &file_name_no_ext)
+        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+        basic_setting := "C:\Users\TruUser\Desktop\\`"Basic Setting`"\" sub_pat[1] ".esp"
+    }
+    Run("esp_helper.ahk " esp_pid " " esp_id " " file_name_no_ext " " basic_setting)
+}
+
 ; G4
 +f16::{
     selected_file := FileSelect(, STL_FILE_PATH)
