@@ -66,7 +66,7 @@ highlight_tool(){
 }
 
 generate_nc(){
-	PostMessage 0x111, 3323, , , "ESPRIT"
+	PostMessage 0x111, 3323, , , "ESPRIT - "
 }
 
 extrude_tool(){

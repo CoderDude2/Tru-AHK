@@ -76,49 +76,20 @@ debug(){
     Suspend
 }
 
-;G5 Key
+; G5 Key
 f17::{
     Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
 }
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
-
-Tab::{
-    static esprit_ids := Map()
-    active_index := 1
-    active_id := WinGetID("ESPRIT - ")
-
-    for this_id in WinGetList("ESPRIT - ") {
-        esprit_ids[this_id] := this_id 
-    }
-
-    sorted_ids := []
-    for k,v in esprit_ids {
-        sorted_ids.Push(v)
-    }
-
-    for this_id in sorted_ids {
-        if this_id == active_id {
-            active_index := A_Index
-        }
-    }
-
-    active_index += 1
-    if active_index > sorted_ids.Length {
-        active_index := 1
-    }
-
-    WinActivate("ahk_id" sorted_ids[active_index])
-}
-
 ; I want to save the open file when building the NC code.
 ^b::
+^f15::
 f9::{
-    _id := WinGetID("A")
+    _id := WinGetID("ESPRIT - ")
     save_file()
-    ControlSend("{F9}", , "ahk_id" _id)
-    Send("{F9}")
+    generate_nc()
 }
 
 ^f16::{
