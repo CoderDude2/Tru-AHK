@@ -1,4 +1,5 @@
 #SingleInstance Off 
+#NoTrayIcon
 SetDefaultMouseSpeed 0
 
 #Include %A_ScriptDir%\Lib\restore.ahk
@@ -18,7 +19,7 @@ file_name := A_Args[3]
 basic_setting := A_Args[4]
 
 
-MsgBox(esp_pid "`n" esp_id "`n" file_name "`n" basic_setting)
+; MsgBox(esp_pid "`n" esp_id "`n" file_name "`n" basic_setting)
 
 if WinGetProcessName("ahk_pid" esp_pid) != "esprit.exe" {
    ExitApp -1 
@@ -204,6 +205,7 @@ ds_startup_commands(esp_pid, esp_id){
 	}
     WinActivate("ahk_id " esp_id)
 	deg0()
+    save_and_create_checkpoint("connection_check", esp_id)
     yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
     if yn != "Yes"{
         return
@@ -212,6 +214,29 @@ ds_startup_commands(esp_pid, esp_id){
 	CoordMode("Mouse", "Client")
 	Click("65 115")
 	base_workplane_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    save_and_create_checkpoint("front_turning", esp_id)
+	WinWaitClose("ahk_id " base_workplane_id)
+    WinWaitActiveTitleWithPID(esp_pid, "Check Rough ML & Create Border Solid")
+    save_and_create_checkpoint("rough_check", esp_id)
+}
+
+asc_startup_commands(esp_pid, esp_id){
+	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
+			Send("{Enter}")
+		}
+	}
+    WinActivate("ahk_id " esp_id)
+	deg0()
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
+    if yn != "Yes"{
+        return
+    }
+	WinActivateTitleWithPID(esp_pid, "STL Rotate")
+	CoordMode("Mouse", "Client")
+	Click("60 147")
+
+    base_workplane_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
 	WinWaitClose("ahk_id " base_workplane_id)
     WinWaitActiveTitleWithPID(esp_pid, "Check Rough ML & Create Border Solid")
 }
@@ -221,6 +246,8 @@ macro_button1(){
     CoordMode("Mouse", "Client")
     click_and_return(25, 105)
 }
+
+
 ; MsgBox(STL_FILE "`n" ESP_FILE "`n" basic_setting "`n" esp_pid " " esp_id)
 open_file()
 
@@ -252,4 +279,8 @@ ControlSend("{Enter}", "Button1", "ahk_id" select_file_to_open)
 switch get_case_type(file_name) {
     case "DS":
         ds_startup_commands(esp_pid, esp_id)
+    case "ASC":
+        asc_startup_commands(esp_pid, esp_id)
+    default:
+        ExitApp
 }

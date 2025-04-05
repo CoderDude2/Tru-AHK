@@ -19,6 +19,7 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
+#Include %A_ScriptDir%\Lib\restore.ahk
 
 if(FileExist("old_master_switch.exe")){
     FileDelete("old_master_switch.exe")
@@ -110,8 +111,21 @@ f9::{
         SplitPath(selected_file, &name, &dir, &ext, &file_name_no_ext)
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         basic_setting := "C:\Users\TruUser\Desktop\\`"Basic Setting`"\" sub_pat[1] ".esp"
+        MsgBox(basic_setting)
     }
-    Run("esp_helper.ahk " esp_pid " " esp_id " " file_name_no_ext " " basic_setting)
+
+    Run("esp_helper.ahk " esp_pid " " esp_id " `"" file_name_no_ext "`" " basic_setting)
+}
+
+^+r::{
+    esprit_title := WinGetTitle("A")
+    FoundPos := RegExMatch(esprit_title, "(\w+-\w+-\d+)__\(([A-Za-z0-9;\-]+),(\d+)\) ?\[?([#0-9-=. ]+)?\]?[_0-9]*?(\.\w+)", &SubPat)
+
+    tag := restore_gui()
+    if tag != ""{
+        restore_checkpoint(tag, SubPat[0])
+        load_esp_file(SubPat[0])
+    }
 }
 
 ; G4
