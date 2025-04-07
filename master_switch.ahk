@@ -79,7 +79,7 @@ debug(){
 
 ; G5 Key
 f17::{
-    Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
+    Run("C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe", , ,&esprit_pid)
 }
 #SuspendExempt False
 
