@@ -4,7 +4,7 @@ SetDefaultMouseSpeed 0
 
 #Include %A_ScriptDir%\Lib\restore.ahk
 #Include %A_ScriptDir%\Lib\views.ahk
-
+#Include %A_ScriptDir%\Lib\nav.ahk
 
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 ESP_FILE_PATH := "C:\Users\TruUser\Desktop\작업\작업저장"
@@ -138,11 +138,16 @@ open_esp_file(esp_file, esp_pid, esp_id) {
     Send("{Enter}")
 }
 
+remove_stl_file() {
+    if FileExist(STL_FILE){
+        FileRecycle(STL_FILE)        
+    }
+}
 
 WinExistTitleWithPID(pid, title, text := unset) {
     ids := WinGetList(title, text?)
     for this_id in ids {
-        if WinGetPID("ahk_id " this_id) == pid {
+        if WinGetPID("ahk_id" this_id) == pid {
             return True
         }
     }
@@ -218,6 +223,7 @@ ds_startup_commands(esp_pid, esp_id){
 	WinWaitClose("ahk_id " base_workplane_id)
     WinWaitActiveTitleWithPID(esp_pid, "Check Rough ML & Create Border Solid")
     save_and_create_checkpoint("rough_check", esp_id)
+    remove_stl_file() 
 }
 
 asc_startup_commands(esp_pid, esp_id){
@@ -239,6 +245,7 @@ asc_startup_commands(esp_pid, esp_id){
     base_workplane_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
 	WinWaitClose("ahk_id " base_workplane_id)
     WinWaitActiveTitleWithPID(esp_pid, "Check Rough ML & Create Border Solid")
+    remove_stl_file() 
 }
 
 macro_button1(){

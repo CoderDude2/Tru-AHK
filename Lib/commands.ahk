@@ -65,6 +65,12 @@ highlight_tool(){
 	PostMessage 0x111, 6156 , , "msctls_statusbar322", "ESPRIT"
 }
 
+remove_stl_file(STL_FILE_PATH) {
+    if FileExist(STL_FILE_PATH){
+        FileRecycle(STL_FILE_PATH)        
+    }
+}
+
 generate_nc(){
 	PostMessage 0x111, 3323, , , "ESPRIT - "
 }
@@ -261,8 +267,13 @@ ds_startup_commands(){
 	Click("65 115")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
-    save_file()
-	macro_button3()
+    esp_title := WinGetTitle("A")
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
 }
 
 asc_startup_commands(){
@@ -283,8 +294,13 @@ asc_startup_commands(){
 	Click("60 147")
 	WinWaitActive("Base Work Plane(Degree)")
 	WinWaitClose("Base Work Plane(Degree)")
-    save_file()
-	macro_button3()
+    esp_title := WinGetTitle("A")
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
 }
 
 tl_aot_startup_commands(){
@@ -418,12 +434,6 @@ open_and_start_next_file(file_path, &file_map){
 
 show_milling_tool(){
 	PostMessage 0x111, 6278 , , , "ESPRIT"
-}
-
-click_and_return(posX, posY){
-	MouseGetPos(&mouse_posX, &mouse_posY, &window, &active_control)
-	Click(posX, posY)
-	MouseMove(mouse_posX, mouse_posY)
 }
 
 double_sided_border() {
@@ -601,83 +611,3 @@ scale_selection(scale){
     ControlSetText(Round(scale, 4), "Edit8", "ahk_class #32770")
     Send("{Enter}")
 }
-
-macro_button1(){
-	WinActivate("ESPRIT - ")
-    CoordMode("Mouse", "Client")
-    click_and_return(25, 105)
-}
-
-macro_button2(){
-	WinActivate("ESPRIT - ")
-	CoordMode("Mouse", "Client")
-    click_and_return(45, 105)
-}
-
-macro_button3(){
-	CoordMode("Mouse", "Client")
-    click_and_return(68, 105)
-	window_title := WinGetTitle("A")
-    found_pos := RegExMatch(window_title, "(?<PDO>\w+-\w+-\d+)__\((?<connection>[A-Za-z0-9-]+),(?<id>\d+)\)\[?(?<angle>[A-Za-z0-9\.\-#= ]+)?\]?(?<file_type>\.\w+)", &SubPat)
-    if found_pos{
-        esp_filename := SubStr(window_title, SubPat.Pos, SubPat.Len)
-        stl_filename := StrSplit(esp_filename, '.esp')[1] . ".stl"
-        if FileExist("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename){
-            FileRecycle("C:\Users\TruUser\Desktop\작업\스캔파일\" stl_filename)        
-        }
-    }
-}
-
-macro_button4(){
-	WinActivate("ESPRIT - ")
-	CoordMode("Mouse", "Client")
-    click_and_return(90, 105)
-}
-
-macro_button5(){
-	WinActivate("ESPRIT - ")
-	CoordMode("Mouse", "Client")
-    click_and_return(111, 105)
-}
-
-macro_button_text(){
-	WinActivate("ESPRIT - ")
-	CoordMode("Mouse", "Client")
-    click_and_return(137, 105)
-}
-
-step_5_window_0_deg(){
-	CoordMode("Mouse", "Screen")
-    click_and_return(69, 170)
-}
-
-step_5_window_120_deg(){
-	CoordMode("Mouse", "Screen")
-    click_and_return(183, 172)
-}
-
-step_5_window_240_deg(){
-	CoordMode("Mouse", "Screen")
-    click_and_return(68, 213)
-}
-
-step_5_window_270_deg(){
-	CoordMode("Mouse", "Screen")
-    click_and_return(181, 226)
-}
-
-step_5_window_90_plus_deg(){
-	CoordMode("Mouse", "Screen")
-    click_and_return(45, 259)
-}
-
-step_5_window_tab_1(){
-	CoordMode("Mouse", "Screen")
-    click_and_return(52, 36)
-}
-
-step_5_window_tab_2(){
-	CoordMode("Mouse", "Screen")
-    click_and_return(131, 39)
-}
-

@@ -18,6 +18,7 @@ SetWorkingDir A_ScriptDir
 #Include %A_ScriptDir%\Lib\Const_Memory.ahk
 
 #Include %A_ScriptDir%\Lib\views.ahk
+#Include %A_ScriptDir%\Lib\nav.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\restore.ahk
 
@@ -111,7 +112,6 @@ f9::{
         SplitPath(selected_file, &name, &dir, &ext, &file_name_no_ext)
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         basic_setting := "C:\Users\TruUser\Desktop\\`"Basic Setting`"\" sub_pat[1] ".esp"
-        MsgBox(basic_setting)
     }
 
     Run("esp_helper.ahk " esp_pid " " esp_id " `"" file_name_no_ext "`" " basic_setting)
@@ -139,7 +139,7 @@ f9::{
         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 0.5)
+        WinWait("ahk_class #32770", "&Yes", 1)
         if WinExist("ahk_class #32770", "&Yes"){
             WinWaitClose("ahk_class #32770", "&Yes")
         }
@@ -813,44 +813,44 @@ x::{
     click_and_return(80, 1020)
 }
 
+; Deg 1
 !1::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(40, 101)
+    step_3_deg1()
 }
 
+; Deg 2 
 !2::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(120, 101)
+    step_3_deg2()
 }
 
+; Deg 3 
 !3::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(200, 101)
+    step_3_deg3()
 }
 
+; +90 Deg
 !q::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(62, 190)
+    step_3_degplus90()
 }
 
+; Toggle Yellow Checkbox
 !w::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(27, 62)
+    step_3_yellowcheckbox()
 }
 
+; Tab 1
 !a::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(31, 35)
+    step_3_tab1()
 }
 
+; Tab 2
 !s::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(86, 40)
+    step_3_tab2()
 }
 
+; Tab 3
 !d::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(126, 40)
+    step_3_tab3()
 }
 
 !Right::{
@@ -1081,7 +1081,7 @@ f16::{
         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 0.5)
+        WinWait("ahk_class #32770", "&Yes", 1)
         if WinExist("ahk_class #32770", "&Yes"){
             WinWaitClose("ahk_class #32770", "&Yes")
         }
