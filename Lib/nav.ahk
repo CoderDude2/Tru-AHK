@@ -4,37 +4,54 @@ click_and_return(posX, posY){
 	MouseMove(mouse_posX, mouse_posY)
 }
 
-macro_button1(){
-	WinActivate("ESPRIT - ")
+macro_button1(title := unset){
+    if IsSet(title) {
+        WinActivate(title)
+    }
     CoordMode("Mouse", "Client")
     click_and_return(25, 105)
 }
 
-macro_button2(){
+macro_button2(title := unset) {
+    if IsSet(title) {
+        WinActivate(title)
+    }
 	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(45, 105)
 }
 
-macro_button3(){
+macro_button3(title := unset){
+    if IsSet(title) {
+        WinActivate(title)
+    }
 	CoordMode("Mouse", "Client")
     click_and_return(68, 105)
 	window_title := WinGetTitle("A")
 }
 
-macro_button4(){
+macro_button4(title := unset){
+    if IsSet(title) {
+        WinActivate(title)
+    }
 	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(90, 105)
 }
 
-macro_button5(){
+macro_button5(title := unset){
+    if IsSet(title) {
+        WinActivate(title)
+    }
 	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(111, 105)
 }
 
-macro_button_text(){
+macro_button_text(title := unset){
+    if IsSet(title) {
+        WinActivate(title)
+    }
 	WinActivate("ESPRIT - ")
 	CoordMode("Mouse", "Client")
     click_and_return(137, 105)

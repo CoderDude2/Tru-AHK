@@ -6,12 +6,15 @@ SetDefaultMouseSpeed 0
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\nav.ahk
 
+
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 ESP_FILE_PATH := "C:\Users\TruUser\Desktop\작업\작업저장"
+
 
 if A_Args.Length < 4 {
    ExitApp -1 
 }
+
 
 esp_pid := A_Args[1]
 esp_id := A_Args[2]
@@ -21,20 +24,25 @@ basic_setting := A_Args[4]
 
 ; MsgBox(esp_pid "`n" esp_id "`n" file_name "`n" basic_setting)
 
+
 if WinGetProcessName("ahk_pid" esp_pid) != "esprit.exe" {
    ExitApp -1 
 }
+
 
 if WinGetProcessName("ahk_id" esp_id) != "esprit.exe" {
    ExitApp -1 
 }
 
+
 if not FileExist(basic_setting) {
     ExitApp -1 
 }
 
+
 STL_FILE := STL_FILE_PATH "\" file_name ".stl"
 ESP_FILE := ESP_FILE_PATH "\" file_name ".esp"
+
 
 show_custom_dialog(msg, title){
     WINDOW_INFO_PATH := A_AppData "\tru-ahk\windows.ini"
@@ -110,22 +118,6 @@ open_file(){
 }
 
 
-click_and_return(posX, posY){
-	MouseGetPos(&mouse_posX, &mouse_posY, &window, &active_control)
-	Click(posX, posY)
-	MouseMove(mouse_posX, mouse_posY)
-}
-
-
-load_basic_setting(basic_setting_path, esp_pid, esp_id) {
-    open_file()
-    open_dialog_id := WinWaitActiveTitleWithPID(esp_pid, "Open")
-    ControlSetText(basic_setting_path, "Edit1", "ahk_id " open_dialog_id)
-    ControlSetChecked(0, "Button5", "ahk_id " open_dialog_id)
-    ControlSend("{Enter}", "Button2", "ahk_id " open_dialog_id)
-}
-
-
 open_esp_file(esp_file, esp_pid, esp_id) {
     WinActivate("ahk_id " esp_id)
     CoordMode("Mouse", "Client")
@@ -138,11 +130,13 @@ open_esp_file(esp_file, esp_pid, esp_id) {
     Send("{Enter}")
 }
 
+
 remove_stl_file() {
     if FileExist(STL_FILE){
         FileRecycle(STL_FILE)        
     }
 }
+
 
 WinExistTitleWithPID(pid, title, text := unset) {
     ids := WinGetList(title, text?)
@@ -226,6 +220,7 @@ ds_startup_commands(esp_pid, esp_id){
     remove_stl_file() 
 }
 
+
 asc_startup_commands(esp_pid, esp_id){
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
 		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
@@ -248,23 +243,16 @@ asc_startup_commands(esp_pid, esp_id){
     remove_stl_file() 
 }
 
-macro_button1(){
-	WinActivate("ahk_id" esp_id)
-    CoordMode("Mouse", "Client")
-    click_and_return(25, 105)
+load_basic_setting(basic_setting){
+    open_file()
+    open_id := WinWaitActiveTitleWithPID(esp_pid, "Open", "&Open")
+    ControlSetText(basic_setting, "Edit1", "ahk_id" open_id)
+    ControlSetChecked(0, "Button5", "ahk_id" open_id)
+    ControlSend("{Enter}", "Button2", "ahk_id" open_id)
 }
 
-
 ; MsgBox(STL_FILE "`n" ESP_FILE "`n" basic_setting "`n" esp_pid " " esp_id)
-open_file()
-
-; === Load Basic Setting ===
-open_id := WinWaitActiveTitleWithPID(esp_pid, "Open", "&Open")
-ControlSetText(basic_setting, "Edit1", "ahk_id" open_id)
-ControlSetChecked(0, "Button5", "ahk_id" open_id)
-ControlSend("{Enter}", "Button2", "ahk_id" open_id)
-
-
+load_basic_setting(basic_setting)
 are_you_sure := WinWaitTitleWithPID(esp_pid, "esprit", "&Yes", 500)
 if are_you_sure {
     WinWaitClose("ahk_id" are_you_sure, "&Yes")
@@ -275,7 +263,7 @@ if yn != "Yes"{
     return
 }
 
-macro_button1()
+macro_button1("ahk_id" esp_id)
 cam_automation := WinWaitActiveTitleWithPID(esp_pid, "CAM Automation", "&Yes")
 ControlSend("{Enter}", "Button1", "ahk_id" cam_automation)
 
@@ -290,4 +278,14 @@ switch get_case_type(file_name) {
         asc_startup_commands(esp_pid, esp_id)
     default:
         ExitApp
+}
+
+
+#HotIf WinActive("ahk_pid" esp_pid)
+^i::{
+    MsgBox(esp_pid)
+}
+
+^+i::{
+    ExitApp
 }
