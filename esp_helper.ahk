@@ -280,6 +280,13 @@ switch get_case_type(file_name) {
         ExitApp
 }
 
+check_window_exist(){
+    if not WinExist("ahk_pid" esp_pid) {
+        ExitApp
+    }
+}
+
+SetTimer(check_window_exist, 100)
 
 #HotIf WinActive("ahk_pid" esp_pid)
 ^i::{

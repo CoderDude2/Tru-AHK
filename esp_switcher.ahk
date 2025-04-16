@@ -1,5 +1,6 @@
 #Requires Autohotkey v2.0
 #SingleInstance Force
+#WinActivateForce
 
 go_to_next_esprit(){
     esprit_ids := Map()

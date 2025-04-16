@@ -1,7 +1,9 @@
-﻿update_angle(angle_index){
-	deg_class := WinGetClass("A")
+﻿update_angle(angle_index, title?){
+    if not IsSet(title) {
+        title := "A"
+    }
 	try {
-		ControlChooseIndex(angle_index, "ComboBox1", "ahk_class " deg_class)
+		ControlChooseIndex(angle_index, "ComboBox1", title)
 	} catch TargetError as err{
 
 	}	
@@ -14,8 +16,8 @@ update_angle_deg(degree){
 	}
 }
 
-get_current_angle() {
-	MsgReply := SendMessage(0x0147, 0, 0, "ComboBox1", "ESPRIT") ; Uses CB_GETCURSEL command to retrieve the current selected value in ComboBox1. This outputs to the ErrorLevel.
+get_current_angle(title?) {
+	MsgReply := SendMessage(0x0147, 0, 0, "ComboBox1", title?) ; Uses CB_GETCURSEL command to retrieve the current selected value in ComboBox1. This outputs to the ErrorLevel.
 	current_angle := MsgReply<<32>>32 ; Convert UInt to Int to have -1 if there is no item selected.
 	current_angle += 1
 	return current_angle
@@ -54,30 +56,50 @@ decrement_90_degrees(){
 	update_angle(new_angle)
 }
 
-face() {
-	WinActivate("ESPRIT")
+face(title?) {
+    if not IsSet(title) {
+        title := "ESPRIT - "
+    }
+	WinActivate(title)
 	update_angle(5)
 }
 
-rear() {
-	WinActivate("ESPRIT")
+rear(title?) {
+    if not IsSet(title) {
+        title := "ESPRIT - "
+    }
+	WinActivate(title)
 	update_angle(6)
 }
 
-deg0() {
-	WinActivate("ESPRIT")
+deg0(title?) {
+    if not IsSet(title) {
+        title := "ESPRIT - "
+    }
+	WinActivate(title)
 	update_angle(7)
 }
 
-deg90() {
+deg90(title?) {
+    if not IsSet(title) {
+        title := "ESPRIT - "
+    }
+	WinActivate(title)
 	update_angle(16)
 }
 
-deg180() {
-	WinActivate("ESPRIT")
+deg180(title?) {
+    if not IsSet(title) {
+        title := "ESPRIT - "
+    }
+	WinActivate(title)
+	update_angle(25)
 }
 
-deg270() {
-	WinActivate("ESPRIT")
+deg270(title?) {
+    if not IsSet(title) {
+        title := "ESPRIT - "
+    }
+	WinActivate(title)
 	update_angle(34)
 }
