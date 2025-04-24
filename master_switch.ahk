@@ -259,7 +259,15 @@ v::{
             WinActivate("ESPRIT - ")
         }
         
-        increment_10_degrees()
+        if WinExist("Extrude Boss/Cut"){
+            _id := WinGetID("Extrude Boss/Cut")
+            current_extrude_length := ControlGetText("Edit1", "ahk_id" _id)
+            if current_extrude_length - 1 != 0 {
+                extrude_by(current_extrude_length - 1)
+            }
+        } else {
+            increment_10_degrees()
+        }
     }
 }
 
@@ -277,7 +285,13 @@ v::{
         if not WinActive("ESPRIT - "){
             WinActivate("ESPRIT - ")
         }
-        decrement_10_degrees()
+        if WinExist("Extrude Boss/Cut"){
+            _id := WinGetID("Extrude Boss/Cut")
+            current_extrude_length := ControlGetText("Edit1", "ahk_id" _id)
+            extrude_by(current_extrude_length + 1)
+        } else {
+            decrement_10_degrees()
+        }
     }
 }
 

@@ -23,16 +23,16 @@ get_current_angle(title?) {
 	return current_angle
 }
 
-increment_10_degrees() {
-	new_angle := get_current_angle() + 1
+increment_10_degrees(title?) {
+	new_angle := get_current_angle(title?) + 1
 	if(new_angle > 42){
 		new_angle := 7
 	}
 	update_angle(new_angle)
 }
 
-decrement_10_degrees(){
-	new_angle := get_current_angle() - 1
+decrement_10_degrees(title?){
+	new_angle := get_current_angle(title?) - 1
 	if(new_angle < 7){
 		new_angle := 42
 	}
@@ -40,16 +40,16 @@ decrement_10_degrees(){
 	update_angle(new_angle)
 }
 
-increment_90_degrees(){
-	new_angle := get_current_angle() + 9
+increment_90_degrees(title?){
+	new_angle := get_current_angle(title?) + 9
 	if (new_angle > 42){
 		new_angle := 6 + new_angle - 42
 	}
 	update_angle(new_angle)
 }
 
-decrement_90_degrees(){
-	new_angle := get_current_angle() - 9
+decrement_90_degrees(title?){
+	new_angle := get_current_angle(title?) - 9
 	if(new_angle < 7) {
 		new_angle := 42 - (-1 * new_angle + 7 - 1)
 	}

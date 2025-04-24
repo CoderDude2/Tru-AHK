@@ -1,3 +1,6 @@
+#Include nav.ahk
+STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
+
 show_custom_dialog(msg, title){
     WINDOW_INFO_PATH := A_AppData "\tru-ahk\windows.ini"
 
@@ -61,8 +64,8 @@ consolelog(msg){
     A_Clipboard := previous_clipboard
 }
 
-highlight_tool(){
-	PostMessage 0x111, 6156 , , "msctls_statusbar322", "ESPRIT"
+highlight_tool(title := "ESPRIT - "){
+	PostMessage 0x111, 6156 , , "msctls_statusbar322", title 
 }
 
 remove_stl_file(STL_FILE_PATH) {
@@ -71,48 +74,48 @@ remove_stl_file(STL_FILE_PATH) {
     }
 }
 
-generate_nc(){
-	PostMessage 0x111, 3323, , , "ESPRIT - "
+generate_nc(title := "ESPRIT - "){
+	PostMessage 0x111, 3323, , , title 
 }
 
-extrude_tool(){
-	PostMessage 0x111, 3130 , , , "ESPRIT"
+extrude_tool(title := "ESPRIT - "){
+	PostMessage 0x111, 3130 , , , title 
 }
 
-circle_tool(){
-	PostMessage 0x111, 3005 , , , "ESPRIT"
+circle_tool(title := "ESPRIT - "){
+	PostMessage 0x111, 3005 , , , title 
 }
 
-line_tool(){
-	PostMessage 0x111, 3018 , , , "ESPRIT"
+line_tool(title := "ESPRIT - "){
+	PostMessage 0x111, 3018 , , , title 
 }
 
-line_tool_2(){
-	PostMessage 0x111, 3019 , , , "ESPRIT"
+line_tool_2(title := "ESPRIT - "){
+	PostMessage 0x111, 3019 , , , title 
 }
 
-trim_tool(){
-	PostMessage 0x111, 3033 , , , "ESPRIT"
+trim_tool(title := "ESPRIT - "){
+	PostMessage 0x111, 3033 , , , title 
 }
 
-three_point_tool(){
-	PostMessage 0x111, 3004 , , , "ESPRIT"
+three_point_tool(title := "ESPRIT - "){
+	PostMessage 0x111, 3004 , , , title 
 }
 
-wireframe_view(){
-	PostMessage 0x111, 6130 , , , "ESPRIT"
+wireframe_view(title := "ESPRIT - "){
+	PostMessage 0x111, 6130 , , , title 
 }
 
-solid_view(){
-	PostMessage 0x111, 6135 , , , "ESPRIT"
+solid_view(title := "ESPRIT - "){
+	PostMessage 0x111, 6135 , , , title 
 }
 
-generate_path(){
-	PostMessage 0x111, 3054 , , , "ESPRIT"
+generate_path(title := "ESPRIT - "){
+	PostMessage 0x111, 3054 , , , title 
 }
 
-swap_path(){
-	PostMessage 0x111, 3145 , , , "ESPRIT"
+swap_path(title := "ESPRIT - "){
+	PostMessage 0x111, 3145 , , , title 
 }
 
 draw_path(command){
@@ -162,24 +165,24 @@ draw_path(command){
     }
 }
 
-toggle_simulation(){
-	PostMessage 0x111, 6268 , , , "ESPRIT"
+toggle_simulation(title := "ESPRIT - "){
+	PostMessage 0x111, 6268 , , , title 
 }
 
-stop_simulation(){
-	PostMessage 0x111, 6276 , , , "ESPRIT"
+stop_simulation(title := "ESPRIT - "){
+	PostMessage 0x111, 6276 , , , title 
 }
 
-save_file(){
-	PostMessage 0x111, 57603 , , , "ESPRIT"
+save_file(title := "ESPRIT - "){
+	PostMessage 0x111, 57603 , , , title 
 }
 
-open_file(){
-	PostMessage 0x111, 57601 , , , "ESPRIT"
+open_file(title := "ESPRIT - "){
+	PostMessage 0x111, 57601 , , , title 
 }
 
-transformation_window(){
-	PostMessage 0x111, 57634 , , , "ESPRIT"
+transformation_window(title := "ESPRIT - "){
+	PostMessage 0x111, 57634 , , , title 
 }
 
 unsuppress_operation(){

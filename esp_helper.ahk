@@ -1,10 +1,11 @@
 #SingleInstance Off 
-#NoTrayIcon
+; #NoTrayIcon
 SetDefaultMouseSpeed 0
 
 #Include %A_ScriptDir%\Lib\restore.ahk
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\nav.ahk
+#Include %A_ScriptDir%\Lib\commands.ahk
 
 
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
@@ -21,6 +22,7 @@ esp_id := A_Args[2]
 file_name := A_Args[3]
 basic_setting := A_Args[4]
 
+ESP_PID_FORMATTED := "ahk_pid" esp_pid
 
 ; MsgBox(esp_pid "`n" esp_id "`n" file_name "`n" basic_setting)
 
@@ -44,80 +46,6 @@ STL_FILE := STL_FILE_PATH "\" file_name ".stl"
 ESP_FILE := ESP_FILE_PATH "\" file_name ".esp"
 
 
-show_custom_dialog(msg, title){
-    WINDOW_INFO_PATH := A_AppData "\tru-ahk\windows.ini"
-
-    if not FileExist(WINDOW_INFO_PATH){
-        FileAppend("", WINDOW_INFO_PATH)
-    }
-
-    ui_pos_x := IniRead(WINDOW_INFO_PATH, title "_" msg, "x", A_ScreenWidth/2 - 142)
-    ui_pos_y := IniRead(WINDOW_INFO_PATH, title "_" msg, "y", A_ScreenHeight/2 - 51)
-    
-    response := ""
-    custom_dialog_gui := Gui("+AlwaysOnTop")
-    custom_dialog_gui.BackColor := "0xFFFFFF"
-    custom_dialog_gui.Title := title
-    custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
-
-    custom_dialog_gui.AddButton("x27 y68 w75 h23 +Default","Yes").OnEvent("Click", (*) => (
-        response := "Yes"
-        save_coordinates()
-        custom_dialog_gui.Hide()
-    ))
-
-    custom_dialog_gui.AddButton("x110 y68 w75 h23","No").OnEvent("Click", (*) => (
-        response := "No"
-        save_coordinates()
-        custom_dialog_gui.Hide()
-    ))
-
-    custom_dialog_gui.AddButton("x194 y68 w75 h23","Cancel").OnEvent("Click", (*) => (
-        response := "Cancel"
-        save_coordinates()
-        custom_dialog_gui.Hide()
-        
-    ))
-
-    custom_dialog_gui.OnEvent("Close", (*) => (
-        save_coordinates()
-        response := ""
-    ))
-    
-    custom_dialog_gui.Show("w284 h101 x" ui_pos_x " y" ui_pos_y)
-    WinWaitClose("ahk_id " custom_dialog_gui.Hwnd)
-    return response
-
-    save_coordinates(){
-        custom_dialog_gui.GetPos(&posx, &posy)
-        IniWrite(posx, WINDOW_INFO_PATH, title "_" msg, "x")
-        IniWrite(posy, WINDOW_INFO_PATH, title "_" msg, "y")
-    }
-}
-
-
-get_case_type(title){
-    if InStr(title, "AOT", true) {
-        return "AOT"
-    } else if InStr(title, "TLOC", true) {
-        return "TLOC"
-    } else if InStr(title, "T-L", true) {
-        return "TLOC"
-    } else if InStr(title, "ASC", true) {
-        return "ASC"
-    } else if InStr(title, "TA", true) {
-        return "DS"
-    } else {
-        return -1
-    }
-}
-
-
-open_file(){
-	PostMessage 0x111, 57601 , , , "ahk_id" esp_id
-}
-
-
 open_esp_file(esp_file, esp_pid, esp_id) {
     WinActivate("ahk_id " esp_id)
     CoordMode("Mouse", "Client")
@@ -128,13 +56,6 @@ open_esp_file(esp_file, esp_pid, esp_id) {
     Sleep(200)
     ControlSetText(esp_file, "Edit1", "ahk_id " select_file_dialog_id)
     Send("{Enter}")
-}
-
-
-remove_stl_file() {
-    if FileExist(STL_FILE){
-        FileRecycle(STL_FILE)        
-    }
 }
 
 
@@ -181,7 +102,7 @@ WinWaitTitleWithPID(pid, title, text := unset, timeout := unset) {
 WinWaitActiveTitleWithPID(pid, title, text := unset){
     while true {
         esp_id := WinWaitActive(title, text?)
-        if WinGetPID("ahk_id " esp_id) == pid {
+        if WinGetPID("ahk_id " esp_id) == esp_pid {
             return esp_id 
         }
     }
@@ -196,7 +117,7 @@ WinWaitCloseTitleWithPID(pid, title, text := unset)  {
 }
 
 
-ds_startup_commands(esp_pid, esp_id){
+ds_startup_commands_pid(esp_pid, esp_id){
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
 		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
 			Send("{Enter}")
@@ -217,11 +138,11 @@ ds_startup_commands(esp_pid, esp_id){
 	WinWaitClose("ahk_id " base_workplane_id)
     WinWaitActiveTitleWithPID(esp_pid, "Check Rough ML & Create Border Solid")
     save_and_create_checkpoint("rough_check", esp_id)
-    remove_stl_file() 
+    remove_stl_file(STL_FILE) 
 }
 
 
-asc_startup_commands(esp_pid, esp_id){
+asc_startup_commands_pid(esp_pid, esp_id){
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
 		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
 			Send("{Enter}")
@@ -240,7 +161,7 @@ asc_startup_commands(esp_pid, esp_id){
     base_workplane_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
 	WinWaitClose("ahk_id " base_workplane_id)
     WinWaitActiveTitleWithPID(esp_pid, "Check Rough ML & Create Border Solid")
-    remove_stl_file() 
+    remove_stl_file(STL_FILE) 
 }
 
 load_basic_setting(basic_setting){
@@ -250,41 +171,43 @@ load_basic_setting(basic_setting){
     ControlSetChecked(0, "Button5", "ahk_id" open_id)
     ControlSend("{Enter}", "Button2", "ahk_id" open_id)
 }
-
-; MsgBox(STL_FILE "`n" ESP_FILE "`n" basic_setting "`n" esp_pid " " esp_id)
-load_basic_setting(basic_setting)
-are_you_sure := WinWaitTitleWithPID(esp_pid, "esprit", "&Yes", 500)
-if are_you_sure {
-    WinWaitClose("ahk_id" are_you_sure, "&Yes")
-}
-
-yn := MsgBox("Is the basic setting loaded?", , "YesNoCancel")
-if yn != "Yes"{
-    return
-}
-
-macro_button1("ahk_id" esp_id)
-cam_automation := WinWaitActiveTitleWithPID(esp_pid, "CAM Automation", "&Yes")
-ControlSend("{Enter}", "Button1", "ahk_id" cam_automation)
-
-select_file_to_open := WinWaitActiveTitleWithPID(esp_pid, "Select file to open", "&Open")
-ControlSetText(STL_FILE, "Edit1", "ahk_id" select_file_to_open) 
-ControlSend("{Enter}", "Button1", "ahk_id" select_file_to_open)
-
-switch get_case_type(file_name) {
-    case "DS":
-        ds_startup_commands(esp_pid, esp_id)
-    case "ASC":
-        asc_startup_commands(esp_pid, esp_id)
-    default:
-        ExitApp
-}
-
 check_window_exist(){
     if not WinExist("ahk_pid" esp_pid) {
         ExitApp
     }
 }
+; MsgBox(STL_FILE "`n" ESP_FILE "`n" basic_setting "`n" esp_pid " " esp_id)
+init_file() {
+    load_basic_setting(basic_setting)
+    are_you_sure := WinWaitTitleWithPID(esp_pid, "esprit", "&Yes", 500)
+    if are_you_sure {
+        WinWaitClose("ahk_id" are_you_sure, "&Yes")
+    }
+
+    yn := MsgBox("Is the basic setting loaded?", , "YesNoCancel")
+    if yn != "Yes"{
+        return
+    }
+
+    macro_button1("ahk_id" esp_id)
+    cam_automation := WinWaitActiveTitleWithPID(esp_pid, "CAM Automation", "&Yes")
+    ControlSend("{Enter}", "Button1", "ahk_id" cam_automation)
+
+    select_file_to_open := WinWaitActiveTitleWithPID(esp_pid, "Select file to open", "&Open")
+    ControlSetText(STL_FILE, "Edit1", "ahk_id" select_file_to_open) 
+    ControlSend("{Enter}", "Button1", "ahk_id" select_file_to_open)
+
+    switch get_case_type(file_name) {
+        case "DS":
+            ds_startup_commands_pid(esp_pid, esp_id)
+        case "ASC":
+            asc_startup_commands_pid(esp_pid, esp_id)
+        default:
+            ExitApp
+    }
+}
+
+init_file()
 
 SetTimer(check_window_exist, 100)
 
@@ -295,4 +218,88 @@ SetTimer(check_window_exist, 100)
 
 ^+i::{
     ExitApp
+}
+
+; ===== View Controls=====
+
+a::{
+    try{
+        deg0("ahk_id" esp_id)
+    }
+}
+
+s::{
+    try{
+        deg90("ahk_id" esp_id)
+    }
+}
+
+d::{
+    try{
+        deg180("ahk_id" esp_id)
+    }
+}
+
+f::{
+    try{
+        deg270("ahk_id" esp_id)
+    }
+}
+
+c::{
+    try{
+        face("ahk_id" esp_id)
+    }
+}
+
+v::{
+    try{
+        rear("ahk_id" esp_id)
+    }
+}
+
+!WheelDown::{
+    try{
+        if not WinActive("ahk_id" esp_id){
+            WinActivate("ahk_id" esp_id)
+        }
+        
+        increment_10_degrees("ahk_id" esp_id)
+    }
+}
+
++!WheelDown::{
+    try{
+        if not WinActive("ahk_id" esp_id){
+            WinActivate("ahk_id" esp_id)
+        }
+        increment_90_degrees("ahk_id" esp_id)
+    }
+}
+
+!WheelUp::{
+    try{
+        if not WinActive("ahk_id" esp_id){
+            WinActivate("ahk_id" esp_id)
+        }
+        decrement_10_degrees("ahk_id" esp_id)
+    }
+}
+
++!WheelUp::{
+    try{
+        if not WinActive("ahk_id" esp_id){
+            WinActivate("ahk_id" esp_id)
+        }
+        decrement_90_degrees("ahk_id" esp_id)
+    }
+}
+
+f14::{
+    solid_view("ahk_id" esp_id)
+}
+
+; Tilde(~) key
+`::{
+    wireframe_view("ahk_id" esp_id)
 }
