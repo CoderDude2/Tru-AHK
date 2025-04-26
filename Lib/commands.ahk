@@ -196,7 +196,8 @@ suppress_operation(){
 }
 
 rebuild_operation(){
-	PostMessage 0x111, 32768 , , "SysTreeView321", "Project Manager"
+    _id := WinGetID("Project Manager")
+	PostMessage 0x111, 32768 , , "SysTreeView321", "ahk_id" _id
 }
 
 set_point(x, y, z){

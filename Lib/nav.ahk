@@ -27,7 +27,6 @@ macro_button3(title := unset){
     }
 	CoordMode("Mouse", "Client")
     click_and_return(68, 105)
-	window_title := WinGetTitle("A")
 }
 
 macro_button4(title := unset){

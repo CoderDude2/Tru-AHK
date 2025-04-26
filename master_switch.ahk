@@ -95,11 +95,38 @@ f9::{
 }
 
 ^f16::{
-    global file_map
-    ids := WinGetList("ESPRIT - ")
-    for this_id in ids{
-        WinActivate(this_id)
-        open_and_start_next_file(STL_FILE_PATH, &file_map)
+    selected_file := ""
+    For k,v in file_map{
+        if v = False and FileExist(STL_FILE_PATH "\" k){
+            selected_file := k
+            break
+        }
+    }
+    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    if found_pos {
+        SplitPath(selected_file, &name)
+        open_file()
+        WinWaitActive("Open")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+        ControlSetChecked(0,"Button5","ahk_class #32770")
+        ControlSend("{Enter}", "Button2","ahk_class #32770")
+        WinWait("ahk_class #32770", "&Yes", 1)
+        if WinExist("ahk_class #32770", "&Yes"){
+            WinWaitClose("ahk_class #32770", "&Yes")
+        }
+        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
+        if yn != "Yes"{
+            return
+        }
+        file_map[name] := true
+        WinActivate("ESPRIT")
+        macro_button1()
+        WinWaitActive("CAM Automation")
+        Send("{Enter}")
+        WinWaitActive("Select file to open")
+        Sleep(200)
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
     }
 }
 
@@ -185,17 +212,17 @@ LWin::Delete
 
 ; ===== Hotstrings =====
 :*:3-1::{
-   formatted_angle := (get_current_angle() - 7) * 10
+   formatted_angle := (get_current_angle("ESPRIT - ") - 7) * 10
    Send "3-1. ROUGH_ENDMILL_" formatted_angle "DEG"
 }
 
 :*:3-2::{
-   formatted_angle := (get_current_angle() - 7) * 10
+   formatted_angle := (get_current_angle("ESPRIT - ") - 7) * 10
    Send "3-2. ROUGH_ENDMILL_" formatted_angle "DEG"
 }
 
 :*:3-3::{
-   formatted_angle := (get_current_angle() - 7) * 10
+   formatted_angle := (get_current_angle("ESPRIT - ") - 7) * 10
    Send "3-3. ROUGH_ENDMILL_" formatted_angle "DEG"
 }
 
@@ -304,6 +331,7 @@ v::{
     }
 }
 
+; ===== Controls =====
 f14::{
     solid_view()
 }
@@ -313,7 +341,6 @@ f14::{
     wireframe_view()
 }
 
-; ===== Controls =====
 t::{
     transformation_window()
 }
