@@ -2,7 +2,6 @@
 #SingleInstance Off
 
 SetDefaultMouseSpeed(0)
-DetectHiddenWindows(1)
 
 #Include Lib\views.ahk
 #Include Lib\util.ahk
@@ -377,14 +376,25 @@ remove_stl_file(STL_FILE_PATH) {
 
 ds_startup_commands(){
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
-		if WinActiveTitleWithPID(esp_pid, "esprit", "&Yes") or WinActiveTitleWithPID(esp_pid, "esprit", "OK") or WinActiveTitleWithPID(esp_pid, "Direction Check", "OK"){
-			Send("{Enter}")
-		}
+        win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+        if win_1 {
+            ControlSend("{Enter}", , "ahk_id" win_1)
+        }
+
+        win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+        if win_2 {
+            ControlSend("{Enter}", , "ahk_id" win_2)
+        }
+
+        win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+        if win_3 {
+            ControlSend("{Enter}", , "ahk_id" win_3)
+        }
 	}
     stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
     WinActivate("ahk_id" esp_id)
 	deg0("ahk_id" esp_id)
-    yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
+    yn := MsgBox("Is the connection correct?", "Tru-AHK", "YesNoCancel")
     if yn != "Yes"{
         return
     }
@@ -404,14 +414,25 @@ ds_startup_commands(){
 
 asc_startup_commands(){
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
-		if WinActiveTitleWithPID(esp_pid, "esprit", "&Yes") or WinActiveTitleWithPID(esp_pid, "esprit", "OK") or WinActiveTitleWithPID(esp_pid, "Direction Check", "OK"){
-			Send("{Enter}")
-		}
+        win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+        if win_1 {
+            ControlSend("{Enter}", , "ahk_id" win_1)
+        }
+
+        win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+        if win_2 {
+            ControlSend("{Enter}", , "ahk_id" win_2)
+        }
+
+        win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+        if win_3 {
+            ControlSend("{Enter}", , "ahk_id" win_3)
+        }
 	}
 	stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
 	WinActivate("ahk_id" esp_id)
-	deg0()
-	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
+	deg0("ahk_id" esp_id)
+	yn := MsgBox("Is the connection correct?", "Tru-AHK", "YesNoCancel")
     if yn != "Yes"{
         return
     }
@@ -431,9 +452,20 @@ asc_startup_commands(){
 
 tl_aot_startup_commands(){
     while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
-		if WinActiveTitleWithPID(esp_pid, "esprit", "&Yes") or WinActiveTitleWithPID(esp_pid, "esprit", "OK") or WinActiveTitleWithPID(esp_pid, "Direction Check", "OK"){
-			Send("{Enter}")
-		}
+        win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+        if win_1 {
+            ControlSend("{Enter}", , "ahk_id" win_1)
+        }
+
+        win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+        if win_2 {
+            ControlSend("{Enter}", , "ahk_id" win_2)
+        }
+
+        win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+        if win_3 {
+            ControlSend("{Enter}", , "ahk_id" win_3)
+        }
 	}
     WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
     WinActivate("ahk_id" esp_id)
@@ -1271,15 +1303,16 @@ f16::{
     if found_pos {
         SplitPath(selected_file, &name)
         open_file()
-        open_id := WinWaitActiveTitleWithPID(esp_pid, "Open")
+        WinWaitTitleWithPID(esp_pid, "Open", "&Open")
+        open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_id" open_id)
         ControlSetChecked(0,"Button5","ahk_id" open_id)
         ControlSend("{Enter}", "Button2","ahk_id" open_id)
-        WinWaitTitleWithPID(esp_pid, "ahk_class #32770", "&Yes", 1)
-        if WinExistTitleWithPID(esp_pid, "ahk_class #32770", "&Yes"){
-            WinWaitCloseTitleWithPID(esp_pid, "ahk_class #32770", "&Yes")
+        are_you_sure_id := WinWaitTitleWithPID(esp_pid, "ahk_class #32770", "&Yes", 1)
+        if are_you_sure_id {
+            WinWaitClose("ahk_id" are_you_sure_id)
         }
-        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
+        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel")
         if yn != "Yes"{
             return
         }

@@ -27,18 +27,19 @@ WinActivateTitleWithPID(pid, title, text := unset){
     for this_id in ids {
         if WinGetPID("ahk_id " this_id) == pid {
             WinActivate("ahk_id " this_id)
-            return
+            return this_id
         }
     }
+    return 0
 }
 
 
-WinWaitTitleWithPID(pid, title, text := unset, timeout := unset) {
+WinWaitTitleWithPID(pid, title, text := unset, timeout := unset) {  
     milliseconds := 0
     while True {
         if IsSet(timeout) {
-            if milliseconds >= timeout {
-                return
+            if milliseconds >= (timeout * 1000){
+                return 0
             }
         }
 
@@ -48,17 +49,20 @@ WinWaitTitleWithPID(pid, title, text := unset, timeout := unset) {
         milliseconds += 10
         Sleep(10)
     }
+    return 0
 }
 
 
 WinActiveTitleWithPID(pid, title, text := unset){
     win := WinActive("A")
-    active_pid := WinGetPID(win)
-    active_id := WinGetID(win)
-    active_title := WinGetTitle(win)
+    if win {
+        active_pid := WinGetPID(win)
+        active_id := WinGetID(win)
+        active_title := WinGetTitle(win)
 
-    if active_pid == pid && active_title == title {
-        return active_id
+        if active_pid == pid && active_title == title {
+            return active_id
+        }
     }
 
     return 0
