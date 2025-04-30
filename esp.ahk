@@ -1339,3 +1339,46 @@ f16::{
         }
     }
 }
+
++f16::{
+    selected_file := FileSelect(, STL_FILE_PATH)
+    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    if(selected_file != "" and found_pos){
+        SplitPath(selected_file, &name)
+        open_file()
+        WinWaitTitleWithPID(esp_pid, "Open", "&Open")
+        open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
+        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_id" open_id)
+        ControlSetChecked(0,"Button5","ahk_id" open_id)
+        ControlSend("{Enter}", "Button2","ahk_id" open_id)
+        are_you_sure_id := WinWaitTitleWithPID(esp_pid, "ahk_class #32770", "&Yes", 1)
+        if are_you_sure_id {
+            WinWaitClose("ahk_id" are_you_sure_id)
+        }
+        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel")
+        if yn != "Yes"{
+            return
+        }
+        file_map[name] := true
+        WinActivate("ahk_id" esp_id)
+        macro_button1("ahk_id" esp_id)
+        WinWaitActiveTitleWithPID(esp_pid, "CAM Automation")
+        Send("{Enter}")
+        WinWaitActiveTitleWithPID(esp_pid, "Select file to open")
+        Sleep(200)
+        ControlSetText(selected_file, "Edit1", "Select file to open")
+        Send("{Enter}")
+        switch get_case_type(selected_file) {
+            case "DS":
+                ds_startup_commands()
+            case "ASC":
+                asc_startup_commands()
+            case "TLOC": 
+                tl_aot_startup_commands()
+            case "AOT":
+                tl_aot_startup_commands()
+            default: 
+                return
+        }
+    }
+}
