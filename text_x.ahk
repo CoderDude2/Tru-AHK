@@ -94,7 +94,7 @@ showFadingMessage(msg) {
     WinSetTransColor(" 255", fadingGui)
     CoordText.Value := msg
     fadingGui.Show("x" left+20 " " "y" top+20 " " "NoActivate")
-    Sleep(500)
+    Sleep(100)
     val := 255
     while val != 0{
         WinSetTransColor(" " val, fadingGui)
