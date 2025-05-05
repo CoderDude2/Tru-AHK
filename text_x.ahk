@@ -4,7 +4,7 @@
 
 #Include %A_ScriptDir%\Lib\util.ahk
 
-root := Gui("+Resize +MinSize224x410")
+root := Gui("+Resize +MinSize296x375")
 log_path := A_ScriptDir "\resources\log"
 
 root.OnEvent("Close", onCloseText)
@@ -24,26 +24,46 @@ MyMenu.Add("Copy          Ctrl+C", onCopy)
 MyMenu.Add("Cut             Ctrl+X", onCut)
 MyMenu.Add("Delete         Del", onDelete)
 
+non_library_count := 0
+non_library_asc_count := 0
+non_library_aot_count := 0
+
 tab.UseTab("Text X")
-root.AddText(,"Text X")
+root.AddText("Section","Text X")
 text_x_lb := root.AddListBox("r10 vtext_x Sort Multi",[])
 root.AddText(,"Text X ASC")
 text_x_asc_lb := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
 
 tab.UseTab("Process Last")
-root.AddText(,"Process Last")
+root.AddText("Section","Process Last")
 process_last_lb := root.AddListBox("r10 vprocess_last Sort Multi",[])
 root.AddText(,"Process Last ASC")
 process_last_asc_lb := root.AddListBox("r10 vprocess_last_asc Sort Multi",[])
 
-TEXT_X := "ListBox1"
-PROCESS_LAST := "ListBox2"
+tab.UseTab("Non-Library")
+non_library_text := root.AddText("Section","Non-Library: " non_library_count)
+non_library_lb := root.AddListBox("r10 vnon_library Sort Multi",[])
 
-TEXT_X_ASC := "ListBox3"
+non_library_asc_text := root.AddText("","Non-Library ASC: " non_library_asc_count)
+non_library_asc_lb := root.AddListBox("r10 vnon_library_asc Sort Multi",[])
+
+non_library_aot_text := root.AddText("ys","Non-Library AOT/TL: " non_library_aot_count)
+non_library_aot_lb := root.AddListBox("r10 vnon_library_aot Sort Multi",[])
+
+
+TEXT_X := "ListBox1"
+TEXT_X_ASC := "ListBox2"
+
+PROCESS_LAST := "ListBox3"
 PROCESS_LAST_ASC := "ListBox4"
+
+NON_LIBRARY := "ListBox5"
+NON_LIBRARY_ASC := "ListBox6"
+NON_LIBRARY_AOT := "ListBox7"
 
 load()
 root.show()
+
 
 get_active_monitor(&left, &top, &right, &bottom){
     CoordMode "Mouse", "Screen"
@@ -188,9 +208,27 @@ save(){
     For Item in ControlGetItems(process_last_asc_lb){
         FileAppend(Item "`n", log_path)
     }
+
+    FileAppend("non-library`n", log_path)
+    For Item in ControlGetItems(non_library_lb){
+        FileAppend(Item "`n", log_path)
+    }
+
+    FileAppend("non-library-asc`n", log_path)
+    For Item in ControlGetItems(non_library_asc_lb){
+        FileAppend(Item "`n", log_path)
+    }
+
+    FileAppend("non-library-aot`n", log_path)
+    For Item in ControlGetItems(non_library_aot_lb){
+        FileAppend(Item "`n", log_path)
+    }
 }
 
 load(){
+    global non_library_count
+    global non_library_asc_count
+    global non_library_aot_count
     reset_file := False
     current_list := ""
     if(FileExist(log_path)){
@@ -215,6 +253,12 @@ load(){
                     current_list := "text-x-asc"
                 case "process-last-asc":
                     current_list := "process-last-asc"
+                case "non-library":
+                    current_list := "non-library"
+                case "non-library-asc":
+                    current_list := "non-library-asc"
+                case "non-library-aot":
+                    current_list := "non-library-aot"
             }
 
             if isInteger(A_LoopReadLine){
@@ -227,6 +271,18 @@ load(){
                         text_x_asc_lb.Add([A_LoopReadLine])
                     case "process-last-asc":
                         process_last_asc_lb.Add([A_LoopReadLine])
+                    case "non-library":
+                        non_library_lb.Add([A_LoopReadLine])
+                        non_library_count += 1
+                        non_library_text.Text := "Non-Library: " non_library_count
+                    case "non-library-asc":
+                        non_library_asc_lb.Add([A_LoopReadLine])
+                        non_library_asc_count += 1
+                        non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
+                    case "non-library-aot":
+                        non_library_aot_lb.Add([A_LoopReadLine])
+                        non_library_aot_count += 1
+                        non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
                 }
             }
         }
@@ -261,6 +317,7 @@ cut_items(){
 }
 
 #HotIf WinActive("ahk_id " root.Hwnd, "Text X")
+BackSpace::
 Delete::{
     delete_items()
 }
@@ -353,6 +410,56 @@ DetectHiddenWindows(True)
         } else {
             delete_item(case_id, PROCESS_LAST)
             showFadingMessage(case_id " removed from Process-Last")
+        }
+    }
+    save()
+}
+
++n::{
+    global non_library_count
+    global non_library_asc_count
+    global non_library_aot_count
+    esprit_title := WinGetTitle("A")
+    case_id:=get_case_id(esprit_title)
+    if(case_id = ""){
+        return
+    }
+
+    if(get_case_type(esprit_title) == "ASC"){
+        if not listbox_contains(case_id, NON_LIBRARY_ASC){
+            create_item(case_id, NON_LIBRARY_ASC)
+            non_library_asc_count += 1
+            non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
+            showFadingMessage(case_id " added to Non-Library")
+        } else {
+            delete_item(case_id, NON_LIBRARY_ASC)
+            non_library_asc_count -= 1
+            non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
+            showFadingMessage(case_id " removed from Non-Library")
+        }
+    } else if (get_case_type(esprit_title) == "AOT" or get_case_type(esprit_title) == "TLOC"){
+        if not listbox_contains(case_id, NON_LIBRARY_AOT){
+            create_item(case_id, NON_LIBRARY_AOT)
+            non_library_aot_count += 1
+            non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
+            showFadingMessage(case_id " added to Non-Library")
+        } else {
+            delete_item(case_id, NON_LIBRARY_AOT)
+            non_library_aot_count -= 1
+            non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
+            showFadingMessage(case_id " removed from Non-Library")
+        }
+    } else {
+        if not listbox_contains(case_id, NON_LIBRARY){
+            create_item(case_id, NON_LIBRARY)
+            non_library_count += 1
+            non_library_text.Text := "Non-Library: " non_library_count
+            showFadingMessage(case_id " added to Non-Library")
+        } else {
+            delete_item(case_id, NON_LIBRARY)
+            non_library_count -= 1
+            non_library_text.Text := "Non-Library: " non_library_count
+            showFadingMessage(case_id " removed from Non-Library")
         }
     }
     save()
