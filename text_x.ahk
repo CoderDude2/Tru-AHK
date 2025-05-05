@@ -72,7 +72,7 @@ onDelete(*){
 
 onCreateItem(*){
     case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
-    create_item(case_id, ControlGetClassNN(ControlGetFocus("text_x.exe")))
+    create_item(case_id, ControlGetClassNN(ControlGetFocus("ahk_id" root.Hwnd)))
 }
 
 create_item(value, control){
