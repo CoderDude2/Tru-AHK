@@ -39,7 +39,27 @@ PROCESS_LAST_ASC := "ListBox4"
 load()
 root.show()
 
+get_active_monitor(&left, &top, &right, &bottom){
+    CoordMode "Mouse", "Screen"
+    MouseGetPos(&posX, &posY)
+
+    monitor_count := MonitorGetCount()
+    Loop monitor_count{
+        
+        MonitorGet(A_Index, &monitor_left, &monitor_top, &monitor_right, &monitor_bottom)
+        if posX >= monitor_left && posX <= monitor_right && posY >= monitor_top && posY <= monitor_bottom {
+            left := monitor_left
+            right := monitor_right
+            top := monitor_top
+            bottom := monitor_bottom
+            return A_Index
+        }
+    }
+    return 0
+}
+
 showFadingMessage(msg) {
+    get_active_monitor(&left, &top, &right, &bottom)
     fadingGui := Gui()
     fadingGui.Opt("+AlwaysOnTop -Caption +ToolWindow")
     fadingGui.BackColor := "000000"
@@ -47,7 +67,7 @@ showFadingMessage(msg) {
     CoordText := fadingGui.Add("Text", "cLime", msg)
     WinSetTransColor(" 255", fadingGui)
     CoordText.Value := msg
-    fadingGui.Show("x20 y20 NoActivate")
+    fadingGui.Show("x" left+20 " " "y" top+20 " " "NoActivate")
     Sleep(500)
     val := 255
     while val != 0{
