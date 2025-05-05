@@ -39,6 +39,25 @@ PROCESS_LAST_ASC := "ListBox4"
 load()
 root.show()
 
+showFadingMessage(msg) {
+    fadingGui := Gui()
+    fadingGui.Opt("+AlwaysOnTop -Caption +ToolWindow")
+    fadingGui.BackColor := "000000"
+    fadingGui.SetFont("s24")
+    CoordText := fadingGui.Add("Text", "cLime", msg)
+    WinSetTransColor(" 255", fadingGui)
+    CoordText.Value := msg
+    fadingGui.Show("x20 y20 NoActivate")
+    Sleep(500)
+    val := 255
+    while val != 0{
+        WinSetTransColor(" " val, fadingGui)
+        val -= 5
+        Sleep(20)
+    }
+    fadingGui.Destroy()
+}
+
 onCopy(*){
     copy_items()
 }
