@@ -200,7 +200,7 @@ load(){
 
 copy_items(){
     A_Clipboard := ""
-    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("text_x.exe")), "text_x.exe") ; Get the focused listbox HWND.
+    listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("ahk_id " root.Hwnd)), "ahk_id " root.Hwnd) ; Get the focused listbox HWND.
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd) ; Get the focused listbox.
     listbox_text := selected_listbox.Text
     if(listbox_text != ""){
