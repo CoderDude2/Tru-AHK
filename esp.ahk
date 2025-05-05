@@ -394,6 +394,12 @@ ds_startup_commands(){
     stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
     WinActivate("ahk_id" esp_id)
 	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
     yn := MsgBox("Is the connection correct?", "Tru-AHK", "YesNoCancel")
     if yn != "Yes"{
         return
@@ -403,13 +409,6 @@ ds_startup_commands(){
 	Click("65 115")
 	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
 	WinWaitClose("ahk_id" base_work_id)
-    esp_title := WinGetTitle("ahk_id" esp_id)
-    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
-
-    if found_pos {
-        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
-    }
 }
 
 asc_startup_commands(){
@@ -432,6 +431,12 @@ asc_startup_commands(){
 	stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
 	WinActivate("ahk_id" esp_id)
 	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
 	yn := MsgBox("Is the connection correct?", "Tru-AHK", "YesNoCancel")
     if yn != "Yes"{
         return
@@ -441,13 +446,7 @@ asc_startup_commands(){
 	Click("60 147")
 	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
 	WinWaitClose("ahk_id" base_work_id)
-    esp_title := WinGetTitle("ahk_id" esp_id)
-    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
-
-    if found_pos {
-        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
-    }
+    
 }
 
 tl_aot_startup_commands(){
@@ -470,6 +469,12 @@ tl_aot_startup_commands(){
     WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
     WinActivate("ahk_id" esp_id)
     deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
 }
 
 #HotIf WinActive("ahk_pid" esp_pid)
@@ -478,6 +483,12 @@ tl_aot_startup_commands(){
 Space::Enter
 LWin::Delete
 
+^b::
+^f15::
+f9::{
+    save_file()
+    generate_nc()
+}
 
 f13::{
     Run("esp.ahk " esp_pid)
@@ -1312,7 +1323,7 @@ f16::{
         if are_you_sure_id {
             WinWaitClose("ahk_id" are_you_sure_id)
         }
-        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel")
+        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel Owner" esp_id)
         if yn != "Yes"{
             return
         }
@@ -1355,7 +1366,7 @@ f16::{
         if are_you_sure_id {
             WinWaitClose("ahk_id" are_you_sure_id)
         }
-        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel")
+        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel Owner" esp_id)
         if yn != "Yes"{
             return
         }
