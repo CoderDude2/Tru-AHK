@@ -54,10 +54,6 @@ get_system_language(){
 }
 
 ; global variables
-initial_pos_x := 0
-initial_pos_y := 0
-click_index := 0
-path_tool_active := false
 try{
     USER_LANGUAGE := get_language()
 } catch {
@@ -204,15 +200,11 @@ f13::
 
 ~Escape::{
     BlockInput("MouseMoveOff")
-    global click_index
-    global path_tool_active
-
-    click_index := 0
-    path_tool_active := false
 
     if WinActive("ahk_exe esprit.exe"){
         stop_simulation()
         cancel_all_set()
+        draw_path("cancel")
     }   
 }
 #SuspendExempt False
@@ -223,7 +215,7 @@ f17::
     Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
 }
 
-#HotIf WinActive("ahk_exe esprit.exe")
+#HotIf (WinActive("ahk_exe esprit.exe") && setMacroBar == False && setProjectManager == False)
 
 f12::{
     try{
@@ -261,6 +253,10 @@ f12::{
 }
 
 ^o::{
+    if get_macro_bar() == ""{
+        return
+    }
+
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
@@ -278,7 +274,7 @@ f12::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
         if yn != "Yes"{
             return
         }
@@ -296,6 +292,10 @@ f12::{
 
 ; G4
 f16::{
+    if get_macro_bar() == ""{
+        return
+    }
+
     selected_file := ""
     For k,v in file_map{
         if v = False and FileExist(get_stl_path() "\" k){
@@ -319,7 +319,7 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
         if yn != "Yes"{
             return
         }
@@ -348,6 +348,10 @@ f16::{
 }
 
 +f16::{
+    if get_macro_bar() == ""{
+        return
+    }
+
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
@@ -365,7 +369,7 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := MsgBox("Is the basic setting loaded?",,"YesNoCancel 0x1000")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
         if yn != "Yes"{
             return
         }
@@ -563,21 +567,15 @@ t::{
 }
 
 +a::{
-    try{
-        unsuppress_operation()
-    }
+    unsuppress_operation()
 }
 
 +s::{
-    try {
-        suppress_operation()
-    }
+    suppress_operation()
 }
 
 +r::{
-    try {
-        rebuild_operation()
-    }
+    rebuild_operation()
 }
 
 !x::
@@ -762,35 +760,18 @@ f18::{
     save_file()
 }
 
-; ===== Auto-Complete Margins =====
+; ===== Auto-Complete Path =====
 +CapsLock::
 XButton2::{
-    global click_index
-    global path_tool_active
+    draw_path("start")
+}
 
-    click_index := 0
-    path_tool_active := true
-    draw_path()
+~LButton::{
+    draw_path("click")
 }
 
 RButton::{
-    global path_tool_active
-    global click_index
-    global initial_pos_x
-    global initial_pos_y
-
-    if(path_tool_active == true){
-        ; Snap to original position and click to complete the path
-        CoordMode("Mouse", "Screen")
-        MouseMove(initial_pos_x, initial_pos_y, 0)
-        Click()
-        path_tool_active := false
-        click_index := 0
-        initial_pos_x := 0
-        initial_pos_y := 0
-    } else {
-        SendInput("{RButton}")
-    }
+    draw_path("complete")
 }
 
 ; ===== Auto-Fill TLOC cases =====
@@ -1048,64 +1029,37 @@ y::{
 ; ===== Macro Buttons =====
 #HotIf WinActive("ESPRIT")
 ^Numpad1::{
-    try{
-        macro_button_1()
-    }
+    macro_button_1()
 }
 
 ^Numpad2::{
-    try{
-        macro_button_2()
-    }
+    macro_button_2()
 }
 
 ^Numpad3::{
-    try{
-        macro_button_3()
-    }
+    macro_button_3()
 }
 
 ^Numpad4::{
-    try{
-        macro_button_4()
-    }
+    macro_button_4()
 }
 
 ^Numpad5::{
-    try{
-        macro_button_5()
-    }
+    macro_button_5()
 }
 
 ^Numpad6::{
-    try{
-        macro_button_text()
-    }
+    macro_button_text()
 }
 
-#HotIf path_tool_active
-~LButton::{
-    global click_index
-    global initial_pos_x
-    global initial_pos_y
-
-    if(click_index < 1){
-        CoordMode("Mouse", "Screen")
-        click_index += 1
-        MouseGetPos(&initial_pos_x, &initial_pos_y)
-    }
-}
-
-#HotIf (setMacroBar or setProjectManager)
+#HotIf setMacroBar == true
 LButton::{
-    global 
-    if(setMacroBar) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setMacroBarControl(active_control)
-    }
+    MouseGetPos(&posX, &posY, &window, &active_control)
+    setMacroBarControl(active_control)
+}
 
-    if(setProjectManager) {
-        MouseGetPos(&posX, &posY, &window, &active_control)
-        setProjectManagerControl(active_control)
-    }
+#HotIf setProjectManager == true
+LButton::{
+    MouseGetPos(&posX, &posY, &window, &active_control)
+    setProjectManagerControl(active_control)
 }

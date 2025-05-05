@@ -1,6 +1,69 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
+show_custom_dialog(msg, title){
+    WINDOW_INFO_PATH := PREFS_DIRECTORY "\windows.ini"
+
+    if not FileExist(WINDOW_INFO_PATH){
+        FileAppend("", WINDOW_INFO_PATH)
+    }
+
+    ui_pos_x := IniRead(WINDOW_INFO_PATH, title "_" msg, "x", A_ScreenWidth/2 - 142)
+    ui_pos_y := IniRead(WINDOW_INFO_PATH, title "_" msg, "y", A_ScreenHeight/2 - 51)
+    
+    response := ""
+    custom_dialog_gui := Gui()
+    custom_dialog_gui.BackColor := "0xFFFFFF"
+    custom_dialog_gui.Title := title
+    custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
+
+    custom_dialog_gui.AddButton("x27 y68 w75 h23 +Default","Yes").OnEvent("Click", (*) => (
+        response := "Yes"
+        save_coordinates()
+        custom_dialog_gui.Hide()
+    ))
+
+    custom_dialog_gui.AddButton("x110 y68 w75 h23","No").OnEvent("Click", (*) => (
+        response := "No"
+        save_coordinates()
+        custom_dialog_gui.Hide()
+    ))
+
+    custom_dialog_gui.AddButton("x194 y68 w75 h23","Cancel").OnEvent("Click", (*) => (
+        response := "Cancel"
+        save_coordinates()
+        custom_dialog_gui.Hide()
+        
+    ))
+
+    custom_dialog_gui.OnEvent("Close", (*) => (
+        save_coordinates()
+        response := ""
+    ))
+    
+    custom_dialog_gui.Show("w284 h101 x" ui_pos_x " y" ui_pos_y)
+    WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
+    return response
+
+    save_coordinates(){
+        custom_dialog_gui.GetPos(&posx, &posy)
+        IniWrite(posx, WINDOW_INFO_PATH, title "_" msg, "x")
+        IniWrite(posy, WINDOW_INFO_PATH, title "_" msg, "y")
+    }
+}
+
+consolelog(msg){
+    msg := msg "`r`n"
+    previous_clipboard := A_Clipboard
+    A_Clipboard := msg
+    ControlFocus("Edit1", "ESPRIT - ")
+    Send("^{End}")
+	Sleep(100)
+    PostMessage(0x111, 57637, , "Edit1", "ESPRIT - ")
+    Sleep(200)
+    A_Clipboard := previous_clipboard
+}
+
 open_help(*){
 	Run A_ScriptDir "\resources\keymap.html"
 }
@@ -49,8 +112,51 @@ swap_path(){
 	PostMessage 0x111, 3145 , , , "ESPRIT"
 }
 
-draw_path(){
-	PostMessage 0x111, 3057, , , "ESPRIT"
+draw_path(command){
+    static click_index
+    static path_tool_active := false
+    static initial_pos_x, initial_pos_y
+    switch command{
+        case "start":
+			if path_tool_active {
+				Send("{Escape}")
+			}
+			Sleep(50)
+            click_index := 0
+            path_tool_active := true
+            PostMessage 0x111, 3057, , , "ESPRIT"
+        case "click":
+			if path_tool_active{
+				if click_index < 1{
+					CoordMode("Mouse", "Screen")
+					MouseGetPos(&initial_pos_x, &initial_pos_y)
+					click_index += 1
+				} else {
+					click_index += 1
+				}
+			}
+        case "cancel":
+            path_tool_active := false
+            click_index := 0
+            initial_pos_x := 0
+            initial_pos_y := 0
+        case "complete":
+             if path_tool_active{
+				if click_index > 2 {
+					CoordMode("Mouse", "Screen")
+					MouseMove(initial_pos_x, initial_pos_y, 0)
+					Click()
+					path_tool_active := false
+					click_index := 0
+					initial_pos_x := 0
+					initial_pos_y := 0
+				} else {
+					MsgBox("Must have 3 or more points to complete a path.")
+				}
+             } else {
+                Send("{RButton}")
+             }
+    }
 }
 
 toggle_simulation(){
@@ -78,40 +184,49 @@ show_milling_tool(){
 }
 
 unsuppress_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached){
-		PostMessage 0x111, 32792 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32792 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32792 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached){
+			PostMessage 0x111, 32792 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32792 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32792 , , project_manager, "프로젝트 매니저"
+			}
 		}
-	}
+	}	
 }
 
 suppress_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached) {
-		PostMessage 0x111, 32770 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32770 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32770 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached) {
+			PostMessage 0x111, 32770 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32770 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32770 , , project_manager, "프로젝트 매니저"
+			}
 		}
 	}
 }
 
 rebuild_operation(){
-	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
-	if(is_attached){
-		PostMessage 0x111, 32768 , , get_project_manager(), "ESPRIT"
-	} else {
-		if USER_LANGUAGE == "en"{
-			PostMessage 0x111, 32768 , , get_project_manager(), "Project Manager"
-		} else if USER_LANGUAGE == "ko"{
-			PostMessage 0x111, 32768 , , get_project_manager(), "프로젝트 매니저"
+	project_manager := get_project_manager()
+	if project_manager != ""{
+		is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
+		if(is_attached) {
+			PostMessage 0x111, 32768 , , project_manager, "ESPRIT"
+		} else {
+			if USER_LANGUAGE == "en"{
+				PostMessage 0x111, 32768 , , project_manager, "Project Manager"
+			} else if USER_LANGUAGE == "ko"{
+				PostMessage 0x111, 32768 , , project_manager, "프로젝트 매니저"
+			}
 		}
 	}
 }
@@ -214,6 +329,7 @@ double_sided_border() {
 		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -231,6 +347,7 @@ cut_with_border() {
 		ControlSetChecked(1,"Button3","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -245,6 +362,7 @@ extrude_by(length) {
 		ControlChooseIndex(1,"ComboBox1","ahk_id" _id)
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
+		consolelog("[Tru-AHK] No geometry selected")
 	}
 }
 
@@ -404,12 +522,13 @@ get_project_manager(){
 	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")
 
 	if class_nn == ""{
-        MsgBox("Project manager control not set!")
+		MsgBox("Project manager control not set. Go to the dashboard to set it.", "Error - Project manager not set", "0x30")
+		return ""
     }
 
 	try {
 		if(is_attached){
-			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT")
+			project_manager_control := ControlGetClassNN(class_nn, "ESPRIT - ")
 		} else {
 			if USER_LANGUAGE == "en"{
 				project_manager_control := ControlGetClassNN(class_nn, "Project Manager")
@@ -417,65 +536,89 @@ get_project_manager(){
 				project_manager_control := ControlGetClassNN(class_nn, "프로젝트 매니저")
 			}
 		}
+	} catch TargetError {
+		MsgBox("Project manager control not found, try setting it in the dashboard.", "Error - Project manager not found", "0x10")
+		return ""
 	}
 
 	return project_manager_control
 }
 
 get_macro_bar(){
-	
 	class_nn := IniRead(PREFS_FILE_PATH, "macro_bar_control", "control")
 
     if class_nn == ""{
-        MsgBox("Macro bar control not set!")
+        MsgBox("Macro bar control not set. Go to the dashboard to set it.", "Error - Macro bar not set", "0x30")
+		return ""
     }
     
     try {
         macro_bar_control := ControlGetClassNN(class_nn, "ESPRIT - ")
 		return macro_bar_control
-    }	
+    } catch TargetError {
+		MsgBox("Macro bar control not found, try setting it in the dashboard.", "Error - Macro bar not found", "0x10")
+		return ""
+	}
 }
 
 macro_button_1(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+20, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+20, y+14
+	}
 }
 
 macro_button_2(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+45, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+45, y+14
+	}    
 }
 
 macro_button_3(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+68, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+68, y+14
+	}
 }
 
 macro_button_4(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+90, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+90, y+14
+	}
 }
 
 macro_button_5(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+115, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+115, y+14
+	}
 }
 
 macro_button_text(){
-	WinActivate("ESPRIT - ")
-	CoordMode "Mouse", "Client"
-    ControlGetPos(&x, &y, &w, &h, get_macro_bar(), "ESPRIT - ")
-    Click x+135, y+14
+	macro_bar := get_macro_bar()
+	if macro_bar != ""{
+		WinActivate("ESPRIT - ")
+		CoordMode "Mouse", "Client"
+		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
+		Click x+135, y+14
+	}
 }
 
 recycle_active_file(){
