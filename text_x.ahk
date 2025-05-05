@@ -4,7 +4,7 @@
 
 #Include %A_ScriptDir%\Lib\util.ahk
 
-root := Gui()
+root := Gui("+Resize +MinSize224x410")
 log_path := A_ScriptDir "\resources\log"
 
 root.OnEvent("Close", onCloseText)
@@ -13,6 +13,10 @@ onCloseText(*){
     ExitApp
 }
 
+tab := root.AddTab3("w200",["Text X", "Process Last", "Non-Library"])
+
+root.OnEvent("Size", onResize)
+
 ; Right Click Menu
 MyMenu := Menu()
 MyMenu.Add("New           Ctrl+N", onCreateItem)
@@ -20,13 +24,15 @@ MyMenu.Add("Copy          Ctrl+C", onCopy)
 MyMenu.Add("Cut             Ctrl+X", onCut)
 MyMenu.Add("Delete         Del", onDelete)
 
+tab.UseTab("Text X")
 root.AddText(,"Text X")
 text_x_lb := root.AddListBox("r10 vtext_x Sort Multi",[])
+root.AddText(,"Text X ASC")
+text_x_asc_lb := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
+
+tab.UseTab("Process Last")
 root.AddText(,"Process Last")
 process_last_lb := root.AddListBox("r10 vprocess_last Sort Multi",[])
-
-root.AddText("ys","Text X ASC")
-text_x_asc_lb := root.AddListBox("r10 vtext_x_asc Sort Multi",[])
 root.AddText(,"Process Last ASC")
 process_last_asc_lb := root.AddListBox("r10 vprocess_last_asc Sort Multi",[])
 
@@ -93,6 +99,14 @@ onDelete(*){
 onCreateItem(*){
     case_id := InputBox("Enter Case ID", "Get Case ID", "w100 h100").value
     create_item(case_id, ControlGetClassNN(ControlGetFocus("ahk_id" root.Hwnd)))
+}
+
+onResize(this_gui, minmax, width, height) {
+    if minmax == -1{
+        return
+    }
+
+    tab.Move(,,width-20, height-20)
 }
 
 listbox_contains(value, control){
