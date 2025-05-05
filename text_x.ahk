@@ -75,6 +75,17 @@ onCreateItem(*){
     create_item(case_id, ControlGetClassNN(ControlGetFocus("ahk_id" root.Hwnd)))
 }
 
+listbox_contains(value, control){
+    listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
+    Items := ControlGetItems(control, "ahk_id " root.Hwnd)
+    for item in Items{
+        if(item == value){
+            return True
+        }
+    }
+    return False
+}
+
 create_item(value, control){
     listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
     Items := ControlGetItems(control, "ahk_id " root.Hwnd)
@@ -250,14 +261,15 @@ Escape::{
 }
 
 ~RButton::{
-   CoordMode("Mouse", "Client")
-   MouseGetPos(&pos_x, &pos_y, &id)
-    if(WinGetTitle(id) == "text_x.exe"){
+    CoordMode("Mouse", "Client")
+    MouseGetPos(&pos_x, &pos_y, &id)
+    if(id == root.Hwnd){
         MyMenu.show(pos_x, pos_y)
     }
 }
 
 #HotIf WinActive("ahk_exe esprit.exe")
+DetectHiddenWindows(True)
 +x::{
     esprit_title := WinGetTitle("A")
     case_id:=get_case_id(esprit_title)
@@ -265,11 +277,24 @@ Escape::{
         return
     }
     if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, TEXT_X_ASC)
+        if not listbox_contains(case_id, TEXT_X_ASC){
+            create_item(case_id, TEXT_X_ASC)
+            showFadingMessage(case_id " added to Text-X")
+        } else {
+            delete_item(case_id, TEXT_X_ASC)
+            showFadingMessage(case_id " removed from Text-X")
+        }
     } else {
-        create_item(case_id, TEXT_X)
+        if not listbox_contains(case_id, TEXT_X){
+            create_item(case_id, TEXT_X)
+            showFadingMessage(case_id " added to Text-X")
+        } else {
+            delete_item(case_id, TEXT_X)
+            showFadingMessage(case_id " removed from Text-X")
+        }
     }
     save()
+    
 }
 
 +z::{
@@ -280,9 +305,21 @@ Escape::{
     }
 
     if(get_case_type(esprit_title) == "ASC"){
-        create_item(case_id, PROCESS_LAST_ASC)
+        if not listbox_contains(case_id, PROCESS_LAST_ASC){
+            create_item(case_id, PROCESS_LAST_ASC)
+            showFadingMessage(case_id " added to Process-Last")
+        } else {
+            delete_item(case_id, PROCESS_LAST_ASC)
+            showFadingMessage(case_id " removed from Process-Last")
+        }
     } else {
-        create_item(case_id, PROCESS_LAST)
+        if not listbox_contains(case_id, PROCESS_LAST){
+            create_item(case_id, PROCESS_LAST)
+            showFadingMessage(case_id " added to Process-Last")
+        } else {
+            delete_item(case_id, PROCESS_LAST)
+            showFadingMessage(case_id " removed from Process-Last")
+        }
     }
     save()
 }
