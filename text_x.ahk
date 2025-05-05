@@ -76,8 +76,8 @@ onCreateItem(*){
 }
 
 create_item(value, control){
-    listbox_hwnd := ControlGetHwnd(control, "text_x.exe")
-    Items := ControlGetItems(control, "text_x.exe")
+    listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
+    Items := ControlGetItems(control, "ahk_id " root.Hwnd)
     for item in Items{
         if(item == value){
             return
@@ -85,6 +85,19 @@ create_item(value, control){
     }
     GuiCtrlFromHwnd(listbox_hwnd).Add([value])
     save()
+}
+
+delete_item(value, control) {
+    listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
+    Items := ControlGetItems(control, "ahk_id " root.Hwnd)
+    index := unset
+    for item in Items{
+        if value == item{
+            index := A_Index
+            break
+        }
+    }
+    ControlDeleteItem(index, listbox_hwnd)
 }
 
 delete_items(){
