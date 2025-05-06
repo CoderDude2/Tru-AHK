@@ -141,6 +141,9 @@ listbox_contains(value, control){
 }
 
 create_item(value, control){
+    global non_library_count
+    global non_library_asc_count
+    global non_library_aot_count
     listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
     Items := ControlGetItems(control, "ahk_id " root.Hwnd)
     for item in Items{
@@ -149,10 +152,24 @@ create_item(value, control){
         }
     }
     GuiCtrlFromHwnd(listbox_hwnd).Add([value])
+    switch ControlGetClassNN(listbox_hwnd) {
+        case NON_LIBRARY:
+            non_library_count += 1
+            non_library_text.Text := "Non-Library: " non_library_count
+        case NON_LIBRARY_ASC:
+            non_library_asc_count += 1
+            non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
+        case NON_LIBRARY_AOT:
+            non_library_aot_count += 1
+            non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
+    }
     save()
 }
 
 delete_item(value, control) {
+    global non_library_count
+    global non_library_asc_count
+    global non_library_aot_count
     listbox_hwnd := ControlGetHwnd(control, "ahk_id " root.Hwnd)
     Items := ControlGetItems(control, "ahk_id " root.Hwnd)
     index := unset
@@ -163,9 +180,23 @@ delete_item(value, control) {
         }
     }
     ControlDeleteItem(index, listbox_hwnd)
+    switch ControlGetClassNN(listbox_hwnd) {
+        case NON_LIBRARY:
+            non_library_count -= 1
+            non_library_text.Text := "Non-Library: " non_library_count
+        case NON_LIBRARY_ASC:
+            non_library_asc_count -= 1
+            non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
+        case NON_LIBRARY_AOT:
+            non_library_aot_count -= 1
+            non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
+    }
 }
 
 delete_items(){
+    global non_library_count
+    global non_library_asc_count
+    global non_library_aot_count
     listbox_hwnd := ControlGetHwnd(ControlGetClassNN(ControlGetFocus("ahk_id " root.Hwnd)), "ahk_id " root.Hwnd)
     selected_listbox := GuiCtrlFromHwnd(listbox_hwnd)
     index := selected_listbox.Value
@@ -176,6 +207,17 @@ delete_items(){
                 break
             }
             selected_listbox.Delete(selected_listbox.Value[index])
+            switch ControlGetClassNN(selected_listbox) {
+                case NON_LIBRARY:
+                    non_library_count -= 1
+                    non_library_text.Text := "Non-Library: " non_library_count
+                case NON_LIBRARY_ASC:
+                    non_library_asc_count -= 1
+                    non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
+                case NON_LIBRARY_AOT:
+                    non_library_aot_count -= 1
+                    non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
+            }
             index--
         }
     }
@@ -364,10 +406,18 @@ DetectHiddenWindows(True)
 +x::{
     esprit_title := WinGetTitle("A")
     case_id:=get_case_id(esprit_title)
-    if(case_id = ""){
+
+    if(not case_id){
         return
     }
-    if(get_case_type(esprit_title) == "ASC"){
+
+    case_type := get_case_type(esprit_title)
+
+    if(not case_type) {
+        return
+    }
+
+    if(case_type == "ASC"){
         if not listbox_contains(case_id, TEXT_X_ASC){
             create_item(case_id, TEXT_X_ASC)
             showFadingMessage(case_id " added to Text-X")
@@ -390,12 +440,19 @@ DetectHiddenWindows(True)
 
 +z::{
     esprit_title := WinGetTitle("A")
-    case_id:=get_case_id(esprit_title)
-    if(case_id = ""){
+    case_id := get_case_id(esprit_title)
+
+    if(not case_id){
         return
     }
 
-    if(get_case_type(esprit_title) == "ASC"){
+    case_type := get_case_type(esprit_title)
+
+    if(not case_type) {
+        return
+    }
+
+    if(case_type == "ASC"){
         if not listbox_contains(case_id, PROCESS_LAST_ASC){
             create_item(case_id, PROCESS_LAST_ASC)
             showFadingMessage(case_id " added to Process-Last")
@@ -421,44 +478,39 @@ DetectHiddenWindows(True)
     global non_library_aot_count
     esprit_title := WinGetTitle("A")
     case_id:=get_case_id(esprit_title)
-    if(case_id = ""){
+
+    if(not case_id){
         return
     }
 
-    if(get_case_type(esprit_title) == "ASC"){
+    case_type := get_case_type(esprit_title)
+
+    if(not case_type){
+        return
+    }
+
+    if(case_type == "ASC"){
         if not listbox_contains(case_id, NON_LIBRARY_ASC){
             create_item(case_id, NON_LIBRARY_ASC)
-            non_library_asc_count += 1
-            non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
             showFadingMessage(case_id " added to Non-Library")
         } else {
             delete_item(case_id, NON_LIBRARY_ASC)
-            non_library_asc_count -= 1
-            non_library_asc_text.Text := "Non-Library ASC: " non_library_asc_count
             showFadingMessage(case_id " removed from Non-Library")
         }
-    } else if (get_case_type(esprit_title) == "AOT" or get_case_type(esprit_title) == "TLOC"){
+    } else if (case_type == "AOT" or case_type == "TLOC"){
         if not listbox_contains(case_id, NON_LIBRARY_AOT){
             create_item(case_id, NON_LIBRARY_AOT)
-            non_library_aot_count += 1
-            non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
             showFadingMessage(case_id " added to Non-Library")
         } else {
             delete_item(case_id, NON_LIBRARY_AOT)
-            non_library_aot_count -= 1
-            non_library_aot_text.Text := "Non-Library AOT/TL: " non_library_aot_count
             showFadingMessage(case_id " removed from Non-Library")
         }
     } else {
         if not listbox_contains(case_id, NON_LIBRARY){
             create_item(case_id, NON_LIBRARY)
-            non_library_count += 1
-            non_library_text.Text := "Non-Library: " non_library_count
             showFadingMessage(case_id " added to Non-Library")
         } else {
             delete_item(case_id, NON_LIBRARY)
-            non_library_count -= 1
-            non_library_text.Text := "Non-Library: " non_library_count
             showFadingMessage(case_id " removed from Non-Library")
         }
     }
