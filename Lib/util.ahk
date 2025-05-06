@@ -18,10 +18,16 @@ get_case_type(title){
 
 get_case_id(title){
     FoundPos := RegExMatch(title, ",([0-9]+)", &SubPat)
-    return SubPat[1]
+    if FoundPos {
+        return SubPat[1]
+    }
+    return 0
 }
 
 get_connection_type(title){
     FoundPos := RegExMatch(title, "\(([A-Za-z0-9;-]+),", &SubPat)
-    return StrSplit(SubPat[1], "-")[1]
+    if FoundPos {
+        return StrSplit(SubPat[1], "-")[1]
+    }
+    return 0
 }
