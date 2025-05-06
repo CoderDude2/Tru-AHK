@@ -270,7 +270,7 @@ f12::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 1)
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
@@ -315,7 +315,7 @@ f16::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 1)
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
@@ -365,7 +365,7 @@ f16::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 1)
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }

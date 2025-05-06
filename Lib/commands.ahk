@@ -240,7 +240,7 @@ ds_startup_commands(){
 	}
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
     if yn != "Yes"{
         return
     }
@@ -265,7 +265,7 @@ asc_startup_commands(){
 	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
     if yn != "Yes"{
         return
     }
