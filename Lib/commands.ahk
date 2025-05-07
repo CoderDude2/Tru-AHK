@@ -1,7 +1,7 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-show_custom_dialog(msg, title){
+show_custom_dialog(msg, title, owner := unset){
     WINDOW_INFO_PATH := PREFS_DIRECTORY "\windows.ini"
 
     if not FileExist(WINDOW_INFO_PATH){
@@ -13,6 +13,9 @@ show_custom_dialog(msg, title){
     
     response := ""
     custom_dialog_gui := Gui()
+	if IsSet(owner){
+		custom_dialog_gui.Opt("+Owner" owner)
+	}
     custom_dialog_gui.BackColor := "0xFFFFFF"
     custom_dialog_gui.Title := title
     custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
@@ -231,7 +234,7 @@ rebuild_operation(){
 	}
 }
 
-ds_startup_commands(){
+ds_startup_commands(esp_id){
 	while not WinExist("STL Rotate"){
 		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
 		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
@@ -240,7 +243,7 @@ ds_startup_commands(){
 	}
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
         return
     }
@@ -255,7 +258,7 @@ ds_startup_commands(){
 	macro_button_3()
 }
 
-asc_startup_commands(){
+asc_startup_commands(esp_id){
 	while not WinExist("STL Rotate"){
 		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
 		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
@@ -265,7 +268,7 @@ asc_startup_commands(){
 	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
         return
     }

@@ -253,6 +253,12 @@ f12::{
 }
 
 ^o::{
+    esp_id := WinGetID("ESPRIT - ")
+
+    if not esp_id {
+        return
+    }
+
     if get_macro_bar() == ""{
         return
     }
@@ -274,7 +280,7 @@ f12::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK", esp_id)
         if yn != "Yes"{
             return
         }
@@ -292,6 +298,12 @@ f12::{
 
 ; G4
 f16::{
+    esp_id := WinGetID("ESPRIT - ")
+
+    if not esp_id {
+        return
+    }
+
     if get_macro_bar() == ""{
         return
     }
@@ -319,7 +331,7 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK", esp_id)
         if yn != "Yes"{
             return
         }
@@ -334,9 +346,9 @@ f16::{
         Send("{Enter}")
         switch get_case_type(selected_file) {
             case "DS":
-                ds_startup_commands()
+                ds_startup_commands(esp_id)
             case "ASC":
-                asc_startup_commands()
+                asc_startup_commands(esp_id)
             case "TLOC":
                 tl_aot_startup_commands()
             case "AOT":
@@ -348,6 +360,12 @@ f16::{
 }
 
 +f16::{
+    esp_id := WinGetID("ESPRIT - ")
+
+    if not esp_id {
+        return
+    }
+
     if get_macro_bar() == ""{
         return
     }
@@ -384,9 +402,9 @@ f16::{
         Send("{Enter}")
         switch get_case_type(name) {
             case "DS":
-                ds_startup_commands()
+                ds_startup_commands(esp_id)
             case "ASC":
-                asc_startup_commands()
+                asc_startup_commands(esp_id)
             case "TLOC":
                 tl_aot_startup_commands()
             case "AOT":
