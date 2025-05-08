@@ -45,7 +45,11 @@ show_custom_dialog(msg, title, owner := unset){
     ))
     
     custom_dialog_gui.Show("w284 h101 x" ui_pos_x " y" ui_pos_y)
+    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
+    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
+    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
     WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
+    custom_dialog_gui.Destroy()
     return response
 
     save_coordinates(){
