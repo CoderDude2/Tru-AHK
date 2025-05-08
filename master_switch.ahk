@@ -387,7 +387,7 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK", esp_id)
         if yn != "Yes"{
             return
         }
