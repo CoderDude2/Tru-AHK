@@ -117,7 +117,7 @@ consolelog(msg){
     A_Clipboard := previous_clipboard
 }
 
-show_custom_dialog(msg, title){
+show_custom_dialog(msg, title, owner := unset){
     WINDOW_INFO_PATH := A_AppData "\tru-ahk\windows.ini"
 
     if not FileExist(WINDOW_INFO_PATH){
@@ -128,7 +128,10 @@ show_custom_dialog(msg, title){
     ui_pos_y := IniRead(WINDOW_INFO_PATH, title "_" msg, "y", A_ScreenHeight/2 - 51)
     
     response := ""
-    custom_dialog_gui := Gui("+AlwaysOnTop")
+    custom_dialog_gui := Gui()
+	if IsSet(owner){
+		custom_dialog_gui.Opt("+Owner" owner)
+	}
     custom_dialog_gui.BackColor := "0xFFFFFF"
     custom_dialog_gui.Title := title
     custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
@@ -158,7 +161,11 @@ show_custom_dialog(msg, title){
     ))
     
     custom_dialog_gui.Show("w284 h101 x" ui_pos_x " y" ui_pos_y)
+    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
+    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
+    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
     WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
+    custom_dialog_gui.Destroy()
     return response
 
     save_coordinates(){
@@ -166,4 +173,77 @@ show_custom_dialog(msg, title){
         IniWrite(posx, WINDOW_INFO_PATH, title "_" msg, "x")
         IniWrite(posy, WINDOW_INFO_PATH, title "_" msg, "y")
     }
+}
+
+save_completed_files(file_map){
+    if FileExist(A_AppData "\tru-ahk\completed_files"){
+        FileDelete(A_AppData "\tru-ahk\completed_files")
+    }
+    
+    for k,v in file_map{
+        FileAppend(k "==" v "`n", A_AppData "\tru-ahk\completed_files")
+    }
+}
+
+loads_completed_files(){
+    result := Map()
+    if FileExist(A_AppData "\tru-ahk\completed_files"){
+        contents := FileRead(A_AppData "\tru-ahk\completed_files")
+        Loop Read A_AppData "\tru-ahk\completed_files"{
+            if A_LoopReadLine != ""{
+                line := StrSplit(A_LoopReadLine, "==")
+
+                switch line[2]{
+                    case "0":
+                        result.Set(line[1], False)
+                    case "1": 
+                        result.Set(line[1], True)
+                }
+            }
+        }
+    }
+    return result
+}
+
+class Mutex {
+    /**
+     * Creates a new Mutex, or opens an existing one. The mutex is destroyed once all handles to
+     * it are closed.
+     * @param name Optional. The name can start with "Local\" to be session-local, or "Global\" to be 
+     * available system-wide.
+     * @param initialOwner Optional. If this value is TRUE and the caller created the mutex, the 
+     * calling thread obtains initial ownership of the mutex object.
+     * @param securityAttributes Optional. A pointer to a SECURITY_ATTRIBUTES structure.
+     */
+    __New(name?, initialOwner := 0, securityAttributes := 0) {
+        if !(this.ptr := DllCall("CreateMutex", "ptr", securityAttributes, "int", !!initialOwner, "ptr", IsSet(name) ? StrPtr(name) : 0))
+            throw Error("Unable to create or open the mutex", -1)
+    }
+    /**
+     * Tries to lock (or signal) the mutex within the timeout period.
+     * @param timeout The timeout period in milliseconds (default is infinite wait)
+     * @returns {Integer} 0 = successful, 0x80 = abandoned, 0x120 = timeout, 0xFFFFFFFF = failed
+     */
+    Lock(timeout:=0xFFFFFFFF) => DllCall("WaitForSingleObject", "ptr", this, "int", timeout, "int")
+    ; Releases the mutex (resets it back to the unsignaled state)
+    Release() => DllCall("ReleaseMutex", "ptr", this)
+    __Delete() => DllCall("CloseHandle", "ptr", this)
+}
+
+ObjRegisterActive(obj, CLSID, Flags:=0) {
+    static cookieJar := Map()
+    if (!CLSID) {
+        if (cookie := cookieJar.Remove(obj)) != ""
+            DllCall("oleaut32\RevokeActiveObject", "uint", cookie, "ptr", 0)
+        return
+    }
+    if cookieJar.Has(obj)
+        throw Error("Object is already registered", -1)
+    _clsid := Buffer(16, 0)
+    if (hr := DllCall("ole32\CLSIDFromString", "wstr", CLSID, "ptr", _clsid)) < 0
+        throw Error("Invalid CLSID", -1, CLSID)
+    hr := DllCall("oleaut32\RegisterActiveObject", "ptr", ObjPtr(obj), "ptr", _clsid, "uint", Flags, "uint*", &cookie:=0, "uint")
+    if hr < 0
+        throw Error(format("Error 0x{:x}", hr), -1)
+    cookieJar[obj] := cookie
 }

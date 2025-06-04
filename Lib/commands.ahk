@@ -86,6 +86,10 @@ circle_tool(title := "ESPRIT - "){
 	PostMessage 0x111, 3005 , , , title 
 }
 
+three_point_circle(title := "ESPRIT - "){
+	PostMessage 0x111, 3007 , , , title 
+}
+
 line_tool(title := "ESPRIT - "){
 	PostMessage 0x111, 3018 , , , title 
 }
@@ -118,11 +122,63 @@ swap_path(title := "ESPRIT - "){
 	PostMessage 0x111, 3145 , , , title 
 }
 
+draw_line(command){
+    static click_index
+    static line_tool_active := false
+    static initial_pos_x, initial_pos_y
+    switch command{
+        case "get-state":
+            return line_tool_active
+        case "start":
+			if line_tool_active {
+				Send("{Escape}")
+			}
+			Sleep(50)
+            click_index := 0
+            line_tool_active := true
+            PostMessage 0x111, 3018 , , , "ESPRIT" 
+        case "click":
+			if line_tool_active{
+				if click_index < 1{
+					CoordMode("Mouse", "Screen")
+					MouseGetPos(&initial_pos_x, &initial_pos_y)
+					click_index += 1
+				} else {
+					click_index += 1
+				}
+			}
+        case "cancel":
+            line_tool_active := false
+            click_index := 0
+            initial_pos_x := 0
+            initial_pos_y := 0
+        case "complete":
+             if line_tool_active{
+				if click_index > 2 {
+					CoordMode("Mouse", "Screen")
+					MouseMove(initial_pos_x, initial_pos_y, 0)
+					Click()
+					line_tool_active := false
+					click_index := 0
+					initial_pos_x := 0
+					initial_pos_y := 0
+                    Send("{Escape}{Escape}{Escape}")
+				} else {
+					MsgBox("Must have 3 or more points to complete a path.")
+				}
+             } else {
+                Send("{RButton}")
+             }
+    }
+}
+
 draw_path(command){
     static click_index
     static path_tool_active := false
     static initial_pos_x, initial_pos_y
     switch command{
+        case "get-state":
+            return path_tool_active
         case "start":
 			if path_tool_active {
 				Send("{Escape}")
@@ -146,6 +202,7 @@ draw_path(command){
             click_index := 0
             initial_pos_x := 0
             initial_pos_y := 0
+            Send("{Escape}{Escape}{Escape}")
         case "complete":
              if path_tool_active{
 				if click_index > 2 {
@@ -316,6 +373,13 @@ tl_aot_startup_commands(){
     WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
     deg0()
+    esp_title := WinGetTitle("A")
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
 }
 
 align_tl_aot_cap(){
@@ -557,6 +621,47 @@ is_non_engaging(title){
 	}
 
 	return false
+}
+
+create_layer(layer_name) {
+    PostMessage 0x111, 10032, , , "Layers" 
+    WinWait "Add layer"
+    ControlSetText(layer_name, "Edit1", "Add layer")
+    ControlSend("{Enter}", "Button1", "Add layer")
+}
+
+delete_layer(layer_name) {
+    try {
+        ControlChooseString(layer_name, "ListBox1", "Layers")
+        ControlSend("{Home}", "ListBox1", "Layers")
+        Sleep(100)
+        Loop {
+            choice := ControlGetChoice("ListBox1", "Layers")
+            current_layer_name := StrSplit(choice, " ")[2]
+            if current_layer_name == "'" layer_name "'" {
+                break
+            }
+            ControlSend("{Down}", "ListBox1", "Layers")
+            Sleep(1)
+        }
+        PostMessage 0x111, 10029, , , "Layers" 
+        PostMessage 0x111, 10030, , , "Layers" 
+        id_ := WinWait("esprit")
+        ControlClick("Button1", "ahk_id" id_)
+        ControlSend("{Enter}", "Button1","ahk_id" id_)
+    } catch {
+        return 0
+    }
+}
+
+smash_selection(tolerance, mid_face_angle) {
+    WinActivate("ESPRIT")
+    transformation_window()
+    WinWaitActive("ahk_class #32770")
+
+    ControlChooseString("Smash", "ComboBox1", "ahk_class #32770")
+    ControlSetText(tolerance, "Edit25", "ahk_class #32770")
+    ControlSetText(mid_face_angle, "Edit26", "ahk_class #32770")
 }
 
 translate_selection(x := 0, y := 0, z := 0){

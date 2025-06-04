@@ -10,29 +10,34 @@ SetDefaultMouseSpeed(0)
 
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 
+mtx := Mutex("Local\FileMutex")
 
 esp_pid := A_Args[1]
 
 suspend_event_num := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
+terminate_event_num := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 OnMessage(suspend_event_num, SuspendScript)
+OnMessage(terminate_event_num, TerminateScript)
 
 SuspendScript(wParam, lParam, msg, hwnd){
     Suspend(-1)
 }
 
-step_5_tab := 1
-file_map := Map()
-
-SetTimer(update_file_map, 500)
-
-
-update_file_map(){
-    Loop Files, STL_FILE_PATH "\*", "F"{
-        if not file_map.Has(A_LoopFileName){
-            file_map[A_LoopFileName] := false
-        } 
-    }        
+TerminateScript(wParam, lParam, msg, hwnd){
+    ExitApp
 }
+
+esp_id := unset
+while True {
+    id_ := WinWaitActive("ESPRIT - ")
+    pid := WinGetPID("ahk_id" id_)
+    if pid == esp_pid {
+        esp_id := id_
+        break
+    }
+}
+
+file_map := ComObjActive("{EB5BAF88-E58D-48F9-AE79-56392D4C7AF6}")
 
 check_window_exist(){
     if not ProcessExist(esp_pid) {
@@ -41,8 +46,6 @@ check_window_exist(){
 }
 
 SetTimer(check_window_exist, 100)
-
-esp_id := WinWaitTitleWithPID(esp_pid, "ESPRIT - ")
 
 generate_nc(){
 	PostMessage 0x111, 3323, , , "ahk_id" esp_id
@@ -400,7 +403,7 @@ ds_startup_commands(){
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
         remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
-    yn := MsgBox("Is the connection correct?", "Tru-AHK", "YesNoCancel")
+    yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
         return
     }
@@ -409,6 +412,7 @@ ds_startup_commands(){
 	Click("65 115")
 	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
 	WinWaitClose("ahk_id" base_work_id)
+    
 }
 
 asc_startup_commands(){
@@ -437,7 +441,7 @@ asc_startup_commands(){
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
         remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
-	yn := MsgBox("Is the connection correct?", "Tru-AHK", "YesNoCancel")
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
         return
     }
@@ -869,100 +873,6 @@ RButton::{
     }
 }
 
-y::{
-    CoordMode("Mouse", "Screen")
-    MouseMove(46, 38, 0) ; Press Tab 1
-    Click(170, 325) ; Click the Entry Box
-    Send("^a-5")
-    Click(175, 275) ; Click Regenerate
-}
-
-AppsKey::{
-    BlockInput("MouseMove")
-    CoordMode("Mouse", "Screen")
-
-    ; 1st Margin
-    Click("70 170")
-    Click("180, 290") ; Click the Text box and enter 0.025
-    Send("^a0.025")
-    Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
-    ; 2nd Margin
-    Click("180 170")
-    Click("180, 290") ; Click the Text box and enter 0.025
-    Send("^a0.025")
-    Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
-    ; 3rd Margin
-    Click("70 215")
-    Click("180, 290") ; Click the Text box and enter 0.025
-    Send("^a0.025")
-    Click("120, 325") ; Click Re-Generate Operation
-    BlockInput("MouseMoveOff")
-    face()
-    Sleep(20)
-    face()
-    ; unsuppress_operation()
-    ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("30 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("31 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("14 '경계소재-4'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("15 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-}
-
-+AppsKey::{
-    BlockInput("MouseMove")
-    CoordMode("Mouse", "Screen")
-
-    ; 1st Margin
-    Click("70 170")
-    Click("180, 290") ; Click the Text box and enter 0.025
-    Send("^a0.025")
-    Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
-    ; 2nd Margin
-    Click("180 170")
-    Click("180, 290") ; Click the Text box and enter 0.025
-    Send("^a0.025")
-    Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
-    ; 3rd Margin
-    Click("70 215")
-    Click("180, 290") ; Click the Text box and enter 0.025
-    Send("^a0.025")
-    Click("120, 325") ; Click Re-Generate Operation
-    Sleep(40)
-    ; 4th Margin
-    Click("180 215")
-    Click("180, 290") ; Click the Text box and enter 0.025
-    Send("^a0.025")
-    Click("120, 325") ; Click Re-Generate Operation
-    BlockInput("MouseMoveOff")
-    face()
-    Sleep(20)
-    face()
-    ; unsuppress_operation()
-    ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("30 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("31 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("14 '경계소재-4'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("15 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-}
-
 q::{
     swap_path()
     generate_path()
@@ -970,240 +880,6 @@ q::{
 
 w::{
     swap_path()
-}
-
-!Numpad7::{
-    global step_5_tab
-    step_5_window_0_deg()
-    Sleep(20)
-    if step_5_tab = 1{
-        step_5_window_90_plus_deg()
-    }
-}
-
-!Numpad9::{
-    global step_5_tab
-    step_5_window_120_deg()
-    Sleep(20)
-    if step_5_tab = 1{
-        step_5_window_90_plus_deg()
-    }
-}
-
-!Numpad1::{
-    global step_5_tab
-    step_5_window_240_deg()
-    Sleep(20)
-    if step_5_tab = 1{
-        step_5_window_90_plus_deg()
-    }
-}
-
-!Numpad3::{
-    global step_5_tab
-    step_5_window_270_deg()
-    Sleep(20)
-    if step_5_tab = 1{
-        step_5_window_90_plus_deg()
-    }
-}
-
-!Numpad0::{
-    step_5_window_90_plus_deg()
-}
-
-
-z::{
-    global step_5_tab
-    step_5_window_tab_1()
-    step_5_tab := 1
-}
-
-x::{
-    global step_5_tab
-    step_5_window_tab_2()
-    step_5_tab := 2
-}
-
-^!Up::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        decrement_10_degrees()
-    }
-}
-
-^!Down::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        increment_10_degrees()
-    }
-}
-
-^+Up::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        decrement_90_degrees()
-    }
-}
-
-^+Down::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        increment_90_degrees()
-    }
-}
-
-^Numpad1::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    macro_button1()
-}
-
-^Numpad2::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    macro_button2()
-}
-
-^Numpad3::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    macro_button3()
-}
-
-^Numpad4::{
-    ; unsuppress_operation()
-    Sleep(20)
-    ControlChooseString("28 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("29 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("14 '경계소재-4'", "ComboBox2", "ESPRIT - ")
-    Sleep(20)
-    ControlChooseString("15 '경계소재-5'", "ComboBox2", "ESPRIT - ")
-    macro_button4()
-}
-
-^Numpad5::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    macro_button5()
-    step_5_tab := 2
-}
-
-^Numpad6::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    macro_button_text()
-}
-
-^!Numpad1::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(32, 1020)
-}
-
-^!Numpad3::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(80, 1020)
-}
-
-; Deg 1
-!1::{
-    step_3_deg1()
-}
-
-; Deg 2 
-!2::{
-    step_3_deg2()
-}
-
-; Deg 3 
-!3::{
-    step_3_deg3()
-}
-
-; +90 Deg
-!q::{
-    step_3_degplus90()
-}
-
-; Toggle Yellow Checkbox
-!w::{
-    step_3_yellowcheckbox()
-}
-
-; Tab 1
-!a::{
-    step_3_tab1()
-}
-
-; Tab 2
-!s::{
-    step_3_tab2()
-}
-
-; Tab 3
-!d::{
-    step_3_tab3()
-}
-
-!Right::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(205, 250)
-}
-
-!Left::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(155, 250)
-}
-
-!Up::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(155, 210)
-}
-
-!Down::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(205, 210)
-}
-
-+Left::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(155, 290)
-}
-
-+Right::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(205, 290)
-}
-
-^+Enter::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(106, 126)
-    WinWaitActiveTitleWithPID(esp_pid, "esprit", "OK")
-    WinClose("esprit", "OK")
-}
-
-^!Enter::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(103, 336)
 }
 
 !e::{
@@ -1217,6 +893,18 @@ f15::{
 
 ^Left::{
     translate_selection(-0.5, 0, 0)
+}
+
+^+Enter::{
+    CoordMode("Mouse", "Screen")
+    click_and_return(106, 126)
+    WinWaitActiveTitleWithPID(esp_pid, "esprit", "OK")
+    WinClose("esprit", "OK")
+}
+
+^!Enter::{
+    CoordMode("Mouse", "Screen")
+    click_and_return(103, 336)
 }
 
 ^Up::{
@@ -1304,7 +992,7 @@ f15::{
 ; G4
 f16::{
     selected_file := ""
-    For k,v in file_map{
+    For k,v in file_map.data {
         if v = False and FileExist(STL_FILE_PATH "\" k){
             selected_file := k
             break
@@ -1313,6 +1001,10 @@ f16::{
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
     if found_pos {
         SplitPath(selected_file, &name)
+        if mtx.Lock() == 0 {
+            file_map.data[name] := true
+            mtx.Release()
+        }
         open_file()
         WinWaitTitleWithPID(esp_pid, "Open", "&Open")
         open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
@@ -1323,11 +1015,14 @@ f16::{
         if are_you_sure_id {
             WinWaitClose("ahk_id" are_you_sure_id)
         }
-        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel Owner" esp_id)
+        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK", esp_id)
         if yn != "Yes"{
+            if mtx.Lock() == 0 {
+                file_map.data[name] := false
+                mtx.Release()
+            }
             return
         }
-        file_map[name] := true
         WinActivate("ahk_id" esp_id)
         macro_button1("ahk_id" esp_id)
         WinWaitActiveTitleWithPID(esp_pid, "CAM Automation")
@@ -1356,6 +1051,10 @@ f16::{
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
     if(selected_file != "" and found_pos){
         SplitPath(selected_file, &name)
+        if mtx.Lock() == 0 {
+            file_map.data[name] := true
+            mtx.Release()
+        }
         open_file()
         WinWaitTitleWithPID(esp_pid, "Open", "&Open")
         open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
@@ -1366,11 +1065,14 @@ f16::{
         if are_you_sure_id {
             WinWaitClose("ahk_id" are_you_sure_id)
         }
-        yn := MsgBox("Is the basic setting loaded?", "Tru-AHK", "YesNoCancel Owner" esp_id)
+        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK", esp_id)
         if yn != "Yes"{
+            if mtx.Lock() == 0 {
+                file_map.data[name] := false
+                mtx.Release()
+            }
             return
         }
-        file_map[name] := true
         WinActivate("ahk_id" esp_id)
         macro_button1("ahk_id" esp_id)
         WinWaitActiveTitleWithPID(esp_pid, "CAM Automation")

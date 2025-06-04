@@ -85,6 +85,30 @@ f17::{
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
+
+k::{
+    create_layer("1")
+    translate_selection(-3, 0, 0)
+    KeyWait("Enter", "D")
+    smash_selection(0.001, 15)
+    Send("{Enter}")
+    KeyWait("Enter", "D")
+    smash_selection(0.001, 15)
+    Send("{Enter}")
+    create_layer("2")
+    three_point_circle()
+    KeyWait("Enter", "D")
+    Send("{Escape}{Escape}{Escape}")
+    delete_layer("1")
+    translate_selection_click()
+    KeyWait("Enter", "D")
+    delete_layer("2")
+}
+
+l::{
+    delete_layer("1")
+}
+
 ; I want to save the open file when building the NC code.
 ^b::
 ^f15::
@@ -390,9 +414,7 @@ XButton1::{
     extrude_tool()
 }
 
-CapsLock::{
-    line_tool()
-}
+
 
 +Space::{
     toggle_simulation()
@@ -545,17 +567,27 @@ f18::{
     stop_simulation()
 }
 
+CapsLock::{
+    line_tool()
+}
+
 +CapsLock::
 XButton2::{
     draw_path("start")
 }
 
 ~LButton::{
-    draw_path("click")
+    if draw_path("get-state") {
+        draw_path("click")
+    }
 }
 
 RButton::{
-    draw_path("complete")
+    if draw_path("get-state") {
+        draw_path("complete")
+    } else {
+        Send("{RButton}")
+    }
 }
 
 ; ===== Auto-Fill TLOC cases =====
@@ -942,7 +974,12 @@ x::{
 
 ; G3 Key
 f15::{
-    WinMove(-600, 275, , , "esprit", "&Yes")
+    ids := WinGetList("esprit", "&Yes")
+    for this_id in ids{
+        try {
+            WinMove(-600, 275, , , "ahk_id" this_id, "&Yes")
+        }
+    }
 }
 
 ^Left::{
