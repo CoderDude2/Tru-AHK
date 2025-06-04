@@ -1026,8 +1026,6 @@ y::{
     click_client_pos(98, 305, "Engraving Program Number Text", true)
 }
 
-; ===== Macro Buttons =====
-#HotIf WinActive("ESPRIT")
 ^Numpad1::{
     macro_button_1()
 }
