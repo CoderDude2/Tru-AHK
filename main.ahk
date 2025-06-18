@@ -40,22 +40,22 @@ save_on_exit_callback(*){
 
 OnExit(save_on_exit_callback)
 
-for this_id in WinGetList("ESPRIT - "){
-    esp_pid := WinGetPID("ahk_id" this_id)
-    
-    Run("esp.ahk " esp_pid)
-}
-
 ^f13::{
     PostMessage(SuspendScriptMsg, , , ,0xFFFF)
 }
 
-f17::{
-    Run("C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe", , , &esp_pid)
-    Run("esp.ahk " esp_pid)
+#HotIf WinActive("ahk_exe esprit.exe")
+
+f16::{
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " auto")
 }
 
-#HotIf WinActive("ahk_exe esprit.exe")
++f16::{
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " manual")
+}
+
 AppsKey::{
     BlockInput("MouseMove")
     CoordMode("Mouse", "Screen")

@@ -19,6 +19,7 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\nav.ahk
+#Include %A_ScriptDir%\Lib\util.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\restore.ahk
 
@@ -34,10 +35,15 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 ; ===== Variables =====
 showDebug := false
 
-file_map := Map()
 step_5_tab := 1
 
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
+
+SuspendScriptMsg := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
+TerminateMsg := DllCall("RegisterWindowMessageA", "Str", "Terminate")
+
+file_map := {data:loads_completed_files()}
+ObjRegisterActive(file_map, "{EB5BAF88-E58D-48F9-AE79-56392D4C7AF6}")
 
 #SuspendExempt
 ;G1
@@ -46,16 +52,37 @@ f13::{
 }
 
 SetTimer(debug, 20)
-SetTimer(update_file_map, 1000)
 
+; update_file_map(){
+    ; Loop Files, STL_FILE_PATH "\*", "F"{
+        ; if not file_map.Has(A_LoopFileName){
+            ; file_map[A_LoopFileName] := false
+        ; } 
+    ; }        
+; }
 
 update_file_map(){
     Loop Files, STL_FILE_PATH "\*", "F"{
-        if not file_map.Has(A_LoopFileName){
-            file_map[A_LoopFileName] := false
-        } 
-    }        
+        if not file_map.data.Has(A_LoopFileName){
+            file_map.data[A_LoopFileName] := false
+        }
+    }
+
+    for k,v in file_map.data{
+        if not FileExist(STL_FILE_PATH "\" k){
+            file_map.data.Delete(k)
+        }
+    }
 }
+
+SetTimer(update_file_map, 1000)
+
+save_on_exit_callback(*){
+    save_completed_files(file_map.data)
+    PostMessage(TerminateMsg, , , ,0xFFFF)
+}
+OnExit(save_on_exit_callback)
+
 
 debug(){
     if(showDebug){
@@ -75,6 +102,7 @@ debug(){
 
 ;Ctrl+G1
 ^f13::{
+    PostMessage(SuspendScriptMsg, , , ,0xFFFF)
     Suspend
 }
 
@@ -85,6 +113,15 @@ f17::{
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
+f16::{
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " auto")
+}
+
++f16::{
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " manual")
+}
 
 k::{
     create_layer("1")
@@ -103,10 +140,6 @@ k::{
     translate_selection_click()
     KeyWait("Enter", "D")
     delete_layer("2")
-}
-
-l::{
-    delete_layer("1")
 }
 
 ; I want to save the open file when building the NC code.
@@ -154,20 +187,6 @@ f9::{
     }
 }
 
-!f16::{
-    esp_id := WinGetID("ESPRIT - ")
-    esp_pid := WinGetPID("ahk_id" esp_id)
-
-    selected_file := FileSelect(, STL_FILE_PATH)
-    if(selected_file != ""){
-        SplitPath(selected_file, &name, &dir, &ext, &file_name_no_ext)
-        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
-        basic_setting := "C:\Users\TruUser\Desktop\\`"Basic Setting`"\" sub_pat[1] ".esp"
-    }
-
-    Run("esp_helper.ahk " esp_pid " " esp_id " `"" file_name_no_ext "`" " basic_setting)
-}
-
 ^+r::{
     esprit_title := WinGetTitle("A")
     FoundPos := RegExMatch(esprit_title, "(\w+-\w+-\d+)__\(([A-Za-z0-9;\-]+),(\d+)\) ?\[?([#0-9-=. ]+)?\]?[_0-9]*?(\.\w+)", &SubPat)
@@ -180,48 +199,48 @@ f9::{
 }
 
 ; G4
-+f16::{
-    selected_file := FileSelect(, STL_FILE_PATH)
-    if(selected_file != ""){
-        SplitPath(selected_file, &name)
-        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
-        open_file()
-        WinWaitActive("ahk_class #32770")
-        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-        ControlSetChecked(0,"Button5","ahk_class #32770")
-        ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 1)
-        if WinExist("ahk_class #32770", "&Yes"){
-            WinWaitClose("ahk_class #32770", "&Yes")
-        }
-        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
-        if yn != "Yes"{
-            return
-        }
-        file_map[name] := true
-        WinActivate("ESPRIT")
-        ; set_bounding_points()
-        macro_button1()
-        WinWaitActive("CAM Automation")
-        Send("{Enter}")
-        WinWaitActive("Select file to open")
-        Sleep(200)
-        ControlSetText(selected_file, "Edit1", "Select file to open")
-        Send("{Enter}")
-        switch get_case_type(name) {
-            case "DS":
-                ds_startup_commands()
-            case "ASC":
-                asc_startup_commands()
-            case "TLOC": 
-                tl_aot_startup_commands()
-            case "AOT":
-                tl_aot_startup_commands()
-            default: 
-                return
-        }
-    }
-}
+; +f16::{
+;     selected_file := FileSelect(, STL_FILE_PATH)
+;     if(selected_file != ""){
+;         SplitPath(selected_file, &name)
+;         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
+;         open_file()
+;         WinWaitActive("ahk_class #32770")
+;         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+;         ControlSetChecked(0,"Button5","ahk_class #32770")
+;         ControlSend("{Enter}", "Button2","ahk_class #32770")
+;         WinWait("ahk_class #32770", "&Yes", 1)
+;         if WinExist("ahk_class #32770", "&Yes"){
+;             WinWaitClose("ahk_class #32770", "&Yes")
+;         }
+;         yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
+;         if yn != "Yes"{
+;             return
+;         }
+;         file_map[name] := true
+;         WinActivate("ESPRIT")
+;         ; set_bounding_points()
+;         macro_button1()
+;         WinWaitActive("CAM Automation")
+;         Send("{Enter}")
+;         WinWaitActive("Select file to open")
+;         Sleep(200)
+;         ControlSetText(selected_file, "Edit1", "Select file to open")
+;         Send("{Enter}")
+;         switch get_case_type(name) {
+;             case "DS":
+;                 ds_startup_commands()
+;             case "ASC":
+;                 asc_startup_commands()
+;             case "TLOC": 
+;                 tl_aot_startup_commands()
+;             case "AOT":
+;                 tl_aot_startup_commands()
+;             default: 
+;                 return
+;         }
+;     }
+; }
 
 f12::{
     ProcessExist("esprit.exe")
@@ -1143,53 +1162,53 @@ f15::{
 }
 
 ; G4
-f16::{
-    selected_file := ""
-    For k,v in file_map{
-        if v = False and FileExist(STL_FILE_PATH "\" k){
-            selected_file := k
-            break
-        }
-    }
-    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
-    if found_pos {
-        SplitPath(selected_file, &name)
-        open_file()
-        WinWaitActive("Open")
-        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-        ControlSetChecked(0,"Button5","ahk_class #32770")
-        ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 1)
-        if WinExist("ahk_class #32770", "&Yes"){
-            WinWaitClose("ahk_class #32770", "&Yes")
-        }
-        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
-        if yn != "Yes"{
-            return
-        }
-        file_map[name] := true
-        WinActivate("ESPRIT")
-        macro_button1()
-        WinWaitActive("CAM Automation")
-        Send("{Enter}")
-        WinWaitActive("Select file to open")
-        Sleep(200)
-        ControlSetText(selected_file, "Edit1", "Select file to open")
-        Send("{Enter}")
-        switch get_case_type(selected_file) {
-            case "DS":
-                ds_startup_commands()
-            case "ASC":
-                asc_startup_commands()
-            case "TLOC": 
-                tl_aot_startup_commands()
-            case "AOT":
-                tl_aot_startup_commands()
-            default: 
-                return
-        }
-    }
-}
+; f16::{
+;     selected_file := ""
+;     For k,v in file_map{
+;         if v = False and FileExist(STL_FILE_PATH "\" k){
+;             selected_file := k
+;             break
+;         }
+;     }
+;     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+;     if found_pos {
+;         SplitPath(selected_file, &name)
+;         open_file()
+;         WinWaitActive("Open")
+;         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+;         ControlSetChecked(0,"Button5","ahk_class #32770")
+;         ControlSend("{Enter}", "Button2","ahk_class #32770")
+;         WinWait("ahk_class #32770", "&Yes", 1)
+;         if WinExist("ahk_class #32770", "&Yes"){
+;             WinWaitClose("ahk_class #32770", "&Yes")
+;         }
+;         yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
+;         if yn != "Yes"{
+;             return
+;         }
+;         file_map[name] := true
+;         WinActivate("ESPRIT")
+;         macro_button1()
+;         WinWaitActive("CAM Automation")
+;         Send("{Enter}")
+;         WinWaitActive("Select file to open")
+;         Sleep(200)
+;         ControlSetText(selected_file, "Edit1", "Select file to open")
+;         Send("{Enter}")
+;         switch get_case_type(selected_file) {
+;             case "DS":
+;                 ds_startup_commands()
+;             case "ASC":
+;                 asc_startup_commands()
+;             case "TLOC": 
+;                 tl_aot_startup_commands()
+;             case "AOT":
+;                 tl_aot_startup_commands()
+;             default: 
+;                 return
+;         }
+;     }
+; }
 
 +3::{
     res := SendMessage(TVM_GETITEMW, , , "SysTreeView321", "Project Manager")
