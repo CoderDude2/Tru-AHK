@@ -560,6 +560,10 @@ is_non_engaging(title){
 	return false
 }
 
+enable_layer(layer_name) {
+    ControlChooseString(layer_name, "ComboBox2", "ESPRIT - ")
+}
+
 create_layer(layer_name) {
     PostMessage 0x111, 10032, , , "Layers" 
     WinWait "Add layer"
