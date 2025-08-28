@@ -37,6 +37,8 @@ showDebug := false
 
 step_5_tab := 1
 
+espritInstances := Map() 
+
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 
 SuspendScriptMsg := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
@@ -77,6 +79,14 @@ update_file_map(){
 
 SetTimer(update_file_map, 1000)
 
+get_active_esprit_info(){
+    activeTitle := WinGetTitle("A")
+    if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle)) and get_case_id(activeTitle) != ""){
+        espritInstances[activeTitle "_" WinGetPID(activeTitle)] := EspritInfo() 
+    }
+    return espritInstances[activeTitle "_" WinGetPID(activeTitle)] 
+}
+
 save_on_exit_callback(*){
     save_completed_files(file_map.data)
     PostMessage(TerminateMsg, , , ,0xFFFF)
@@ -113,6 +123,25 @@ f17::{
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
+
+l::{ 
+    activeTitle := WinGetTitle("A")
+    if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle)) and get_case_id(activeTitle) != ""){
+        espritInstances[activeTitle "_" WinGetPID(activeTitle)] := EspritInfo() 
+    }
+}
+
++l::{
+    activeTitle := WinGetTitle("A")
+    if espritInstances.Has(activeTitle "_" WinGetPID(activeTitle)){
+        MsgBox(espritInstances[activeTitle "_" WinGetPID(activeTitle)].Step3Tab)
+    }
+}
+
+^l::{
+    MsgBox(espritInstances.Count)
+}
+
 f16::{
     esp_pid := WinGetPID("ESPRIT - ") 
     Run("esp.ahk " esp_pid " auto")
@@ -143,12 +172,27 @@ k::{
 }
 
 ; I want to save the open file when building the NC code.
+f8::{
+    _id := WinGetID("ESPRIT - ")
+    CoordMode("Mouse", "Screen")
+    Click(257, 107)
+    Sleep(20)
+    Click(222, 977)
+    Sleep(20)
+    Click(100, 946)
+    Sleep(40)
+    deg0("ahk_id" _id)
+}
+
 ^b::
 ^f15::
 f9::{
     _id := WinGetID("ESPRIT - ")
-    save_file()
-    generate_nc()
+    
+    ; WinActivate("ahk_id" _id)
+    save_file("ahk_id" _id)
+    generate_nc("ahk_id" _id)
+    toggle_simulation("ahk_id" _id)
 }
 
 ^f16::{
@@ -696,6 +740,7 @@ AppsKey::{
     Sleep(20)
     enable_layer("15 '경계소재-5'")
     Sleep(20)
+    unsuppress_operation()
 }
 
 +AppsKey::{
@@ -742,6 +787,7 @@ AppsKey::{
     Sleep(20)
     enable_layer("15 '경계소재-5'")
     Sleep(20)
+    unsuppress_operation()
 }
 
 q::{
@@ -857,13 +903,21 @@ x::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
+    deg0()
+    enable_layer("18 'STL'")
+    enable_layer("19 'STL'")
+    enable_layer("21 'STL'")
     macro_button2()
 }
 
 ^Numpad3::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
+    ; if not WinActive("ESPRIT - "){
+    ;     WinActivate("ESPRIT - ")
+    ; }
+    ; try{
+    ;     esp_info := get_active_esprit_info()
+    ;     esp_info.Step3Tab := 1 
+    ; }
     macro_button3()
 }
 
@@ -877,6 +931,7 @@ x::{
     enable_layer("14 '경계소재-4'")
     Sleep(20)
     enable_layer("15 '경계소재-5'")
+    CoordMode("Mouse", "Screen")
     macro_button4()
 }
 
@@ -932,16 +987,58 @@ x::{
 
 ; Tab 1
 !a::{
+    ; if not WinActive("ESPRIT - "){
+    ;     WinActivate("ESPRIT - ")
+    ; }
+    ; esp_info := get_active_esprit_info()
+    ; switch esp_info.Step3Tab{
+    ;     case 1:
+    ;         esp_info.Step3Tab1Deg := get_current_angle("ESPRIT - ") 
+    ;     case 2:
+    ;         esp_info.Step3Tab2Deg := get_current_angle("ESPRIT - ") 
+    ;     case 3:
+    ;         esp_info.Step3Tab3Deg := get_current_angle("ESPRIT - ") 
+    ; }
+    ; esp_info.Step3Tab := 1
+    ; update_angle(esp_info.Step3Tab1Deg, "ESPRIT - ")
     step_3_tab1()
 }
 
 ; Tab 2
 !s::{
+    ; if not WinActive("ESPRIT - "){
+    ;     WinActivate("ESPRIT - ")
+    ; }
+    ; esp_info := get_active_esprit_info()
+    ; switch esp_info.Step3Tab{
+    ;     case 1:
+    ;         esp_info.Step3Tab1Deg := get_current_angle("ESPRIT - ") 
+    ;     case 2:
+    ;         esp_info.Step3Tab2Deg := get_current_angle("ESPRIT - ") 
+    ;     case 3:
+    ;         esp_info.Step3Tab3Deg := get_current_angle("ESPRIT - ") 
+    ; }
+    ; esp_info.Step3Tab := 2 
+    ; update_angle(esp_info.Step3Tab2Deg, "ESPRIT - ")
     step_3_tab2()
 }
 
 ; Tab 3
 !d::{
+    ; if not WinActive("ESPRIT - "){
+    ;     WinActivate("ESPRIT - ")
+    ; }
+    ; esp_info := get_active_esprit_info()
+    ; switch esp_info.Step3Tab{
+    ;     case 1:
+    ;         esp_info.Step3Tab1Deg := get_current_angle("ESPRIT - ") 
+    ;     case 2:
+    ;         esp_info.Step3Tab2Deg := get_current_angle("ESPRIT - ") 
+    ;     case 3:
+    ;         esp_info.Step3Tab3Deg := get_current_angle("ESPRIT - ") 
+    ; }
+    ; esp_info.Step3Tab := 3
+    ; update_angle(esp_info.Step3Tab3Deg, "ESPRIT - ")
     step_3_tab3()
 }
 

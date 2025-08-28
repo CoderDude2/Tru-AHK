@@ -104,7 +104,7 @@ ds_startup_commands(){
     found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
     if found_pos {
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
     yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
@@ -142,7 +142,7 @@ asc_startup_commands(){
     found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
     if found_pos {
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
 	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
@@ -186,7 +186,7 @@ tl_aot_startup_commands(){
     found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
     if found_pos {
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
     ExitApp
 }

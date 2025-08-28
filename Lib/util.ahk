@@ -1,3 +1,10 @@
+class EspritInfo{
+    Step3Tab := 1
+    Step3Tab1Deg := 0
+    Step3Tab2Deg := 0
+    Step3Tab3Deg := 0
+}
+
 get_active_monitor(){
     CoordMode "Mouse", "Screen"
     MouseGetPos(&posX, &posY)

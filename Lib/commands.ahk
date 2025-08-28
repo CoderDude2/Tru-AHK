@@ -270,7 +270,7 @@ ds_startup_commands(){
 
     if found_pos {
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
 }
 
@@ -297,7 +297,7 @@ asc_startup_commands(){
 
     if found_pos {
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
 }
 
@@ -315,7 +315,7 @@ tl_aot_startup_commands(){
 
     if found_pos {
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
 }
 
@@ -529,7 +529,7 @@ get_case_type(title){
     } else if InStr(title, "TA", true) {
         return "DS"
     } else {
-        return -1
+        return "" 
     }
 }
 
