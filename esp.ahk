@@ -52,6 +52,60 @@ open_file(){
 	PostMessage 0x111, 57601 , , , "ahk_id" esp_id
 }
 
+set_point(x, y, z){
+	try{
+    	PostMessage 0x111, 10425, , , "Point"
+		ControlSetText(x, "Edit1", "ahk_class #32770")
+		ControlSetText(y, "Edit2", "ahk_class #32770")
+		ControlSetText(z, "Edit3", "ahk_class #32770")
+		PostMessage 0x111, 12321, , , "Point"
+	}
+}
+
+set_bounding_points(){
+	if not WinExist("Point"){
+        PostMessage 0x111, 3014, , , "ESPRIT"
+        Sleep(50)
+        WinActivate "Point"
+    } else {
+        WinActivate "Point"
+    }
+    deg0()
+    Sleep(50)
+
+    set_point(10, 5, 0)
+    Sleep(50)
+
+    set_point(-5, 5, 0)
+    Sleep(50)
+
+    set_point(-5, -5, 0)
+    Sleep(50)
+
+    set_point(10, -5, 0)
+    Sleep(50)
+
+    face()
+    Sleep(50)
+
+    set_point(5, 0, 0)
+    Sleep(50)
+
+    set_point(-5, 0, 0)
+    Sleep(50)
+
+    set_point(0, 5, 0)
+    Sleep(50)
+
+    set_point(0, -5, 0)
+    Sleep(50)
+
+    deg0()
+    Sleep(50)
+
+    WinClose("Point")
+}
+
 get_case_type(title){
     if InStr(title, "AOT", true) {
         return "AOT"

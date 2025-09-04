@@ -117,13 +117,21 @@ debug(){
 }
 
 ; G5 Key
+#MaxThreadsPerHotkey 10 
 f17::{
     Run("C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe", , ,&esprit_pid)
+    if (WinGetList("ahk_exe esprit.exe").Length > 1){
+        warning_id := WinWaitTitleWithPID(esprit_pid, "ahk_class #32770", "WARNING: ESPRIT")
+        WinMove(-600, 275, , , "ahk_id" warning_id, "WARNING: ESPRIT")
+        ControlClick("Button2", "ahk_id" warning_id)
+    }
 }
+
 #SuspendExempt False
 
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
 
+#MaxThreadsPerHotkey 1
 l::{ 
     activeTitle := WinGetTitle("A")
     if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle)) and get_case_id(activeTitle) != ""){
