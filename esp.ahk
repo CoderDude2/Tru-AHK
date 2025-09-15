@@ -7,7 +7,6 @@ SetDefaultMouseSpeed(0)
 #Include Lib\util.ahk
 #Include Lib\nav.ahk
 
-
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 
 mtx := Mutex("Local\FileMutex")
@@ -128,6 +127,36 @@ remove_stl_file(STL_FILE_PATH) {
     }
 }
 
+go_to_next_esprit(){
+    esprit_ids := Map()
+    static active_index := 1
+    active_id := WinGetID("ESPRIT - ")
+
+    for this_id in WinGetList("ESPRIT - ") {
+        esprit_ids[this_id] := this_id 
+    }
+
+    sorted_ids := []
+    for k,v in esprit_ids {
+        sorted_ids.Push(v)
+    }
+
+    for this_id in sorted_ids {
+        if this_id == active_id {
+            active_index := A_Index
+        }
+    }
+
+    active_index += 1
+    if active_index > sorted_ids.Length {
+        active_index := 1
+    }
+
+    try {
+        WinActivate("ahk_id" sorted_ids[active_index])
+    } 
+}
+
 ds_startup_commands(){
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
         try{
@@ -164,11 +193,38 @@ ds_startup_commands(){
     if yn != "Yes"{
         ExitApp
     }
+    numOfSides := 3
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" {
+            numOfSides := 4
+            break
+        }
+        consolelog("[Tru-AHK] Invalid input")
+    }
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+    deg0("ahk_id" esp_id)
     WinActivate("ahk_id" stl_rotate_id)
 	CoordMode("Mouse", "Client")
 	Click("65 115")
 	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
 	WinWaitClose("ahk_id" base_work_id)
+    go_to_next_esprit()
     ExitApp
 }
 
@@ -202,11 +258,38 @@ asc_startup_commands(){
     if yn != "Yes"{
         ExitApp
     }
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
+    numOfSides := 3
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" {
+            numOfSides := 4
+            break
+        }
+        consolelog("[Tru-AHK] Invalid input")
+    }
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+    deg0("ahk_id" esp_id)
 	WinActivate("ahk_id" stl_rotate_id)
 	CoordMode("Mouse", "Client")
 	Click("60 147")
 	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
 	WinWaitClose("ahk_id" base_work_id)
+    go_to_next_esprit()
     ExitApp
 }
 
@@ -245,7 +328,17 @@ tl_aot_startup_commands(){
     ExitApp
 }
 
+
 #HotIf WinActive("ahk_pid" esp_pid)
+
+Up::{
+    decrement_10_degrees("ahk_id" esp_id)
+}
+
+Down::{
+    increment_10_degrees("ahk_id" esp_id)
+}
+
 ; G4
 switch startup_command {
     case "auto":

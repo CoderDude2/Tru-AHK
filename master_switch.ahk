@@ -36,6 +36,7 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 showDebug := false
 
 step_5_tab := 1
+f9_queue := [] 
 
 espritInstances := Map() 
 
@@ -78,6 +79,23 @@ update_file_map(){
 }
 
 SetTimer(update_file_map, 1000)
+
+SetTimer(process_f9_file_queue, 100)
+process_f9_file_queue(){
+    if f9_queue.Length > 0 {
+        f9_object := f9_queue.Pop()
+        generate_nc("ahk_id" f9_object.esp_id)
+        while (!WinExist("ESPRIT NC Editor", f9_object.case_id ".prg")){
+            Sleep(500)
+        }
+        try{
+            WinClose("ESPRIT NC Editor")
+        }
+        ControlSend("{Esc}{Esc}",,"ahk_id" f9_object.esp_id)
+        save_file(f9_object.esp_id)
+        Sleep(1000)
+    }
+}
 
 get_active_esprit_info(){
     activeTitle := WinGetTitle("A")
@@ -183,24 +201,32 @@ k::{
 f8::{
     _id := WinGetID("ESPRIT - ")
     CoordMode("Mouse", "Screen")
-    Click(257, 107)
-    Sleep(20)
     Click(222, 977)
     Sleep(20)
     Click(100, 946)
     Sleep(40)
     deg0("ahk_id" _id)
+    toggle_simulation("ahk_id" _id)
 }
 
 ^b::
 ^f15::
 f9::{
     _id := WinGetID("ESPRIT - ")
+    pid := WinGetPID("ahk_id" _id)
+    case_id := get_case_id(WinGetTitle("ahk_id" _id))
+
+    newF9QueueObject := F9QueueObject()
+    newF9QueueObject.esp_pid := pid
+    newF9QueueObject.esp_id := _id
+    newF9QueueObject.case_id := case_id
     
+    ; save_file("ahk_id" _id)
+    f9_queue.InsertAt(1, newF9QueueObject)
+
+    ; MsgBox(f9_queue.Length)
     ; WinActivate("ahk_id" _id)
-    save_file("ahk_id" _id)
-    generate_nc("ahk_id" _id)
-    toggle_simulation("ahk_id" _id)
+    
 }
 
 ^f16::{
@@ -941,6 +967,9 @@ x::{
     enable_layer("15 '경계소재-5'")
     CoordMode("Mouse", "Screen")
     macro_button4()
+    cam_automation_id := WinWaitTitleWithPID(WinGetPID("ESPRIT - "), "CAM Automation", "[4] Rebuild Freeform")
+    WinWaitClose("ahk_id" cam_automation_id)
+    go_to_next_esprit()
 }
 
 ^Numpad5::{

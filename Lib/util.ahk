@@ -5,6 +5,12 @@ class EspritInfo{
     Step3Tab3Deg := 0
 }
 
+class F9QueueObject{
+    esp_pid := 0
+    esp_id := 0
+    case_id := 0
+}
+
 get_active_monitor(){
     CoordMode "Mouse", "Screen"
     MouseGetPos(&posX, &posY)
