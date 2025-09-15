@@ -233,10 +233,36 @@ rebuild_operation(){
 
 ds_startup_commands(){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
-			Send("{Enter}")
-		}
+        try {
+            dialog_win := WinActive("esprit", "&Yes")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("Direction Check", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "예(&Y)")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "확인")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
 	}
 	WinActivate("ESPRIT -")
 	deg0()
@@ -257,10 +283,36 @@ ds_startup_commands(){
 
 asc_startup_commands(){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
-			Send("{Enter}")
-		}
+        try {
+            dialog_win := WinActive("esprit", "&Yes")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("Direction Check", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "예(&Y)")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "확인")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
 	}
 	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
@@ -282,10 +334,36 @@ asc_startup_commands(){
 
 tl_aot_startup_commands(){
     while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
-			Send("{Enter}")
-		}
+        try {
+            dialog_win := WinActive("esprit", "&Yes")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("Direction Check", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "예(&Y)")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "확인")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
 	}
     WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
