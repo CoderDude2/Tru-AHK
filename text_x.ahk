@@ -193,9 +193,6 @@ save(){
 }
 
 load(){
-    global non_library_count
-    global non_library_asc_count
-    global non_library_aot_count
     reset_file := False
     current_list := ""
     if(FileExist(log_path)){
