@@ -207,6 +207,7 @@ f8::{
     Sleep(40)
     deg0("ahk_id" _id)
     toggle_simulation("ahk_id" _id)
+    go_to_next_esprit()
 }
 
 ^b::
@@ -1119,6 +1120,7 @@ x::{
 ^!Enter::{
     CoordMode("Mouse", "Screen")
     click_and_return(103, 336)
+    go_to_next_esprit()
 }
 
 !e::{

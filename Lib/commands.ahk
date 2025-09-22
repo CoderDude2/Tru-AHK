@@ -142,8 +142,13 @@ draw_path(command){
             Send("{Escape}{Escape}{Escape}")
         case "complete":
              if path_tool_active{
-				if click_index > 2 {
+				if click_index > 1 {
 					CoordMode("Mouse", "Screen")
+                    MouseGetPos(&last_pox_x, &last_pos_y)
+                    MouseMove(391, last_pos_y)
+                    Click()
+                    MouseMove(391, initial_pos_y)
+                    Click()
 					MouseMove(initial_pos_x, initial_pos_y, 0)
 					Click()
 					path_tool_active := false
