@@ -36,6 +36,8 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 showDebug := false
 
 step_5_tab := 1
+step_5_margin := 1
+
 f9_queue := [] 
 
 espritInstances := Map() 
@@ -223,8 +225,9 @@ f9::{
     newF9QueueObject.case_id := case_id
     
     ; save_file("ahk_id" _id)
+    go_to_next_esprit()
     f9_queue.InsertAt(1, newF9QueueObject)
-
+    
     ; MsgBox(f9_queue.Length)
     ; WinActivate("ahk_id" _id)
     
@@ -741,20 +744,20 @@ AppsKey::{
     BlockInput("MouseMove")
     CoordMode("Mouse", "Screen")
 
-    ; 1st Margin
-    Click("70 170")
+    
+    Click("70 170") ; 1st Margin
     Click("180, 290") ; Click the Text box and enter 0.025
     Send("^a0.025")
     Click("120, 325") ; Click Re-Generate Operation
     Sleep(20)
-    ; 2nd Margin
-    Click("180 170")
+    
+    Click("180 170") ; 2nd Margin
     Click("180, 290") ; Click the Text box and enter 0.025
     Send("^a0.025")
     Click("120, 325") ; Click Re-Generate Operation
     Sleep(20)
-    ; 3rd Margin
-    Click("70 215")
+    
+    Click("70 215") ; 3rd Margin
     Click("180, 290") ; Click the Text box and enter 0.025
     Send("^a0.025")
     Click("120, 325") ; Click Re-Generate Operation
@@ -800,8 +803,8 @@ AppsKey::{
     Send("^a0.025")
     Click("120, 325") ; Click Re-Generate Operation
     Sleep(40)
-    ; 4th Margin
-    Click("180 215")
+    
+    Click("180 215") ; 4th Margin
     Click("180, 290") ; Click the Text box and enter 0.025
     Send("^a0.025")
     Click("120, 325") ; Click Re-Generate Operation
@@ -836,37 +839,49 @@ w::{
 
 !Numpad7::{
     global step_5_tab
+    global step_5_margin
     step_5_window_0_deg()
     Sleep(20)
     if step_5_tab = 1{
         step_5_window_90_plus_deg()
+    } else if step_5_tab == 2 {
+        step_5_margin := 1
     }
 }
 
 !Numpad9::{
     global step_5_tab
+    global step_5_margin
     step_5_window_120_deg()
     Sleep(20)
     if step_5_tab = 1{
         step_5_window_90_plus_deg()
+    } else if step_5_tab == 2 {
+        step_5_margin := 2
     }
 }
 
 !Numpad1::{
     global step_5_tab
+    global step_5_margin
     step_5_window_240_deg()
     Sleep(20)
     if step_5_tab = 1{
         step_5_window_90_plus_deg()
+    } else if step_5_tab == 2 {
+        step_5_margin := 3
     }
 }
 
 !Numpad3::{
     global step_5_tab
+    global step_5_margin
     step_5_window_270_deg()
     Sleep(20)
     if step_5_tab = 1{
         step_5_window_90_plus_deg()
+    } else if step_5_tab == 2 {
+        step_5_margin := 4
     }
 }
 
