@@ -145,9 +145,9 @@ draw_path(command){
 				if click_index > 1 {
 					CoordMode("Mouse", "Screen")
                     MouseGetPos(&last_pox_x, &last_pos_y)
-                    MouseMove(445, last_pos_y)
+                    MouseMove(500, last_pos_y)
                     Click()
-                    MouseMove(445, initial_pos_y)
+                    MouseMove(500, initial_pos_y)
                     Click()
 					MouseMove(initial_pos_x, initial_pos_y, 0)
 					Click()

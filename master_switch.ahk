@@ -34,6 +34,10 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 
 ; ===== Variables =====
 showDebug := false
+isDrawing := false
+
+lastMousePosX := unset
+lastMousePosY := unset
 
 step_5_tab := 1
 step_5_margin := 1
@@ -200,10 +204,11 @@ k::{
 }
 
 ; I want to save the open file when building the NC code.
+f15::
 f8::{
     _id := WinGetID("ESPRIT - ")
     CoordMode("Mouse", "Screen")
-    Click(222, 977)
+    Click(231, 968)
     Sleep(20)
     Click(100, 946)
     Sleep(40)
@@ -212,8 +217,9 @@ f8::{
     go_to_next_esprit()
 }
 
+; G3 Key
++f15::
 ^b::
-^f15::
 f9::{
     _id := WinGetID("ESPRIT - ")
     pid := WinGetPID("ahk_id" _id)
@@ -230,7 +236,6 @@ f9::{
     
     ; MsgBox(f9_queue.Length)
     ; WinActivate("ahk_id" _id)
-    
 }
 
 ^f16::{
@@ -504,7 +509,9 @@ XButton1::{
 }
 
 !LButton::{
+    highlight_tool()
     Send("{LButton}{RButton}{LButton}")
+    highlight_tool()
 }
 
 ^d::{
@@ -522,6 +529,22 @@ XButton1::{
 }
 
 g::{
+    global isDrawing
+    global lastMousePosX
+    global lastMousePosY
+    
+    if isDrawing {
+        isDrawing := false
+        highlight_tool()
+        Send("{Escape}")
+        Send("{Shift down}")
+        MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
+        Send("{Shift up}")
+        highlight_tool()
+        solid_view()
+        Sleep(100)
+    }
+    
     if not WinActive("Extrude Boss/Cut"){
         double_sided_border()
     } else {
@@ -530,6 +553,23 @@ g::{
 }
 
 b::{
+    global isDrawing
+    global lastMousePosX
+    global lastMousePosY
+    
+    if isDrawing {
+        isDrawing := false
+        highlight_tool()
+        Send("{Escape}")
+        Send("{Shift down}")
+        MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
+        Send("{Shift up}")
+        highlight_tool()
+        solid_view()
+        Sleep(100)
+
+    }
+
     if not WinExist("Extrude Boss/Cut"){
         cut_with_border()
     } else {
@@ -650,25 +690,34 @@ e::{
     draw_straight_border()
 }
 
-; G5 Key
-
-f18::{
-    save_file()
-}
-
 ; ===== Auto-Complete Margins =====
 ~Escape::{
     global passes
+    global isDrawing
+    global lastMousePosX
+    global lastMousePosY
 
     passes := 5
 
     if not WinActive("ahk_class #32770","No Intersections P->L"){
         draw_path("cancel")
     }
+
+    if isDrawing {
+        isDrawing := false
+        highlight_tool()
+        Send("{Shift down}")
+        MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
+        Send("{Shift up}")
+        highlight_tool()
+    }
+
     stop_simulation()
 }
 
 CapsLock::{
+    global isDrawing
+    isDrawing := true
     line_tool()
 }
 
@@ -678,8 +727,18 @@ XButton2::{
 }
 
 ~LButton::{
+    global isDrawing
+    global lastMousePosX
+    global lastMousePosY
+
     if draw_path("get-state") {
         draw_path("click")
+    }
+
+    if isDrawing {
+        MouseGetPos(&mousePosX, &mousePosY)
+        lastMousePosX := mousePosX
+        lastMousePosY := mousePosY
     }
 }
 
@@ -747,20 +806,41 @@ AppsKey::{
     
     Click("70 170") ; 1st Margin
     Click("180, 290") ; Click the Text box and enter 0.025
+    try{
+        WinClose("Command", "PIN")
+        WinWaitClose("Command", "PIN")
+    }
+    Sleep(50)
     Send("^a0.025")
+    Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
+    Sleep(50)
     
     Click("180 170") ; 2nd Margin
     Click("180, 290") ; Click the Text box and enter 0.025
+    try{
+        WinClose("Command", "PIN")
+        WinWaitClose("Command", "PIN")
+    }
+    Sleep(50)
     Send("^a0.025")
+    Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
+    Sleep(50)
+    
     
     Click("70 215") ; 3rd Margin
     Click("180, 290") ; Click the Text box and enter 0.025
+    try{
+        WinClose("Command", "PIN")
+        WinWaitClose("Command", "PIN")
+    }
+    Sleep(100)
     Send("^a0.025")
+    Sleep(100)
     Click("120, 325") ; Click Re-Generate Operation
+    Sleep(100)
+
     BlockInput("MouseMoveOff")
     face()
     Sleep(20)
@@ -788,26 +868,55 @@ AppsKey::{
     ; 1st Margin
     Click("70 170")
     Click("180, 290") ; Click the Text box and enter 0.025
+    try{
+        WinClose("Command", "PIN")
+        WinWaitClose("Command", "PIN")
+    }
+    Sleep(50)
     Send("^a0.025")
+    Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
+    Sleep(50)
+
     ; 2nd Margin
     Click("180 170")
     Click("180, 290") ; Click the Text box and enter 0.025
+    try{
+        WinClose("Command", "PIN")
+        WinWaitClose("Command", "PIN")
+    }
+    Sleep(50)
     Send("^a0.025")
+    Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(20)
+    Sleep(50)
+
     ; 3rd Margin
     Click("70 215")
     Click("180, 290") ; Click the Text box and enter 0.025
+    try{
+        WinClose("Command", "PIN")
+        WinWaitClose("Command", "PIN")
+    }
+    Sleep(50)
     Send("^a0.025")
+    Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(40)
+    Sleep(50)
+
     
     Click("180 215") ; 4th Margin
     Click("180, 290") ; Click the Text box and enter 0.025
+    try{
+        WinClose("Command", "PIN")
+        WinWaitClose("Command", "PIN")
+    }
+    Sleep(50)
     Send("^a0.025")
+    Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
+    Sleep(50)
+
     BlockInput("MouseMoveOff")
     face()
     Sleep(20)
@@ -961,9 +1070,9 @@ x::{
 }
 
 ^Numpad3::{
-    ; if not WinActive("ESPRIT - "){
-    ;     WinActivate("ESPRIT - ")
-    ; }
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
     ; try{
     ;     esp_info := get_active_esprit_info()
     ;     esp_info.Step3Tab := 1 
@@ -1010,6 +1119,8 @@ x::{
 
 ^!Numpad3::{
     CoordMode("Mouse", "Screen")
+    Click(231, 968)
+    Sleep(20)
     click_and_return(80, 1020)
 }
 
@@ -1074,6 +1185,8 @@ x::{
     ; esp_info.Step3Tab := 2 
     ; update_angle(esp_info.Step3Tab2Deg, "ESPRIT - ")
     step_3_tab2()
+    WinWaitActive("Check Rough ML & Create Border Solid")
+    save_file()
 }
 
 ; Tab 3
@@ -1125,6 +1238,7 @@ x::{
     click_and_return(205, 290)
 }
 
+^+NumpadEnter::
 ^+Enter::{
     CoordMode("Mouse", "Screen")
     click_and_return(106, 126)
@@ -1132,6 +1246,7 @@ x::{
     WinClose("esprit", "OK")
 }
 
+^!NumpadEnter::
 ^!Enter::{
     CoordMode("Mouse", "Screen")
     click_and_return(103, 336)
@@ -1140,16 +1255,6 @@ x::{
 
 !e::{
     show_milling_tool()
-}
-
-; G3 Key
-f15::{
-    ids := WinGetList("esprit", "&Yes")
-    for this_id in ids{
-        try {
-            WinMove(-600, 275, , , "ahk_id" this_id, "&Yes")
-        }
-    }
 }
 
 ^Left::{

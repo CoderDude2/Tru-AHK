@@ -196,14 +196,14 @@ ds_startup_commands(){
     numOfSides := 3
     consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
     Loop {
-        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}")
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}{LShift}")
         ih.Start()
         ih.Wait()
         keyName := GetKeyName(ih.EndKey)
         if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
             numOfSides := 3
             break
-        } else if keyName == "4" or keyName == "Numpad4" {
+        } else if keyName == "4" or keyName == "Numpad4" or keyName == "LShift"{
             numOfSides := 4
             break
         }
