@@ -1,8 +1,16 @@
 class EspritInfo{
+    esp_pid := unset
+    esp_id := unset
+
     Step3Tab := 1
     Step3Tab1Deg := 0
     Step3Tab2Deg := 0
     Step3Tab3Deg := 0
+
+    Step2Complete := false
+    Step3Saved := false
+    Step5Saved := false
+    MarginsSaved := false
 }
 
 class F9QueueObject{

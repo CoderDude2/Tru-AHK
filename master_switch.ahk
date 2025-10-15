@@ -50,6 +50,7 @@ STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 
 SuspendScriptMsg := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
 TerminateMsg := DllCall("RegisterWindowMessageA", "Str", "Terminate")
+ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
 
 file_map := {data:loads_completed_files()}
 ObjRegisterActive(file_map, "{EB5BAF88-E58D-48F9-AE79-56392D4C7AF6}")
@@ -98,24 +99,57 @@ process_f9_file_queue(){
             WinClose("ESPRIT NC Editor")
         }
         ControlSend("{Esc}{Esc}",,"ahk_id" f9_object.esp_id)
-        save_file(f9_object.esp_id)
+        save_and_create_checkpoint("nc generated", f9_object.esp_id)
         Sleep(1000)
     }
 }
 
 get_active_esprit_info(){
-    activeTitle := WinGetTitle("A")
-    if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle)) and get_case_id(activeTitle) != ""){
-        espritInstances[activeTitle "_" WinGetPID(activeTitle)] := EspritInfo() 
+    activeTitle := WinGetTitle("ESPRIT - ")
+    if get_case_id(activeTitle) == ""{
+        return
     }
+
+    if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle))){
+        esp_id := WinGetID(activeTitle)
+        esp_pid := WinGetPID(activeTitle)
+         
+        esp_info := EspritInfo()
+        esp_info.esp_pid := esp_pid
+        esp_info.esp_id := esp_id
+
+        espritInstances[activeTitle "_" WinGetPID(activeTitle)] := esp_info
+    }
+
     return espritInstances[activeTitle "_" WinGetPID(activeTitle)] 
 }
 
-save_on_exit_callback(*){
+OnMessage(ESPInitCompleteMsg, OnESPInitCompleteMsg)
+
+OnESPInitCompleteMsg(wParam, lParam, msg, hwnd){
+    esp_info := get_active_esprit_info()
+
+    if not esp_info.Step2Complete {
+        esp_info.Step2Complete := true
+    }
+
+    go_to_next_esprit(esp_info.esp_id)
+}
+
+on_exit_callback(*){
+    activeTitle := WinGetTitle("ESPRIT - ")
+    if get_case_id(activeTitle) == ""{
+        return
+    }
+
+    if (espritInstances.Has(activeTitle "_" WinGetPID(activeTitle))){
+        espritInstances.Delete(activeTitle "_" WinGetPID(activeTitle))
+    }
+
     save_completed_files(file_map.data)
     PostMessage(TerminateMsg, , , ,0xFFFF)
 }
-OnExit(save_on_exit_callback)
+OnExit(on_exit_callback)
 
 
 debug(){
@@ -156,32 +190,14 @@ f17::{
 #HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
 
 #MaxThreadsPerHotkey 1
-l::{ 
-    activeTitle := WinGetTitle("A")
-    if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle)) and get_case_id(activeTitle) != ""){
-        espritInstances[activeTitle "_" WinGetPID(activeTitle)] := EspritInfo() 
-    }
-}
-
-+l::{
-    activeTitle := WinGetTitle("A")
-    if espritInstances.Has(activeTitle "_" WinGetPID(activeTitle)){
-        MsgBox(espritInstances[activeTitle "_" WinGetPID(activeTitle)].Step3Tab)
-    }
-}
-
-^l::{
-    MsgBox(espritInstances.Count)
-}
-
 f16::{
-    esp_pid := WinGetPID("ESPRIT - ") 
-    Run("esp.ahk " esp_pid " auto")
+    esp_info := get_active_esprit_info()
+    Run("esp.ahk " esp_info.esp_pid " auto")
 }
 
 +f16::{
-    esp_pid := WinGetPID("ESPRIT - ") 
-    Run("esp.ahk " esp_pid " manual")
+    esp_info := get_active_esprit_info() 
+    Run("esp.ahk " esp_info.esp_pid " manual")
 }
 
 k::{
@@ -206,32 +222,32 @@ k::{
 ; I want to save the open file when building the NC code.
 f15::
 f8::{
-    _id := WinGetID("ESPRIT - ")
+    esp_info := get_active_esprit_info()
     CoordMode("Mouse", "Screen")
     Click(231, 968)
     Sleep(20)
     Click(100, 946)
     Sleep(40)
-    deg0("ahk_id" _id)
-    toggle_simulation("ahk_id" _id)
-    go_to_next_esprit()
+    deg0("ahk_id" esp_info.esp_id)
+    toggle_simulation("ahk_id" esp_info.esp_id)
+    go_to_next_esprit(esp_info.esp_id)
 }
 
 ; G3 Key
 +f15::
 ^b::
 f9::{
-    _id := WinGetID("ESPRIT - ")
-    pid := WinGetPID("ahk_id" _id)
-    case_id := get_case_id(WinGetTitle("ahk_id" _id))
+    esp_info := get_active_esprit_info()
+
+    case_id := get_case_id(WinGetTitle("ahk_id" esp_info.esp_id))
 
     newF9QueueObject := F9QueueObject()
-    newF9QueueObject.esp_pid := pid
-    newF9QueueObject.esp_id := _id
+    newF9QueueObject.esp_pid := esp_info.esp_pid
+    newF9QueueObject.esp_id := esp_info.esp_id
     newF9QueueObject.case_id := case_id
     
     ; save_file("ahk_id" _id)
-    go_to_next_esprit()
+    go_to_next_esprit(esp_info.esp_id)
     f9_queue.InsertAt(1, newF9QueueObject)
     
     ; MsgBox(f9_queue.Length)
@@ -285,54 +301,21 @@ f9::{
     }
 }
 
-; G4
-; +f16::{
-;     selected_file := FileSelect(, STL_FILE_PATH)
-;     if(selected_file != ""){
-;         SplitPath(selected_file, &name)
-;         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
-;         open_file()
-;         WinWaitActive("ahk_class #32770")
-;         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-;         ControlSetChecked(0,"Button5","ahk_class #32770")
-;         ControlSend("{Enter}", "Button2","ahk_class #32770")
-;         WinWait("ahk_class #32770", "&Yes", 1)
-;         if WinExist("ahk_class #32770", "&Yes"){
-;             WinWaitClose("ahk_class #32770", "&Yes")
-;         }
-;         yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
-;         if yn != "Yes"{
-;             return
-;         }
-;         file_map[name] := true
-;         WinActivate("ESPRIT")
-;         ; set_bounding_points()
-;         macro_button1()
-;         WinWaitActive("CAM Automation")
-;         Send("{Enter}")
-;         WinWaitActive("Select file to open")
-;         Sleep(200)
-;         ControlSetText(selected_file, "Edit1", "Select file to open")
-;         Send("{Enter}")
-;         switch get_case_type(name) {
-;             case "DS":
-;                 ds_startup_commands()
-;             case "ASC":
-;                 asc_startup_commands()
-;             case "TLOC": 
-;                 tl_aot_startup_commands()
-;             case "AOT":
-;                 tl_aot_startup_commands()
-;             default: 
-;                 return
-;         }
-;     }
-; }
+f18::{
+    esprit_title := WinGetTitle("ESPRIT - ")
+    FoundPos := RegExMatch(esprit_title, "(\w+-\w+-\d+)__\(([A-Za-z0-9;\-]+),(\d+)\) ?\[?([#0-9-=. ]+)?\]?[_0-9]*?(\.\w+)", &SubPat)
+    
+    if FoundPos{
+        inp := InputBox("Enter a tag for the checkpoint", "New Checkpoint")
+        if inp.Value != "" {
+            create_checkpoint(inp.Value, SubPat[0])
+        }
+    }
+}
 
 f12::{
-    ProcessExist("esprit.exe")
-    pid := WinGetPID("A")
-    ProcessClose(pid)
+    esp_info := get_active_esprit_info()
+    ProcessClose(esp_info.esp_pid)
 }
 
 
@@ -411,7 +394,7 @@ v::{
 }
 
 !WheelDown::{
-    try{
+    try {
         if not WinActive("ESPRIT - "){
             WinActivate("ESPRIT - ")
         }
@@ -752,8 +735,9 @@ RButton::{
 
 ; ===== Auto-Fill TLOC cases =====
 +t::{
-WinWaitActive("ahk_exe esprit.exe")
-esprit_title := WinGetTitle("A")
+    WinWaitActive("ahk_exe esprit.exe")
+    esprit_title := WinGetTitle("A")
+
     if(get_case_type(esprit_title) = "TLOC"){
         FoundPos := RegExMatch(esprit_title, "#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", &SubPat)
         working_degree := SubPat[1]
@@ -1009,6 +993,13 @@ x::{
     global step_5_tab
     step_5_window_tab_2()
     step_5_tab := 2
+
+    esp_info := get_active_esprit_info()
+
+    if not esp_info.Step5Saved {
+        save_and_create_checkpoint("margins", esp_info.esp_id)
+        esp_info.Step5Saved := true
+    }
 }
 
 ^!Up::{
@@ -1062,11 +1053,26 @@ x::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    deg0()
-    enable_layer("18 'STL'")
-    enable_layer("19 'STL'")
-    enable_layer("21 'STL'")
-    macro_button2()
+
+    esp_info := get_active_esprit_info()
+    if not esp_info.Step2Complete {
+        deg0()
+        enable_layer("18 'STL'")
+        enable_layer("19 'STL'")
+        enable_layer("21 'STL'")
+        macro_button2()
+        esp_info.Step2Complete := true
+    } else {
+        yn := MsgBox("Are you sure you want to continue? Step 2 was completed for this file.", "Step-2", "YesNo")
+        if yn != "Yes"{
+            return
+        }
+        enable_layer("18 'STL'")
+        enable_layer("19 'STL'")
+        enable_layer("21 'STL'")
+        macro_button2()
+        esp_info.Step2Complete := true
+    }
 }
 
 ^Numpad3::{
@@ -1081,6 +1087,8 @@ x::{
 }
 
 ^Numpad4::{
+    esp_info := get_active_esprit_info()
+    
     ; unsuppress_operation()
     Sleep(20)
     enable_layer("28 '경계소재-5'")
@@ -1092,9 +1100,9 @@ x::{
     enable_layer("15 '경계소재-5'")
     CoordMode("Mouse", "Screen")
     macro_button4()
-    cam_automation_id := WinWaitTitleWithPID(WinGetPID("ESPRIT - "), "CAM Automation", "[4] Rebuild Freeform")
+    cam_automation_id := WinWaitTitleWithPID(esp_info.esp_pid, "CAM Automation", "[4] Rebuild Freeform")
     WinWaitClose("ahk_id" cam_automation_id)
-    go_to_next_esprit()
+    go_to_next_esprit(esp_info.esp_id)
 }
 
 ^Numpad5::{
@@ -1186,7 +1194,11 @@ x::{
     ; update_angle(esp_info.Step3Tab2Deg, "ESPRIT - ")
     step_3_tab2()
     WinWaitActive("Check Rough ML & Create Border Solid")
-    save_file()
+    esp_info := get_active_esprit_info()
+    if not esp_info.Step3Saved {
+        save_and_create_checkpoint("layer 12", esp_info.esp_id)
+        esp_info.Step3Saved := true
+    }
 }
 
 ; Tab 3
@@ -1248,9 +1260,11 @@ x::{
 
 ^!NumpadEnter::
 ^!Enter::{
+    esp_info := get_active_esprit_info()
+
     CoordMode("Mouse", "Screen")
     click_and_return(103, 336)
-    go_to_next_esprit()
+    go_to_next_esprit(esp_info.esp_id)
 }
 
 !e::{
@@ -1416,55 +1430,6 @@ x::{
 +w::{
     set_bounding_points()
 }
-
-; G4
-; f16::{
-;     selected_file := ""
-;     For k,v in file_map{
-;         if v = False and FileExist(STL_FILE_PATH "\" k){
-;             selected_file := k
-;             break
-;         }
-;     }
-;     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
-;     if found_pos {
-;         SplitPath(selected_file, &name)
-;         open_file()
-;         WinWaitActive("Open")
-;         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-;         ControlSetChecked(0,"Button5","ahk_class #32770")
-;         ControlSend("{Enter}", "Button2","ahk_class #32770")
-;         WinWait("ahk_class #32770", "&Yes", 1)
-;         if WinExist("ahk_class #32770", "&Yes"){
-;             WinWaitClose("ahk_class #32770", "&Yes")
-;         }
-;         yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
-;         if yn != "Yes"{
-;             return
-;         }
-;         file_map[name] := true
-;         WinActivate("ESPRIT")
-;         macro_button1()
-;         WinWaitActive("CAM Automation")
-;         Send("{Enter}")
-;         WinWaitActive("Select file to open")
-;         Sleep(200)
-;         ControlSetText(selected_file, "Edit1", "Select file to open")
-;         Send("{Enter}")
-;         switch get_case_type(selected_file) {
-;             case "DS":
-;                 ds_startup_commands()
-;             case "ASC":
-;                 asc_startup_commands()
-;             case "TLOC": 
-;                 tl_aot_startup_commands()
-;             case "AOT":
-;                 tl_aot_startup_commands()
-;             default: 
-;                 return
-;         }
-;     }
-; }
 
 +3::{
     res := SendMessage(TVM_GETITEMW, , , "SysTreeView321", "Project Manager")

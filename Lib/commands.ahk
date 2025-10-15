@@ -253,10 +253,10 @@ set_bounding_points(){
     WinClose("Point")
 }
 
-go_to_next_esprit(){
+go_to_next_esprit(current_esp_id){
     esprit_ids := Map()
     static active_index := 1
-    active_id := WinGetID("ESPRIT - ")
+    active_id := current_esp_id
 
     for this_id in WinGetList("ESPRIT - ") {
         esprit_ids[this_id] := this_id 
@@ -283,192 +283,209 @@ go_to_next_esprit(){
     } 
 }
 
-ds_startup_commands(){
-	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
-			Send("{Enter}")
-		}
+ds_startup_commands(esp_pid, esp_id){
+	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+        try{
+            win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+            if win_1 {
+                ControlSend("{Enter}", , "ahk_id" win_1)
+            }
+        }
+        
+        try{
+            win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+            if win_2 {
+                ControlSend("{Enter}", , "ahk_id" win_2)
+            }
+        }
+
+        try{
+            win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+            if win_3 {
+                ControlSend("{Enter}", , "ahk_id" win_3)
+            }
+        }
 	}
-	WinActivate("ESPRIT -")
-	deg0()
-    yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
+    stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
+    WinActivate("ahk_id" esp_id)
+	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
+    yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
-        return
+        ExitApp
     }
-	WinActivate("STL Rotate")
-	CoordMode("Mouse", "Client")
-	Click("65 115")
-	WinWaitActive("Base Work Plane(Degree)")
-	WinWaitClose("Base Work Plane(Degree)")
-    esp_title := WinGetTitle("A")
-    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
-
-    if found_pos {
-        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
-    }
-}
-
-asc_startup_commands(){
-	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
-			Send("{Enter}")
-		}
-	}
-	WinWaitActive("STL Rotate")
-	WinActivate("ESPRIT -")
-	deg0()
-	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK")
-    if yn != "Yes"{
-        return
-    }
-	WinActivate("STL Rotate")
-	CoordMode("Mouse", "Client")
-	Click("60 147")
-	WinWaitActive("Base Work Plane(Degree)")
-	WinWaitClose("Base Work Plane(Degree)")
-    esp_title := WinGetTitle("A")
-    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
-
-    if found_pos {
-        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
-    }
-}
-
-tl_aot_startup_commands(){
-    while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check", "OK"){
-			Send("{Enter}")
-		}
-	}
-    WinWaitActive("STL Rotate")
-	WinActivate("ESPRIT -")
-    deg0()
-    esp_title := WinGetTitle("A")
-    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
-
-    if found_pos {
-        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
-        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
-    }
-}
-
-align_tl_aot_cap(){
-    WinWaitActive("ahk_exe esprit.exe")
-    esprit_title := WinGetTitle("A")
-        if(get_case_type(esprit_title) = "TLOC"){
-            FoundPos := RegExMatch(esprit_title, "#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", &SubPat)
-            working_degree := SubPat[1]
-            rotate_stl_by := SubPat[2]
-            y_pos := SubPat[3]
-            z_pos := SubPat[4]
-            x_pos := SubPat[5]
-
-            update_angle_deg(working_degree)
-            Sleep(50)
-            rotate_selection(rotate_stl_by)
-            Sleep(50)
-            translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
-            Sleep(50)
-            rotate_selection(Mod(working_degree, 10), True)
-
-        } else if(get_case_type(esprit_title) = "AOT"){
-            FoundPos := RegExMatch(esprit_title, "#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", &SubPat)
-            working_degree := SubPat[1]
-            rotate_stl_by := SubPat[2]
-            y_pos := SubPat[3]
-            z_pos := SubPat[4]
-            x_pos := SubPat[5]
-
-            update_angle_deg(working_degree)
-            Sleep(50)
-            translate_selection(20, 0, 0)
-            Sleep(50)
-            rotate_selection(rotate_stl_by)
-            Sleep(50)
-            translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
-            Sleep(50)
-            rotate_selection(Mod(working_degree, 10), True)
-        }
-}
-
-open_and_start_file(file_path, &file_map){
-	selected_file := FileSelect(, file_path)
-    if(selected_file != ""){
-        SplitPath(selected_file, &name)
-        file_map[name] := true
-
-        found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
-        open_file()
-        WinWaitActive("ahk_class #32770")
-        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-        ControlSetChecked(0,"Button5","ahk_class #32770")
-        ControlSend("{Enter}", "Button2","ahk_class #32770")
-        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
-        if yn != "Yes"{
-            return
-        }
-        WinActivate("ESPRIT")
-		set_bounding_points()
-        macro_button1()
-        WinWaitActive("CAM Automation")
-        Send("{Enter}")
-        WinWaitActive("Select file to open")
-        Sleep(200)
-        ControlSetText(selected_file, "Edit1", "Select file to open")
-        Send("{Enter}")
-        switch get_case_type(name) {
-            case "DS":
-                ds_startup_commands()
-            case "ASC":
-                asc_startup_commands()
-            default: 
-                return
-        }
-    }
-}
-
-open_and_start_next_file(file_path, &file_map){
-	selected_file := ""
-    For k,v in file_map{
-        if v = False and FileExist(file_path "\" k){
-            selected_file := k
-            file_map[k] := true
+    numOfSides := 3
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}{LShift}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" or keyName == "LShift"{
+            numOfSides := 4
             break
         }
+        consolelog("[Tru-AHK] Invalid input")
     }
-    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+    deg0("ahk_id" esp_id)
+    WinActivate("ahk_id" stl_rotate_id)
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
+	WinWaitClose("ahk_id" base_work_id)
+    go_to_next_esprit(esp_id)
+}
+
+asc_startup_commands(esp_pid, esp_id){
+	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+        win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+        if win_1 {
+            ControlSend("{Enter}", , "ahk_id" win_1)
+        }
+
+        win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+        if win_2 {
+            ControlSend("{Enter}", , "ahk_id" win_2)
+        }
+
+        win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+        if win_3 {
+            ControlSend("{Enter}", , "ahk_id" win_3)
+        }
+	}
+	stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
+	WinActivate("ahk_id" esp_id)
+	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
     if found_pos {
-        open_file()
-        WinWaitActive("Open")
-        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-        ControlSetChecked(0,"Button5","ahk_class #32770")
-        ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 0.5)
-        if WinExist("ahk_class #32770", "&Yes"){
-            WinWaitClose("ahk_class #32770", "&Yes")
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
+    if yn != "Yes"{
+        ExitApp
+    }
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
+    numOfSides := 3
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" {
+            numOfSides := 4
+            break
         }
-        yn := MsgBox("Is the file loaded?",,"YesNoCancel 0x1000")
-        if yn != "Yes"{
-            return
+        consolelog("[Tru-AHK] Invalid input")
+    }
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+    deg0("ahk_id" esp_id)
+	WinActivate("ahk_id" stl_rotate_id)
+	CoordMode("Mouse", "Client")
+	Click("60 147")
+	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
+	WinWaitClose("ahk_id" base_work_id)
+    go_to_next_esprit(esp_id)
+}
+
+tl_aot_startup_commands(esp_pid, esp_id){
+    while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+        try{
+            win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+            if win_1 {
+                ControlSend("{Enter}", , "ahk_id" win_1)
+            }
         }
-        WinActivate("ESPRIT")
-        macro_button1()
-        WinWaitActive("CAM Automation")
-        Send("{Enter}")
-        WinWaitActive("Select file to open")
-        Sleep(200)
-        ControlSetText(selected_file, "Edit1", "Select file to open")
-        Send("{Enter}")
-        switch get_case_type(selected_file) {
-            case "DS":
-                ds_startup_commands()
-            case "ASC":
-                asc_startup_commands()
-            default: 
-                return
+        
+        try{
+            win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+            if win_2 {
+                ControlSend("{Enter}", , "ahk_id" win_2)
+            }
         }
+
+        try{
+            win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+            if win_3 {
+                ControlSend("{Enter}", , "ahk_id" win_3)
+            }
+        }
+	}
+    WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
+    WinActivate("ahk_id" esp_id)
+    deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+    }
+}
+
+align_tl_aot_cap(title := "ahk_exe esprit.exe"){
+    WinWaitActive(title)
+    esprit_title := WinGetTitle(title)
+    if(get_case_type(esprit_title) = "TLOC"){
+        FoundPos := RegExMatch(esprit_title, "#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", &SubPat)
+        working_degree := SubPat[1]
+        rotate_stl_by := SubPat[2]
+        y_pos := SubPat[3]
+        z_pos := SubPat[4]
+        x_pos := SubPat[5]
+
+        update_angle_deg(working_degree)
+        Sleep(50)
+        rotate_selection(rotate_stl_by)
+        Sleep(50)
+        translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
+        Sleep(50)
+        rotate_selection(Mod(working_degree, 10), True)
+
+    } else if(get_case_type(esprit_title) = "AOT"){
+        FoundPos := RegExMatch(esprit_title, "#101=([\-\d.]+) #102=([\-\d.]+) #103=([\-\d.]+) #104=([\-\d.]+) #105=([\-\d.]+)", &SubPat)
+        working_degree := SubPat[1]
+        rotate_stl_by := SubPat[2]
+        y_pos := SubPat[3]
+        z_pos := SubPat[4]
+        x_pos := SubPat[5]
+
+        update_angle_deg(working_degree)
+        Sleep(50)
+        translate_selection(20, 0, 0)
+        Sleep(50)
+        rotate_selection(rotate_stl_by)
+        Sleep(50)
+        translate_selection(x_pos, -1 * y_pos, -1 * z_pos)
+        Sleep(50)
+        rotate_selection(Mod(working_degree, 10), True)
     }
 }
 

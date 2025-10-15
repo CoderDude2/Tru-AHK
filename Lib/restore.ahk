@@ -11,7 +11,7 @@ if not DirExist(ESP_CHECKPOINT_DIRECTORY){
     DirCreate(ESP_CHECKPOINT_DIRECTORY)
 }
 
-create_checkpoint(tag, file_name){
+create_checkpoint(tag, file_name, overwrite := false){
     esp_file_path := ESP_DIRECTORY "\" file_name
     if not FileExist(esp_file_path){
         return
@@ -25,7 +25,7 @@ create_checkpoint(tag, file_name){
         DirCreate(ESP_CHECKPOINT_DIRECTORY "\" file_name "\" tag)
     }
 
-    if FileExist(ESP_CHECKPOINT_DIRECTORY "\" file_name "\" tag "\" file_name) {
+    if not overwrite and FileExist(ESP_CHECKPOINT_DIRECTORY "\" file_name "\" tag "\" file_name) {
         yn := MsgBox("Checkpoint already exist, do you want to overwrite it?", , "YesNo")
         if yn == "No"{
             return
@@ -122,8 +122,8 @@ save_and_create_checkpoint(tag, esprit_id){
     PostMessage 0x111, 57603 , , , "ahk_id " esprit_id
     
     while file_time == FileGetTime(ESP_DIRECTORY "\" SubPat[0]) {
-        Sleep(1)
+        Sleep(100)
     }
     
-    create_checkpoint(tag, SubPat[0])
+    create_checkpoint(tag, SubPat[0], true)
 }
