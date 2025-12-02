@@ -1,11 +1,12 @@
 #Requires Autohotkey v2.0
 #SingleInstance Force
 #WinActivateForce
+DetectHiddenWindows true
 
-go_to_next_esprit(){
+go_to_next_esprit(current_esp_id){
     esprit_ids := Map()
     static active_index := 1
-    active_id := WinGetID("ESPRIT - ")
+    active_id := current_esp_id
 
     for this_id in WinGetList("ESPRIT - ") {
         esprit_ids[this_id] := this_id 
@@ -33,6 +34,8 @@ go_to_next_esprit(){
 }
 
 ^Tab::{
-  go_to_next_esprit() 
+    if WinExist("ESPRIT - "){
+        current_id := WinGetID(WinGetTitle("ESPRIT - "))
+        go_to_next_esprit(current_id)
+    } 
 }
-

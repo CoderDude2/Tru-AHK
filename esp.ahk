@@ -16,13 +16,25 @@ mtx := Mutex("Local\FileMutex")
 esp_pid := A_Args[1]
 startup_command := A_Args[2]
 
+ESPAfterDocumentOpenMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_AFTER_DOCUMENT_OPEN")
 ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
+GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
 
 suspend_event_num := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
 terminate_event_num := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 
+DocumentOpen := false
+
 OnMessage(suspend_event_num, SuspendScript)
 OnMessage(terminate_event_num, TerminateScript)
+OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
+
+OnEspAfterDocumentOpen(wParam, lParam, msg, hwnd){
+    global DocumentOpen
+    if wParam == esp_id{
+        DocumentOpen := true
+    }
+}
 
 SuspendScript(wParam, lParam, msg, hwnd){
     Suspend(-1)
@@ -42,6 +54,10 @@ while True {
     }
 }
 
+ExecuteMacroButtonCommand(command){
+    PostMessage(GetMacroButtonCodeMsg, esp_id, command, , 0xFFFF)
+}
+
 file_map := ComObjActive("{EB5BAF88-E58D-48F9-AE79-56392D4C7AF6}")
 
 check_window_exist(){
@@ -53,7 +69,6 @@ check_window_exist(){
 SetTimer(check_window_exist, 100)
 
 #HotIf WinActive("ahk_pid" esp_pid)
-
 Up::{
     decrement_10_degrees("ahk_id" esp_id)
 }
@@ -79,7 +94,7 @@ switch startup_command {
                 file_map.data[name] := true
                 mtx.Release()
             }
-            open_file()
+            open_file("ahk_id" esp_id)
             WinWaitTitleWithPID(esp_pid, "Open", "&Open")
             open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
             ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_id" open_id)
@@ -89,16 +104,15 @@ switch startup_command {
             if are_you_sure_id {
                 WinWaitClose("ahk_id" are_you_sure_id)
             }
-            yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK", esp_id)
-            if yn != "Yes"{
-                if mtx.Lock() == 0 {
-                    file_map.data[name] := false
-                    mtx.Release()
-                }
-                ExitApp 
+
+            While Not DocumentOpen {
+                Sleep(1)
             }
+
             WinActivate("ahk_id" esp_id)
-            macro_button1("ahk_id" esp_id)
+            ; Macro Button 1
+            ExecuteMacroButtonCommand(1)
+            ; macro_button1("ahk_id" esp_id)
             WinWaitActiveTitleWithPID(esp_pid, "CAM Automation")
             Send("{Enter}")
             WinWaitActiveTitleWithPID(esp_pid, "Select file to open")
@@ -129,7 +143,7 @@ switch startup_command {
                 file_map.data[name] := true
                 mtx.Release()
             }
-            open_file()
+            open_file("ahk_id" esp_id)
             WinWaitTitleWithPID(esp_pid, "Open", "&Open")
             open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
             ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_id" open_id)
@@ -139,16 +153,15 @@ switch startup_command {
             if are_you_sure_id {
                 WinWaitClose("ahk_id" are_you_sure_id)
             }
-            yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK", esp_id)
-            if yn != "Yes"{
-                if mtx.Lock() == 0 {
-                    file_map.data[name] := false
-                    mtx.Release()
-                }
-                ExitApp 
+
+            While Not DocumentOpen {
+                Sleep(1)
             }
+
             WinActivate("ahk_id" esp_id)
-            macro_button1("ahk_id" esp_id)
+            ; Macro Button 1
+            ExecuteMacroButtonCommand(1)
+            ; macro_button1("ahk_id" esp_id)
             WinWaitActiveTitleWithPID(esp_pid, "CAM Automation")
             Send("{Enter}")
             WinWaitActiveTitleWithPID(esp_pid, "Select file to open")

@@ -51,6 +51,7 @@ STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 SuspendScriptMsg := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
 TerminateMsg := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
+RefreshDocumentMsg := DllCall("RegisterWindowMessageW", "Str", "REFRESH_DOCUMENT")
 
 file_map := {data:loads_completed_files()}
 ObjRegisterActive(file_map, "{EB5BAF88-E58D-48F9-AE79-56392D4C7AF6}")
@@ -91,24 +92,20 @@ SetTimer(process_f9_file_queue, 100)
 process_f9_file_queue(){
     if f9_queue.Length > 0 {
         f9_object := f9_queue.Pop()
+        Sleep(100)
         generate_nc("ahk_id" f9_object.esp_id)
-        while (!WinExist("ESPRIT NC Editor", f9_object.case_id ".prg")){
-            Sleep(500)
-        }
-        try{
-            WinClose("ESPRIT NC Editor")
-        }
-        ControlSend("{Esc}{Esc}",,"ahk_id" f9_object.esp_id)
-        save_and_create_checkpoint("nc generated", f9_object.esp_id)
-        Sleep(1000)
+        nc_id := WinWait("ESPRIT NC Editor", f9_object.case_id ".prg")
+        WinClose("ahk_id" nc_id)
+        WinWaitClose("ahk_id" nc_id)
+        save_file("ahk_id" f9_object.esp_id)
     }
 }
 
 get_active_esprit_info(){
     activeTitle := WinGetTitle("ESPRIT - ")
-    if get_case_id(activeTitle) == ""{
-        return
-    }
+    ; if get_case_id(activeTitle) == ""{
+    ;     return
+    ; }
 
     if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle))){
         esp_id := WinGetID(activeTitle)
@@ -123,17 +120,48 @@ get_active_esprit_info(){
 
     return espritInstances[activeTitle "_" WinGetPID(activeTitle)] 
 }
-
 OnMessage(ESPInitCompleteMsg, OnESPInitCompleteMsg)
 
 OnESPInitCompleteMsg(wParam, lParam, msg, hwnd){
     esp_info := get_active_esprit_info()
-
+    
     if not esp_info.Step2Complete {
         esp_info.Step2Complete := true
     }
 
     go_to_next_esprit(esp_info.esp_id)
+}
+
+GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
+MacroButtonCodeResponseMsg := DllCall("RegisterWindowMessageW", "Str", "MACRO_BUTTON_COMMAND_RESPONSE")
+
+ExecuteMacroButtonCommand(command){
+    esp_info := get_active_esprit_info()
+    PostMessage(GetMacroButtonCodeMsg, esp_info.esp_id, command, , 0xFFFF)
+}
+
+OnMessage(MacroButtonCodeResponseMsg, OnMacroButtonCodeResponseMsg)
+
+OnMacroButtonCodeResponseMsg(wParam, lParam, msg, hwnd){
+    esp_info := get_active_esprit_info()
+    if wParam == esp_info.esp_id{
+        ; MsgBox(lParam)
+        ; consolelog(lParam)
+        Sleep(50)
+        PostMessage 0x111, lParam, , , "ahk_id" esp_info.esp_id
+    }
+}
+
+ExtrudeMsg := DllCall("RegisterWindowMessageW", "Str", "EXTRUDE")
+DrawLineMsg := DllCall("RegisterWindowMessageW", "Str", "DRAW_LINE")
+
+OnMessage(ExtrudeMsg, OnExtrudeMsg)
+
+OnExtrudeMsg(wParam, lParam, msg, hwnd){
+    esp_info := get_active_esprit_info()
+    if wParam == esp_info.esp_id {
+        double_sided_border(true)
+    }
 }
 
 on_exit_callback(*){
@@ -191,13 +219,18 @@ f17::{
 
 #MaxThreadsPerHotkey 1
 f16::{
-    esp_info := get_active_esprit_info()
-    Run("esp.ahk " esp_info.esp_pid " auto")
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " auto")
 }
 
 +f16::{
-    esp_info := get_active_esprit_info() 
-    Run("esp.ahk " esp_info.esp_pid " manual")
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " manual")
+}
+
+TestMsg := DllCall("RegisterWindowMessageW", "Str", "TEST_MESSAGE")
+h::{
+    ExecuteMacroButtonCommand(1)
 }
 
 k::{
@@ -246,7 +279,7 @@ f9::{
     newF9QueueObject.esp_id := esp_info.esp_id
     newF9QueueObject.case_id := case_id
     
-    ; save_file("ahk_id" _id)
+    ; save_file("ahk_id" esp_info.esp_id)
     go_to_next_esprit(esp_info.esp_id)
     f9_queue.InsertAt(1, newF9QueueObject)
     
@@ -314,8 +347,8 @@ f18::{
 }
 
 f12::{
-    esp_info := get_active_esprit_info()
-    ProcessClose(esp_info.esp_pid)
+    pid := WinGetPID("A")
+    ProcessClose(pid)
 }
 
 
@@ -493,7 +526,9 @@ XButton1::{
 
 !LButton::{
     highlight_tool()
+    Sleep(100)
     Send("{LButton}{RButton}{LButton}")
+    Sleep(100)
     highlight_tool()
 }
 
@@ -505,9 +540,9 @@ XButton1::{
     extrude_tool()
 }
 
-
-
 +Space::{
+    ; esp_info := get_active_esprit_info()
+    ; PostMessage(RefreshDocumentMsg, esp_info.esp_id, , , 0xFFFF)
     toggle_simulation()
 }
 
@@ -670,7 +705,12 @@ r & Numpad9::{
 }
 
 e::{
-    draw_straight_border()
+    WinActivate("ESPRIT - ")
+    esp_info := get_active_esprit_info()
+    Click(Count := 1)
+    Sleep(20)
+    PostMessage(DrawLineMsg, esp_info.esp_id, 20, , 0xFFFF)
+    ; draw_straight_border()
 }
 
 ; ===== Auto-Complete Margins =====
@@ -782,7 +822,6 @@ y::{
     Send("^a-5")
     Click(175, 275) ; Click Regenerate
 }
-
 AppsKey::{
     BlockInput("MouseMove")
     CoordMode("Mouse", "Screen")
@@ -794,11 +833,12 @@ AppsKey::{
         WinClose("Command", "PIN")
         WinWaitClose("Command", "PIN")
     }
+    Send("^a")
     Sleep(50)
-    Send("^a0.025")
+    Send("0.025")
     Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(50)
+    Sleep(100)
     
     Click("180 170") ; 2nd Margin
     Click("180, 290") ; Click the Text box and enter 0.025
@@ -806,11 +846,12 @@ AppsKey::{
         WinClose("Command", "PIN")
         WinWaitClose("Command", "PIN")
     }
+    Send("^a")
     Sleep(50)
-    Send("^a0.025")
+    Send("0.025")
     Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(50)
+    Sleep(100)
     
     
     Click("70 215") ; 3rd Margin
@@ -819,9 +860,10 @@ AppsKey::{
         WinClose("Command", "PIN")
         WinWaitClose("Command", "PIN")
     }
-    Sleep(100)
-    Send("^a0.025")
-    Sleep(100)
+    Send("^a")
+    Sleep(50)
+    Send("0.025")
+    Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
     Sleep(100)
 
@@ -856,11 +898,12 @@ AppsKey::{
         WinClose("Command", "PIN")
         WinWaitClose("Command", "PIN")
     }
-    Sleep(50)
-    Send("^a0.025")
+    Send("^a")
+    Sleep(100)
+    Send("0.025")
     Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(50)
+    Sleep(100)
 
     ; 2nd Margin
     Click("180 170")
@@ -869,11 +912,12 @@ AppsKey::{
         WinClose("Command", "PIN")
         WinWaitClose("Command", "PIN")
     }
-    Sleep(50)
-    Send("^a0.025")
+    Send("^a")
+    Sleep(100)
+    Send("0.025")
     Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(50)
+    Sleep(100)
 
     ; 3rd Margin
     Click("70 215")
@@ -882,11 +926,12 @@ AppsKey::{
         WinClose("Command", "PIN")
         WinWaitClose("Command", "PIN")
     }
-    Sleep(50)
-    Send("^a0.025")
+    Send("^a")
+    Sleep(100)
+    Send("0.025")
     Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(50)
+    Sleep(100)
 
     
     Click("180 215") ; 4th Margin
@@ -895,11 +940,12 @@ AppsKey::{
         WinClose("Command", "PIN")
         WinWaitClose("Command", "PIN")
     }
-    Sleep(50)
-    Send("^a0.025")
+    Send("^a")
+    Sleep(100)
+    Send("0.025")
     Sleep(50)
     Click("120, 325") ; Click Re-Generate Operation
-    Sleep(50)
+    Sleep(100)
 
     BlockInput("MouseMoveOff")
     face()
@@ -1002,88 +1048,28 @@ x::{
     }
 }
 
-^!Up::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        decrement_10_degrees()
-    }
-}
-
-^!Down::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        increment_10_degrees()
-    }
-}
-
-^+Up::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        decrement_90_degrees()
-    }
-}
-
-^+Down::{
-    try{
-        if not WinActive("ESPRIT - "){
-            WinActivate("ESPRIT - ")
-        }
-        
-        increment_90_degrees()
-    }
-}
-
 ^Numpad1::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    macro_button1()
+    ; macro_button1()
+    ExecuteMacroButtonCommand(1)
 }
 
 ^Numpad2::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-
-    esp_info := get_active_esprit_info()
-    if not esp_info.Step2Complete {
-        deg0()
-        enable_layer("18 'STL'")
-        enable_layer("19 'STL'")
-        enable_layer("21 'STL'")
-        macro_button2()
-        esp_info.Step2Complete := true
-    } else {
-        yn := MsgBox("Are you sure you want to continue? Step 2 was completed for this file.", "Step-2", "YesNo")
-        if yn != "Yes"{
-            return
-        }
-        enable_layer("18 'STL'")
-        enable_layer("19 'STL'")
-        enable_layer("21 'STL'")
-        macro_button2()
-        esp_info.Step2Complete := true
-    }
+    ; macro_button2()
+    ExecuteMacroButtonCommand(2)
 }
 
 ^Numpad3::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    ; try{
-    ;     esp_info := get_active_esprit_info()
-    ;     esp_info.Step3Tab := 1 
-    ; }
-    macro_button3()
+    ; macro_button3()
+    ExecuteMacroButtonCommand(3)
 }
 
 ^Numpad4::{
@@ -1099,7 +1085,11 @@ x::{
     Sleep(20)
     enable_layer("15 '경계소재-5'")
     CoordMode("Mouse", "Screen")
-    macro_button4()
+    ; Click(130, 544)
+    ; Sleep(200)
+    esp_info := get_active_esprit_info()
+    ; macro_button4()
+    ExecuteMacroButtonCommand(4)
     cam_automation_id := WinWaitTitleWithPID(esp_info.esp_pid, "CAM Automation", "[4] Rebuild Freeform")
     WinWaitClose("ahk_id" cam_automation_id)
     go_to_next_esprit(esp_info.esp_id)
@@ -1109,7 +1099,8 @@ x::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    macro_button5()
+    ; macro_button5()
+    ExecuteMacroButtonCommand(5)
     step_5_tab := 2
 }
 
@@ -1117,7 +1108,8 @@ x::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    macro_button_text()
+    ; macro_button_text()
+    ExecuteMacroButtonCommand(6)
 }
 
 ^!Numpad1::{

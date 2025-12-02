@@ -11,6 +11,10 @@ remove_stl_file(STL_FILE_PATH) {
     }
 }
 
+align_cap(title := "ESPRIT - "){
+    PostMessage 0x111, 5038, , , title
+}
+
 generate_nc(title := "ESPRIT - "){
 	PostMessage 0x111, 3323, , , title 
 }
@@ -350,7 +354,6 @@ ds_startup_commands(esp_pid, esp_id){
     }
     ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
 	WinWaitClose("ahk_id" base_work_id)
-    go_to_next_esprit(esp_id)
 }
 
 asc_startup_commands(esp_pid, esp_id){
@@ -414,7 +417,6 @@ asc_startup_commands(esp_pid, esp_id){
     }
     ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
 	WinWaitClose("ahk_id" base_work_id)
-    go_to_next_esprit(esp_id)
 }
 
 tl_aot_startup_commands(esp_pid, esp_id){
@@ -493,7 +495,7 @@ show_milling_tool(){
 	PostMessage 0x111, 6278 , , , "ESPRIT"
 }
 
-double_sided_border() {
+double_sided_border(press_enter := False) {
 	PostMessage(0x111, 3130, , , "ESPRIT")
 	_id := WinWait("Extrude Boss/Cut",,0.1)
 	
@@ -502,6 +504,9 @@ double_sided_border() {
 		ControlSetText(1, "Edit4", "ahk_id" _id)
 		ControlSetChecked(0,"Button8","ahk_id" _id)
 		ControlChooseIndex(2,"ComboBox1","ahk_id" _id)
+        if press_enter{
+            ControlSend("{Enter}", "Button9", "ahk_id" _id)   
+        }
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
         consolelog("[Tru-AHK] No geometry selected")
