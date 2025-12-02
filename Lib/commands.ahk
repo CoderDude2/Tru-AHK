@@ -240,10 +240,36 @@ rebuild_operation(){
 
 ds_startup_commands(esp_id){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
-			Send("{Enter}")
-		}
+        try {
+            dialog_win := WinActive("esprit", "&Yes")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("Direction Check", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "예(&Y)")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "확인")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
 	}
 	WinActivate("ESPRIT -")
 	deg0()
@@ -264,10 +290,36 @@ ds_startup_commands(esp_id){
 
 asc_startup_commands(esp_id){
 	while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
-			Send("{Enter}")
-		}
+        try {
+            dialog_win := WinActive("esprit", "&Yes")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("Direction Check", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "예(&Y)")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "확인")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
 	}
 	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
@@ -289,10 +341,36 @@ asc_startup_commands(esp_id){
 
 tl_aot_startup_commands(){
     while not WinExist("STL Rotate"){
-		if WinActive("esprit", "&Yes") or WinActive("esprit", "OK") or WinActive("Direction Check") or 
-		   WinActive("esprit", "예(&Y)" or WinActive("esprit", "확인")){
-			Send("{Enter}")
-		}
+        try {
+            dialog_win := WinActive("esprit", "&Yes")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("Direction Check", "OK")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "예(&Y)")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
+        try {
+            dialog_win := WinActive("esprit", "확인")
+            if dialog_win {
+                ControlSend("{Enter}", , "ahk_id" dialog_win)
+            }
+        }
 	}
     WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
@@ -374,6 +452,7 @@ extrude_by(length) {
 }
 
 click_client_pos(posX, posY, window_name, block_input := false, return_to_start := true){
+    SetWinDelay 0
 	SetDefaultMouseSpeed 0
 	try{
 		esprit_window_pid := WinGetPID("A")
@@ -403,6 +482,7 @@ click_client_pos(posX, posY, window_name, block_input := false, return_to_start 
 			BlockInput("MouseMoveOff")
 		}
 	}
+    SetWinDelay 100
 }
 
 draw_straight_border(){
@@ -569,6 +649,7 @@ get_macro_bar(){
 }
 
 macro_button_1(){
+    SetWinDelay 0
 	macro_bar := get_macro_bar()
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
@@ -576,9 +657,11 @@ macro_button_1(){
 		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+20, y+14
 	}
+    SetWinDelay 100
 }
 
 macro_button_2(){
+    SetWinDelay 0
 	macro_bar := get_macro_bar()
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
@@ -586,9 +669,11 @@ macro_button_2(){
 		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+45, y+14
 	}    
+    SetWinDelay 100
 }
 
 macro_button_3(){
+    SetWinDelay 0
 	macro_bar := get_macro_bar()
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
@@ -596,9 +681,11 @@ macro_button_3(){
 		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+68, y+14
 	}
+    SetWinDelay 100
 }
 
 macro_button_4(){
+    SetWinDelay 0
 	macro_bar := get_macro_bar()
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
@@ -606,9 +693,11 @@ macro_button_4(){
 		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+90, y+14
 	}
+    SetWinDelay 100
 }
 
 macro_button_5(){
+    SetWinDelay 0
 	macro_bar := get_macro_bar()
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
@@ -616,9 +705,11 @@ macro_button_5(){
 		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+115, y+14
 	}
+    SetWinDelay 100
 }
 
 macro_button_text(){
+    SetWinDelay 0
 	macro_bar := get_macro_bar()
 	if macro_bar != ""{
 		WinActivate("ESPRIT - ")
@@ -626,6 +717,7 @@ macro_button_text(){
 		ControlGetPos(&x, &y, &w, &h, macro_bar, "ESPRIT - ")
 		Click x+135, y+14
 	}
+    SetWinDelay 100
 }
 
 recycle_active_file(){
