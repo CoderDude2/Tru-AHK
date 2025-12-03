@@ -166,6 +166,10 @@ SetTimer(update_file_map, 50)
 #Include %A_ScriptDir%\Lib\updater.ahk
 #Include %A_ScriptDir%\Lib\dashboard.ahk  
 
+if check_for_tru_cam_addin_update(){
+    update_tru_cam_addin()
+}
+
 if(check_for_update(A_ScriptDir, REMOTE_PATH)){
     result := MsgBox("An update is available. Do you want to install it?",,"Y/N")
     if(result == "Yes"){
