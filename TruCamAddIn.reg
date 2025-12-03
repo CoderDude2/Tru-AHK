@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\Software\Wow6432Node\D.P.Technology\esprit\AddIns\TruCamAddIn.Connect]
+"Description"="TruCamAddIn"
+"FriendlyName"="TruCam AddIN"
+"LoadBehavior"=dword:00000000
