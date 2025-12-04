@@ -216,10 +216,8 @@ f13::
 espritInstances := Map()
 
 get_active_esprit_info(){
+    global espritInstances
     activeTitle := WinGetTitle("ESPRIT - ")
-    ; if get_case_id(activeTitle) == ""{
-    ;     return
-    ; }
 
     if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle))){
         esp_id := WinGetID(activeTitle)
@@ -233,6 +231,20 @@ get_active_esprit_info(){
     }
 
     return espritInstances[activeTitle "_" WinGetPID(activeTitle)] 
+}
+
+DocumentOpen := false
+ESPAfterDocumentOpenMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_AFTER_DOCUMENT_OPEN")
+
+OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
+
+OnEspAfterDocumentOpen(wParam, lParam, msg, hwnd){
+    global DocumentOpen
+    esp_info := get_active_esprit_info()
+    ; MsgBox(wParam " " esp_info.esp_id " " esp_info.DocumentOpen)
+    if wParam == esp_info.esp_id{
+        DocumentOpen := true
+    }
 }
 
 GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
@@ -297,9 +309,12 @@ f12::{
 }
 
 ^o::{
+    global DocumentOpen
     if get_macro_bar() == ""{
         return
     }
+
+    DocumentOpen := false
 
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
@@ -318,10 +333,11 @@ f12::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
-        if yn != "Yes"{
-            return
+
+        While Not DocumentOpen {
+            Sleep(1)
         }
+
         file_map[name] := true
         WinActivate("ESPRIT")
         macro_button_1()
@@ -336,9 +352,12 @@ f12::{
 
 ; G4
 f16::{
+    global DocumentOpen
     if get_macro_bar() == ""{
         return
     }
+
+    DocumentOpen := false
 
     selected_file := ""
     For k,v in file_map{
@@ -363,10 +382,11 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
-        if yn != "Yes"{
-            return
+
+        While Not DocumentOpen {
+            Sleep(1)
         }
+
         file_map[name] := true
         WinActivate("ESPRIT - ")
         macro_button_1()
@@ -392,9 +412,13 @@ f16::{
 }
 
 +f16::{
+    global DocumentOpen
+
     if get_macro_bar() == ""{
         return
     }
+
+    DocumentOpen := false
 
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
@@ -413,10 +437,11 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK")
-        if yn != "Yes"{
-            return
+
+        While Not DocumentOpen {
+            Sleep(1)
         }
+        
         file_map[name] := true
         WinActivate("ESPRIT - ")
         macro_button_1()
