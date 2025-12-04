@@ -215,7 +215,7 @@ f17::{
 
 #SuspendExempt False
 
-#HotIf WinActive("ahk_exe esprit.exe") or WinActive("ahk_exe ESPRIT.NCEDIT.exe")
+#HotIf WinActive("ahk_exe esprit.exe")
 
 #MaxThreadsPerHotkey 1
 f16::{
