@@ -213,6 +213,46 @@ f13::
 }
 #SuspendExempt False
 
+espritInstances := Map()
+
+get_active_esprit_info(){
+    activeTitle := WinGetTitle("ESPRIT - ")
+    ; if get_case_id(activeTitle) == ""{
+    ;     return
+    ; }
+
+    if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle))){
+        esp_id := WinGetID(activeTitle)
+        esp_pid := WinGetPID(activeTitle)
+         
+        esp_info := EspritInfo()
+        esp_info.esp_pid := esp_pid
+        esp_info.esp_id := esp_id
+
+        espritInstances[activeTitle "_" WinGetPID(activeTitle)] := esp_info
+    }
+
+    return espritInstances[activeTitle "_" WinGetPID(activeTitle)] 
+}
+
+GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
+MacroButtonCodeResponseMsg := DllCall("RegisterWindowMessageW", "Str", "MACRO_BUTTON_COMMAND_RESPONSE")
+
+ExecuteMacroButtonCommand(command){
+    esp_info := get_active_esprit_info()
+    PostMessage(GetMacroButtonCodeMsg, esp_info.esp_id, command, , 0xFFFF)
+}
+
+OnMessage(MacroButtonCodeResponseMsg, OnMacroButtonCodeResponseMsg)
+
+OnMacroButtonCodeResponseMsg(wParam, lParam, msg, hwnd){
+    esp_info := get_active_esprit_info()
+    if wParam == esp_info.esp_id{
+        Sleep(50)
+        PostMessage 0x111, lParam, , , "ahk_id" esp_info.esp_id
+    }
+}
+
 ; G5 Key
 f17::
 ^+o::{
@@ -1031,27 +1071,45 @@ y::{
 }
 
 ^Numpad1::{
-    macro_button_1()
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
+    ExecuteMacroButtonCommand(1)
 }
 
 ^Numpad2::{
-    macro_button_2()
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
+    ExecuteMacroButtonCommand(2)
 }
 
 ^Numpad3::{
-    macro_button_3()
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
+    ExecuteMacroButtonCommand(3)
 }
 
 ^Numpad4::{
-    macro_button_4()
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
+    ExecuteMacroButtonCommand(4)
 }
 
 ^Numpad5::{
-    macro_button_5()
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
+    ExecuteMacroButtonCommand(5)
 }
 
 ^Numpad6::{
-    macro_button_text()
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
+    ExecuteMacroButtonCommand(6)
 }
 
 #HotIf setMacroBar == true
