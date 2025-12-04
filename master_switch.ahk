@@ -340,7 +340,7 @@ f12::{
 
         file_map[name] := true
         WinActivate("ESPRIT")
-        macro_button_1()
+        ExecuteMacroButtonCommand(1)
         WinWaitActive("CAM Automation")
         Send("{Enter}")
         WinWaitActive("Select file to open")
@@ -389,7 +389,7 @@ f16::{
 
         file_map[name] := true
         WinActivate("ESPRIT - ")
-        macro_button_1()
+        ExecuteMacroButtonCommand(1)
         WinWaitActive("CAM Automation")
         Send("{Enter}")
         WinWaitActive("Select file to open")
@@ -444,7 +444,7 @@ f16::{
         
         file_map[name] := true
         WinActivate("ESPRIT - ")
-        macro_button_1()
+        ExecuteMacroButtonCommand(1)
         WinWaitActive("CAM Automation")
         Send("{Enter}")
         WinWaitActive("Select file to open")
