@@ -158,6 +158,7 @@ DrawLineMsg := DllCall("RegisterWindowMessageW", "Str", "DRAW_LINE")
 OnMessage(ExtrudeMsg, OnExtrudeMsg)
 
 OnExtrudeMsg(wParam, lParam, msg, hwnd){
+    ; MsgBox("extrude")
     esp_info := get_active_esprit_info()
     if wParam == esp_info.esp_id {
         double_sided_border(true)
@@ -497,6 +498,14 @@ t::{
 
 ^r::{
     rotate_selection(90)
+}
+
+!r::{
+    rotate_selection(1)
+}
+
++!r::{
+    rotate_selection(-1)
 }
 
 +c::{
