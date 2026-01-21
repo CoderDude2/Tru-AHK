@@ -18,21 +18,31 @@ startup_command := A_Args[2]
 
 ESPAfterDocumentOpenMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_AFTER_DOCUMENT_OPEN")
 ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
+EspFileReadyMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_FILE_READY")
 GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
 
 suspend_event_num := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
 terminate_event_num := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 
 DocumentOpen := false
+EspFileReady := false
 
 OnMessage(suspend_event_num, SuspendScript)
 OnMessage(terminate_event_num, TerminateScript)
 OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
+OnMessage(EspFileReadyMsg, OnEspFileReady)
 
 OnEspAfterDocumentOpen(wParam, lParam, msg, hwnd){
     global DocumentOpen
     if wParam == esp_id{
         DocumentOpen := true
+    }
+}
+
+OnEspFileReady(wParam, lParam, msg, hwnd){
+    global EspFileReady
+    if wParam == esp_id{
+        EspFileReady := true
     }
 }
 
@@ -94,32 +104,22 @@ switch startup_command {
                 file_map.data[name] := true
                 mtx.Release()
             }
-            open_file("ahk_id" esp_id)
-            WinWaitTitleWithPID(esp_pid, "Open", "&Open")
-            open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
-            ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_id" open_id)
-            ControlSetChecked(0,"Button5","ahk_id" open_id)
-            ControlSend("{Enter}", "Button2","ahk_id" open_id)
-            are_you_sure_id := WinWaitTitleWithPID(esp_pid, "ahk_class #32770", "&Yes", 1)
-            if are_you_sure_id {
-                WinWaitClose("ahk_id" are_you_sure_id)
-            }
+            send_WM_COPYDATA("LOADFILE " name, "ESPRIT - ")
 
             While Not DocumentOpen {
+                Sleep(1)
+            }
+
+            While Not EspFileReady{
                 Sleep(1)
             }
 
             WinActivate("ahk_id" esp_id)
             ; Macro Button 1
             ExecuteMacroButtonCommand(1)
-            ; macro_button1("ahk_id" esp_id)
             WinWaitActiveTitleWithPID(esp_pid, "CAM Automation")
             Send("{Enter}")
-            WinWaitActiveTitleWithPID(esp_pid, "Select file to open")
-            Sleep(200)
-            ControlSetText(selected_file, "Edit1", "Select file to open")
-            Send("{Enter}")
-            switch get_case_type(selected_file) {
+            switch get_case_type(name) {
                 case "DS":
                     ds_startup_commands(esp_pid, esp_id)
                 case "ASC":
@@ -143,32 +143,22 @@ switch startup_command {
                 file_map.data[name] := true
                 mtx.Release()
             }
-            open_file("ahk_id" esp_id)
-            WinWaitTitleWithPID(esp_pid, "Open", "&Open")
-            open_id := WinActivateTitleWithPID(esp_pid, "Open", "&Open")
-            ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_id" open_id)
-            ControlSetChecked(0,"Button5","ahk_id" open_id)
-            ControlSend("{Enter}", "Button2","ahk_id" open_id)
-            are_you_sure_id := WinWaitTitleWithPID(esp_pid, "ahk_class #32770", "&Yes", 1)
-            if are_you_sure_id {
-                WinWaitClose("ahk_id" are_you_sure_id)
-            }
+            send_WM_COPYDATA("LOADFILE " name, "ESPRIT - ")
 
             While Not DocumentOpen {
+                Sleep(1)
+            }
+
+            While Not EspFileReady{
                 Sleep(1)
             }
 
             WinActivate("ahk_id" esp_id)
             ; Macro Button 1
             ExecuteMacroButtonCommand(1)
-            ; macro_button1("ahk_id" esp_id)
             WinWaitActiveTitleWithPID(esp_pid, "CAM Automation")
             Send("{Enter}")
-            WinWaitActiveTitleWithPID(esp_pid, "Select file to open")
-            Sleep(200)
-            ControlSetText(selected_file, "Edit1", "Select file to open")
-            Send("{Enter}")
-            switch get_case_type(selected_file) {
+            switch get_case_type(name) {
                 case "DS":
                     ds_startup_commands(esp_pid, esp_id)
                 case "ASC":

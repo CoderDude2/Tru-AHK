@@ -1,3 +1,5 @@
+WM_COPYDATA := 0x004A
+
 class EspritInfo{
     esp_pid := unset
     esp_id := unset
@@ -232,6 +234,34 @@ loads_completed_files(){
         }
     }
     return result
+}
+
+recv_WM_COPYDATA(wParam, lParam, msg, hwnd){
+    StringAddress := NumGet(lParam, 2*A_PtrSize, "Ptr")
+    CopyOfData := StrGet(StringAddress)
+    return True
+}
+
+send_WM_COPYDATA(StringToSend, TargetTitle){
+    CopyDataStruct := Buffer(3 * A_PtrSize)
+    SizeInBytes := (StrLen(StringToSend) + 1) * 2
+    NumPut("ptr", 1, CopyDataStruct, 0)
+    NumPut("ptr", SizeInBytes, CopyDataStruct, A_PtrSize)
+    NumPut("ptr", StrPtr(StringToSend), CopyDataStruct, A_PtrSize * 2)
+
+    Prev_DetectHiddenWindows := A_DetectHiddenWindows
+    Prev_TitleMatchMode := A_TitleMatchMode
+    DetectHiddenWindows True
+    SetTitleMatchMode 2
+
+    TimeOutTime := 20000
+
+    RetValue := SendMessage(WM_COPYDATA, 0, CopyDataStruct.Ptr, , "HiddenWindow" WinGetID(TargetTitle),,,,TimeOutTime)
+
+    DetectHiddenWindows Prev_DetectHiddenWindows
+    SetTitleMatchMode Prev_TitleMatchMode
+
+    return RetValue
 }
 
 class Mutex {

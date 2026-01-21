@@ -206,7 +206,7 @@ debug(){
 ; G5 Key
 #MaxThreadsPerHotkey 10 
 f17::{
-    Run("C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe", , ,&esprit_pid)
+    Run("C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe", , , &esprit_pid)
     if (WinGetList("ahk_exe esprit.exe").Length > 1){
         warning_id := WinWaitTitleWithPID(esprit_pid, "ahk_class #32770", "WARNING: ESPRIT")
         WinMove(-600, 275, , , "ahk_id" warning_id, "WARNING: ESPRIT")
@@ -229,9 +229,9 @@ f16::{
     Run("esp.ahk " esp_pid " manual")
 }
 
-TestMsg := DllCall("RegisterWindowMessageW", "Str", "TEST_MESSAGE")
 h::{
-    ExecuteMacroButtonCommand(1)
+    ; MsgBox(WinGetID("ESPRIT - "))
+    MsgBox(send_WM_COPYDATA("Hello World!!!", "ESPRIT - "))
 }
 
 k::{
@@ -556,21 +556,21 @@ XButton1::{
 }
 
 g::{
-    global isDrawing
-    global lastMousePosX
-    global lastMousePosY
+    ; global isDrawing
+    ; global lastMousePosX
+    ; global lastMousePosY
     
-    if isDrawing {
-        isDrawing := false
-        highlight_tool()
-        Send("{Escape}")
-        Send("{Shift down}")
-        MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
-        Send("{Shift up}")
-        highlight_tool()
-        solid_view()
-        Sleep(100)
-    }
+    ; if isDrawing {
+    ;     isDrawing := false
+    ;     highlight_tool()
+    ;     Send("{Escape}")
+    ;     Send("{Shift down}")
+    ;     MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
+    ;     Send("{Shift up}")
+    ;     highlight_tool()
+    ;     solid_view()
+    ;     Sleep(100)
+    ; }
     
     if not WinActive("Extrude Boss/Cut"){
         double_sided_border()
@@ -580,22 +580,22 @@ g::{
 }
 
 b::{
-    global isDrawing
-    global lastMousePosX
-    global lastMousePosY
+    ; global isDrawing
+    ; global lastMousePosX
+    ; global lastMousePosY
     
-    if isDrawing {
-        isDrawing := false
-        highlight_tool()
-        Send("{Escape}")
-        Send("{Shift down}")
-        MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
-        Send("{Shift up}")
-        highlight_tool()
-        solid_view()
-        Sleep(100)
+    ; if isDrawing {
+    ;     isDrawing := false
+    ;     highlight_tool()
+    ;     Send("{Escape}")
+    ;     Send("{Shift down}")
+    ;     MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
+    ;     Send("{Shift up}")
+    ;     highlight_tool()
+    ;     solid_view()
+    ;     Sleep(100)
 
-    }
+    ; }
 
     if not WinExist("Extrude Boss/Cut"){
         cut_with_border()
@@ -735,14 +735,14 @@ e::{
         draw_path("cancel")
     }
 
-    if isDrawing {
-        isDrawing := false
-        highlight_tool()
-        Send("{Shift down}")
-        MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
-        Send("{Shift up}")
-        highlight_tool()
-    }
+    ; if isDrawing {
+    ;     isDrawing := false
+    ;     highlight_tool()
+    ;     Send("{Shift down}")
+    ;     MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
+    ;     Send("{Shift up}")
+    ;     highlight_tool()
+    ; }
 
     stop_simulation()
 }

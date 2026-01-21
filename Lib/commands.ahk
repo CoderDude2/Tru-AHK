@@ -507,6 +507,7 @@ double_sided_border(press_enter := False) {
         if press_enter{
             ControlSend("{Enter}", "Button9", "ahk_id" _id)   
         }
+        solid_view()
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
         consolelog("[Tru-AHK] No geometry selected")
@@ -523,6 +524,7 @@ cut_with_border() {
 		ControlChooseIndex(2,"ComboBox2","ahk_id" _id)
 		ControlSetChecked(1,"Button8","ahk_id" _id)
 		ControlSetChecked(1,"Button3","ahk_id" _id)
+        solid_view()
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
         consolelog("[Tru-AHK] No geometry selected")
@@ -583,7 +585,7 @@ get_case_type(title){
         return "TLOC"
     } else if InStr(title, "ASC", true) {
         return "ASC"
-    } else if InStr(title, "TA", true) {
+    } else if InStr(title, "TA", true) or InStr(title, "TC", true) or InStr(title, "HA", true) {
         return "DS"
     } else {
         return "" 
