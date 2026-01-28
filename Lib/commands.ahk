@@ -1,4 +1,5 @@
 #Include nav.ahk
+#Include util.ahk
 STL_FILE_PATH := "C:\Users\TruUser\Desktop\작업\스캔파일"
 
 highlight_tool(title := "ESPRIT - "){
@@ -319,6 +320,8 @@ ds_startup_commands(esp_pid, esp_id){
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
         ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
+    send_WM_COPYDATA("ENABLE_LAYER:BACK TURNING", "ESPRIT - ")
+    send_WM_COPYDATA("ENABLE_LAYER:CUT-OFF", "ESPRIT - ")
     yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
         ExitApp
@@ -382,6 +385,8 @@ asc_startup_commands(esp_pid, esp_id){
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
         ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
+    send_WM_COPYDATA("ENABLE_LAYER:BACK TURNING", "ESPRIT - ")
+    send_WM_COPYDATA("ENABLE_LAYER:CUT-OFF", "ESPRIT - ")
 	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
         ExitApp
@@ -450,6 +455,7 @@ tl_aot_startup_commands(esp_pid, esp_id){
     if found_pos {
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
     }
+    send_WM_COPYDATA("ALIGN_CAP", "ESPRIT - ")
 }
 
 align_tl_aot_cap(title := "ahk_exe esprit.exe"){

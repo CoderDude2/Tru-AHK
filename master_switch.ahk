@@ -19,7 +19,7 @@ SetWorkingDir A_ScriptDir
 
 #Include %A_ScriptDir%\Lib\views.ahk
 #Include %A_ScriptDir%\Lib\nav.ahk
-#Include %A_ScriptDir%\Lib\util.ahk
+; #Include %A_ScriptDir%\Lib\util.ahk
 #Include %A_ScriptDir%\Lib\commands.ahk
 #Include %A_ScriptDir%\Lib\restore.ahk
 
@@ -53,8 +53,34 @@ TerminateMsg := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
 RefreshDocumentMsg := DllCall("RegisterWindowMessageW", "Str", "REFRESH_DOCUMENT")
 
+SetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "SET_SPACE_CONFIRM")
+UnsetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "UNSET_SPACE_CONFIRM")
+
+RunStep4Msg := DllCall("RegisterWindowMessageW", "Str", "RunStep4Msg")
+
 file_map := {data:loads_completed_files()}
 ObjRegisterActive(file_map, "{EB5BAF88-E58D-48F9-AE79-56392D4C7AF6}")
+
+spaceAsConfirmMap := Map()
+
+OnMessage(SetSpaceAsConfirmMsg, OnSetSpaceAsConfirmMsg)
+OnMessage(UnsetSpaceAsConfirmMsg, OnUnsetSpaceAsConfirmMsg)
+
+OnSetSpaceAsConfirmMsg(wParam, lParam, msg, hwnd){
+    esp_info := get_active_esprit_info()
+    if esp_info.esp_id == wParam {
+        consolelog(esp_info.esp_id " is set")
+        spaceAsConfirmMap[esp_info.esp_id] := true
+    }
+}
+
+OnUnsetSpaceAsConfirmMsg(wParam, lParam, msg, hwnd){
+    esp_info := get_active_esprit_info()
+    if esp_info.esp_id == wParam {
+        consolelog(esp_info.esp_id " is unset")
+        spaceAsConfirmMap[esp_info.esp_id] := false
+    }
+}
 
 #SuspendExempt
 ;G1
@@ -257,14 +283,15 @@ k::{
 f15::
 f8::{
     esp_info := get_active_esprit_info()
-    CoordMode("Mouse", "Screen")
-    Click(231, 968)
-    Sleep(20)
-    Click(100, 946)
-    Sleep(40)
-    deg0("ahk_id" esp_info.esp_id)
-    toggle_simulation("ahk_id" esp_info.esp_id)
+    ; CoordMode("Mouse", "Screen")
+    ; Click(231, 968)
+    ; Sleep(20)
+    ; Click(100, 946)
+    ; Sleep(40)
+    ; deg0("ahk_id" esp_info.esp_id)
+    ; toggle_simulation("ahk_id" esp_info.esp_id)
     go_to_next_esprit(esp_info.esp_id)
+    send_WM_COPYDATA("SIMULATE_BACK", "ahk_id" esp_info.esp_id)
 }
 
 ; G3 Key
@@ -354,7 +381,7 @@ f12::{
 
 
 ; ===== Remappings =====
-Space::Enter
+; Space::Enter
 LWin::Delete
 
 ; ===== Hotstrings =====
@@ -479,6 +506,15 @@ v::{
 }
 
 ; ===== Controls =====
+Space::{
+    esp_info := get_active_esprit_info()
+    if spaceAsConfirmMap.Has(esp_info.esp_id) and spaceAsConfirmMap[esp_info.esp_id] == true {
+        send_WM_COPYDATA("CONFIRM", "ahk_id" esp_info.esp_id)
+    } else {
+        Send("{Enter}")
+    }
+}
+
 f14::{
     solid_view()
 }
@@ -531,6 +567,10 @@ XButton1::{
 
 +XButton2::{
     three_point_tool()
+}
+
+^!LButton::{
+    send_WM_COPYDATA("91011", "ESPRIT - ")
 }
 
 !LButton::{
@@ -1082,22 +1122,13 @@ x::{
 }
 
 ^Numpad4::{
+    ; CoordMode("Mouse", "Screen")
+    ; click_and_return(80, 1020)
     esp_info := get_active_esprit_info()
-    
-    ; unsuppress_operation()
-    Sleep(20)
-    enable_layer("28 '경계소재-5'")
-    Sleep(20)
-    enable_layer("29 '경계소재-5'")
-    Sleep(20)
-    enable_layer("14 '경계소재-4'")
-    Sleep(20)
-    enable_layer("15 '경계소재-5'")
-    CoordMode("Mouse", "Screen")
-    ; Click(130, 544)
-    ; Sleep(200)
-    esp_info := get_active_esprit_info()
-    ; macro_button4()
+    case_type := get_case_type(WinGetTitle("ahk_id" esp_info.esp_id))
+    if case_type != "TLOC" and case_type != "AOT" {
+        send_WM_COPYDATA("BUILD_ESP", "ESPRIT - ")
+    }
     ExecuteMacroButtonCommand(4)
     cam_automation_id := WinWaitTitleWithPID(esp_info.esp_pid, "CAM Automation", "[4] Rebuild Freeform")
     WinWaitClose("ahk_id" cam_automation_id)
@@ -1128,9 +1159,8 @@ x::{
 
 ^!Numpad3::{
     CoordMode("Mouse", "Screen")
-    Click(231, 968)
-    Sleep(20)
     click_and_return(80, 1020)
+    send_WM_COPYDATA("HIGHLIGHT_CROSSBALLS", "ESPRIT - ")
 }
 
 ; Deg 1
@@ -1266,6 +1296,8 @@ x::{
     CoordMode("Mouse", "Screen")
     click_and_return(103, 336)
     go_to_next_esprit(esp_info.esp_id)
+    ; Sleep(200)
+    ; send_WM_COPYDATA("SIMULATE_BACK", "ahk_id" esp_info.esp_id)   
 }
 
 !e::{
@@ -1344,6 +1376,14 @@ x::{
             }
         }
     }
+}
+
+^+Down::{
+    send_WM_COPYDATA("LOWER_MARGINS", "ESPRIT - ")
+}
+
+^+Up::{
+    send_WM_COPYDATA("RAISE_MARGINS", "ESPRIT - ")
 }
 
 ^Up::{
