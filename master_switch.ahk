@@ -324,7 +324,12 @@ f12::{
 }
 
 ^o::{
-    global DocumentOpen
+    esp_id := WinGetID("ESPRIT - ")
+
+    if not esp_id {
+        return
+    }
+
     if get_macro_bar() == ""{
         return
     }
@@ -344,7 +349,7 @@ f12::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 1)
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
@@ -393,7 +398,7 @@ f16::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 1)
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
@@ -413,9 +418,9 @@ f16::{
         Send("{Enter}")
         switch get_case_type(selected_file) {
             case "DS":
-                ds_startup_commands()
+                ds_startup_commands(esp_id)
             case "ASC":
-                asc_startup_commands()
+                asc_startup_commands(esp_id)
             case "TLOC":
                 tl_aot_startup_commands()
             case "AOT":
@@ -448,7 +453,7 @@ f16::{
         ControlSetText(get_basic_setting_path() "\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
         ControlSetChecked(0,"Button5","ahk_class #32770")
         ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", esprit_are_you_sure_text, 0.25)
+        WinWait("ahk_class #32770", esprit_are_you_sure_text, 1)
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
@@ -468,9 +473,9 @@ f16::{
         Send("{Enter}")
         switch get_case_type(name) {
             case "DS":
-                ds_startup_commands()
+                ds_startup_commands(esp_id)
             case "ASC":
-                asc_startup_commands()
+                asc_startup_commands(esp_id)
             case "TLOC":
                 tl_aot_startup_commands()
             case "AOT":
