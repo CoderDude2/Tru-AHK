@@ -56,6 +56,22 @@ decrement_90_degrees(title?){
 	update_angle(new_angle)
 }
 
+increment_120_degrees(title?){
+	new_angle := get_current_angle(title?) + 12
+	if (new_angle > 42){
+		new_angle := 6 + new_angle - 42
+	}
+	update_angle(new_angle)
+}
+
+decrement_120_degrees(title?){
+	new_angle := get_current_angle(title?) - 12
+	if(new_angle < 7) {
+		new_angle := 42 - (-1 * new_angle + 7 - 1)
+	}
+	update_angle(new_angle)
+}
+
 face(title?) {
     if not IsSet(title) {
         title := "ESPRIT - "

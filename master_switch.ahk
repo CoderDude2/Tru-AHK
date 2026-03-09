@@ -41,6 +41,7 @@ lastMousePosY := unset
 
 step_5_tab := 1
 step_5_margin := 1
+step_5_crossball := 1
 
 f9_queue := [] 
 
@@ -52,6 +53,7 @@ SuspendScriptMsg := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
 TerminateMsg := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
 RefreshDocumentMsg := DllCall("RegisterWindowMessageW", "Str", "REFRESH_DOCUMENT")
+ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
 
 SetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "SET_SPACE_CONFIRM")
 UnsetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "UNSET_SPACE_CONFIRM")
@@ -159,24 +161,20 @@ OnESPInitCompleteMsg(wParam, lParam, msg, hwnd){
 }
 
 GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
+EspExecuteCommandMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_EXECUTE_COMMAND")
 MacroButtonCodeResponseMsg := DllCall("RegisterWindowMessageW", "Str", "MACRO_BUTTON_COMMAND_RESPONSE")
 
-ExecuteMacroButtonCommand(command){
-    esp_info := get_active_esprit_info()
-    PostMessage(GetMacroButtonCodeMsg, esp_info.esp_id, command, , 0xFFFF)
+ExecuteMacroButtonCommand(command, esp_id){
+    ; esp_info := get_active_esprit_info()
+    PostMessage(EspExecuteCommandMsg, esp_id, command, , 0xFFFF)
 }
 
-OnMessage(MacroButtonCodeResponseMsg, OnMacroButtonCodeResponseMsg)
+; OnMessage(MacroButtonCodeResponseMsg, OnMacroButtonCodeResponseMsg)
 
-OnMacroButtonCodeResponseMsg(wParam, lParam, msg, hwnd){
-    esp_info := get_active_esprit_info()
-    if wParam == esp_info.esp_id{
-        ; MsgBox(lParam)
-        ; consolelog(lParam)
-        Sleep(50)
-        PostMessage 0x111, lParam, , , "ahk_id" esp_info.esp_id
-    }
-}
+; OnMacroButtonCodeResponseMsg(wParam, lParam, msg, hwnd){
+;     ; esp_info := get_active_esprit_info()
+;     PostMessage 0x111, lParam, , , "ahk_id" wParam
+; }
 
 ExtrudeMsg := DllCall("RegisterWindowMessageW", "Str", "EXTRUDE")
 DrawLineMsg := DllCall("RegisterWindowMessageW", "Str", "DRAW_LINE")
@@ -245,7 +243,8 @@ f17::{
 #HotIf WinActive("ahk_exe esprit.exe")
 
 #MaxThreadsPerHotkey 1
-f16::{
+
+^+f16::{
     esp_pid := WinGetPID("ESPRIT - ") 
     Run("esp.ahk " esp_pid " auto")
 }
@@ -255,9 +254,35 @@ f16::{
     Run("esp.ahk " esp_pid " manual")
 }
 
+; f16::{
+;     esp_pid := WinGetPID("ESPRIT - ") 
+;     Run("esp.ahk " esp_pid " new")
+; }
+
+f16::{
+    case_type := get_case_type(WinGetTitle("ahk_id" get_active_esprit_info().esp_id))
+    if case_type == "TLOC" or case_type == "AOT"{
+        Run("esp.ahk " esp_pid " auto")
+        return
+    }
+
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " new_auto")
+}
+
 h::{
     ; MsgBox(WinGetID("ESPRIT - "))
     MsgBox(send_WM_COPYDATA("Hello World!!!", "ESPRIT - "))
+}
+
+l::{
+    bottom_z_limit := -5
+    send_WM_COPYDATA("CREATE_CROSSBALLS", "ESPRIT - ")
+    send_WM_COPYDATA("CREATE_MARGINS", "ESPRIT - ")
+    send_WM_COPYDATA("SET_CROSSBALL_BOTTOM_Z_LIMIT:" 1 " " bottom_z_limit, "ESPRIT - ")
+    send_WM_COPYDATA("SET_CROSSBALL_BOTTOM_Z_LIMIT:" 2 " " bottom_z_limit, "ESPRIT - ")
+    send_WM_COPYDATA("SET_CROSSBALL_BOTTOM_Z_LIMIT:" 3 " " bottom_z_limit, "ESPRIT - ")
+    send_WM_COPYDATA("SET_CROSSBALL_BOTTOM_Z_LIMIT:" 4 " " bottom_z_limit, "ESPRIT - ")
 }
 
 k::{
@@ -315,41 +340,41 @@ f9::{
     ; WinActivate("ahk_id" _id)
 }
 
-^f16::{
-    selected_file := ""
-    For k,v in file_map{
-        if v = False and FileExist(STL_FILE_PATH "\" k){
-            selected_file := k
-            break
-        }
-    }
-    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
-    if found_pos {
-        SplitPath(selected_file, &name)
-        open_file()
-        WinWaitActive("Open")
-        ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-        ControlSetChecked(0,"Button5","ahk_class #32770")
-        ControlSend("{Enter}", "Button2","ahk_class #32770")
-        WinWait("ahk_class #32770", "&Yes", 1)
-        if WinExist("ahk_class #32770", "&Yes"){
-            WinWaitClose("ahk_class #32770", "&Yes")
-        }
-        yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
-        if yn != "Yes"{
-            return
-        }
-        file_map[name] := true
-        WinActivate("ESPRIT")
-        macro_button1()
-        WinWaitActive("CAM Automation")
-        Send("{Enter}")
-        WinWaitActive("Select file to open")
-        Sleep(200)
-        ControlSetText(selected_file, "Edit1", "Select file to open")
-        Send("{Enter}")
-    }
-}
+; ^f16::{
+;     selected_file := ""
+;     For k,v in file_map{
+;         if v = False and FileExist(STL_FILE_PATH "\" k){
+;             selected_file := k
+;             break
+;         }
+;     }
+;     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+;     if found_pos {
+;         SplitPath(selected_file, &name)
+;         open_file()
+;         WinWaitActive("Open")
+;         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
+;         ControlSetChecked(0,"Button5","ahk_class #32770")
+;         ControlSend("{Enter}", "Button2","ahk_class #32770")
+;         WinWait("ahk_class #32770", "&Yes", 1)
+;         if WinExist("ahk_class #32770", "&Yes"){
+;             WinWaitClose("ahk_class #32770", "&Yes")
+;         }
+;         yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
+;         if yn != "Yes"{
+;             return
+;         }
+;         file_map[name] := true
+;         WinActivate("ESPRIT")
+;         macro_button1()
+;         WinWaitActive("CAM Automation")
+;         Send("{Enter}")
+;         WinWaitActive("Select file to open")
+;         Sleep(200)
+;         ControlSetText(selected_file, "Edit1", "Select file to open")
+;         Send("{Enter}")
+;     }
+; }
 
 ^+r::{
     esprit_title := WinGetTitle("A")
@@ -508,6 +533,7 @@ v::{
 ; ===== Controls =====
 Space::{
     esp_info := get_active_esprit_info()
+    ; PostMessage(ConfirmESPMsg, esp_info.esp_id, , , 0xFFFF)
     if spaceAsConfirmMap.Has(esp_info.esp_id) and spaceAsConfirmMap[esp_info.esp_id] == true {
         send_WM_COPYDATA("CONFIRM", "ahk_id" esp_info.esp_id)
     } else {
@@ -536,8 +562,12 @@ t::{
     rotate_selection(90)
 }
 
+r::{
+    send_WM_COPYDATA("ROTATE_STL_45", "ESPRIT - ")
+}
+
 !r::{
-    rotate_selection(1)
+    send_WM_COPYDATA("ROTATE_STL_30", "ESPRIT - ")
 }
 
 +!r::{
@@ -570,7 +600,7 @@ XButton1::{
 }
 
 ^!LButton::{
-    send_WM_COPYDATA("91011", "ESPRIT - ")
+    send_WM_COPYDATA("91011", "ahk_id" get_active_esprit_info().esp_id)
 }
 
 !LButton::{
@@ -644,16 +674,16 @@ b::{
     }
 }
 
-r::{
-    distance_val := 5
-    if not WinActive("Extrude Boss/Cut"){
-        extrude_by(distance_val)
-    } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
-        extrude_by(distance_val)
-    } else {
-        toggle_extrude_window_reverse_direction()
-    }
-}
+; r::{
+;     distance_val := 5
+;     if not WinActive("Extrude Boss/Cut"){
+;         extrude_by(distance_val)
+;     } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
+;         extrude_by(distance_val)
+;     } else {
+;         toggle_extrude_window_reverse_direction()
+;     }
+; }
 
 r & Numpad1::{
     distance_val := 1
@@ -865,12 +895,16 @@ RButton::{
 
 ; ===== More Keys =====
 y::{
-    CoordMode("Mouse", "Screen")
-    MouseMove(46, 38, 0) ; Press Tab 1
-    Click(170, 325) ; Click the Entry Box
-    Send("^a-5")
-    Click(175, 275) ; Click Regenerate
+    global step_5_crossball
+    ; CoordMode("Mouse", "Screen")
+    ; MouseMove(46, 38, 0) ; Press Tab 1
+    ; Click(170, 325) ; Click the Entry Box
+    ; Send("^a-5")
+    ; Click(175, 275) ; Click Regenerate
+    bottomZLimit := -5
+    send_WM_COPYDATA("SET_CROSSBALL_BOTTOM_Z_LIMIT:" step_5_crossball " " bottomZLimit, "ESPRIT - ")
 }
+
 AppsKey::{
     BlockInput("MouseMove")
     CoordMode("Mouse", "Screen")
@@ -1028,11 +1062,15 @@ w::{
 !Numpad7::{
     global step_5_tab
     global step_5_margin
-    step_5_window_0_deg()
-    Sleep(20)
+    global step_5_crossball
+    ; step_5_window_0_deg()
+    ; Sleep(20)
     if step_5_tab = 1{
-        step_5_window_90_plus_deg()
+        ; step_5_window_90_plus_deg()
+        send_WM_COPYDATA("SELECT_CROSSBALL:1", "ESPRIT - ")
+        step_5_crossball := 1
     } else if step_5_tab == 2 {
+        send_WM_COPYDATA("SELECT_MARGIN:1", "ESPRIT - ")
         step_5_margin := 1
     }
 }
@@ -1040,11 +1078,15 @@ w::{
 !Numpad9::{
     global step_5_tab
     global step_5_margin
-    step_5_window_120_deg()
-    Sleep(20)
+    global step_5_crossball
+    ; step_5_window_120_deg()
+    ; Sleep(20)
     if step_5_tab = 1{
-        step_5_window_90_plus_deg()
+        ; step_5_window_90_plus_deg()
+        send_WM_COPYDATA("SELECT_CROSSBALL:2", "ESPRIT - ")
+        step_5_crossball := 2
     } else if step_5_tab == 2 {
+        send_WM_COPYDATA("SELECT_MARGIN:2", "ESPRIT - ")
         step_5_margin := 2
     }
 }
@@ -1052,11 +1094,15 @@ w::{
 !Numpad1::{
     global step_5_tab
     global step_5_margin
-    step_5_window_240_deg()
-    Sleep(20)
+    global step_5_crossball
+    ; step_5_window_240_deg()
+    ; Sleep(20)
     if step_5_tab = 1{
-        step_5_window_90_plus_deg()
+        ; step_5_window_90_plus_deg()
+        send_WM_COPYDATA("SELECT_CROSSBALL:3", "ESPRIT - ")
+        step_5_crossball := 3
     } else if step_5_tab == 2 {
+        send_WM_COPYDATA("SELECT_MARGIN:3", "ESPRIT - ")
         step_5_margin := 3
     }
 }
@@ -1064,11 +1110,15 @@ w::{
 !Numpad3::{
     global step_5_tab
     global step_5_margin
-    step_5_window_270_deg()
-    Sleep(20)
+    global step_5_crossball
+    ; step_5_window_270_deg()
+    ; Sleep(20)
     if step_5_tab = 1{
-        step_5_window_90_plus_deg()
+        ; step_5_window_90_plus_deg()
+        send_WM_COPYDATA("SELECT_CROSSBALL:4", "ESPRIT - ")
+        step_5_crossball := 4
     } else if step_5_tab == 2 {
+        send_WM_COPYDATA("SELECT_MARGIN:4", "ESPRIT - ")
         step_5_margin := 4
     }
 }
@@ -1080,67 +1130,72 @@ w::{
 
 z::{
     global step_5_tab
-    step_5_window_tab_1()
+    ; step_5_window_tab_1()
     step_5_tab := 1
 }
 
 x::{
     global step_5_tab
-    step_5_window_tab_2()
+    ; step_5_window_tab_2()
     step_5_tab := 2
 
-    esp_info := get_active_esprit_info()
+    ; esp_info := get_active_esprit_info()
 
-    if not esp_info.Step5Saved {
-        save_and_create_checkpoint("margins", esp_info.esp_id)
-        esp_info.Step5Saved := true
-    }
+    ; if not esp_info.Step5Saved {
+    ;     save_and_create_checkpoint("margins", esp_info.esp_id)
+    ;     esp_info.Step5Saved := true
+    ; }
 }
 
 ^Numpad1::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    ; macro_button1()
-    ExecuteMacroButtonCommand(1)
+
+    ExecuteMacroButtonCommand(1, get_active_esprit_info().esp_id)
 }
 
 ^Numpad2::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    ; macro_button2()
-    ExecuteMacroButtonCommand(2)
+    ExecuteMacroButtonCommand(2,get_active_esprit_info().esp_id)
 }
 
 ^Numpad3::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    ; macro_button3()
-    ExecuteMacroButtonCommand(3)
+    ExecuteMacroButtonCommand(3,get_active_esprit_info().esp_id)
 }
 
 ^Numpad4::{
-    ; CoordMode("Mouse", "Screen")
-    ; click_and_return(80, 1020)
+
     esp_info := get_active_esprit_info()
     case_type := get_case_type(WinGetTitle("ahk_id" esp_info.esp_id))
+    
+    
+    ExecuteMacroButtonCommand(4,get_active_esprit_info().esp_id)
+    cam_automation_id := WinWaitTitleWithPID(esp_info.esp_pid, "CAM Automation", "[4] Rebuild Freeform")
+
+    bottom_z_limit := -5
+    send_WM_COPYDATA("SET_ALL_CROSSBALL_BOTTOM_Z_LIMIT:" bottom_z_limit, "ahk_id" esp_info.esp_id)
     if case_type != "TLOC" and case_type != "AOT" {
+        
+        send_WM_COPYDATA("CREATE_CROSSBALLS", "ESPRIT - ")
+        send_WM_COPYDATA("CREATE_MARGINS", "ESPRIT - ")
         send_WM_COPYDATA("BUILD_ESP", "ESPRIT - ")
     }
-    ExecuteMacroButtonCommand(4)
-    cam_automation_id := WinWaitTitleWithPID(esp_info.esp_pid, "CAM Automation", "[4] Rebuild Freeform")
+
     WinWaitClose("ahk_id" cam_automation_id)
     go_to_next_esprit(esp_info.esp_id)
 }
-
 ^Numpad5::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
+    ; if not WinActive("ESPRIT - "){
+    ;     WinActivate("ESPRIT - ")
+    ; }
     ; macro_button5()
-    ExecuteMacroButtonCommand(5)
+    ExecuteMacroButtonCommand(5, get_active_esprit_info().esp_id)
     step_5_tab := 2
 }
 
@@ -1148,8 +1203,7 @@ x::{
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    ; macro_button_text()
-    ExecuteMacroButtonCommand(6)
+    ExecuteMacroButtonCommand(6, get_active_esprit_info().esp_id)
 }
 
 ^!Numpad1::{
@@ -1209,76 +1263,58 @@ x::{
 
 ; Tab 2
 !s::{
-    ; if not WinActive("ESPRIT - "){
-    ;     WinActivate("ESPRIT - ")
-    ; }
-    ; esp_info := get_active_esprit_info()
-    ; switch esp_info.Step3Tab{
-    ;     case 1:
-    ;         esp_info.Step3Tab1Deg := get_current_angle("ESPRIT - ") 
-    ;     case 2:
-    ;         esp_info.Step3Tab2Deg := get_current_angle("ESPRIT - ") 
-    ;     case 3:
-    ;         esp_info.Step3Tab3Deg := get_current_angle("ESPRIT - ") 
-    ; }
-    ; esp_info.Step3Tab := 2 
-    ; update_angle(esp_info.Step3Tab2Deg, "ESPRIT - ")
-    step_3_tab2()
-    WinWaitActive("Check Rough ML & Create Border Solid")
-    esp_info := get_active_esprit_info()
-    if not esp_info.Step3Saved {
-        save_and_create_checkpoint("layer 12", esp_info.esp_id)
-        esp_info.Step3Saved := true
-    }
+    ; step_3_tab2()
+    send_WM_COPYDATA("FACE_LIMITATION", "ESPRIT - ")
+    update_angle(get_current_angle("ESPRIT - "), "ESPRIT - ")
 }
 
 ; Tab 3
 !d::{
-    ; if not WinActive("ESPRIT - "){
-    ;     WinActivate("ESPRIT - ")
-    ; }
-    ; esp_info := get_active_esprit_info()
-    ; switch esp_info.Step3Tab{
-    ;     case 1:
-    ;         esp_info.Step3Tab1Deg := get_current_angle("ESPRIT - ") 
-    ;     case 2:
-    ;         esp_info.Step3Tab2Deg := get_current_angle("ESPRIT - ") 
-    ;     case 3:
-    ;         esp_info.Step3Tab3Deg := get_current_angle("ESPRIT - ") 
-    ; }
-    ; esp_info.Step3Tab := 3
-    ; update_angle(esp_info.Step3Tab3Deg, "ESPRIT - ")
-    step_3_tab3()
+    ; step_3_tab3()
+    send_WM_COPYDATA("LAYER13_LIMITATION", "ESPRIT - ")
 }
 
 !Right::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(205, 250)
+    ; CoordMode("Mouse", "Screen")
+    ; click_and_return(205, 250)
+    send_WM_COPYDATA("TRANSLATE_X:0.1", "ESPRIT - ")
 }
 
 !Left::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(155, 250)
+    ; CoordMode("Mouse", "Screen")
+    ; click_and_return(155, 250)
+    send_WM_COPYDATA("TRANSLATE_X:-0.1", "ESPRIT - ")
 }
 
 !Up::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(155, 210)
+    ; CoordMode("Mouse", "Screen")
+    ; click_and_return(155, 210)
+    send_WM_COPYDATA("TRANSLATE_Y:0.1", "ESPRIT - ")
 }
 
 !Down::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(205, 210)
+    ; CoordMode("Mouse", "Screen")
+    ; click_and_return(205, 210)
+    send_WM_COPYDATA("TRANSLATE_Y:-0.1", "ESPRIT - ")
 }
 
 +Left::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(155, 290)
+    ; CoordMode("Mouse", "Screen")
+    ; click_and_return(155, 290)
+    send_WM_COPYDATA("ROTATE_Z:1", "ESPRIT - ")
 }
 
 +Right::{
-    CoordMode("Mouse", "Screen")
-    click_and_return(205, 290)
+    ; CoordMode("Mouse", "Screen")
+    ; click_and_return(205, 290)
+    send_WM_COPYDATA("ROTATE_Z:-1", "ESPRIT - ")
+}
+
+!XButton2::
+!c::
+^!MButton::{
+    esp_info := get_active_esprit_info()
+    PostMessage(ConfirmESPMsg, esp_info.esp_id, , , 0xFFFF)
 }
 
 ^+NumpadEnter::
@@ -1295,7 +1331,7 @@ x::{
 
     CoordMode("Mouse", "Screen")
     click_and_return(103, 336)
-    go_to_next_esprit(esp_info.esp_id)
+    ; go_to_next_esprit(esp_info.esp_id)
     ; Sleep(200)
     ; send_WM_COPYDATA("SIMULATE_BACK", "ahk_id" esp_info.esp_id)   
 }

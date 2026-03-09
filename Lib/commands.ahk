@@ -288,7 +288,7 @@ go_to_next_esprit(current_esp_id){
     } 
 }
 
-ds_startup_commands(esp_pid, esp_id){
+old_ds_startup_commands(esp_pid, esp_id){
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
         try{
             win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
@@ -320,8 +320,6 @@ ds_startup_commands(esp_pid, esp_id){
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
         ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
     }
-    send_WM_COPYDATA("ENABLE_LAYER:BACK TURNING", "ESPRIT - ")
-    send_WM_COPYDATA("ENABLE_LAYER:CUT-OFF", "ESPRIT - ")
     yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
     if yn != "Yes"{
         ExitApp
@@ -359,7 +357,628 @@ ds_startup_commands(esp_pid, esp_id){
 	WinWaitClose("ahk_id" base_work_id)
 }
 
+ds_startup_commands(esp_pid, esp_id){
+    ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
+
+    layer_12_and_13_confirm := false
+
+    numOfSides := 3
+
+    OnMessage(ConfirmESPMsg, OnConfirmESPMsg)
+
+    OnConfirmESPMsg(wParam, lParam, msg, hwnd){
+        if wParam != esp_id {
+            return
+        }
+
+        if layer_12_and_13_confirm == false {
+            layer_12_and_13_confirm := true
+            return
+        }
+    }
+
+	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+        try{
+            win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+            if win_1 {
+                ControlSend("{Enter}", , "ahk_id" win_1)
+            }
+        }
+        
+        try{
+            win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+            if win_2 {
+                ControlSend("{Enter}", , "ahk_id" win_2)
+            }
+        }
+
+        try{
+            win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+            if win_3 {
+                ControlSend("{Enter}", , "ahk_id" win_3)
+            }
+        }
+	}
+    stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
+    WinActivate("ahk_id" esp_id)
+	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
+    send_WM_COPYDATA("ENABLE_LAYER:BACK TURNING", "ESPRIT - ")
+    send_WM_COPYDATA("ENABLE_LAYER:CUT-OFF", "ESPRIT - ")
+    consolelog("[Tru-AHK] Is the connection correct?")
+    yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
+    if yn != "Yes"{
+        ExitApp
+    }
+
+    lower_margins := show_custom_dialog("Lower margin values?", "Tru-AHK", esp_id)
+    
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4")
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}{LShift}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" or keyName == "LShift"{
+            numOfSides := 4
+            break
+        }
+        consolelog("[Tru-AHK] Invalid input")
+    }
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+
+    if numOfSides == 3{
+        send_WM_COPYDATA("CREATE_CROSSBALLS_TEMP_3", "ESPRIT - ")
+        send_WM_COPYDATA("CREATE_MARGINS_TEMP_3", "ESPRIT - ")
+    } else if numOfSides == 4 {
+        send_WM_COPYDATA("CREATE_CROSSBALLS_TEMP_4", "ESPRIT - ")
+        send_WM_COPYDATA("CREATE_MARGINS_TEMP_4", "ESPRIT - ")
+    }
+
+    send_WM_COPYDATA("FACE_LIMITATION", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw layers 12 and 13, then confirm")
+    While not layer_12_and_13_confirm{
+        Sleep(1)
+    }
+
+    deg0("ahk_id" esp_id)
+    WinActivate("ahk_id" stl_rotate_id)
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
+	WinWaitClose("ahk_id" base_work_id)
+
+    return lower_margins
+}
+
+new_ds_startup_commands(esp_pid, esp_id){
+    ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
+
+    isConnectionCorrect := false
+    layer_12_and_13_confirm := false
+
+    crossball_1_confirm := false
+    crossball_2_confirm := false
+    crossball_3_confirm := false
+    crossball_4_confirm := false
+
+    margin_1_confirm := false
+    margin_2_confirm := false
+    margin_3_confirm := false
+    margin_4_confirm := false
+
+    numOfSides := 3
+
+    OnMessage(ConfirmESPMsg, OnConfirmESPMsg)
+
+    OnConfirmESPMsg(wParam, lParam, msg, hwnd){
+        if wParam != esp_id {
+            return
+        }
+
+        if isConnectionCorrect == false {
+            isConnectionCorrect := true
+            return
+        }
+
+        if layer_12_and_13_confirm == false {
+            layer_12_and_13_confirm := true
+            return
+        }
+
+        if crossball_1_confirm == false {
+            crossball_1_confirm := true
+            return
+        }
+
+        if crossball_2_confirm == false {
+            crossball_2_confirm := true
+            return
+        }
+
+        if crossball_3_confirm == false {
+            crossball_3_confirm := true
+            return
+        }
+
+        if crossball_4_confirm == false and numOfSides == 4 {
+            crossball_4_confirm := true
+            return
+        }
+
+        if margin_1_confirm == false {
+            margin_1_confirm := true
+            return
+        }
+
+        if margin_2_confirm == false {
+            margin_2_confirm := true
+            return
+        }
+
+        if margin_3_confirm == false {
+            margin_3_confirm := true
+            return
+        }
+
+        if margin_4_confirm == false and numOfSides == 4 {
+            margin_4_confirm := true
+            return
+        }
+    }
+
+	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+        try{
+            win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+            if win_1 {
+                ControlSend("{Enter}", , "ahk_id" win_1)
+            }
+        }
+        
+        try{
+            win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+            if win_2 {
+                ControlSend("{Enter}", , "ahk_id" win_2)
+            }
+        }
+
+        try{
+            win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+            if win_3 {
+                ControlSend("{Enter}", , "ahk_id" win_3)
+            }
+        }
+	}
+    stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
+    WinActivate("ahk_id" esp_id)
+	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
+    send_WM_COPYDATA("ENABLE_LAYER:BACK TURNING", "ESPRIT - ")
+    send_WM_COPYDATA("ENABLE_LAYER:CUT-OFF", "ESPRIT - ")
+    consolelog("[Tru-AHK] Is the connection correct?")
+    While not isConnectionCorrect{
+        Sleep(1)
+    }
+    
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4")
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}{LShift}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" or keyName == "LShift"{
+            numOfSides := 4
+            break
+        }
+        consolelog("[Tru-AHK] Invalid input")
+    }
+    seleted_degree := get_current_angle("ahk_id" esp_id)
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+
+    send_WM_COPYDATA("FACE_LIMITATION", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw layers 12 and 13, then confirm")
+    While not layer_12_and_13_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    increment_90_degrees("ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:경계소재-3", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw crossball 1 and confirm")
+    While not crossball_1_confirm{
+        Sleep(1)
+    }
+    
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    increment_90_degrees("ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP1", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw crossball 2 and confirm")
+    While not crossball_2_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    increment_90_degrees("ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP2", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw crossball 3 and confirm")
+    While not crossball_3_confirm{
+        Sleep(1)
+    }
+
+    if numOfSides == 4 {
+        update_angle(seleted_degree, "ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+        consolelog("[Tru-AHK] Draw crossball 4 and confirm")
+        While not crossball_4_confirm{
+            Sleep(1)
+        }
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP4", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw margin 1 and confirm")
+    While not margin_1_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:MARGIN_TEMP1", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw margin 2 and confirm")
+    While not margin_2_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:MARGIN_TEMP2", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw margin 3 and confirm")
+    While not margin_3_confirm{
+        Sleep(1)
+    }
+
+    if numOfSides == 4 {
+        update_angle(seleted_degree, "ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("DISABLE_LAYER:MARGIN_TEMP3", "ESPRIT - ")
+        consolelog("[Tru-AHK] Draw margin 4 and confirm")
+        While not margin_4_confirm{
+            Sleep(1)
+        }
+    }
+
+    deg0("ahk_id" esp_id)
+    WinActivate("ahk_id" stl_rotate_id)
+	CoordMode("Mouse", "Client")
+	Click("65 115")
+	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
+	WinWaitClose("ahk_id" base_work_id)
+}
+
+old_asc_startup_commands(esp_pid, esp_id){
+	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+        win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+        if win_1 {
+            ControlSend("{Enter}", , "ahk_id" win_1)
+        }
+
+        win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+        if win_2 {
+            ControlSend("{Enter}", , "ahk_id" win_2)
+        }
+
+        win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+        if win_3 {
+            ControlSend("{Enter}", , "ahk_id" win_3)
+        }
+	}
+	stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
+	WinActivate("ahk_id" esp_id)
+	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
+	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
+    if yn != "Yes"{
+        ExitApp
+    }
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
+    numOfSides := 3
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" {
+            numOfSides := 4
+            break
+        }
+        consolelog("[Tru-AHK] Invalid input")
+    }
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+    deg0("ahk_id" esp_id)
+	WinActivate("ahk_id" stl_rotate_id)
+	CoordMode("Mouse", "Client")
+	Click("60 147")
+	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
+	WinWaitClose("ahk_id" base_work_id)
+}
+
 asc_startup_commands(esp_pid, esp_id){
+    ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
+
+    layer_12_and_13_confirm := false
+
+    numOfSides := 3
+
+    OnMessage(ConfirmESPMsg, OnConfirmESPMsg)
+
+    OnConfirmESPMsg(wParam, lParam, msg, hwnd){
+        if wParam != esp_id {
+            return
+        }
+
+        if layer_12_and_13_confirm == false {
+            layer_12_and_13_confirm := true
+            return
+        }
+    }
+
+	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
+        win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
+        if win_1 {
+            ControlSend("{Enter}", , "ahk_id" win_1)
+        }
+
+        win_2 := WinActiveTitleWithPID(esp_pid, "esprit", "OK")
+        if win_2 {
+            ControlSend("{Enter}", , "ahk_id" win_2)
+        }
+
+        win_3 := WinActiveTitleWithPID(esp_pid, "Direction Check", "OK")
+        if win_3 {
+            ControlSend("{Enter}", , "ahk_id" win_3)
+        }
+	}
+	stl_rotate_id := WinWaitActiveTitleWithPID(esp_pid, "STL Rotate")
+	WinActivate("ahk_id" esp_id)
+	deg0("ahk_id" esp_id)
+    esp_title := WinGetTitle("ahk_id" esp_id)
+    found_pos := RegExMatch(esp_title, "(?P<PDO>\w+-\w+-\d+)__\((?P<connection>[A-Za-z0-9;\-]+),(?P<id>\d+)\) ?\[?(?P<ug_values>[#0-9-=. ]+)?\]?[_0-9]*?(?P<file_type>\.\w+)", &sub_pat)
+    if found_pos {
+        file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
+        ; remove_stl_file(STL_FILE_PATH "\" file_name_no_ext ".stl")
+    }
+    
+    yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
+    if yn != "Yes"{
+        ExitApp
+    }
+
+    lower_margins := show_custom_dialog("Lower margin values?", "Tru-AHK", esp_id)
+
+    consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
+    numOfSides := 3
+    Loop {
+        ih := InputHook("L1", "34{Numpad3}{Numpad4}{Enter}{NumpadEnter}{Space}")
+        ih.Start()
+        ih.Wait()
+        keyName := GetKeyName(ih.EndKey)
+        if keyName == "3" or keyName == "Numpad3" or keyName == "Enter" or keyName == "NumpadEnter" or keyName == "Space"{
+            numOfSides := 3
+            break
+        } else if keyName == "4" or keyName == "Numpad4" {
+            numOfSides := 4
+            break
+        }
+        consolelog("[Tru-AHK] Invalid input")
+    }
+    selected_view := get_current_angle("ahk_id" esp_id) - 7
+
+    if numOfSides == 3{
+        send_WM_COPYDATA("CREATE_CROSSBALLS_TEMP_3", "ESPRIT - ")
+        send_WM_COPYDATA("CREATE_MARGINS_TEMP_3", "ESPRIT - ")
+    } else if numOfSides == 4 {
+        send_WM_COPYDATA("CREATE_CROSSBALLS_TEMP_4", "ESPRIT - ")
+        send_WM_COPYDATA("CREATE_MARGINS_TEMP_4", "ESPRIT - ")
+    }
+
+    send_WM_COPYDATA("FACE_LIMITATION", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw layers 12 and 13, then confirm")
+    While not layer_12_and_13_confirm{
+        Sleep(1)
+    }
+    
+    deg0("ahk_id" esp_id)
+	WinActivate("ahk_id" stl_rotate_id)
+	CoordMode("Mouse", "Client")
+	Click("60 147")
+	base_work_id := WinWaitActiveTitleWithPID(esp_pid, "Base Work Plane(Degree)")
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    } 
+    ControlSend("{Tab}{Tab}", , "ahk_id" base_work_id)
+    if numOfSides == 3 {
+        ControlSend("{Up}", , "ahk_id" base_work_id)
+    }
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
+	WinWaitClose("ahk_id" base_work_id)
+    return lower_margins
+}
+
+new_asc_startup_commands(esp_pid, esp_id){
+    ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
+
+    isConnectionCorrect := false
+    layer_12_confirm := false
+    layer_13_confirm := false
+
+    crossball_1_confirm := false
+    crossball_2_confirm := false
+    crossball_3_confirm := false
+    crossball_4_confirm := false
+
+    margin_1_confirm := false
+    margin_2_confirm := false
+    margin_3_confirm := false
+    margin_4_confirm := false
+
+    numOfSides := 3
+
+    OnMessage(ConfirmESPMsg, OnConfirmESPMsg)
+
+    OnConfirmESPMsg(wParam, lParam, msg, hwnd){
+        if wParam != esp_id {
+            return
+        }
+
+        if isConnectionCorrect == false {
+            isConnectionCorrect := true
+            return
+        }
+
+        if layer_12_confirm == false {
+            layer_12_confirm := true
+            return
+        }
+
+        if layer_13_confirm == false {
+            layer_13_confirm := true
+            return
+        }
+
+        if crossball_1_confirm == false {
+            crossball_1_confirm := true
+            return
+        }
+
+        if crossball_2_confirm == false {
+            crossball_2_confirm := true
+            return
+        }
+
+        if crossball_3_confirm == false {
+            crossball_3_confirm := true
+            return
+        }
+
+        if crossball_4_confirm == false and numOfSides == 4 {
+            crossball_4_confirm := true
+            return
+        }
+
+        if margin_1_confirm == false {
+            margin_1_confirm := true
+            return
+        }
+
+        if margin_2_confirm == false {
+            margin_2_confirm := true
+            return
+        }
+
+        if margin_3_confirm == false {
+            margin_3_confirm := true
+            return
+        }
+
+        if margin_4_confirm == false and numOfSides == 4 {
+            margin_4_confirm := true
+            return
+        }
+    }
+
 	while not WinExistTitleWithPID(esp_pid, "STL Rotate"){
         win_1 := WinActiveTitleWithPID(esp_pid, "esprit", "&Yes")
         if win_1 {
@@ -387,10 +1006,11 @@ asc_startup_commands(esp_pid, esp_id){
     }
     send_WM_COPYDATA("ENABLE_LAYER:BACK TURNING", "ESPRIT - ")
     send_WM_COPYDATA("ENABLE_LAYER:CUT-OFF", "ESPRIT - ")
-	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
-    if yn != "Yes"{
-        ExitApp
+	consolelog("[Tru-AHK] Is the connection correct?")
+    While not isConnectionCorrect{
+        Sleep(1)
     }
+
     consolelog("[Tru-AHK] Rotate to desired angle and press either 3 or 4 for the side count")
     numOfSides := 3
     Loop {
@@ -407,7 +1027,138 @@ asc_startup_commands(esp_pid, esp_id){
         }
         consolelog("[Tru-AHK] Invalid input")
     }
+    seleted_degree := get_current_angle("ahk_id" esp_id)
     selected_view := get_current_angle("ahk_id" esp_id) - 7
+
+    send_WM_COPYDATA("DISABLE_LAYER:BACK TURNING", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CUT-OFF", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:경계소재-2", "ESPRIT - ")
+    deg0("ahk_id" esp_id)
+    ; yn := show_custom_dialog("Is layer 12 drawn?", "Tru-AHK", esp_id)
+    consolelog("[Tru-AHK] Draw layer 12 and confirm")
+    While not layer_12_confirm{
+        Sleep(1)
+    }
+
+    send_WM_COPYDATA("DISABLE_LAYER:경계소재-2", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:경계소재-3", "ESPRIT - ")
+    face("ahk_id" esp_id)
+    consolelog("[Tru-AHK] Draw layer 13 and confirm")
+    While not layer_13_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    increment_90_degrees("ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:경계소재-3", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw crossball 1 and confirm")
+    While not crossball_1_confirm{
+        Sleep(1)
+    }
+    
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    increment_90_degrees("ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP1", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw crossball 2 and confirm")
+    While not crossball_2_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    increment_90_degrees("ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP2", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw crossball 3 and confirm")
+    While not crossball_3_confirm{
+        Sleep(1)
+    }
+
+    if numOfSides == 4 {
+        update_angle(seleted_degree, "ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        send_WM_COPYDATA("CREATE_LAYER:CROSSBALL_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("ACTIVATE_LAYER:CROSSBALL_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+        consolelog("[Tru-AHK] Draw crossball 4 and confirm")
+        While not crossball_4_confirm{
+            Sleep(1)
+        }
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP1", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CROSSBALL_TEMP4", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw margin 1 and confirm")
+    While not margin_1_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP2", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:MARGIN_TEMP1", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw margin 2 and confirm")
+    While not margin_2_confirm{
+        Sleep(1)
+    }
+
+    update_angle(seleted_degree, "ahk_id" esp_id)
+    if numOfSides == 3 {
+        increment_120_degrees("ahk_id" esp_id)
+        increment_120_degrees("ahk_id" esp_id)
+    } else {
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+    }
+    send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP3", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:MARGIN_TEMP2", "ESPRIT - ")
+    consolelog("[Tru-AHK] Draw margin 3 and confirm")
+    While not margin_3_confirm{
+        Sleep(1)
+    }
+
+    if numOfSides == 4 {
+        update_angle(seleted_degree, "ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        increment_90_degrees("ahk_id" esp_id)
+        send_WM_COPYDATA("CREATE_LAYER:MARGIN_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("ACTIVATE_LAYER:MARGIN_TEMP4", "ESPRIT - ")
+        send_WM_COPYDATA("DISABLE_LAYER:MARGIN_TEMP3", "ESPRIT - ")
+        consolelog("[Tru-AHK] Draw margin 4 and confirm")
+        While not margin_4_confirm{
+            Sleep(1)
+        }
+    }
+
     deg0("ahk_id" esp_id)
 	WinActivate("ahk_id" stl_rotate_id)
 	CoordMode("Mouse", "Client")
