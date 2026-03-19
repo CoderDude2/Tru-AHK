@@ -173,25 +173,6 @@ if(check_for_update(A_ScriptDir, REMOTE_PATH)){
     }
 }
 
-if check_for_tru_cam_addin_update(){
-    result := MsgBox("An update is available for TruCamAddIn. Do you want to install it? Esprit will need to be restarted.",,"Y/N")
-    if(result == "Yes"){
-        ids := WinGetList("ESPRIT - ")
-        for this_id in ids{
-            pid := WinGetPID("ahk_id" this_id)
-            ProcessClose(pid)
-        }
-        Sleep(100)
-        success := update_tru_cam_addin()
-
-        if success == 0{
-            Run "C:\Program Files (x86)\D.P.Technology\ESPRIT\Prog\esprit.exe"
-        } else {
-            MsgBox("Failed to install update!")
-        }
-    }
-}
-
 if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
     Run A_ScriptDir "\resources\changelog.html"
     IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
@@ -227,58 +208,6 @@ f13::
     }   
 }
 #SuspendExempt False
-
-espritInstances := Map()
-
-get_active_esprit_info(){
-    global espritInstances
-    activeTitle := WinGetTitle("ESPRIT - ")
-
-    if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle))){
-        esp_id := WinGetID(activeTitle)
-        esp_pid := WinGetPID(activeTitle)
-         
-        esp_info := EspritInfo()
-        esp_info.esp_pid := esp_pid
-        esp_info.esp_id := esp_id
-
-        espritInstances[activeTitle "_" WinGetPID(activeTitle)] := esp_info
-    }
-
-    return espritInstances[activeTitle "_" WinGetPID(activeTitle)] 
-}
-
-DocumentOpen := false
-ESPAfterDocumentOpenMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_AFTER_DOCUMENT_OPEN")
-
-OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
-
-OnEspAfterDocumentOpen(wParam, lParam, msg, hwnd){
-    global DocumentOpen
-    esp_info := get_active_esprit_info()
-    ; MsgBox(wParam " " esp_info.esp_id " " esp_info.DocumentOpen)
-    if wParam == esp_info.esp_id{
-        DocumentOpen := true
-    }
-}
-
-GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
-MacroButtonCodeResponseMsg := DllCall("RegisterWindowMessageW", "Str", "MACRO_BUTTON_COMMAND_RESPONSE")
-
-ExecuteMacroButtonCommand(command){
-    esp_info := get_active_esprit_info()
-    PostMessage(GetMacroButtonCodeMsg, esp_info.esp_id, command, , 0xFFFF)
-}
-
-OnMessage(MacroButtonCodeResponseMsg, OnMacroButtonCodeResponseMsg)
-
-OnMacroButtonCodeResponseMsg(wParam, lParam, msg, hwnd){
-    esp_info := get_active_esprit_info()
-    if wParam == esp_info.esp_id{
-        Sleep(50)
-        PostMessage 0x111, lParam, , , "ahk_id" esp_info.esp_id
-    }
-}
 
 ; G5 Key
 f17::
@@ -334,8 +263,6 @@ f12::{
         return
     }
 
-    DocumentOpen := false
-
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
         SplitPath(selected_file, &name)
@@ -353,14 +280,13 @@ f12::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-
-        While Not DocumentOpen {
-            Sleep(1)
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK", esp_id)
+        if yn != "Yes"{
+            return
         }
-
         file_map[name] := true
         WinActivate("ESPRIT")
-        ExecuteMacroButtonCommand(1)
+        macro_button_1()
         WinWaitActive("CAM Automation")
         Send("{Enter}")
         WinWaitActive("Select file to open")
@@ -372,12 +298,15 @@ f12::{
 
 ; G4
 f16::{
-    global DocumentOpen
-    if get_macro_bar() == ""{
+    esp_id := WinGetID("ESPRIT - ")
+
+    if not esp_id {
         return
     }
 
-    DocumentOpen := false
+    if get_macro_bar() == ""{
+        return
+    }
 
     selected_file := ""
     For k,v in file_map{
@@ -402,14 +331,13 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-
-        While Not DocumentOpen {
-            Sleep(1)
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK", esp_id)
+        if yn != "Yes"{
+            return
         }
-
         file_map[name] := true
         WinActivate("ESPRIT - ")
-        ExecuteMacroButtonCommand(1)
+        macro_button_1()
         WinWaitActive("CAM Automation")
         Send("{Enter}")
         WinWaitActive("Select file to open")
@@ -432,13 +360,15 @@ f16::{
 }
 
 +f16::{
-    global DocumentOpen
+    esp_id := WinGetID("ESPRIT - ")
+
+    if not esp_id {
+        return
+    }
 
     if get_macro_bar() == ""{
         return
     }
-
-    DocumentOpen := false
 
     selected_file := FileSelect(, get_stl_path())
     if(selected_file != ""){
@@ -457,14 +387,13 @@ f16::{
         if WinExist("ahk_class #32770", esprit_are_you_sure_text){
             WinWaitClose("ahk_class #32770", esprit_are_you_sure_text)
         }
-
-        While Not DocumentOpen {
-            Sleep(1)
+        yn := show_custom_dialog("Is the basic setting loaded?","Tru-AHK", esp_id)
+        if yn != "Yes"{
+            return
         }
-        
         file_map[name] := true
         WinActivate("ESPRIT - ")
-        ExecuteMacroButtonCommand(1)
+        macro_button_1()
         WinWaitActive("CAM Automation")
         Send("{Enter}")
         WinWaitActive("Select file to open")
@@ -1116,45 +1045,27 @@ y::{
 }
 
 ^Numpad1::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    ExecuteMacroButtonCommand(1)
+    macro_button_1()
 }
 
 ^Numpad2::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    ExecuteMacroButtonCommand(2)
+    macro_button_2()
 }
 
 ^Numpad3::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    ExecuteMacroButtonCommand(3)
+    macro_button_3()
 }
 
 ^Numpad4::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    ExecuteMacroButtonCommand(4)
+    macro_button_4()
 }
 
 ^Numpad5::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    ExecuteMacroButtonCommand(5)
+    macro_button_5()
 }
 
 ^Numpad6::{
-    if not WinActive("ESPRIT - "){
-        WinActivate("ESPRIT - ")
-    }
-    ExecuteMacroButtonCommand(6)
+    macro_button_text()
 }
 
 #HotIf setMacroBar == true
