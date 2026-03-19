@@ -23,6 +23,10 @@ EspStep4ReadyMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_FILE_STEP_4_RE
 GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
 EspExecuteCommandMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_EXECUTE_COMMAND")
 
+EspFileLoadedMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_FILE_LOADED")
+EspFileCenteredMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_FILE_CENTERED")
+EspFileOrientedMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_FILE_ORIENTED")
+
 suspend_event_num := DllCall("RegisterWindowMessageA", "Str", "SuspendScript")
 terminate_event_num := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 
@@ -30,12 +34,39 @@ DocumentOpen := false
 EspFileReady := false
 EspStep4Ready := false
 
+EspFileLoaded := false
+EspFileCentered := false
+EspFileOriented := false
+
 OnMessage(suspend_event_num, SuspendScript)
 OnMessage(terminate_event_num, TerminateScript)
 OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
 OnMessage(EspFileReadyMsg, OnEspFileReady)
 OnMessage(EspStep4ReadyMsg, OnEspStep4Ready)
 
+OnMessage(EspFileLoadedMsg, OnEspFileLoaded)
+OnMessage(EspFileCenteredMsg, OnEspFileCentered)
+OnMessage(EspFileOrientedMsg, OnEspFileOriented)
+
+OnEspFileLoaded(wParam, lParam, msg, hwnd){
+    global EspFileLoaded
+    if wParam == esp_id{
+        EspFileLoaded := true
+    }
+}
+
+OnEspFileCentered(wParam, lParam, msg, hwnd){
+    global EspFileCentered
+    if wParam == esp_id{
+        EspFileCentered := true
+    }
+}
+OnEspFileOriented(wParam, lParam, msg, hwnd){
+    global EspFileOriented
+    if wParam == esp_id{
+        EspFileOriented := true
+    }
+}
 
 OnEspAfterDocumentOpen(wParam, lParam, msg, hwnd){
     global DocumentOpen
@@ -335,9 +366,22 @@ switch startup_command {
                 file_map.data[name] := true
                 mtx.Release()
             }
-            send_WM_COPYDATA("OPENANDINITSTL " name, "ESPRIT - ")
+            ; send_WM_COPYDATA("OPENANDINITSTL " name, "ESPRIT - ")
+            send_WM_COPYDATA("LOAD_STL " name, "ESPRIT - ")
+            
+            While Not EspFileLoaded{
+                Sleep(1)
+            }
 
-            While Not EspFileReady{
+            send_WM_COPYDATA("CENTER_STL " name, "ESPRIT - ")
+
+            While Not EspFileCentered{
+                Sleep(1)
+            }
+
+            send_WM_COPYDATA("ORIENT_STL " name, "ESPRIT - ")
+
+            While Not EspFileOriented{
                 Sleep(1)
             }
 
