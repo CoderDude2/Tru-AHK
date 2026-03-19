@@ -256,12 +256,6 @@ ds_startup_commands(){
                 ControlSend("{Enter}", , "ahk_id" dialog_win)
             }
         }
-		try {
-            dialog_win := WinActive("Direction Check", "확인")
-            if dialog_win {
-                ControlSend("{Enter}", , "ahk_id" dialog_win)
-            }
-        }
         try {
             dialog_win := WinActive("esprit", "예(&Y)")
             if dialog_win {
@@ -289,7 +283,7 @@ ds_startup_commands(){
 	if IniRead(PREFS_FILE_PATH, "auto_recycle_STL", "value") == true{
 		recycle_active_file()
 	}
-	ExecuteMacroButtonCommandWithHWND(3, WinGetID("ESPRIT - "))
+	macro_button_3()
 }
 
 asc_startup_commands(){
@@ -340,7 +334,7 @@ asc_startup_commands(){
 	if IniRead(PREFS_FILE_PATH, "auto_recycle_STL", "value") == true{
 		recycle_active_file()
 	}
-	ExecuteMacroButtonCommandWithHWND(3, WinGetID("ESPRIT - "))
+	macro_button_3()
 }
 
 tl_aot_startup_commands(){
