@@ -1,7 +1,12 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-show_custom_dialog(msg, title, owner := unset){
+GetMacroButtonCodeMsg := DllCall("RegisterWindowMessageW", "Str", "GET_MACRO_BUTTON_COMMAND")
+ExecuteMacroButtonCommandWithHWND(command, esp_id){
+    PostMessage(GetMacroButtonCodeMsg, esp_id, command, , 0xFFFF)
+}
+
+show_custom_dialog(msg, title){
     WINDOW_INFO_PATH := PREFS_DIRECTORY "\windows.ini"
 
     if not FileExist(WINDOW_INFO_PATH){
@@ -13,9 +18,6 @@ show_custom_dialog(msg, title, owner := unset){
     
     response := ""
     custom_dialog_gui := Gui()
-	if IsSet(owner){
-		custom_dialog_gui.Opt("+Owner" owner)
-	}
     custom_dialog_gui.BackColor := "0xFFFFFF"
     custom_dialog_gui.Title := title
     custom_dialog_gui.AddText("x11 y23 w243 h15", msg)
@@ -45,11 +47,7 @@ show_custom_dialog(msg, title, owner := unset){
     ))
     
     custom_dialog_gui.Show("w284 h101 x" ui_pos_x " y" ui_pos_y)
-    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
-    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
-    WinActivate("ahk_id" custom_dialog_gui.Hwnd)
     WinWaitClose("ahk_id" custom_dialog_gui.Hwnd)
-    custom_dialog_gui.Destroy()
     return response
 
     save_coordinates(){
@@ -238,7 +236,7 @@ rebuild_operation(){
 	}
 }
 
-ds_startup_commands(esp_id){
+ds_startup_commands(){
 	while not WinExist("STL Rotate"){
         try {
             dialog_win := WinActive("esprit", "&Yes")
@@ -279,7 +277,7 @@ ds_startup_commands(esp_id){
 	}
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
     if yn != "Yes"{
         return
     }
@@ -294,7 +292,7 @@ ds_startup_commands(esp_id){
 	ExecuteMacroButtonCommandWithHWND(3, WinGetID("ESPRIT - "))
 }
 
-asc_startup_commands(esp_id){
+asc_startup_commands(){
 	while not WinExist("STL Rotate"){
         try {
             dialog_win := WinActive("esprit", "&Yes")
@@ -330,7 +328,7 @@ asc_startup_commands(esp_id){
 	WinWaitActive("STL Rotate")
 	WinActivate("ESPRIT -")
 	deg0()
-	yn := show_custom_dialog("Is the connection correct?", "Tru-AHK", esp_id)
+	yn := MsgBox("Is the connection correct?",,"YesNoCancel 0x1000")
     if yn != "Yes"{
         return
     }
