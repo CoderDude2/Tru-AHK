@@ -249,7 +249,7 @@ f17::{
 :c1o:>>WC::Wrong connection
 :c1o:>>LP::List pasted
 :c1o:>>NR::Needs recentering
-:c1o:>>CSDU::Single case
+:c1o:>>CSDU::CS is done uploading
 
 #HotIf WinActive("ahk_exe esprit.exe")
 
