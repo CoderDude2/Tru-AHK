@@ -240,6 +240,17 @@ f17::{
 
 #SuspendExempt False
 
+#HotIf WinActive("ahk_exe DaouMessenger 4.0.exe")
+
+:c1o:>>SC::Single case
+:c1o:>>SP::Same patient
+:c1o:>>CC::Canceled
+:c1o:>>DO::Design okay
+:c1o:>>WC::Wrong connection
+:c1o:>>LP::List pasted
+:c1o:>>NR::Needs recentering
+:c1o:>>CSDU::Single case
+
 #HotIf WinActive("ahk_exe esprit.exe")
 
 #MaxThreadsPerHotkey 1
