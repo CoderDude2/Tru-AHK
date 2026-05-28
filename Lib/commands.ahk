@@ -32,7 +32,10 @@ three_point_circle(title := "ESPRIT - "){
 	PostMessage 0x111, 3007 , , , title 
 }
 
-line_tool(title := "ESPRIT - "){
+line_tool(title := "ESPRIT - ", create_plane := false){
+    if create_plane {
+        PostMessage 0x111, 3189 , , , title 
+    }
 	PostMessage 0x111, 3018 , , , title 
 }
 

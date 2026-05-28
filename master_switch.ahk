@@ -54,6 +54,7 @@ TerminateMsg := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
 RefreshDocumentMsg := DllCall("RegisterWindowMessageW", "Str", "REFRESH_DOCUMENT")
 ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
+EscapeKeyPressedMsg := DllCall("RegisterWindowMessageW", "Str", "ESCAPE_KEY_PRESSED")
 
 SetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "SET_SPACE_CONFIRM")
 UnsetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "UNSET_SPACE_CONFIRM")
@@ -116,6 +117,27 @@ update_file_map(){
 
 SetTimer(update_file_map, 1000)
 
+SetTimer(WindowWatcher, 150)
+
+global watched := Map()
+global nextID := 1
+
+WatchForClose(title, callback){
+    global watched, nextID
+    id := nextID++
+    watched[id] := {title: title, callback: callback}
+}
+
+WindowWatcher(){
+    global watched
+    for id, info in Watched.Clone(){
+        if !WinExist(info.title){
+            info.callback()
+            watched.Delete(id)
+        }
+    }
+}
+
 SetTimer(process_f9_file_queue, 100)
 process_f9_file_queue(){
     if f9_queue.Length > 0 {
@@ -124,8 +146,7 @@ process_f9_file_queue(){
         generate_nc("ahk_id" f9_object.esp_id)
         nc_id := WinWait("ESPRIT NC Editor", f9_object.case_id ".prg")
         WinClose("ahk_id" nc_id)
-        WinWaitClose("ahk_id" nc_id)
-        save_file("ahk_id" f9_object.esp_id)
+        WatchForClose("ahk_id" nc_id, (*) => save_file("ahk_id" f9_object.esp_id))
     }
 }
 
@@ -254,6 +275,11 @@ f17::{
 #HotIf WinActive("ahk_exe esprit.exe")
 
 #MaxThreadsPerHotkey 1
+
+~^o::{
+    win_id := WinWaitActive("Select a file to load")
+    WatchForClose("ahk_id" win_id, (*) => go_to_next_esprit(get_active_esprit_info().esp_id))
+}
 
 ^+f16::{
     esp_pid := WinGetPID("ESPRIT - ") 
@@ -805,6 +831,8 @@ e::{
 
 ; ===== Auto-Complete Margins =====
 ~Escape::{
+    esp_info := get_active_esprit_info()
+    PostMessage(EscapeKeyPressedMsg, esp_info.esp_id, , , 0xFFFF)
     global passes
     global isDrawing
     global lastMousePosX
@@ -826,6 +854,13 @@ e::{
     ; }
 
     stop_simulation()
+}
+
+!XButton2::
+!CapsLock::{
+    global isDrawing
+    isDrawing := true
+    line_tool(, true)
 }
 
 CapsLock::{
@@ -1321,7 +1356,6 @@ x::{
     send_WM_COPYDATA("ROTATE_Z:-1", "ESPRIT - ")
 }
 
-!XButton2::
 !c::
 ^!MButton::{
     esp_info := get_active_esprit_info()
