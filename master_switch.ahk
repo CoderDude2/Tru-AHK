@@ -276,15 +276,63 @@ f17::{
 
 #MaxThreadsPerHotkey 1
 
-~^o::{
+mtx := Mutex("Local\FileMutex")
+
+f16::{
+    Send("{Ctrl down}o{Ctrl up}")
+    selected_file := ""
+    For k,v in file_map.data {
+        if v = False and FileExist(STL_FILE_PATH "\" k){
+            selected_file := k
+            break
+        }
+    }
+    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    if found_pos {
+        SplitPath(selected_file, &name)
+        if mtx.Lock() == 0 {
+            file_map.data[name] := true
+            mtx.Release()
+        }
+    }
     win_id := WinWaitActive("Select a file to load")
+    ControlSetText(name, "Edit1", "ahk_id" win_id)
+    ControlSend("{Enter}", "Button1", "ahk_id" win_id)
     WatchForClose("ahk_id" win_id, (*) => go_to_next_esprit(get_active_esprit_info().esp_id))
 }
 
-^+f16::{
-    esp_pid := WinGetPID("ESPRIT - ") 
-    Run("esp.ahk " esp_pid " auto")
+^b::{
+    Send("{Ctrl down}b{Ctrl up}")
+    Sleep(200)
+    go_to_next_esprit(get_active_esprit_info().esp_id)
 }
+
+~^o::{
+    selected_file := ""
+    For k,v in file_map.data {
+        if v = False and FileExist(STL_FILE_PATH "\" k){
+            selected_file := k
+            break
+        }
+    }
+    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    if found_pos {
+        SplitPath(selected_file, &name)
+        if mtx.Lock() == 0 {
+            file_map.data[name] := true
+            mtx.Release()
+        }
+    }
+    win_id := WinWaitActive("Select a file to load")
+    ControlSetText(name, "Edit1", "ahk_id" win_id)
+    ControlSend("{Enter}", "Button1", "ahk_id" win_id)
+    WatchForClose("ahk_id" win_id, (*) => go_to_next_esprit(get_active_esprit_info().esp_id))
+}
+
+; ^+f16::{
+;     esp_pid := WinGetPID("ESPRIT - ") 
+;     Run("esp.ahk " esp_pid " new_auto")
+; }
 
 +f16::{
     esp_pid := WinGetPID("ESPRIT - ") 
@@ -296,16 +344,16 @@ f17::{
 ;     Run("esp.ahk " esp_pid " new")
 ; }
 
-f16::{
-    case_type := get_case_type(WinGetTitle("ahk_id" get_active_esprit_info().esp_id))
-    if case_type == "TLOC" or case_type == "AOT"{
-        Run("esp.ahk " esp_pid " auto")
-        return
-    }
+; f16::{
+;     case_type := get_case_type(WinGetTitle("ahk_id" get_active_esprit_info().esp_id))
+;     if case_type == "TLOC" or case_type == "AOT"{
+;         Run("esp.ahk " esp_pid " auto")
+;         return
+;     }
 
-    esp_pid := WinGetPID("ESPRIT - ") 
-    Run("esp.ahk " esp_pid " new_auto")
-}
+;     esp_pid := WinGetPID("ESPRIT - ") 
+;     Run("esp.ahk " esp_pid " new_auto")
+; }
 
 h::{
     ; MsgBox(WinGetID("ESPRIT - "))
@@ -352,13 +400,12 @@ f8::{
     ; Sleep(40)
     ; deg0("ahk_id" esp_info.esp_id)
     ; toggle_simulation("ahk_id" esp_info.esp_id)
-    go_to_next_esprit(esp_info.esp_id)
+    ; go_to_next_esprit(esp_info.esp_id)
     send_WM_COPYDATA("SIMULATE_BACK", "ahk_id" esp_info.esp_id)
 }
 
 ; G3 Key
 +f15::
-^b::
 f9::{
     esp_info := get_active_esprit_info()
 
@@ -1216,25 +1263,23 @@ x::{
 }
 
 ^Numpad4::{
-
     esp_info := get_active_esprit_info()
     case_type := get_case_type(WinGetTitle("ahk_id" esp_info.esp_id))
     
-    
-    ExecuteMacroButtonCommand(4,get_active_esprit_info().esp_id)
-    cam_automation_id := WinWaitTitleWithPID(esp_info.esp_pid, "CAM Automation", "[4] Rebuild Freeform")
-
-    bottom_z_limit := -5
-    send_WM_COPYDATA("SET_ALL_CROSSBALL_BOTTOM_Z_LIMIT:" bottom_z_limit, "ahk_id" esp_info.esp_id)
     if case_type != "TLOC" and case_type != "AOT" {
-        
-        send_WM_COPYDATA("CREATE_CROSSBALLS", "ESPRIT - ")
-        send_WM_COPYDATA("CREATE_MARGINS", "ESPRIT - ")
-        send_WM_COPYDATA("BUILD_ESP", "ESPRIT - ")
-    }
+        Send("{Ctrl down}b{Ctrl up}")
+        Sleep(200)
+        go_to_next_esprit(esp_info.esp_id)
+    } else {
+        ExecuteMacroButtonCommand(4,get_active_esprit_info().esp_id)
+        cam_automation_id := WinWaitTitleWithPID(esp_info.esp_pid, "CAM Automation", "[4] Rebuild Freeform")
 
-    WinWaitClose("ahk_id" cam_automation_id)
-    go_to_next_esprit(esp_info.esp_id)
+        bottom_z_limit := -5
+        send_WM_COPYDATA("SET_ALL_CROSSBALL_BOTTOM_Z_LIMIT:" bottom_z_limit, "ahk_id" esp_info.esp_id)
+        WinWaitClose("ahk_id" cam_automation_id)
+        
+        go_to_next_esprit(esp_info.esp_id)
+    }    
 }
 ^Numpad5::{
     ; if not WinActive("ESPRIT - "){
