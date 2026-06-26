@@ -55,6 +55,7 @@ ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteM
 RefreshDocumentMsg := DllCall("RegisterWindowMessageW", "Str", "REFRESH_DOCUMENT")
 ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
 EscapeKeyPressedMsg := DllCall("RegisterWindowMessageW", "Str", "ESCAPE_KEY_PRESSED")
+LoadSTLMsg := DllCall("RegisterWindowMessageW", "Str", "LOAD_STL")
 
 SetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "SET_SPACE_CONFIRM")
 UnsetSpaceAsConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "UNSET_SPACE_CONFIRM")
@@ -279,26 +280,30 @@ f17::{
 mtx := Mutex("Local\FileMutex")
 
 f16::{
-    Send("{Ctrl down}o{Ctrl up}")
-    selected_file := ""
-    For k,v in file_map.data {
-        if v = False and FileExist(STL_FILE_PATH "\" k){
-            selected_file := k
-            break
-        }
-    }
-    found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
-    if found_pos {
-        SplitPath(selected_file, &name)
-        if mtx.Lock() == 0 {
-            file_map.data[name] := true
-            mtx.Release()
-        }
-    }
-    win_id := WinWaitActive("Select a file to load")
-    ControlSetText(name, "Edit1", "ahk_id" win_id)
-    ControlSend("{Enter}", "Button1", "ahk_id" win_id)
-    WatchForClose("ahk_id" win_id, (*) => go_to_next_esprit(get_active_esprit_info().esp_id))
+    esp_info := get_active_esprit_info()
+    PostMessage(LoadSTLMsg, esp_info.esp_id, , , 0xFFFF)
+    ; Sleep(500)
+    ; go_to_next_esprit(get_active_esprit_info().esp_id)
+    ; Send("{Ctrl down}o{Ctrl up}")
+    ; selected_file := ""
+    ; For k,v in file_map.data {
+    ;     if v = False and FileExist(STL_FILE_PATH "\" k){
+    ;         selected_file := k
+    ;         break
+    ;     }
+    ; }
+    ; found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
+    ; if found_pos {
+    ;     SplitPath(selected_file, &name)
+    ;     if mtx.Lock() == 0 {
+    ;         file_map.data[name] := true
+    ;         mtx.Release()
+    ;     }
+    ; }
+    ; win_id := WinWaitActive("Select a file to load")
+    ; ControlSetText(name, "Edit1", "ahk_id" win_id)
+    ; ControlSend("{Enter}", "Button1", "ahk_id" win_id)
+    ; WatchForClose("ahk_id" win_id, (*) => go_to_next_esprit(get_active_esprit_info().esp_id))
 }
 
 ^b::{
@@ -528,27 +533,31 @@ LWin::Delete
 ; ===== View Controls=====
 
 a::{
-    try{
-        deg0()
-    }
+    ; try{
+    ;     deg0()
+    ; }
+    send_WM_COPYDATA("SELECT_VIEW:1", "ESPRIT - ")
 }
 
 s::{
-    try{
-        deg90()
-    }
+    ; try{
+    ;     deg90()
+    ; }
+    send_WM_COPYDATA("SELECT_VIEW:2", "ESPRIT - ")
 }
 
 d::{
-    try{
-        deg180()
-    }
+    ; try{
+    ;     deg180()
+    ; }
+    send_WM_COPYDATA("SELECT_VIEW:3", "ESPRIT - ")
 }
 
 f::{
-    try{
-        deg270()
-    }
+    ; try{
+    ;     deg270()
+    ; }
+    send_WM_COPYDATA("SELECT_VIEW:4", "ESPRIT - ")
 }
 
 c::{
@@ -1295,6 +1304,7 @@ x::{
         WinActivate("ESPRIT - ")
     }
     ExecuteMacroButtonCommand(6, get_active_esprit_info().esp_id)
+    send_WM_COPYDATA("SELECT_VIEW:1", "ESPRIT - ")
 }
 
 ^!Numpad1::{
