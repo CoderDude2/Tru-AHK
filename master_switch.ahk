@@ -220,11 +220,14 @@ f13::
 ~Escape::{
     BlockInput("MouseMoveOff")
 
+    esp_info := get_active_esprit_info()
+    PostMessage(EscapeKeyPressedMsg, esp_info.esp_id, , , 0xFFFF)
+
     if WinActive("ahk_exe esprit.exe"){
         stop_simulation()
         cancel_all_set()
         draw_path("cancel")
-    }   
+    } 
 }
 #SuspendExempt False
 
@@ -237,7 +240,6 @@ get_active_esprit_info(){
     if (not espritInstances.Has(activeTitle "_" WinGetPID(activeTitle))){
         esp_id := WinGetID(activeTitle)
         esp_pid := WinGetPID(activeTitle)
-         
         esp_info := EspritInfo()
         esp_info.esp_pid := esp_pid
         esp_info.esp_id := esp_id
@@ -250,6 +252,8 @@ get_active_esprit_info(){
 
 DocumentOpen := false
 ESPAfterDocumentOpenMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_AFTER_DOCUMENT_OPEN")
+LoadSTLMsg := DllCall("RegisterWindowMessageW", "Str", "LOAD_STL")
+EscapeKeyPressedMsg := DllCall("RegisterWindowMessageW", "Str", "ESCAPE_KEY_PRESSED")
 
 OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
 
@@ -367,6 +371,20 @@ f12::{
 
 ; G4
 f16::{
+    selected_file := get_next_file()
+    
+    if not (get_case_type(selected_file) == "AOT" or get_case_type(selected_file) == "TLOC"){
+        esp_info := get_active_esprit_info()
+        PostMessage(LoadSTLMsg, esp_info.esp_id, , , 0xFFFF)
+        return
+    }
+
+    If selected_file == ""{
+        return
+    }
+    
+    mark_file_as_completed(selected_file)
+    
     global DocumentOpen
     if get_macro_bar() == ""{
         return
@@ -374,13 +392,6 @@ f16::{
 
     DocumentOpen := false
 
-    selected_file := ""
-    For k,v in file_map{
-        if v = False and FileExist(get_stl_path() "\" k){
-            selected_file := k
-            break
-        }
-    }
     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
     if found_pos {
         SplitPath(selected_file, &name)
@@ -436,8 +447,16 @@ f16::{
     DocumentOpen := false
 
     selected_file := FileSelect(, get_stl_path())
+
+    If not(get_case_type(selected_file) == "AOT" or get_case_type(selected_file) == "TLOC"){
+        send_WM_COPYDATA("LOAD_STL_MANUAL:" selected_file, "ESPRIT - ")
+        return
+    }
+
     if(selected_file != ""){
+        
         SplitPath(selected_file, &name)
+        mark_file_as_completed(name)
         found_pos := RegExMatch(name, "\(([A-Za-z0-9\-]+),", &sub_pat)
         if not FileExist(get_basic_setting_path() "\" sub_pat[1] ".esp"){
             MsgBox("Basic setting `"" sub_pat[1] ".esp`" does not exist!")

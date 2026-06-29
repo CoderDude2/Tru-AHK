@@ -1,4 +1,6 @@
-#Requires AutoHotkey v2.0
+﻿#Requires AutoHotkey v2.0
+
+WM_COPYDATA := 0x004A
 
 class EspritInfo{
     esp_pid := unset
@@ -39,4 +41,62 @@ get_case_id(title){
 get_connection_type(title){
     FoundPos := RegExMatch(title, "\(([A-Za-z0-9;-]+),", &SubPat)
     return StrSplit(SubPat[1], "-")[1]
+}
+
+is_file_completed(file_name){
+    if FileExist("C:\Users\TruUser\AppData\Roaming\TruCamAddIn\processed_files.txt"){
+        Loop read, "C:\Users\TruUser\AppData\Roaming\TruCamAddIn\processed_files.txt"{
+            Loop parse, A_LoopReadLine, "`n", "`r"{
+                SplitPath(A_LoopField, &name)
+                if file_name == name{
+                    return true
+                }
+            }
+        }
+    }
+
+    return false
+}
+
+get_next_file(){
+    Loop Files, get_stl_path() "\*", "F"{
+        if InStr(A_LoopFileName, ".stl") and not is_file_completed(A_LoopFileName){
+            return A_LoopFileName
+        }
+    }
+
+    return ""
+}
+
+mark_file_as_completed(file_name){
+    full_name := get_stl_path() "\" file_name
+    FileAppend(full_name "`n", "C:\Users\TruUser\AppData\Roaming\TruCamAddIn\processed_files.txt", "UTF-8")
+}
+
+recv_WM_COPYDATA(wParam, lParam, msg, hwnd){
+    StringAddress := NumGet(lParam, 2*A_PtrSize, "Ptr")
+    CopyOfData := StrGet(StringAddress)
+    return True
+}
+
+send_WM_COPYDATA(StringToSend, TargetTitle){
+    CopyDataStruct := Buffer(3 * A_PtrSize)
+    SizeInBytes := (StrLen(StringToSend) + 1) * 2
+    NumPut("ptr", 1, CopyDataStruct, 0)
+    NumPut("ptr", SizeInBytes, CopyDataStruct, A_PtrSize)
+    NumPut("ptr", StrPtr(StringToSend), CopyDataStruct, A_PtrSize * 2)
+
+    Prev_DetectHiddenWindows := A_DetectHiddenWindows
+    Prev_TitleMatchMode := A_TitleMatchMode
+    DetectHiddenWindows True
+    SetTitleMatchMode 2
+
+    TimeOutTime := 20000
+
+    RetValue := SendMessage(WM_COPYDATA, 0, CopyDataStruct.Ptr, , "HiddenWindow" WinGetID(TargetTitle),,,,TimeOutTime)
+
+    DetectHiddenWindows Prev_DetectHiddenWindows
+    SetTitleMatchMode Prev_TitleMatchMode
+
+    return RetValue
 }
