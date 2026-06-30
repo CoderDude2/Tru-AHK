@@ -254,6 +254,7 @@ DocumentOpen := false
 ESPAfterDocumentOpenMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_AFTER_DOCUMENT_OPEN")
 LoadSTLMsg := DllCall("RegisterWindowMessageW", "Str", "LOAD_STL")
 EscapeKeyPressedMsg := DllCall("RegisterWindowMessageW", "Str", "ESCAPE_KEY_PRESSED")
+CreateFrontTurningMsg := DllCall("RegisterWindowMessageW", "Str", "CREATE_FRONT_TURNING")
 
 OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
 
@@ -861,6 +862,11 @@ e::{
 ; G6 Key
 f18::{
     save_file()
+}
+
++1::{
+    esp_info := get_active_esprit_info()
+    PostMessage(CreateFrontTurningMsg, esp_info.esp_id, , , 0xFFFF)
 }
 
 ; ===== Auto-Complete Path =====
