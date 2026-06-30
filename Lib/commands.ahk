@@ -125,6 +125,7 @@ draw_path(command){
         case "get-state":
             return path_tool_active
         case "start":
+            CoordMode("Mouse", "Window")
 			if path_tool_active {
 				Send("{Escape}")
 			}
@@ -135,7 +136,7 @@ draw_path(command){
         case "click":
 			if path_tool_active{
 				if click_index < 1{
-					CoordMode("Mouse", "Screen")
+					CoordMode("Mouse", "Window")
 					MouseGetPos(&initial_pos_x, &initial_pos_y)
 					click_index += 1
 				} else {
@@ -151,11 +152,11 @@ draw_path(command){
         case "complete":
              if path_tool_active{
 				if click_index > 1 {
-					CoordMode("Mouse", "Screen")
+					CoordMode("Mouse", "Window")
                     MouseGetPos(&last_pox_x, &last_pos_y)
-                    MouseMove(500, last_pos_y)
+                    MouseMove(20, last_pos_y)
                     Click()
-                    MouseMove(500, initial_pos_y)
+                    MouseMove(20, initial_pos_y)
                     Click()
 					MouseMove(initial_pos_x, initial_pos_y, 0)
 					Click()

@@ -1,4 +1,4 @@
-WM_COPYDATA := 0x004A
+﻿WM_COPYDATA := 0x004A
 
 class EspritInfo{
     esp_pid := unset

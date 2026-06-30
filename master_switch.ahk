@@ -421,49 +421,9 @@ f9::{
     newF9QueueObject.esp_id := esp_info.esp_id
     newF9QueueObject.case_id := case_id
     
-    ; save_file("ahk_id" esp_info.esp_id)
     go_to_next_esprit(esp_info.esp_id)
     f9_queue.InsertAt(1, newF9QueueObject)
-    
-    ; MsgBox(f9_queue.Length)
-    ; WinActivate("ahk_id" _id)
 }
-
-; ^f16::{
-;     selected_file := ""
-;     For k,v in file_map{
-;         if v = False and FileExist(STL_FILE_PATH "\" k){
-;             selected_file := k
-;             break
-;         }
-;     }
-;     found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
-;     if found_pos {
-;         SplitPath(selected_file, &name)
-;         open_file()
-;         WinWaitActive("Open")
-;         ControlSetText("C:\Users\TruUser\Desktop\Basic Setting\" sub_pat[1] ".esp", "Edit1", "ahk_class #32770")
-;         ControlSetChecked(0,"Button5","ahk_class #32770")
-;         ControlSend("{Enter}", "Button2","ahk_class #32770")
-;         WinWait("ahk_class #32770", "&Yes", 1)
-;         if WinExist("ahk_class #32770", "&Yes"){
-;             WinWaitClose("ahk_class #32770", "&Yes")
-;         }
-;         yn := show_custom_dialog("Is the basic setting loaded?", "Tru-AHK")
-;         if yn != "Yes"{
-;             return
-;         }
-;         file_map[name] := true
-;         WinActivate("ESPRIT")
-;         macro_button1()
-;         WinWaitActive("CAM Automation")
-;         Send("{Enter}")
-;         WinWaitActive("Select file to open")
-;         Sleep(200)
-;         ControlSetText(selected_file, "Edit1", "Select file to open")
-;         Send("{Enter}")
-;     }
-; }
 
 ^+r::{
     esprit_title := WinGetTitle("A")
@@ -495,7 +455,6 @@ f12::{
 
 
 ; ===== Remappings =====
-; Space::Enter
 LWin::Delete
 
 ; ===== Hotstrings =====
@@ -533,30 +492,18 @@ LWin::Delete
 ; ===== View Controls=====
 
 a::{
-    ; try{
-    ;     deg0()
-    ; }
     send_WM_COPYDATA("SELECT_VIEW:1", "ESPRIT - ")
 }
 
 s::{
-    ; try{
-    ;     deg90()
-    ; }
     send_WM_COPYDATA("SELECT_VIEW:2", "ESPRIT - ")
 }
 
 d::{
-    ; try{
-    ;     deg180()
-    ; }
     send_WM_COPYDATA("SELECT_VIEW:3", "ESPRIT - ")
 }
 
 f::{
-    ; try{
-    ;     deg270()
-    ; }
     send_WM_COPYDATA("SELECT_VIEW:4", "ESPRIT - ")
 }
 
@@ -626,7 +573,6 @@ v::{
 ; ===== Controls =====
 Space::{
     esp_info := get_active_esprit_info()
-    ; PostMessage(ConfirmESPMsg, esp_info.esp_id, , , 0xFFFF)
     if spaceAsConfirmMap.Has(esp_info.esp_id) and spaceAsConfirmMap[esp_info.esp_id] == true {
         send_WM_COPYDATA("CONFIRM", "ahk_id" esp_info.esp_id)
     } else {
@@ -713,28 +659,10 @@ XButton1::{
 }
 
 +Space::{
-    ; esp_info := get_active_esprit_info()
-    ; PostMessage(RefreshDocumentMsg, esp_info.esp_id, , , 0xFFFF)
     toggle_simulation()
 }
 
-g::{
-    ; global isDrawing
-    ; global lastMousePosX
-    ; global lastMousePosY
-    
-    ; if isDrawing {
-    ;     isDrawing := false
-    ;     highlight_tool()
-    ;     Send("{Escape}")
-    ;     Send("{Shift down}")
-    ;     MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
-    ;     Send("{Shift up}")
-    ;     highlight_tool()
-    ;     solid_view()
-    ;     Sleep(100)
-    ; }
-    
+g::{ 
     if not WinActive("Extrude Boss/Cut"){
         double_sided_border()
     } else {
@@ -743,40 +671,12 @@ g::{
 }
 
 b::{
-    ; global isDrawing
-    ; global lastMousePosX
-    ; global lastMousePosY
-    
-    ; if isDrawing {
-    ;     isDrawing := false
-    ;     highlight_tool()
-    ;     Send("{Escape}")
-    ;     Send("{Shift down}")
-    ;     MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
-    ;     Send("{Shift up}")
-    ;     highlight_tool()
-    ;     solid_view()
-    ;     Sleep(100)
-
-    ; }
-
     if not WinExist("Extrude Boss/Cut"){
         cut_with_border()
     } else {
         toggle_extrude_window_reverse_side()
     }
 }
-
-; r::{
-;     distance_val := 5
-;     if not WinActive("Extrude Boss/Cut"){
-;         extrude_by(distance_val)
-;     } else if WinActive("Extrude Boss/Cut") and ControlGetText("Edit1", "Extrude Boss/Cut") != distance_val{
-;         extrude_by(distance_val)
-;     } else {
-;         toggle_extrude_window_reverse_direction()
-;     }
-; }
 
 r & Numpad1::{
     distance_val := 1
@@ -899,15 +799,6 @@ e::{
     if not WinActive("ahk_class #32770","No Intersections P->L"){
         draw_path("cancel")
     }
-
-    ; if isDrawing {
-    ;     isDrawing := false
-    ;     highlight_tool()
-    ;     Send("{Shift down}")
-    ;     MouseClick('L', lastMousePosX, lastMousePosY, 2, 0)
-    ;     Send("{Shift up}")
-    ;     highlight_tool()
-    ; }
 
     stop_simulation()
 }
