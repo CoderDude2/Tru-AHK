@@ -255,6 +255,9 @@ ESPAfterDocumentOpenMsg := DllCall("RegisterWindowMessageW", "Str", "ESP_AFTER_D
 LoadSTLMsg := DllCall("RegisterWindowMessageW", "Str", "LOAD_STL")
 EscapeKeyPressedMsg := DllCall("RegisterWindowMessageW", "Str", "ESCAPE_KEY_PRESSED")
 CreateFrontTurningMsg := DllCall("RegisterWindowMessageW", "Str", "CREATE_FRONT_TURNING")
+TranslateXMsg := DllCall("RegisterWindowMessageW", "Str", "TRANSLATE_X")
+TranslateYMsg := DllCall("RegisterWindowMessageW", "Str", "TRANSLATE_Y")
+RotateZMsg := DllCall("RegisterWindowMessageW", "Str", "ROTATE_Z")
 
 OnMessage(ESPAfterDocumentOpenMsg, OnEspAfterDocumentOpen)
 
@@ -1106,33 +1109,40 @@ y::{
 }
 
 !Up::{
-    click_client_pos(136, 180, "Engraving Program Number Text", true)
+    send_WM_COPYDATA("TRANSLATE_Y:0.1", "ESPRIT - ")
 }
 
 !Down::{
-    click_client_pos(190, 180, "Engraving Program Number Text", true)
+    send_WM_COPYDATA("TRANSLATE_Y:-0.1", "ESPRIT - ")
 }
 
 !Left::{
-    click_client_pos(130, 220, "Engraving Program Number Text", true)
+    send_WM_COPYDATA("TRANSLATE_X:-0.1", "ESPRIT - ")
 }
 
 !Right::{
-    click_client_pos(190, 220, "Engraving Program Number Text", true)
+    send_WM_COPYDATA("TRANSLATE_X:0.1", "ESPRIT - ")
 }
 
 +Left::{
-    click_client_pos(130, 260, "Engraving Program Number Text", true)
+    send_WM_COPYDATA("ROTATE_Z:1", "ESPRIT - ")
 }
 
 +Right::{
-    click_client_pos(190, 260, "Engraving Program Number Text", true)
+    send_WM_COPYDATA("ROTATE_Z:-1", "ESPRIT - ")
 }
 
 ; Create Text Projection Finishing Button
 +NumpadEnter::
 +Enter::{
     click_client_pos(98, 305, "Engraving Program Number Text", true)
+}
+
+^+NumpadEnter::
+^+Enter::{
+    click_client_pos(98, 86, "Engraving Program Number Text", false)
+    WinWaitActive("esprit", "OK")
+    WinClose("esprit", "OK")
 }
 
 ^Numpad1::{
