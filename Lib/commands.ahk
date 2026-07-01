@@ -603,11 +603,6 @@ get_basic_setting_path(){
 	return basic_setting_path
 }
 
-get_stl_path(){
-	stl_path := IniRead(PREFS_FILE_PATH, "locations", "stl_path")
-	return stl_path
-}
-
 get_project_manager(){
 	class_nn := IniRead(PREFS_FILE_PATH, "project_manager_control", "control")
 	is_attached := IniRead(PREFS_FILE_PATH, "project_manager_control", "is_attached")

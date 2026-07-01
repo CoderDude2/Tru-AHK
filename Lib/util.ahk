@@ -1,6 +1,8 @@
 ﻿#Requires AutoHotkey v2.0
 
 WM_COPYDATA := 0x004A
+PREFS_FILE_PATH := A_AppData "\tru-ahk\prefs.ini"
+PREFS_DIRECTORY := A_AppData "\tru-ahk"
 
 class EspritInfo{
     esp_pid := unset
@@ -56,6 +58,11 @@ is_file_completed(file_name){
     }
 
     return false
+}
+
+get_stl_path(){
+	stl_path := IniRead(PREFS_FILE_PATH, "locations", "stl_path")
+	return stl_path
 }
 
 get_next_file(){
