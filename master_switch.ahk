@@ -867,7 +867,7 @@ f18::{
     save_file()
 }
 
-+1::{
+!::{
     esp_info := get_active_esprit_info()
     PostMessage(CreateFrontTurningMsg, esp_info.esp_id, , , 0xFFFF)
 }
