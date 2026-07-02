@@ -694,6 +694,10 @@ XButton1::{
     three_point_tool()
 }
 
+!XButton2::{
+    create_plane()
+}
+
 ^e::{
     extrude_tool()
 }

@@ -86,7 +86,11 @@ circle_tool(){
 }
 
 line_tool(){
-	PostMessage 0x111, 3018 , , , "ESPRIT"
+	PostMessage 0x111, 3018 , , , "ESPRIT" 
+}
+
+create_plane(){
+    PostMessage 0x111, 3189 , , , "ESPRIT" 
 }
 
 line_tool_2(){
