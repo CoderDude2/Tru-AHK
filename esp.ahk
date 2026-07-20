@@ -433,7 +433,7 @@ switch startup_command {
             ExitApp
         }
     case "manual":
-        selected_file := FileSelect(, STL_FILE_PATH)
+        selected_file := A_Args[3]
         found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
         if(selected_file != "" and found_pos){
             SplitPath(selected_file, &name)

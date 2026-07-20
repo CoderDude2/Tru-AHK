@@ -16,11 +16,41 @@ update_angle_deg(degree){
 	}
 }
 
+get_angle_index_deg(degree){
+	if(degree >= 0 && degree < 360){
+		index := (degree / 10) + 7
+		return index
+	}	
+}
+
 get_current_angle(title?) {
 	MsgReply := SendMessage(0x0147, 0, 0, "ComboBox1", title?) ; Uses CB_GETCURSEL command to retrieve the current selected value in ComboBox1. This outputs to the ErrorLevel.
 	current_angle := MsgReply<<32>>32 ; Convert UInt to Int to have -1 if there is no item selected.
 	current_angle += 1
 	return current_angle
+}
+
+clamp_to_90(angle){
+	if angle <= 90 {
+		return angle
+	}
+
+	if angle <= 180 {
+		return angle - 90
+	}
+	
+	if angle <= 270 {
+		return angle - 180
+	}
+
+	return angle - 270
+}
+
+get_angle_deg(title?){
+	choice := ControlGetChoice("ComboBox1", title?)
+	if InStr(choice, "DEG") {
+		return StrSplit(choice, "DEG")[1]
+	}
 }
 
 increment_10_degrees(title?) {

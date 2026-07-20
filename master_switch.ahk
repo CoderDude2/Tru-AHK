@@ -54,6 +54,7 @@ TerminateMsg := DllCall("RegisterWindowMessageA", "Str", "Terminate")
 ESPInitCompleteMsg := DllCall("RegisterWindowMessageA", "Str", "ESPInitCompleteMsg")
 RefreshDocumentMsg := DllCall("RegisterWindowMessageW", "Str", "REFRESH_DOCUMENT")
 ConfirmESPMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM")
+NewConfirmMsg := DllCall("RegisterWindowMessageW", "Str", "CONFIRM_MESSAGE")
 EscapeKeyPressedMsg := DllCall("RegisterWindowMessageW", "Str", "ESCAPE_KEY_PRESSED")
 LoadSTLMsg := DllCall("RegisterWindowMessageW", "Str", "LOAD_STL")
 
@@ -66,6 +67,8 @@ file_map := {data:loads_completed_files()}
 ObjRegisterActive(file_map, "{EB5BAF88-E58D-48F9-AE79-56392D4C7AF6}")
 
 spaceAsConfirmMap := Map()
+prev_angle := Map()
+base_index := Map()
 
 OnMessage(SetSpaceAsConfirmMsg, OnSetSpaceAsConfirmMsg)
 OnMessage(UnsetSpaceAsConfirmMsg, OnUnsetSpaceAsConfirmMsg)
@@ -164,6 +167,7 @@ get_active_esprit_info(){
         esp_info := EspritInfo()
         esp_info.esp_pid := esp_pid
         esp_info.esp_id := esp_id
+        esp_info.title := activeTitle
 
         espritInstances[activeTitle "_" WinGetPID(activeTitle)] := esp_info
     }
@@ -207,7 +211,7 @@ OnExtrudeMsg(wParam, lParam, msg, hwnd){
     ; MsgBox("extrude")
     esp_info := get_active_esprit_info()
     if wParam == esp_info.esp_id {
-        double_sided_border(true)
+        double_sided_border("ahk_id" esp_info.esp_id, true)
     }
 }
 
@@ -281,29 +285,36 @@ mtx := Mutex("Local\FileMutex")
 
 f16::{
     esp_info := get_active_esprit_info()
-    PostMessage(LoadSTLMsg, esp_info.esp_id, , , 0xFFFF)
-    ; Sleep(500)
-    ; go_to_next_esprit(get_active_esprit_info().esp_id)
-    ; Send("{Ctrl down}o{Ctrl up}")
-    ; selected_file := ""
-    ; For k,v in file_map.data {
-    ;     if v = False and FileExist(STL_FILE_PATH "\" k){
-    ;         selected_file := k
-    ;         break
-    ;     }
-    ; }
-    ; found_pos := RegExMatch(selected_file, "\(([A-Za-z0-9\-]+),", &sub_pat)
-    ; if found_pos {
-    ;     SplitPath(selected_file, &name)
-    ;     if mtx.Lock() == 0 {
-    ;         file_map.data[name] := true
-    ;         mtx.Release()
-    ;     }
-    ; }
-    ; win_id := WinWaitActive("Select a file to load")
-    ; ControlSetText(name, "Edit1", "ahk_id" win_id)
-    ; ControlSend("{Enter}", "Button1", "ahk_id" win_id)
-    ; WatchForClose("ahk_id" win_id, (*) => go_to_next_esprit(get_active_esprit_info().esp_id))
+    go_to_next_esprit(esp_info.esp_id)
+
+    selected_file := get_next_file()
+    
+    if not (get_case_type(selected_file) == "AOT" or get_case_type(selected_file) == "TLOC"){
+        PostMessage(LoadSTLMsg, esp_info.esp_id, , , 0xFFFF)
+        return
+    }
+
+    If selected_file == ""{
+        return
+    }
+
+    mark_file_as_completed(selected_file)
+
+    esp_info := get_active_esprit_info()
+    Run("esp.ahk " esp_info.esp_pid " auto")
+}
+
++f16::{
+    selected_file := FileSelect(, STL_FILE_PATH)
+    consolelog(selected_file)
+    If not(get_case_type(selected_file) == "AOT" or get_case_type(selected_file) == "TLOC"){
+        send_WM_COPYDATA_dev("LOAD_STL_MANUAL:" selected_file, "ESPRIT - ")
+        return
+    }
+
+    esp_pid := WinGetPID("ESPRIT - ") 
+    Run("esp.ahk " esp_pid " manual " '"' selected_file '"')
+    mark_file_as_completed(selected_file)
 }
 
 ^b::{
@@ -333,32 +344,6 @@ f16::{
     ControlSend("{Enter}", "Button1", "ahk_id" win_id)
     WatchForClose("ahk_id" win_id, (*) => go_to_next_esprit(get_active_esprit_info().esp_id))
 }
-
-; ^+f16::{
-;     esp_pid := WinGetPID("ESPRIT - ") 
-;     Run("esp.ahk " esp_pid " new_auto")
-; }
-
-+f16::{
-    esp_pid := WinGetPID("ESPRIT - ") 
-    Run("esp.ahk " esp_pid " manual")
-}
-
-; f16::{
-;     esp_pid := WinGetPID("ESPRIT - ") 
-;     Run("esp.ahk " esp_pid " new")
-; }
-
-; f16::{
-;     case_type := get_case_type(WinGetTitle("ahk_id" get_active_esprit_info().esp_id))
-;     if case_type == "TLOC" or case_type == "AOT"{
-;         Run("esp.ahk " esp_pid " auto")
-;         return
-;     }
-
-;     esp_pid := WinGetPID("ESPRIT - ") 
-;     Run("esp.ahk " esp_pid " new_auto")
-; }
 
 h::{
     ; MsgBox(WinGetID("ESPRIT - "))
@@ -415,6 +400,7 @@ f9::{
     esp_info := get_active_esprit_info()
 
     case_id := get_case_id(WinGetTitle("ahk_id" esp_info.esp_id))
+    Send("{Ctrl down}{Shift down}s{Shift up}{Ctrl up}")
 
     newF9QueueObject := F9QueueObject()
     newF9QueueObject.esp_pid := esp_info.esp_pid
@@ -578,6 +564,8 @@ Space::{
     } else {
         Send("{Enter}")
     }
+
+    PostMessage(NewConfirmMsg, esp_info.esp_id, , , 0xFFFF)
 }
 
 f14::{
@@ -806,8 +794,14 @@ e::{
 !XButton2::
 !CapsLock::{
     global isDrawing
+    global prev_angle
     isDrawing := true
+
+    esp_info := get_active_esprit_info()
+    prev_angle[esp_info.esp_id] := get_current_angle("ahk_id" esp_info.esp_id)
+
     line_tool(, true)
+
 }
 
 CapsLock::{
@@ -1149,10 +1143,58 @@ x::{
 }
 
 ^Numpad2::{
+    global base_index
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
-    ExecuteMacroButtonCommand(2,get_active_esprit_info().esp_id)
+
+    esp_info := get_active_esprit_info()
+    deg0("ahk_id" esp_info.esp_id)
+    selected_view := base_index.Get(esp_info.title)
+
+	ExecuteMacroButtonCommand(2, get_active_esprit_info().esp_id)
+
+    send_WM_COPYDATA("DISABLE_LAYER:BACK TURNING", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CUT-OFF", "ESPRIT - ")
+    send_WM_COPYDATA("ENABLE_LAYER:FRONT TURNING", "ESPRIT - ")
+
+
+    base_work_id := WinWaitActiveTitleWithPID(esp_info.esp_pid, "Base Work Plane(Degree)")
+
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+        Sleep(20)
+    } 
+    Sleep(200)
+    ControlSend("{Tab}{Tab}{Up}", , "ahk_id" base_work_id)
+    ControlSend("{Tab}{Tab}{Enter}", , "ahk_id" base_work_id)
+    WatchForClose("ahk_id" base_work_id, (*) => go_to_next_esprit(esp_info.esp_id))
+}
+
+^NumpadDown::{
+    global base_index
+    if not WinActive("ESPRIT - "){
+        WinActivate("ESPRIT - ")
+    }
+
+    esp_info := get_active_esprit_info()
+    deg0("ahk_id" esp_info.esp_id)
+    selected_view := base_index.Get(esp_info.title)
+
+	ExecuteMacroButtonCommand(2, get_active_esprit_info().esp_id)
+
+    send_WM_COPYDATA("DISABLE_LAYER:BACK TURNING", "ESPRIT - ")
+    send_WM_COPYDATA("DISABLE_LAYER:CUT-OFF", "ESPRIT - ")
+    send_WM_COPYDATA("ENABLE_LAYER:FRONT TURNING", "ESPRIT - ")
+
+    base_work_id := WinWaitActiveTitleWithPID(esp_info.esp_pid, "Base Work Plane(Degree)")
+
+    Loop selected_view{
+        ControlSend("{Down}", , "ahk_id" base_work_id)
+    }
+    Sleep(200)
+    ControlSend("{Tab}{Enter}", , "ahk_id" base_work_id)
+    WatchForClose("ahk_id" base_work_id, (*) => go_to_next_esprit(esp_info.esp_id))
 }
 
 ^Numpad3::{
@@ -1190,12 +1232,18 @@ x::{
     step_5_tab := 2
 }
 
+text_views := Map()
 ^Numpad6::{
+    global text_views
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }
+    esp_info := get_active_esprit_info()
+
     ExecuteMacroButtonCommand(6, get_active_esprit_info().esp_id)
-    send_WM_COPYDATA("SELECT_VIEW:1", "ESPRIT - ")
+    If text_views.Has(esp_info.esp_id){
+        update_angle(text_views[esp_info.title], "ahk_id" esp_info.esp_id)
+    }
 }
 
 ^!Numpad1::{
@@ -1255,9 +1303,17 @@ x::{
 
 ; Tab 2
 !s::{
+    global base_index
+    esp_info := get_active_esprit_info()
+
+    if not base_index.Has(esp_info.title){
+        base_index.Set(esp_info.title, get_angle_index_deg(clamp_to_90(get_angle_deg("ahk_id" esp_info.esp_id)))-7)
+    }
     ; step_3_tab2()
     send_WM_COPYDATA("FACE_LIMITATION", "ESPRIT - ")
-    update_angle(get_current_angle("ESPRIT - "), "ESPRIT - ")
+    ; update_angle(get_current_angle("ESPRIT - "), "ESPRIT - ")
+    ; update_angle(Mod(get_current_angle(), 16) + 7)
+    ; MsgBox(get_angle_deg())
 }
 
 ; Tab 3
@@ -1310,16 +1366,19 @@ x::{
 
 ^+NumpadEnter::
 ^+Enter::{
+    global text_views
     CoordMode("Mouse", "Screen")
     click_and_return(106, 126)
     WinWaitActive("esprit", "OK")
     WinClose("esprit", "OK")
+    esp_info := get_active_esprit_info()
+
+    text_views[esp_info.title] := get_current_angle("ahk_id" esp_info.esp_id)
 }
 
 ^!NumpadEnter::
 ^!Enter::{
     esp_info := get_active_esprit_info()
-
     CoordMode("Mouse", "Screen")
     click_and_return(103, 336)
     ; go_to_next_esprit(esp_info.esp_id)

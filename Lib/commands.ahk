@@ -1256,9 +1256,10 @@ show_milling_tool(){
 	PostMessage 0x111, 6278 , , , "ESPRIT"
 }
 
-double_sided_border(press_enter := False) {
-	PostMessage(0x111, 3130, , , "ESPRIT")
-	_id := WinWait("Extrude Boss/Cut",,0.1)
+double_sided_border(title := "ESPRIT - ",press_enter := False) {
+	PostMessage(0x111, 3130, , , title)
+    ; extrude_tool(title)
+	_id := WinWait("Extrude Boss/Cut",,0.5)
 	
 	try{
 		ControlSetText(11, "Edit1", "ahk_id" _id)
