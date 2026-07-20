@@ -444,18 +444,18 @@ f16::{
 +f16::{
     global DocumentOpen
 
+    selected_file := FileSelect(, get_stl_path())
+    
+    If not(get_case_type(selected_file) == "AOT" or get_case_type(selected_file) == "TLOC"){
+        send_WM_COPYDATA("LOAD_STL_MANUAL:" selected_file, "ESPRIT - ")
+        return
+    }
+    
     if get_macro_bar() == ""{
         return
     }
 
     DocumentOpen := false
-
-    selected_file := FileSelect(, get_stl_path())
-
-    If not(get_case_type(selected_file) == "AOT" or get_case_type(selected_file) == "TLOC"){
-        send_WM_COPYDATA("LOAD_STL_MANUAL:" selected_file, "ESPRIT - ")
-        return
-    }
 
     if(selected_file != ""){
         

@@ -106,7 +106,9 @@ update_tru_cam_addin(){
         RegWrite("TruCamAddIn", "REG_SZ", "HKEY_LOCAL_MACHINE\Software\Wow6432Node\D.P.Technology\esprit\AddIns\TruCamAddIn.Connect", "FriendlyName")
         RegWrite(0x0000001, "REG_DWORD", "HKEY_LOCAL_MACHINE\Software\Wow6432Node\D.P.Technology\esprit\AddIns\TruCamAddIn.Connect", "LoadBehavior")
         DirCopy(remote_path, new_local_path, true)
-        Run("*RunAs " new_local_path "\register.bat")
+        Run("*RunAs " new_local_path "\register.bat", , , &cmd_pid)
+        _id := WinWait("Select C:\WINDOWS\System32\cmd.exe")
+        WinWaitClose("ahk_id" _id)
         return 0
     } catch {
         return 1
