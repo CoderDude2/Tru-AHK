@@ -173,6 +173,13 @@ if(check_for_update(A_ScriptDir, REMOTE_PATH)){
     }
 }
 
+if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
+    Run A_ScriptDir "\resources\changelog.html"
+    IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
+} else {
+    MsgBox("Tru-AHK update successful!")
+}
+
 if check_for_tru_cam_addin_update(){
     result := MsgBox("An update is available for TruCamAddIn. Do you want to install it? Esprit will need to be restarted.",,"Y/N")
     if(result == "Yes"){
@@ -190,11 +197,6 @@ if check_for_tru_cam_addin_update(){
             MsgBox("Failed to install update!")
         }
     }
-}
-
-if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
-    Run A_ScriptDir "\resources\changelog.html"
-    IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
 }
 
 ; ===== Dashboard Menu =====
@@ -1157,6 +1159,14 @@ y::{
 }
 
 ^Numpad2::{
+    esp_info := get_active_esprit_info()
+    for id in WinGetList("Rotate STL"){
+        pid := WinGetPID("ahk_id" id)
+        if pid == esp_info.esp_pid {
+            WinHide("ahk_id" id)
+            break
+        }
+    }
     if not WinActive("ESPRIT - "){
         WinActivate("ESPRIT - ")
     }

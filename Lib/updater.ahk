@@ -34,7 +34,7 @@ update(online_path){
             }
         }
     }
-    IniWrite("True", "config.ini", "info", "show_changelog")
+
     Sleep(300)
 
     if(FileExist(A_ScriptDir "\old_text_x.exe") and FileExist(A_ScriptDir "\text_x.exe")){
