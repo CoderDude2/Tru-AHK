@@ -411,7 +411,7 @@ toggle_extrude_window_reverse_direction(){
 
 double_sided_border() {
 	PostMessage(0x111, 3130, , , "ESPRIT")
-	WinWait(extrude_window_name,,0.1)
+	WinWait(extrude_window_name, , 0.5)
 	
 	try{
 		_id := WinGetID(extrude_window_name)
