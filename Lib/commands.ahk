@@ -20,6 +20,10 @@ generate_nc(title := "ESPRIT - "){
 	PostMessage 0x111, 3323, , , title 
 }
 
+loft_surface(title := "ESPRIT - "){
+	PostMessage 0x111, 3116, , , title 
+}
+
 extrude_tool(title := "ESPRIT - "){
 	PostMessage 0x111, 3130 , , , title 
 }
@@ -118,58 +122,23 @@ draw_line(command){
 }
 
 draw_path(command){
-    static click_index
     static path_tool_active := false
-    static initial_pos_x, initial_pos_y
     switch command{
         case "get-state":
             return path_tool_active
         case "start":
-            CoordMode("Mouse", "Window")
-			if path_tool_active {
-				Send("{Escape}")
-			}
-			Sleep(50)
-            click_index := 0
             path_tool_active := true
             PostMessage 0x111, 3057, , , "ESPRIT"
-        case "click":
-			if path_tool_active{
-				if click_index < 1{
-					CoordMode("Mouse", "Window")
-					MouseGetPos(&initial_pos_x, &initial_pos_y)
-					click_index += 1
-				} else {
-					click_index += 1
-				}
-			}
         case "cancel":
             path_tool_active := false
-            click_index := 0
-            initial_pos_x := 0
-            initial_pos_y := 0
             Send("{Escape}{Escape}{Escape}")
         case "complete":
-             if path_tool_active{
-				if click_index > 1 {
-					CoordMode("Mouse", "Window")
-                    MouseGetPos(&last_pox_x, &last_pos_y)
-                    MouseMove(20, last_pos_y)
-                    Click()
-                    MouseMove(20, initial_pos_y)
-                    Click()
-					MouseMove(initial_pos_x, initial_pos_y, 0)
-					Click()
-					path_tool_active := false
-					click_index := 0
-					initial_pos_x := 0
-					initial_pos_y := 0
-				} else {
-					MsgBox("Must have 3 or more points to complete a path.")
-				}
-             } else {
+            if path_tool_active{
+                send_WM_COPYDATA_dev("COMPLETE_PATH", "ESPRIT - ")
+                path_tool_active := false
+            } else {
                 Send("{RButton}")
-             }
+            }
     }
 }
 
@@ -1211,6 +1180,7 @@ tl_aot_startup_commands(esp_pid, esp_id){
         file_name := SplitPath(STL_FILE_PATH "\" sub_pat[0], , , , &file_name_no_ext)
     }
     send_WM_COPYDATA("ALIGN_CAP", "ESPRIT - ")
+    Sleep(500)
 }
 
 align_tl_aot_cap(title := "ahk_exe esprit.exe"){
@@ -1276,7 +1246,7 @@ double_sided_border(title := "ESPRIT - ",press_enter := False) {
 	}
 }
 
-cut_with_border() {
+cut_with_border(send_enter := false) {
 	PostMessage(0x111, 3130, , , "ESPRIT")
 	_id := WinWait("Extrude Boss/Cut",,0.1)
 	try{
@@ -1287,6 +1257,9 @@ cut_with_border() {
 		ControlSetChecked(1,"Button8","ahk_id" _id)
 		ControlSetChecked(1,"Button3","ahk_id" _id)
         solid_view()
+        if send_enter{
+            ControlSend("{Enter}", "Button9", "ahk_id" _id)
+        }
 	} catch TargetError as err {
 		BlockInput("MouseMoveOff")
         consolelog("[Tru-AHK] No geometry selected")
