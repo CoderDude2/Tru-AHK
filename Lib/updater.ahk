@@ -53,7 +53,7 @@ update(online_path){
 check_for_tru_cam_addin_update(){
     remote_name := unset
     local_name := unset
-    Loop Files, "\\192.168.1.100\Trubox\Tru Dept. - CAM\Development\*", "DF"{
+    Loop Files, "\\10.10.60.11\Trubox\Tru Dept. - CAM\Development\*", "DF"{
         If InStr(A_LoopFileName, "TruCamAddIn"){
             remote_name := A_LoopFileName
             break
@@ -80,7 +80,7 @@ update_tru_cam_addin(){
     remote_name := unset
 
     try{
-        Loop Files, "\\192.168.1.100\Trubox\Tru Dept. - CAM\Development\*", "DF"{
+        Loop Files, "\\10.10.60.11\Trubox\Tru Dept. - CAM\Development\*", "DF"{
             If InStr(A_LoopFileName, "TruCamAddIn"){
                 remote_path := A_LoopFileFullPath
                 remote_name := A_LoopFileName

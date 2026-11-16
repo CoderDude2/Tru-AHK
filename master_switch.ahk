@@ -176,8 +176,6 @@ if(check_for_update(A_ScriptDir, REMOTE_PATH)){
 if(IniRead(A_ScriptDir "\config.ini", "info", "show_changelog") == "True"){
     Run A_ScriptDir "\resources\changelog.html"
     IniWrite("False", A_ScriptDir "\config.ini", "info", "show_changelog")
-} else {
-    MsgBox("Tru-AHK update successful!")
 }
 
 if check_for_tru_cam_addin_update(){
