@@ -35,6 +35,7 @@ if(IniRead("config.ini", "info", "show_changelog") == "True"){
 ; ===== Variables =====
 showDebug := false
 isDrawing := false
+first_seg := true 
 
 lastMousePosX := unset
 lastMousePosY := unset
@@ -747,6 +748,7 @@ XButton1::{
     send_WM_COPYDATA_dev("PLACE_POINTS", "ESPRIT - ")
 }
 
+
 ^!LButton::{
     send_WM_COPYDATA("91011", "ahk_id" get_active_esprit_info().esp_id)
 }
@@ -927,10 +929,12 @@ e::{
     PostMessage(EscapeKeyPressedMsg, esp_info.esp_id, , , 0xFFFF)
     global passes
     global isDrawing
+    global first_seg
     global lastMousePosX
     global lastMousePosY
 
     isDrawing := false
+    first_seg := false
     ControlChooseString("All", "ComboBox4", "ESPRIT - ")
 
     passes := 5
@@ -943,11 +947,14 @@ e::{
 	PostMessage 0x111, 3055 , , , esp_info.title 
 }
 
+
 !XButton2::
 !CapsLock::{
     global isDrawing
+    global first_seg
     global prev_angle
     isDrawing := true
+    first_seg := true
 
     esp_info := get_active_esprit_info()
     prev_angle[esp_info.esp_id] := get_current_angle("ahk_id" esp_info.esp_id)
@@ -958,9 +965,23 @@ e::{
 
 CapsLock::{
     global isDrawing
+    global first_seg
     isDrawing := true
+    first_seg := true
     line_tool()
     send_WM_COPYDATA_dev("START_SEGMENT", "ESPRIT - ")
+}
+
+~LButton::{
+    global first_seg
+    global isDrawing
+    If isDrawing {
+        if first_seg {
+            first_seg := false
+            return
+        }
+        Click()
+    }
 }
 
 path_tool := false
@@ -974,6 +995,7 @@ XButton2::{
 RButton::{
     global path_tool
     global isDrawing
+    global first_seg
     if path_tool {
         send_WM_COPYDATA_dev("COMPLETE_PATH", "ESPRIT - ")
         PostMessage 0x111, 3055 , , , "ESPRIT - " 
@@ -982,6 +1004,7 @@ RButton::{
         send_WM_COPYDATA_dev("COMPLETE_SEGMENT", "ESPRIT - ")
         PostMessage 0x111, 3055 , , , "ESPRIT - " 
         isDrawing := false
+        first_seg := false
     } else {
         Send("{RButton}")
     }
